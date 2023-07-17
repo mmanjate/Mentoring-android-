@@ -21,7 +21,7 @@ import java.util.Map;
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.common.ApplicationStep;
-import mz.org.csaude.mentoring.model.User;
+import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.util.Utilities;
 
 /**

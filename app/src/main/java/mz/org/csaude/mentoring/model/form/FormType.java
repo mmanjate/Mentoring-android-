@@ -1,10 +1,29 @@
 package mz.org.csaude.mentoring.model.form;
 
-public enum FormType {
+import mz.org.csaude.mentoring.base.model.BaseModel;
 
-    MENTORING,
+public class FormType extends BaseModel {
 
-    MENTORING_CUSTOM,
+    private String description;
 
-    INDICATORS
+    private  String code;
+
+    public FormType() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

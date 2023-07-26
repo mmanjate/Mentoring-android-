@@ -1,44 +1,28 @@
 package mz.org.csaude.mentoring.model.Question;
 
-import mz.org.csaude.mentoring.model.answer.Answer;
+import mz.org.csaude.mentoring.base.model.BaseModel;
 
-public enum QuestionType {
+public class QuestionType extends BaseModel {
 
-    TEXT {
-        @Override
-        public Answer getAnswer() {
-            return new Answer();
-        }
-    },
+    private String description;
 
-    BOOLEAN {
-        @Override
-        public Answer getAnswer() {
-            return new Answer();
-        }
-    },
+    private String code;
+    public QuestionType() {
+    }
 
-    NUMERIC {
-        @Override
-        public Answer getAnswer() {
-            return new Answer();
-        }
-    };
+    public String getDescription() {
+        return description;
+    }
 
-    // Just Uncomment when ready to be used...
-    // DECIMAL {
-    // @Override
-    // public Answer getAnswer() {
-    // return null;
-    // }
-    // },
-    //
-    // CURRENCY {
-    // @Override
-    // public Answer getAnswer() {
-    // return null;
-    // }
-    // };
+    public String getCode() {
+        return code;
+    }
 
-    public abstract Answer getAnswer();
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

@@ -1,33 +1,29 @@
 package mz.org.csaude.mentoring.model.career;
 
-public enum CareerType {
+import mz.org.csaude.mentoring.base.model.BaseModel;
 
-    HEALTH_TECHNICAL_ASSISTANT,
+public class CareerType extends BaseModel {
 
-    ADMINISTRATIVE_ASSISTANT,
+    private String descripion;
 
-    HEALTH_TECHNICIAN_AUXILIARY,
+    private String code;
 
-    HEALTH_SPECIALIST,
+    public CareerType() {
+    }
 
-    MEDICAL_PUBLIC_HEALTH,
+    public String getDescripion() {
+        return descripion;
+    }
 
-    MEDICAL_GENERALIST,
+    public String getCode() {
+        return code;
+    }
 
-    MEDICAL_HOSPITAL,
+    public void setDescripion(String descripion) {
+        this.descripion = descripion;
+    }
 
-    HEALTH_TECHNICIAN,
-
-    HEALTH_TECHNICIAL_SPECIALIST,
-
-    HEALTH_ASSOCIATE_DEGREE_N1,
-
-    HEALTH_ASSOCIATE_DEGREE_N2,
-
-    SERVICE_AGENT,
-
-    CLINICAL_AREA,
-
-    MONITORING_AND_EVALUATION;
-
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

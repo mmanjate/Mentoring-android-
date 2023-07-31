@@ -1,24 +1,28 @@
 package mz.org.csaude.mentoring.model.location;
 
-public enum Province {
+import mz.org.csaude.mentoring.base.model.BaseModel;
 
-    MAPUTO,
+public class Province extends BaseModel {
 
-    GAZA,
+    private String description;
 
-    INHAMBANE,
+    private String code;
+    public Province() {
+    }
 
-    SOFALA,
+    public String getDescription() {
+        return description;
+    }
 
-    TETE,
+    public String getCode() {
+        return code;
+    }
 
-    MANICA,
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    ZAMBEZIA,
-
-    NAMPULA,
-
-    NIASSA,
-
-    CABO_DELEGADO;
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

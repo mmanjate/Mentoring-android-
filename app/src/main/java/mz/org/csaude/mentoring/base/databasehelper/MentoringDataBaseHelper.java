@@ -62,6 +62,7 @@ import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
+import mz.org.csaude.mentoring.model.setting.PartnerSetting;
 import mz.org.csaude.mentoring.model.setting.Setting;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutor.TutorLocation;
@@ -357,6 +358,7 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, Province.class);
             TableUtils.createTableIfNotExists(connectionSource, QuestionType.class);
             TableUtils.createTableIfNotExists(connectionSource, SessionStatus.class);
+            TableUtils.createTableIfNotExists(connectionSource, PartnerSetting.class);
 
 
         } catch (SQLException e) {
@@ -366,6 +368,6 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-
+            System.out.println("SSSSSSS");
     }
 }

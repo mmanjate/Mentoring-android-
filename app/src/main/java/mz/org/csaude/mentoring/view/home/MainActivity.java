@@ -1,5 +1,6 @@
 package mz.org.csaude.mentoring.view.home;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -19,12 +20,18 @@ import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityMainBinding;
+import mz.org.csaude.mentoring.service.metadata.LoadMetadataService;
+import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.viewmodel.home.HomeVM;
 
 public class MainActivity extends BaseActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+
+    private LoadMetadataService loadMetadataService;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,14 @@ public class MainActivity extends BaseActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
+
+        progressDialog = new ProgressDialog(this);
+
+        // Load metadata
+        loadMetadataService = new LoadMetadataServiceImpl();
+        loadMetadataService.load(MainActivity.this, progressDialog,
+                null);
+
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,5 +91,13 @@ public class MainActivity extends BaseActivity {
     @Override
     public HomeVM getRelatedViewModel() {
         return (HomeVM) super.getRelatedViewModel();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 }

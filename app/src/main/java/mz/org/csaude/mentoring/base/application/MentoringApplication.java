@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import lombok.Getter;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -16,7 +17,13 @@ public class MentoringApplication  extends Application {
 
     private static MentoringApplication mInstance;
 
-    private static final String BASE_URL = "https://mentdev.fgh.org.mz";
+    //private static final String BASE_URL = "https://mentdev.fgh.org.mz";
+
+    // 10.10.12.97 http://10.0.2.2:8087  192.168.16.104
+
+    private static final String BASE_URL = "http://192.168.16.104:8087";
+
+    @Getter
     private Retrofit retrofit;
     private ObjectMapper mapper;
 
@@ -24,6 +31,8 @@ public class MentoringApplication  extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+
+        mapper = new ObjectMapper();
 
         setUpRetrofit();
 
@@ -50,5 +59,9 @@ public class MentoringApplication  extends Application {
                 .client(okHttpClient)
                 .addConverterFactory(JacksonConverterFactory.create(mapper))
                 .build();
+    }
+
+    public Retrofit getRetrofit() {
+        return retrofit;
     }
 }

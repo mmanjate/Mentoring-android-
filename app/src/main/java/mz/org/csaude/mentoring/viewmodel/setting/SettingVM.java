@@ -39,11 +39,11 @@ public class SettingVM extends BaseViewModel {
     }
 
     @Bindable
-    public Integer getValue() {
+    public String getValue() {
         return this.setting.getValue();
     }
 
-    public void setValue(Integer value) {
+    public void setValue(String value) {
         this.setting.setValue(value);
         notifyPropertyChanged(BR.value);
     }

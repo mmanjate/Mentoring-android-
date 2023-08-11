@@ -7,11 +7,11 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.setting.SettingDAO;
+import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.model.setting.Setting;
 import mz.org.csaude.mentoring.model.user.User;
 
 public class SettingServiceImpl extends BaseServiceImpl<Setting> implements SettingService {
-
 
     SettingDAO settingDAO;
 
@@ -19,8 +19,9 @@ public class SettingServiceImpl extends BaseServiceImpl<Setting> implements Sett
         super(application, currentUser);
     }
 
-    public SettingServiceImpl(Application application) {
+    public SettingServiceImpl(Application application) throws SQLException {
         super(application);
+        this.settingDAO = getDataBaseHelper().getSettingDAO();
     }
 
     @Override
@@ -53,5 +54,21 @@ public class SettingServiceImpl extends BaseServiceImpl<Setting> implements Sett
     @Override
     public Setting getById(int id) throws SQLException {
         return this.settingDAO.queryForId(id);
+    }
+
+    @Override
+    public void savedOrUpdateSettings(List<SettingDTO> settings) throws SQLException {
+
+        for (SettingDTO settingDTO: settings) {
+            boolean doesSettingExist = settingDAO.checkSettingExistance(settingDTO.getDescription());
+            if(!doesSettingExist) {
+                Setting setting = new Setting();
+                setting.setDescription(settingDTO.getDescription());
+                setting.setDesignation(settingDTO.getDesignation());
+                setting.setValue(settingDTO.getValue());
+                this.settingDAO.create(setting);
+            }
+        }
+
     }
 }

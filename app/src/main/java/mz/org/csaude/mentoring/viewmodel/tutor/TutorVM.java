@@ -88,16 +88,6 @@ public class TutorVM extends BaseViewModel {
     }
 
     @Bindable
-    public Boolean getUser() {
-        return this.tutor.getUser();
-    }
-
-    public void setUser(Boolean isUser) {
-        this.tutor.setUser(isUser);
-      //  notifyPropertyChanged(BR.isUser);
-    }
-
-    @Bindable
     public Partner getPartner() {
         return this.tutor.getPartner();
     }
@@ -105,16 +95,6 @@ public class TutorVM extends BaseViewModel {
     public void setUser(Partner partner) {
         this.tutor.setPartner(partner);
           notifyPropertyChanged(BR.partner);
-    }
-
-    @Bindable
-    public Boolean getAdmin() {
-        return this.tutor.getAdmin();
-    }
-
-    public void setAdmin(Boolean isAdmin) {
-        this.tutor.setAdmin(isAdmin);
-       // notifyPropertyChanged(BR.isAdmin);
     }
 
 

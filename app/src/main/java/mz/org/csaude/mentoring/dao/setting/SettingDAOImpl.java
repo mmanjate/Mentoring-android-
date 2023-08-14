@@ -29,7 +29,7 @@ public class SettingDAOImpl extends BaseDaoImpl<Setting, Integer> implements Set
     }
 
     @Override
-    public boolean checkSettingExistance(String uuid) throws SQLException {
+    public boolean checkSettingExistence(String uuid) throws SQLException {
         List<Setting> settings = this.queryForEq(BaseModel.COLUMN_UUID, uuid);
         return !settings.isEmpty();
     }

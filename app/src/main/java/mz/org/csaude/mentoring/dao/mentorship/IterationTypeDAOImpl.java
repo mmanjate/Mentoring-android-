@@ -10,15 +10,15 @@ import mz.org.csaude.mentoring.model.mentorship.IterationType;
 
 public class IterationTypeDAOImpl extends BaseDaoImpl<IterationType, Integer> implements IterationTypeDAO {
 
-    protected IterationTypeDAOImpl(Class<IterationType> dataClass) throws SQLException {
+    public IterationTypeDAOImpl(Class<IterationType> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected IterationTypeDAOImpl(ConnectionSource connectionSource, Class<IterationType> dataClass) throws SQLException {
+    public IterationTypeDAOImpl(ConnectionSource connectionSource, Class<IterationType> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected IterationTypeDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<IterationType> tableConfig) throws SQLException {
+    public IterationTypeDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<IterationType> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

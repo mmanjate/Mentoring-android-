@@ -10,15 +10,15 @@ import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 
 public class MentorshipDAOImpl extends BaseDaoImpl<Mentorship, Integer> implements MentorshipDAO{
 
-    protected MentorshipDAOImpl(Class<Mentorship> dataClass) throws SQLException {
+    public MentorshipDAOImpl(Class<Mentorship> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected MentorshipDAOImpl(ConnectionSource connectionSource, Class<Mentorship> dataClass) throws SQLException {
+    public MentorshipDAOImpl(ConnectionSource connectionSource, Class<Mentorship> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected MentorshipDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<Mentorship> tableConfig) throws SQLException {
+    public MentorshipDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<Mentorship> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

@@ -11,15 +11,15 @@ import mz.org.csaude.mentoring.model.partner.Partner;
 public class PartnerDaoImpl extends BaseDaoImpl<Partner, Integer> implements PartnerDao {
 
 
-    protected PartnerDaoImpl(Class<Partner> dataClass) throws SQLException {
+    public PartnerDaoImpl(Class<Partner> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected PartnerDaoImpl(ConnectionSource connectionSource, Class<Partner> dataClass) throws SQLException {
+    public PartnerDaoImpl(ConnectionSource connectionSource, Class<Partner> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected PartnerDaoImpl(ConnectionSource connectionSource, DatabaseTableConfig<Partner> tableConfig) throws SQLException {
+    public PartnerDaoImpl(ConnectionSource connectionSource, DatabaseTableConfig<Partner> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

@@ -10,15 +10,15 @@ import java.sql.SQLException;
 
 public class PartnerSettingDaoImpl extends BaseDaoImpl<PartnerSetting, Integer> implements PartnerSettingDao {
 
-    protected PartnerSettingDaoImpl(Class<PartnerSetting> dataClass) throws SQLException {
+    public PartnerSettingDaoImpl(Class<PartnerSetting> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected PartnerSettingDaoImpl(ConnectionSource connectionSource, Class<PartnerSetting> dataClass) throws SQLException {
+    public PartnerSettingDaoImpl(ConnectionSource connectionSource, Class<PartnerSetting> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected PartnerSettingDaoImpl(ConnectionSource connectionSource, DatabaseTableConfig<PartnerSetting> tableConfig) throws SQLException {
+    public PartnerSettingDaoImpl(ConnectionSource connectionSource, DatabaseTableConfig<PartnerSetting> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

@@ -11,15 +11,15 @@ import mz.org.csaude.mentoring.model.tutor.TutorLocation;
 public class TutorLocationDAOImpl extends BaseDaoImpl<TutorLocation, Integer> implements TutorLocationDAO {
 
 
-    public TutorLocationDAOImpl(Class<TutorLocation> dataClass) throws SQLException {
+    protected TutorLocationDAOImpl(Class<TutorLocation> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    public TutorLocationDAOImpl(ConnectionSource connectionSource, Class<TutorLocation> dataClass) throws SQLException {
+    protected TutorLocationDAOImpl(ConnectionSource connectionSource, Class<TutorLocation> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    public TutorLocationDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<TutorLocation> tableConfig) throws SQLException {
+    protected TutorLocationDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<TutorLocation> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

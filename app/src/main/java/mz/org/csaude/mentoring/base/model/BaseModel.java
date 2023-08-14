@@ -11,10 +11,12 @@ import java.io.Serializable;
 public abstract class BaseModel implements Serializable {
 
     public static final String COLUMN_ID = "id";
+
     public static final String COLUMN_UUID = "uuid";
 
-    @DatabaseField(columnName = COLUMN_ID, generatedId = true)
+    @DatabaseField(columnName = COLUMN_ID, id = true, generatedId = true)
     private int id;
+
     @DatabaseField(columnName = COLUMN_UUID, unique = true)
     private String uuid;
 }

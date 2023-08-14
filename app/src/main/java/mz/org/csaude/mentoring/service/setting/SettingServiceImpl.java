@@ -60,13 +60,13 @@ public class SettingServiceImpl extends BaseServiceImpl<Setting> implements Sett
     public void savedOrUpdateSettings(List<SettingDTO> settings) throws SQLException {
 
         for (SettingDTO settingDTO: settings) {
-            boolean doesSettingExist = settingDAO.checkSettingExistance(settingDTO.getDescription());
+            boolean doesSettingExist = settingDAO.checkSettingExistance(settingDTO.getUuid());
             if(!doesSettingExist) {
                 Setting setting = new Setting();
                 setting.setDescription(settingDTO.getDescription());
                 setting.setDesignation(settingDTO.getDesignation());
                 setting.setValue(settingDTO.getValue());
-                this.settingDAO.create(setting);
+                this.settingDAO.createOrUpdate(setting);
             }
         }
 

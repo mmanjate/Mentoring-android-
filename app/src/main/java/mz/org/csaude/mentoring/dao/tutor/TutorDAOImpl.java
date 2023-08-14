@@ -11,15 +11,15 @@ import mz.org.csaude.mentoring.model.tutor.Tutor;
 public class TutorDAOImpl extends BaseDaoImpl<Tutor, Integer> implements TutorDAO {
 
 
-    public TutorDAOImpl(Class<Tutor> dataClass) throws SQLException {
+    protected TutorDAOImpl(Class<Tutor> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    public TutorDAOImpl(ConnectionSource connectionSource, Class<Tutor> dataClass) throws SQLException {
+    protected TutorDAOImpl(ConnectionSource connectionSource, Class<Tutor> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    public TutorDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<Tutor> tableConfig) throws SQLException {
+    protected TutorDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<Tutor> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

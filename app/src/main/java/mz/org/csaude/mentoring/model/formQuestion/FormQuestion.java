@@ -16,9 +16,9 @@ import mz.org.csaude.mentoring.model.setting.Setting;
 public class FormQuestion extends BaseModel {
 
     public static final String TABLE_NAME = "form_question";
-    public static final String COLUMN_FORM = "form";
+    public static final String COLUMN_FORM = "form_id";
 
-    public static final String COLUMN_QUESTION = "question";
+    public static final String COLUMN_QUESTION = "question_id";
 
     public static final String COLUMN_MANDATORY = "mandatory";
 
@@ -26,10 +26,10 @@ public class FormQuestion extends BaseModel {
 
     public static final String COLUMN_APPLICABLE = "applicable";
 
-    @DatabaseField(columnName = COLUMN_FORM)
+    @DatabaseField(columnName = COLUMN_FORM, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Form form;
 
-    @DatabaseField(columnName = COLUMN_QUESTION)
+    @DatabaseField(columnName = COLUMN_QUESTION, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Question question;
 
     @DatabaseField(columnName = COLUMN_MANDATORY)

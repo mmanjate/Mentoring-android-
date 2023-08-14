@@ -27,11 +27,11 @@ public class Indicator extends BaseModel {
 
     public static final String COLUMN_REFERREDMONTH = "referred_month";
 
-    public static final String COLUMN_TUTOR = "tutor";
+    public static final String COLUMN_TUTOR = "tutor_id";
 
-    public static final String COLUMN_FORM = "form";
+    public static final String COLUMN_FORM = "form_id";
 
-    public static final String COLUMN_HEALTHFACILITY = "healthFacility";
+    public static final String COLUMN_HEALTHFACILITY = "healthFacility_id";
 
     @DatabaseField(columnName = COLUMN_CODE)
     private String code;
@@ -42,13 +42,13 @@ public class Indicator extends BaseModel {
     @DatabaseField(columnName = COLUMN_REFERREDMONTH)
     private LocalDate referredMonth;
 
-    @DatabaseField(columnName = COLUMN_TUTOR)
+    @DatabaseField(columnName = COLUMN_TUTOR, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Tutor tutor;
 
-    @DatabaseField(columnName = COLUMN_FORM)
+    @DatabaseField(columnName = COLUMN_FORM, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Form form;
 
-    @DatabaseField(columnName = COLUMN_HEALTHFACILITY)
+    @DatabaseField(columnName = COLUMN_HEALTHFACILITY, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private HealthFacility healthFacility;
 
     public Indicator() {

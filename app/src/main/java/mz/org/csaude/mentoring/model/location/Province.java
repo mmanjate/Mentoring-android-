@@ -1,28 +1,26 @@
 package mz.org.csaude.mentoring.model.location;
 
-import mz.org.csaude.mentoring.base.model.BaseModel;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.model.BaseModel;
+import mz.org.csaude.mentoring.dao.location.ProvinceDAOImpl;
+
+@Data
+@NoArgsConstructor
+@DatabaseTable(tableName = Province.COLUMN_TABLE_NAME, daoClass = ProvinceDAOImpl.class)
 public class Province extends BaseModel {
 
-    private String description;
+    public static final String COLUMN_TABLE_NAME = "province";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_CODE = "code";
 
+    @DatabaseField(columnName = COLUMN_DESCRIPTION)
+    private String descripion;
+
+    @DatabaseField(columnName = COLUMN_CODE)
     private String code;
-    public Province() {
-    }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 }

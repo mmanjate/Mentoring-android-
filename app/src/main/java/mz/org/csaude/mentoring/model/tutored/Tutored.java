@@ -1,45 +1,23 @@
 package mz.org.csaude.mentoring.model.tutored;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.dao.tutored.TutoredDaoImpl;
-import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
-import mz.org.csaude.mentoring.model.career.Career;
 
-@Data
-@NoArgsConstructor
-@DatabaseTable(tableName = Tutored.COLUMN_TABLE_NAME, daoClass = TutoredDaoImpl.class)
 public class Tutored extends BaseModel {
 
-    public static final String COLUMN_TABLE_NAME = "tutored";
-    public static final String COLUMN_EMAIL = "email";
-    public static final String COLUMN_CODE = "code";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_SURNAME = "surname";
-    public static final String COLUMN_PHONENUMBER = "phone_number";
-    public static final String COLUMN_CAREER = "career_id";
-
-    @DatabaseField(columnName = COLUMN_CODE)
-    private String code;
-
-    @DatabaseField(columnName = COLUMN_NAME)
     private String name;
 
-    @DatabaseField(columnName = COLUMN_SURNAME)
-    private String surname;
+    public Tutored() {
+    }
 
-    @DatabaseField(columnName = COLUMN_PHONENUMBER)
-    private String phoneNumber;
+    public String getName() {
+        return name;
+    }
 
-    @DatabaseField(columnName = COLUMN_EMAIL)
-    private String email;
-
-    @DatabaseField(columnName = COLUMN_CAREER, canBeNull = false, foreign = true, foreignAutoRefresh = true )
-    private Career career;
+    public void setName(String name) {
+        this.name = name;
+    }
 }

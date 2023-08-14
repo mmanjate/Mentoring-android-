@@ -11,8 +11,10 @@ import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 
 @Data
-@DatabaseTable(tableName = "settings", daoClass = SettingDAO.class)
+@DatabaseTable(tableName = Setting.TABLE_NAME, daoClass = SettingDAOImpl.class)
 public class Setting extends BaseModel {
+
+    public static final String TABLE_NAME = "setting";
 
     public static final String COLUMN_DESIGNATION = "designation";
 
@@ -27,7 +29,7 @@ public class Setting extends BaseModel {
     @DatabaseField(columnName = COLUMN_DESIGNATION, unique = true)
     private String designation;
 
-    @DatabaseField(columnName = COLUMN_VALUE)
+    @DatabaseField(columnName = COLUMN_VALUE, canBeNull = false)
     private String value;
 
     @DatabaseField(columnName = COLUMN_DESCRIPTION)

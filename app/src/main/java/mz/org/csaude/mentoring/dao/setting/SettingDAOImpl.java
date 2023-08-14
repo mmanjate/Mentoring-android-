@@ -9,38 +9,28 @@ import java.sql.SQLException;
 import java.util.List;
 
 import lombok.Getter;
+import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.model.setting.Setting;
 
 public class SettingDAOImpl extends BaseDaoImpl<Setting, Integer> implements SettingDAO {
 
     private static SettingDAOImpl instance;
 
-    protected SettingDAOImpl(Class<Setting> dataClass) throws SQLException {
+    public SettingDAOImpl(Class<Setting> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected SettingDAOImpl(ConnectionSource connectionSource, Class<Setting> dataClass) throws SQLException {
+    public SettingDAOImpl(ConnectionSource connectionSource, Class<Setting> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected SettingDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<Setting> tableConfig) throws SQLException {
+    public SettingDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<Setting> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
-    }
-
-    public static SettingDAOImpl getInstance(ConnectionSource connectionSource) {
-        if (instance == null) {
-            try {
-                instance = new SettingDAOImpl(connectionSource, Setting.class);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return instance;
     }
 
     @Override
     public boolean checkSettingExistance(String uuid) throws SQLException {
-        List<Setting> settings = this.queryForEq("uuid", uuid);
+        List<Setting> settings = this.queryForEq(BaseModel.COLUMN_UUID, uuid);
         return !settings.isEmpty();
     }
 }

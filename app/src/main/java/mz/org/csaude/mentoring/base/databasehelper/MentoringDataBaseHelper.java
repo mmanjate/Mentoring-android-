@@ -368,6 +368,6 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-            System.out.println("SSSSSSS");
+            //onCreate(database, connectionSource);
     }
 }

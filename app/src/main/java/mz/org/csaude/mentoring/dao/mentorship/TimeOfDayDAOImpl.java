@@ -10,15 +10,15 @@ import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
 
 public class TimeOfDayDAOImpl extends BaseDaoImpl<TimeOfDay, Integer> implements TimeOfDayDAO {
 
-    protected TimeOfDayDAOImpl(Class<TimeOfDay> dataClass) throws SQLException {
+    public TimeOfDayDAOImpl(Class<TimeOfDay> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected TimeOfDayDAOImpl(ConnectionSource connectionSource, Class<TimeOfDay> dataClass) throws SQLException {
+    public TimeOfDayDAOImpl(ConnectionSource connectionSource, Class<TimeOfDay> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected TimeOfDayDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<TimeOfDay> tableConfig) throws SQLException {
+    public TimeOfDayDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<TimeOfDay> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

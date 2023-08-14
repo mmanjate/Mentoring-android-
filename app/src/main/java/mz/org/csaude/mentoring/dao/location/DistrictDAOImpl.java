@@ -10,15 +10,15 @@ import mz.org.csaude.mentoring.model.location.District;
 
 public class DistrictDAOImpl extends BaseDaoImpl<District, Integer> implements DistrictDAO {
 
-    protected DistrictDAOImpl(Class<District> dataClass) throws SQLException {
+    public DistrictDAOImpl(Class<District> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected DistrictDAOImpl(ConnectionSource connectionSource, Class<District> dataClass) throws SQLException {
+    public DistrictDAOImpl(ConnectionSource connectionSource, Class<District> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected DistrictDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<District> tableConfig) throws SQLException {
+    public DistrictDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<District> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

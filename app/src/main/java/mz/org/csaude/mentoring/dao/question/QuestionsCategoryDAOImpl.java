@@ -11,15 +11,15 @@ import mz.org.csaude.mentoring.model.Question.QuestionsCategory;
 public class QuestionsCategoryDAOImpl extends BaseDaoImpl<QuestionsCategory, Integer> implements QuestionsCategoryDAO{
 
 
-    protected QuestionsCategoryDAOImpl(Class<QuestionsCategory> dataClass) throws SQLException {
+    public QuestionsCategoryDAOImpl(Class<QuestionsCategory> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected QuestionsCategoryDAOImpl(ConnectionSource connectionSource, Class<QuestionsCategory> dataClass) throws SQLException {
+    public QuestionsCategoryDAOImpl(ConnectionSource connectionSource, Class<QuestionsCategory> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected QuestionsCategoryDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<QuestionsCategory> tableConfig) throws SQLException {
+    public QuestionsCategoryDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<QuestionsCategory> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

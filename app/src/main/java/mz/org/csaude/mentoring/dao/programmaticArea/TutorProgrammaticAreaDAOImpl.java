@@ -11,15 +11,15 @@ import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 public class TutorProgrammaticAreaDAOImpl extends BaseDaoImpl<TutorProgrammaticArea, Integer> implements
 TutorProgrammaticAreaDAO{
 
-    protected TutorProgrammaticAreaDAOImpl(Class<TutorProgrammaticArea> dataClass) throws SQLException {
+    public TutorProgrammaticAreaDAOImpl(Class<TutorProgrammaticArea> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected TutorProgrammaticAreaDAOImpl(ConnectionSource connectionSource, Class<TutorProgrammaticArea> dataClass) throws SQLException {
+    public TutorProgrammaticAreaDAOImpl(ConnectionSource connectionSource, Class<TutorProgrammaticArea> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected TutorProgrammaticAreaDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<TutorProgrammaticArea> tableConfig) throws SQLException {
+    public TutorProgrammaticAreaDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<TutorProgrammaticArea> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

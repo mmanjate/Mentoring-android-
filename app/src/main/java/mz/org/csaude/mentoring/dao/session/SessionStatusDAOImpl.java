@@ -10,15 +10,15 @@ import mz.org.csaude.mentoring.model.session.SessionStatus;
 
 public class SessionStatusDAOImpl extends BaseDaoImpl<SessionStatus, Integer> implements SessionStatusDAO{
 
-    protected SessionStatusDAOImpl(Class<SessionStatus> dataClass) throws SQLException {
+    public SessionStatusDAOImpl(Class<SessionStatus> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected SessionStatusDAOImpl(ConnectionSource connectionSource, Class<SessionStatus> dataClass) throws SQLException {
+    public SessionStatusDAOImpl(ConnectionSource connectionSource, Class<SessionStatus> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected SessionStatusDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<SessionStatus> tableConfig) throws SQLException {
+    public SessionStatusDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<SessionStatus> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

@@ -10,15 +10,15 @@ import mz.org.csaude.mentoring.model.Question.QuestionType;
 
 public class QuestionTypeDAOImpl extends BaseDaoImpl<QuestionType, Integer> implements QuestionTypeDAO {
 
-    protected QuestionTypeDAOImpl(Class<QuestionType> dataClass) throws SQLException {
+    public QuestionTypeDAOImpl(Class<QuestionType> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected QuestionTypeDAOImpl(ConnectionSource connectionSource, Class<QuestionType> dataClass) throws SQLException {
+    public QuestionTypeDAOImpl(ConnectionSource connectionSource, Class<QuestionType> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected QuestionTypeDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<QuestionType> tableConfig) throws SQLException {
+    public QuestionTypeDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<QuestionType> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

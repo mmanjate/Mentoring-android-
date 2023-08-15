@@ -10,15 +10,15 @@ import mz.org.csaude.mentoring.model.career.Career;
 
 public class CareerDAOImpl extends BaseDaoImpl<Career, Integer> implements CareerDAO {
 
-    protected CareerDAOImpl(Class<Career> dataClass) throws SQLException {
+    public CareerDAOImpl(Class<Career> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected CareerDAOImpl(ConnectionSource connectionSource, Class<Career> dataClass) throws SQLException {
+    public CareerDAOImpl(ConnectionSource connectionSource, Class<Career> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected CareerDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<Career> tableConfig) throws SQLException {
+    public CareerDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<Career> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

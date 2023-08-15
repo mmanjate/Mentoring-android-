@@ -11,15 +11,15 @@ import mz.org.csaude.mentoring.model.form.FormTarget;
 public class FormTargetDAOImpl extends BaseDaoImpl<FormTarget, Integer> implements FormTargetDAO {
 
 
-    protected FormTargetDAOImpl(Class<FormTarget> dataClass) throws SQLException {
+    public FormTargetDAOImpl(Class<FormTarget> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected FormTargetDAOImpl(ConnectionSource connectionSource, Class<FormTarget> dataClass) throws SQLException {
+    public FormTargetDAOImpl(ConnectionSource connectionSource, Class<FormTarget> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected FormTargetDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<FormTarget> tableConfig) throws SQLException {
+    public FormTargetDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<FormTarget> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

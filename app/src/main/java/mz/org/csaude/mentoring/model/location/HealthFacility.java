@@ -1,29 +1,28 @@
 package mz.org.csaude.mentoring.model.location;
 
-import mz.org.csaude.mentoring.base.model.BaseModel;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.model.BaseModel;
+import mz.org.csaude.mentoring.dao.career.CareerDAOImpl;
+import mz.org.csaude.mentoring.dao.location.HealthFacilityDAOImpl;
+import mz.org.csaude.mentoring.model.career.CareerType;
+
+@Data
+@NoArgsConstructor
+@DatabaseTable(tableName = HealthFacility.COLUMN_TABLE_NAME, daoClass = HealthFacilityDAOImpl.class)
 public class HealthFacility extends BaseModel {
 
+    public static final String COLUMN_TABLE_NAME = "health_facility";
+    public static final String COLUMN_DISTRICT = "district_id";
+    public static final String COLUMN_NAME = "name";
+    @DatabaseField(columnName = COLUMN_DISTRICT, canBeNull = false, foreign = true, foreignAutoRefresh = true )
     private District district;
 
-    private String healthFacility;
+    @DatabaseField(columnName = COLUMN_NAME)
+    private String name;
 
-    public HealthFacility() {
-    }
 
-    public District getDistrict() {
-        return district;
-    }
-
-    public String getHealthFacility() {
-        return healthFacility;
-    }
-
-    public void setDistrict(District district) {
-        this.district = district;
-    }
-
-    public void setHealthFacility(String healthFacility) {
-        this.healthFacility = healthFacility;
-    }
 }

@@ -10,15 +10,15 @@ import mz.org.csaude.mentoring.model.form.FormType;
 
 public class FormTypeDAOImpl extends BaseDaoImpl<FormType, Integer> {
 
-    protected FormTypeDAOImpl(Class<FormType> dataClass) throws SQLException {
+    public FormTypeDAOImpl(Class<FormType> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected FormTypeDAOImpl(ConnectionSource connectionSource, Class<FormType> dataClass) throws SQLException {
+    public FormTypeDAOImpl(ConnectionSource connectionSource, Class<FormType> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected FormTypeDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<FormType> tableConfig) throws SQLException {
+    public FormTypeDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<FormType> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 }

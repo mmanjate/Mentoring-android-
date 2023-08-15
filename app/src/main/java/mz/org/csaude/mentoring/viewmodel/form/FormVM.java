@@ -103,11 +103,11 @@ public class FormVM extends BaseViewModel {
 
     @Bindable
     public Partner getPartner() {
-        return this.form.getPartiner();
+        return this.form.getPartner();
     }
 
     public void setPartner(Partner partner) {
-        this.form.setPartiner(partner);
+        this.form.setPartner(partner);
         //   notifyPropertyChanged(BR.formType);
     }
 

@@ -4,6 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.career.CareerDAOImpl;
@@ -13,6 +14,7 @@ import mz.org.csaude.mentoring.model.career.CareerType;
 @Data
 @NoArgsConstructor
 @DatabaseTable(tableName = HealthFacility.COLUMN_TABLE_NAME, daoClass = HealthFacilityDAOImpl.class)
+@EqualsAndHashCode(callSuper=false)
 public class HealthFacility extends BaseModel {
 
     public static final String COLUMN_TABLE_NAME = "health_facility";

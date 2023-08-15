@@ -6,8 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
@@ -42,24 +41,24 @@ public class IndicatorVM extends BaseViewModel {
         this.indicator.setCode(code);
         notifyPropertyChanged(BR.code);
     }
-    private LocalDateTime performedDate;
+    private Date performedDate;
 
     @Bindable
-    public LocalDateTime getPerformedDate() {
+    public Date getPerformedDate() {
         return this.indicator.getPerformedDate();
     }
 
-    public void setPerformedDate(LocalDateTime performedDate) {
+    public void setPerformedDate(Date performedDate) {
         this.indicator.setPerformedDate(performedDate);
         notifyPropertyChanged(BR.performedDate);
     }
 
     @Bindable
-    public LocalDate getReferredMonth() {
+    public Date getReferredMonth() {
         return this.indicator.getReferredMonth();
     }
 
-    public void setReferredMonth(LocalDate referredMonth) {
+    public void setReferredMonth(Date referredMonth) {
         this.indicator.setReferredMonth(referredMonth);
         notifyPropertyChanged(BR.referredMonth);
 

@@ -14,7 +14,7 @@ public abstract class BaseModel implements Serializable {
 
     public static final String COLUMN_UUID = "uuid";
 
-    @DatabaseField(columnName = COLUMN_ID, id = true, generatedId = true)
+    @DatabaseField(columnName = COLUMN_ID, canBeNull = false, generatedId = true, allowGeneratedIdInsert = true)
     private int id;
 
     @DatabaseField(columnName = COLUMN_UUID, unique = true)

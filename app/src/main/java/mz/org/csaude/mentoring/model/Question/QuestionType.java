@@ -3,11 +3,13 @@ package mz.org.csaude.mentoring.model.Question;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.question.QuestionTypeDAOImpl;
 
 @Data
 @DatabaseTable(tableName = QuestionType.TABLE_NAME, daoClass = QuestionTypeDAOImpl.class)
+@EqualsAndHashCode(callSuper=false)
 public class QuestionType extends BaseModel {
 
     public static final String TABLE_NAME = "question_type";

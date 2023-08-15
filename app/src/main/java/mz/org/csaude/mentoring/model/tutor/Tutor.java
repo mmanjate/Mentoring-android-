@@ -6,6 +6,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.tutor.TutorDAOImpl;
@@ -16,6 +17,7 @@ import mz.org.csaude.mentoring.model.partner.Partner;
 @Data
 @NoArgsConstructor
 @DatabaseTable(tableName = COLUMN_TABLE_NAME, daoClass = TutorDAOImpl.class)
+@EqualsAndHashCode(callSuper=false)
 public class Tutor extends BaseModel {
 
   public static final String COLUMN_TABLE_NAME = "tutor";

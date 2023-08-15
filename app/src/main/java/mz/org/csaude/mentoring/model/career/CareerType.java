@@ -6,6 +6,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.career.CareerDAOImpl;
@@ -15,6 +16,7 @@ import mz.org.csaude.mentoring.dao.tutor.TutorDAOImpl;
 @Data
 @NoArgsConstructor
 @DatabaseTable(tableName = CareerType.COLUMN_TABLE_NAME, daoClass = CareerTypeDAOImpl.class)
+@EqualsAndHashCode(callSuper=false)
 public class CareerType extends BaseModel {
 
     public static final String COLUMN_TABLE_NAME = "career_type";
@@ -22,7 +24,7 @@ public class CareerType extends BaseModel {
     public static final String COLUMN_CODE = "code";
 
     @DatabaseField(columnName = COLUMN_DESCRIPTION)
-    private String descripion;
+    private String description;
 
     @DatabaseField(columnName = COLUMN_CODE)
     private String code;

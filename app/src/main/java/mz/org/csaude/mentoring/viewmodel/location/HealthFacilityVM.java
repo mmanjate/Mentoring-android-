@@ -42,11 +42,12 @@ public class HealthFacilityVM extends BaseViewModel {
 
     @Bindable
     public String getHealthFacility() {
-        return this.healthFacility.getHealthFacility();
+        //return this.healthFacility.getHealthFacility();
+        return "";
     }
 
     public void setHealthFacility(String healthFacility) {
-        this.healthFacility.setHealthFacility(healthFacility);
+       // this.healthFacility.setHealthFacility(healthFacility);
         notifyPropertyChanged(BR.district);
     }
 

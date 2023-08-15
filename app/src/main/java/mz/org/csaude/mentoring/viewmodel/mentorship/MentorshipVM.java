@@ -6,8 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
@@ -50,31 +49,31 @@ public class MentorshipVM extends BaseViewModel {
     }
 
     @Bindable
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return this.mentorship.getStartDate();
     }
 
-    public void setName(LocalDateTime startDate) {
+    public void setName(Date startDate) {
         this.mentorship.setStartDate(startDate);
        // notifyPropertyChanged(BR.startDate);
     }
 
     @Bindable
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return this.mentorship.getEndDate();
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.mentorship.setEndDate(endDate);
         // notifyPropertyChanged(BR.startDate);
     }
 
     @Bindable
-    public LocalDate getPerformedDate() {
+    public Date getPerformedDate() {
         return this.mentorship.getPerformedDate();
     }
 
-    public void setEndDate(LocalDate performedDate) {
+    public void setPerformedDate(Date performedDate) {
         this.mentorship.setPerformedDate(performedDate);
         // notifyPropertyChanged(BR.startDate);
     }

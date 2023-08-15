@@ -4,6 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.form.FormDAOImpl;
@@ -15,6 +16,7 @@ import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 @Data
 @NoArgsConstructor
 @DatabaseTable(tableName = Form.TABLE_NAME, daoClass = FormDAOImpl.class)
+@EqualsAndHashCode(callSuper=false)
 public class Form extends BaseModel {
 
     public static final String TABLE_NAME = "form";

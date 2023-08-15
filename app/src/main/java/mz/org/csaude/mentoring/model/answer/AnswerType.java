@@ -4,6 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.answer.AnswerTypeDAOImpl;
 import mz.org.csaude.mentoring.dao.setting.SettingDAOImpl;
@@ -11,6 +12,7 @@ import mz.org.csaude.mentoring.model.setting.Setting;
 
 @Data
 @DatabaseTable(tableName = AnswerType.TABLE_NAME, daoClass = AnswerTypeDAOImpl.class)
+@EqualsAndHashCode(callSuper=false)
 public class AnswerType extends BaseModel {
 
     public static final String TABLE_NAME = "answer_type";

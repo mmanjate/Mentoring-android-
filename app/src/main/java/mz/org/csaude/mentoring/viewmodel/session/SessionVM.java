@@ -6,8 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
@@ -33,33 +32,33 @@ public class SessionVM extends BaseViewModel {
     }
 
     @Bindable
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return this.session.getStartDate();
     }
 
-    public void setName(LocalDateTime startDate) {
+    public void setName(Date startDate) {
         this.session.setStartDate(startDate);
         notifyPropertyChanged(BR.startDate);
     }
 
-    private LocalDateTime endDate;
+    private Date endDate;
 
     @Bindable
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return this.session.getEndDate();
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.session.setEndDate(endDate);
         notifyPropertyChanged(BR.endDate);
     }
 
     @Bindable
-    public LocalDate getPerformedDate() {
+    public Date getPerformedDate() {
         return this.session.getPerformedDate();
     }
 
-    public void setPerformedDate(LocalDate performedDate) {
+    public void setPerformedDate(Date performedDate) {
         this.session.setPerformedDate(performedDate);
         notifyPropertyChanged(BR.performedDate);
     }

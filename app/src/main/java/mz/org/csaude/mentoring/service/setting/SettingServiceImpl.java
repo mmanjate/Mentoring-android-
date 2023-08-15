@@ -20,7 +20,7 @@ public class SettingServiceImpl extends BaseServiceImpl<Setting> implements Sett
     }
 
     public SettingServiceImpl(Application application) throws SQLException {
-        super(application);
+        super(application, null);
         this.settingDAO = getDataBaseHelper().getSettingDAO();
     }
 
@@ -62,10 +62,7 @@ public class SettingServiceImpl extends BaseServiceImpl<Setting> implements Sett
         for (SettingDTO settingDTO: settings) {
             boolean doesSettingExist = settingDAO.checkSettingExistence(settingDTO.getUuid());
             if(!doesSettingExist) {
-                Setting setting = new Setting();
-                setting.setDescription(settingDTO.getDescription());
-                setting.setDesignation(settingDTO.getDesignation());
-                setting.setValue(settingDTO.getValue());
+                Setting setting = settingDTO.getSetting();
                 this.settingDAO.createOrUpdate(setting);
             }
         }

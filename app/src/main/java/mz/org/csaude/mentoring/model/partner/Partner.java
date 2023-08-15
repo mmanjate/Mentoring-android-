@@ -3,11 +3,13 @@ package mz.org.csaude.mentoring.model.partner;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.partner.PartnerDaoImpl;
 
 @Data
 @DatabaseTable(tableName = Partner.TABLE_NAME, daoClass = PartnerDaoImpl.class)
+@EqualsAndHashCode(callSuper=false)
 public class Partner extends BaseModel {
 
     public static final String TABLE_NAME = "partner";

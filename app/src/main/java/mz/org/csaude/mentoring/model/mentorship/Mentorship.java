@@ -1,11 +1,11 @@
 package mz.org.csaude.mentoring.model.mentorship;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.mentorship.MentorshipDAOImpl;
 import mz.org.csaude.mentoring.model.form.Form;
@@ -17,6 +17,7 @@ import mz.org.csaude.mentoring.model.tutored.Tutored;
 
 @Data
 @DatabaseTable(tableName = Mentorship.TABLE_NAME, daoClass = MentorshipDAOImpl.class)
+@EqualsAndHashCode(callSuper=false)
 public class Mentorship extends BaseModel {
 
     public static final String TABLE_NAME = "mentorship";
@@ -53,13 +54,13 @@ public class Mentorship extends BaseModel {
     private String code;
 
     @DatabaseField(columnName = COLUMN_START_DATE, canBeNull = false)
-    private LocalDateTime startDate;
+    private Date startDate;
 
     @DatabaseField(columnName = COLUMN_END_DATE, canBeNull = false)
-    private LocalDateTime endDate;
+    private Date endDate;
 
     @DatabaseField(columnName = COLUMN_PERFORMED_DATE, canBeNull = false)
-    private LocalDate performedDate;
+    private Date performedDate;
 
     @DatabaseField(columnName = COLUMN_TUTOR, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Tutor tutor;
@@ -94,7 +95,7 @@ public class Mentorship extends BaseModel {
     public Mentorship() {
     }
 
-    public Mentorship(String code, LocalDateTime startDate, LocalDateTime endDate, LocalDate performedDate, Tutor tutor, Tutored tutored, Form form, HealthFacility healthFacility, Session session, Cabinet cabinet, IterationType iterationType, Integer iterationNumber, TimeOfDay timeOfDay, Door door) {
+    public Mentorship(String code, Date startDate, Date endDate, Date performedDate, Tutor tutor, Tutored tutored, Form form, HealthFacility healthFacility, Session session, Cabinet cabinet, IterationType iterationType, Integer iterationNumber, TimeOfDay timeOfDay, Door door) {
         this.code = code;
         this.startDate = startDate;
         this.endDate = endDate;

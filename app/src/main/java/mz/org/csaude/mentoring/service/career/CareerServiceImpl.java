@@ -7,12 +7,18 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.career.CareerDAO;
+import mz.org.csaude.mentoring.dao.career.CareerTypeDAO;
+import mz.org.csaude.mentoring.dto.career.CareerDTO;
+import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 import mz.org.csaude.mentoring.model.career.Career;
+import mz.org.csaude.mentoring.model.career.CareerType;
 import mz.org.csaude.mentoring.model.user.User;
 
 public class CareerServiceImpl extends BaseServiceImpl<Career> implements CareerService {
 
     CareerDAO careerDAO;
+
+    CareerTypeDAO careerTypeDAO;
 
     public CareerServiceImpl(Application application, User currentUser) {
         super(application, currentUser);
@@ -24,8 +30,9 @@ public class CareerServiceImpl extends BaseServiceImpl<Career> implements Career
 
     @Override
     public void init(Application application, User currentUser) throws SQLException {
-        super.init(application,currentUser);
+        super.init(application, currentUser);
         this.careerDAO = getDataBaseHelper().getCareerDAO();
+        this.careerTypeDAO = getDataBaseHelper().getCareerTypeDAO();
     }
 
     @Override
@@ -54,5 +61,20 @@ public class CareerServiceImpl extends BaseServiceImpl<Career> implements Career
     @Override
     public Career getById(int id) throws SQLException {
         return this.careerDAO.queryForId(id);
+    }
+
+    @Override
+    public void savedOrUpdateCareers(List<CareerDTO> careerDTOS) throws SQLException {
+        for (CareerDTO careerDTO : careerDTOS) {
+            boolean doesCareerExist = this.careerDAO.checkCareerExistance(careerDTO.getUuid());
+            if (!doesCareerExist) {
+                CareerTypeDTO careerTypeDTO = careerDTO.getCareerTypeDTO();
+                CareerType careerType = new CareerType(careerTypeDTO);
+                this.careerTypeDAO.createOrUpdate(careerType);
+                Career career = new Career(careerDTO);
+                career.setCareerType(careerType);
+                this.careerDAO.createOrUpdate(career);
+            }
+        }
     }
 }

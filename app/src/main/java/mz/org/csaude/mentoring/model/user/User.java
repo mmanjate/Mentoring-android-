@@ -24,19 +24,8 @@ public class User extends BaseModel {
     @DatabaseField(columnName = COLUMN_PASSWORD)
     private String password;
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setUserName(String userName) {
+    public User(String userName, String password) {
         this.userName = userName;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
     }
 }

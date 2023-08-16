@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.location.CabinetDAOImpl;
+import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 
 @Data
 @DatabaseTable(tableName = Cabinet.TABLE_NAME, daoClass = CabinetDAOImpl.class)
@@ -24,4 +25,9 @@ public class Cabinet extends BaseModel {
     public Cabinet(String name) {
         this.name = name;
     }
+    public Cabinet(CabinetDTO dto) {
+        this.setUuid(dto.getUuid());
+        this.setName(dto.getName());
+    }
+
 }

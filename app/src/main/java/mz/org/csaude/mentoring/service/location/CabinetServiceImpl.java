@@ -8,6 +8,7 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.location.CabinetDAO;
+import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.model.location.Cabinet;
 import mz.org.csaude.mentoring.model.user.User;
 
@@ -54,5 +55,16 @@ public class CabinetServiceImpl extends BaseServiceImpl<Cabinet> implements Cabi
     @Override
     public Cabinet getById(int id) throws SQLException {
         return this.cabinetDAO.queryForId(id);
+    }
+
+    @Override
+    public void saveOrUpdateCabinets(List<CabinetDTO> cabinets) throws SQLException {
+        for (CabinetDTO dto: cabinets) {
+            boolean doesCabinetExist = this.cabinetDAO.checkCabinetExistance(dto.getUuid());
+            if(!doesCabinetExist){
+                Cabinet cabinet = dto.getCabinet();
+                this.cabinetDAO.createOrUpdate(cabinet);
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.career.CareerDAOImpl;
 import mz.org.csaude.mentoring.dao.career.CareerTypeDAOImpl;
 import mz.org.csaude.mentoring.dao.tutor.TutorDAOImpl;
+import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +21,9 @@ import mz.org.csaude.mentoring.dao.tutor.TutorDAOImpl;
 public class CareerType extends BaseModel {
 
     public static final String COLUMN_TABLE_NAME = "career_type";
+
     public static final String COLUMN_DESCRIPTION = "description";
+
     public static final String COLUMN_CODE = "code";
 
     @DatabaseField(columnName = COLUMN_DESCRIPTION)
@@ -29,4 +32,14 @@ public class CareerType extends BaseModel {
     @DatabaseField(columnName = COLUMN_CODE)
     private String code;
 
+    public CareerType(String description, String code) {
+        this.description = description;
+        this.code = code;
+    }
+
+    public CareerType(CareerTypeDTO careerTypeDTO){
+        this.setUuid(careerTypeDTO.getUuid());
+        this.setCode(careerTypeDTO.getCode());
+        this.setDescription(careerTypeDTO.getDescription());
+    }
 }

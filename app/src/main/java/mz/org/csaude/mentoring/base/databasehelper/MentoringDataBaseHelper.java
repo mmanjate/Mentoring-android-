@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.dao.answer.AnswerDAO;
 import mz.org.csaude.mentoring.dao.career.CareerDAO;
-import mz.org.csaude.mentoring.dao.career.ICareerTypeDAO;
+import mz.org.csaude.mentoring.dao.career.CareerTypeDAO;
 import mz.org.csaude.mentoring.dao.form.FormDAO;
 import mz.org.csaude.mentoring.dao.form.FormTargetDAO;
 import mz.org.csaude.mentoring.dao.form.FormTypeDAO;
@@ -115,7 +115,7 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     private TutorProgrammaticAreaDAO tutorProgrammaticAreaDAO;
 
-    private ICareerTypeDAO careerTypeDAO;
+    private CareerTypeDAO careerTypeDAO;
 
     private FormTypeDAO formTypeDAO;
 
@@ -275,7 +275,7 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return tutorProgrammaticAreaDAO;
     }
-    public ICareerTypeDAO getCareerTypeDAO() throws SQLException {
+    public CareerTypeDAO getCareerTypeDAO() throws SQLException {
         if(careerTypeDAO == null){
             careerTypeDAO = getDao(CareerType.class);
         }

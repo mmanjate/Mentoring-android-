@@ -13,6 +13,7 @@ import mz.org.csaude.mentoring.dao.tutor.TutorDAOImpl;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.partner.Partner;
+import mz.org.csaude.mentoring.model.user.User;
 
 @Data
 @NoArgsConstructor
@@ -25,10 +26,10 @@ public class Tutor extends BaseModel {
   public static final String COLUMN_CODE = "code";
   public static final String COLUMN_NAME = "name";
   public static final String COLUMN_SURNAME = "surname";
-  public static final String COLUMN_PHONENUMBER = "phone_number";
+  public static final String COLUMN_PHONE_NUMBER = "phone_number";
   public static final String COLUMN_CAREER = "career_id";
-
   public static final String COLUMN_PARTNER= "partner_id";
+  public static final String COLUMN_USER= "user_id";
 
   @DatabaseField(columnName = COLUMN_CODE)
   private String code;
@@ -39,7 +40,7 @@ public class Tutor extends BaseModel {
   @DatabaseField(columnName = COLUMN_SURNAME)
   private String surname;
 
-  @DatabaseField(columnName = COLUMN_PHONENUMBER)
+  @DatabaseField(columnName = COLUMN_PHONE_NUMBER)
   private String phoneNumber;
 
   @DatabaseField(columnName = COLUMN_EMAIL)
@@ -51,63 +52,17 @@ public class Tutor extends BaseModel {
   @DatabaseField(columnName = COLUMN_PARTNER, canBeNull = false, foreign = true, foreignAutoRefresh = true )
   private Partner partner;
 
-  public String getCode() {
-    return code;
-  }
+  @DatabaseField(columnName = COLUMN_USER, canBeNull = false, foreign = true, foreignAutoRefresh = true )
+  private User user;
 
-  public String getName() {
-    return name;
-  }
-
-  public String getSurname() {
-    return surname;
-  }
-
-  public Career getCareer() {
-    return career;
-  }
-
-  public String getPhoneNumber() {
-    return phoneNumber;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-
-  public Partner getPartner() {
-    return partner;
-  }
-
-
-  public void setCode(String code) {
+  public Tutor(String code, String name, String surname, String phoneNumber, String email, Career career, Partner partner, User user) {
     this.code = code;
-  }
-
-  public void setName(String name) {
     this.name = name;
-  }
-
-  public void setSurname(String surname) {
     this.surname = surname;
-  }
-
-  public void setCareer(Career career) {
-    this.career = career;
-  }
-
-  public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
-  }
-
-  public void setEmail(String email) {
     this.email = email;
-  }
-
-
-  public void setPartner(Partner partner) {
+    this.career = career;
     this.partner = partner;
+    this.user = user;
   }
-
 }

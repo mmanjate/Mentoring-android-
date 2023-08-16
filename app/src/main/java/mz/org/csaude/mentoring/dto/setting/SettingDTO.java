@@ -50,8 +50,7 @@ public class SettingDTO implements Serializable {
     }
 
     public Setting getSetting() {
-        Setting setting = new Setting(this);
-        return setting;
+        return new Setting(this);
     }
 
 }

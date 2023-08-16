@@ -8,6 +8,7 @@ import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDaoImpl;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
 import mz.org.csaude.mentoring.model.career.Career;
+import mz.org.csaude.mentoring.model.user.User;
 
 @Data
 @NoArgsConstructor
@@ -20,8 +21,9 @@ public class Tutored extends BaseModel {
     public static final String COLUMN_CODE = "code";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_SURNAME = "surname";
-    public static final String COLUMN_PHONENUMBER = "phone_number";
+    public static final String COLUMN_PHONE_NUMBER = "phone_number";
     public static final String COLUMN_CAREER = "career_id";
+    public static final String COLUMN_USER = "user_id";
 
     @DatabaseField(columnName = COLUMN_CODE)
     private String code;
@@ -32,7 +34,7 @@ public class Tutored extends BaseModel {
     @DatabaseField(columnName = COLUMN_SURNAME)
     private String surname;
 
-    @DatabaseField(columnName = COLUMN_PHONENUMBER)
+    @DatabaseField(columnName = COLUMN_PHONE_NUMBER)
     private String phoneNumber;
 
     @DatabaseField(columnName = COLUMN_EMAIL)
@@ -40,4 +42,17 @@ public class Tutored extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_CAREER, canBeNull = false, foreign = true, foreignAutoRefresh = true )
     private Career career;
+
+    @DatabaseField(columnName = COLUMN_USER, canBeNull = false, foreign = true, foreignAutoRefresh = true )
+    private User user;
+
+    public Tutored(String code, String name, String surname, String phoneNumber, String email, Career career, User user) {
+        this.code = code;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.career = career;
+        this.user = user;
+    }
 }

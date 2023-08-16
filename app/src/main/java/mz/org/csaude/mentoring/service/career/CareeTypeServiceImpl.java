@@ -6,13 +6,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
-import mz.org.csaude.mentoring.dao.career.ICareerTypeDAO;
+import mz.org.csaude.mentoring.dao.career.CareerTypeDAO;
+import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 import mz.org.csaude.mentoring.model.career.CareerType;
 import mz.org.csaude.mentoring.model.user.User;
 
 public class CareeTypeServiceImpl extends BaseServiceImpl<CareerType> implements CareeTypeService {
 
-    ICareerTypeDAO careerTypeDAO;
+    CareerTypeDAO careerTypeDAO;
 
     public CareeTypeServiceImpl(Application application, User currentUser) {
         super(application, currentUser);
@@ -21,9 +22,10 @@ public class CareeTypeServiceImpl extends BaseServiceImpl<CareerType> implements
     public CareeTypeServiceImpl(Application application) {
         super(application);
     }
+
     @Override
     public void init(Application application, User currentUser) throws SQLException {
-        super.init(application,currentUser);
+        super.init(application, currentUser);
         this.careerTypeDAO = getDataBaseHelper().getCareerTypeDAO();
     }
 
@@ -52,5 +54,16 @@ public class CareeTypeServiceImpl extends BaseServiceImpl<CareerType> implements
     @Override
     public CareerType getById(int id) throws SQLException {
         return this.careerTypeDAO.queryForId(id);
+    }
+
+    @Override
+    public void savedOrUpdateCareerTypes(List<CareerTypeDTO> careerTypeDTOS) throws SQLException {
+        for (CareerTypeDTO careerTypeDTO : careerTypeDTOS) {
+            boolean doesCareerTypeExist = this.careerTypeDAO.checkCareerTypeExistance(careerTypeDTO.getCode());
+            if (!doesCareerTypeExist) {
+                CareerType careerType = careerTypeDTO.getCareerType();
+                this.careerTypeDAO.createOrUpdate(careerType);
+            }
+        }
     }
 }

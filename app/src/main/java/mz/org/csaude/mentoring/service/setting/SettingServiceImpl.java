@@ -58,7 +58,6 @@ public class SettingServiceImpl extends BaseServiceImpl<Setting> implements Sett
 
     @Override
     public void savedOrUpdateSettings(List<SettingDTO> settings) throws SQLException {
-
         for (SettingDTO settingDTO: settings) {
             boolean doesSettingExist = settingDAO.checkSettingExistence(settingDTO.getUuid());
             if(!doesSettingExist) {
@@ -66,6 +65,5 @@ public class SettingServiceImpl extends BaseServiceImpl<Setting> implements Sett
                 this.settingDAO.createOrUpdate(setting);
             }
         }
-
     }
 }

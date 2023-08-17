@@ -7,12 +7,9 @@ import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.career.CareerDTO;
-import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.service.career.CareeTypeService;
-import mz.org.csaude.mentoring.service.career.CareeTypeServiceImpl;
 import mz.org.csaude.mentoring.service.career.CareerService;
 import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
 import mz.org.csaude.mentoring.service.location.CabinetService;
@@ -24,7 +21,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 

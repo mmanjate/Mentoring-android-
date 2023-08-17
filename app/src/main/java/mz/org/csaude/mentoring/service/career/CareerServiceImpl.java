@@ -20,6 +20,8 @@ public class CareerServiceImpl extends BaseServiceImpl<Career> implements Career
 
     CareerTypeDAO careerTypeDAO;
 
+    CareerTypeService careerTypeService;
+
     public CareerServiceImpl(Application application, User currentUser) {
         super(application, currentUser);
     }
@@ -33,6 +35,7 @@ public class CareerServiceImpl extends BaseServiceImpl<Career> implements Career
         super.init(application, currentUser);
         this.careerDAO = getDataBaseHelper().getCareerDAO();
         this.careerTypeDAO = getDataBaseHelper().getCareerTypeDAO();
+        this.careerTypeService = new CareerTypeServiceImpl(application);
     }
 
     @Override
@@ -69,8 +72,7 @@ public class CareerServiceImpl extends BaseServiceImpl<Career> implements Career
             boolean doesCareerExist = this.careerDAO.checkCareerExistance(careerDTO.getUuid());
             if (!doesCareerExist) {
                 CareerTypeDTO careerTypeDTO = careerDTO.getCareerTypeDTO();
-                CareerType careerType = new CareerType(careerTypeDTO);
-                this.careerTypeDAO.createOrUpdate(careerType);
+                CareerType careerType = this.careerTypeService.savedOrUpdateCareerTypes(new CareerType(careerTypeDTO));
                 Career career = new Career(careerDTO);
                 career.setCareerType(careerType);
                 this.careerDAO.createOrUpdate(career);

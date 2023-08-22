@@ -38,4 +38,28 @@ public class TutorProgrammaticArea extends BaseModel {
         this.programmaticArea = programmaticArea;
         this.mapAsUser = mapAsUser;
     }
+
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
+    }
+
+    public ProgrammaticArea getProgrammaticArea() {
+        return programmaticArea;
+    }
+
+    public void setProgrammaticArea(ProgrammaticArea programmaticArea) {
+        this.programmaticArea = programmaticArea;
+    }
+
+    public Boolean getMapAsUser() {
+        return mapAsUser;
+    }
+
+    public void setMapAsUser(Boolean mapAsUser) {
+        this.mapAsUser = mapAsUser;
+    }
 }

@@ -26,5 +26,11 @@ public class HealthFacility extends BaseModel {
     @DatabaseField(columnName = COLUMN_NAME)
     private String name;
 
+    public District getDistrict() {
+        return district;
+    }
 
+    public void setDistrict(District district) {
+        this.district = district;
+    }
 }

@@ -33,4 +33,19 @@ public class Career extends BaseModel {
         this.setPosition(careerDTO.getPosition());
     }
 
+    public CareerType getCareerType() {
+        return careerType;
+    }
+
+    public void setCareerType(CareerType careerType) {
+        this.careerType = careerType;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
 }

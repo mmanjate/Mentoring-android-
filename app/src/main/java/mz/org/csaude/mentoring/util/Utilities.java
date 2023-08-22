@@ -38,8 +38,8 @@ import java.util.concurrent.ExecutionException;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.listner.IDialogListener;
-import mz.org.csaude.mentoring.listner.IListbleDialogListener;
+import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
+import mz.org.csaude.mentoring.listner.dialog.IListbleDialogListener;
 
 public class Utilities {
 

@@ -21,7 +21,7 @@ public class MentoringApplication  extends Application {
 
     // 10.10.12.97 http://10.0.2.2:8087  192.168.16.104
 
-    private static final String BASE_URL = "http://192.168.16.104:8087";
+    private static final String BASE_URL = "http://10.10.12.99:8087";
 
     @Getter
     private Retrofit retrofit;

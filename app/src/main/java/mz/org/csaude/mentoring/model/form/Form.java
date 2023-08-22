@@ -53,5 +53,67 @@ public class Form extends BaseModel {
     @DatabaseField(columnName = COLUMN_PARTNER, canBeNull = false, foreign = true, foreignAutoRefresh = true )
     private Partner partner;
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ProgrammaticArea getProgrammaticArea() {
+        return programmaticArea;
+    }
+
+    public void setProgrammaticArea(ProgrammaticArea programmaticArea) {
+        this.programmaticArea = programmaticArea;
+    }
+
+    public FormType getFormType() {
+        return formType;
+    }
+
+    public void setFormType(FormType formType) {
+        this.formType = formType;
+    }
+
+    public int getTargetPatient() {
+        return targetPatient;
+    }
+
+    public void setTargetPatient(int targetPatient) {
+        this.targetPatient = targetPatient;
+    }
+
+    public int getTargetFile() {
+        return targetFile;
+    }
+
+    public void setTargetFile(int targetFile) {
+        this.targetFile = targetFile;
+    }
+
+    public Partner getPartner() {
+        return partner;
+    }
+
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
 }

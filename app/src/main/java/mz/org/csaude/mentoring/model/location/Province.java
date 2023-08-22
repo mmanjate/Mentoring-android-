@@ -22,4 +22,11 @@ public class Province extends BaseModel {
     @DatabaseField(columnName = COLUMN_DESIGNATION, canBeNull = false, unique = true)
     private String description;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

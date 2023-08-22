@@ -65,4 +65,68 @@ public class Tutor extends BaseModel {
     this.partner = partner;
     this.user = user;
   }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getSurname() {
+    return surname;
+  }
+
+  public void setSurname(String surname) {
+    this.surname = surname;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public Career getCareer() {
+    return career;
+  }
+
+  public void setCareer(Career career) {
+    this.career = career;
+  }
+
+  public Partner getPartner() {
+    return partner;
+  }
+
+  public void setPartner(Partner partner) {
+    this.partner = partner;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
 }

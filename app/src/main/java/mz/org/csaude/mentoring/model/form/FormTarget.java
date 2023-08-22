@@ -32,4 +32,27 @@ public class FormTarget extends BaseModel {
     @DatabaseField(columnName = COLUMN_TARGET)
     private int target;
 
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
+    }
+
+    public Career getCareer() {
+        return career;
+    }
+
+    public void setCareer(Career career) {
+        this.career = career;
+    }
+
+    public int getTarget() {
+        return target;
+    }
+
+    public void setTarget(int target) {
+        this.target = target;
+    }
 }

@@ -15,7 +15,6 @@
 
     <application
         android:name=".base.application.MentoringApplication"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -24,7 +23,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mentoring"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".view.mentorship.MentorshipActivity"
+            android:exported="false" />
         <activity
             android:name=".view.tutored.TutoredActivity"
             android:exported="false" />

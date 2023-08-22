@@ -42,4 +42,20 @@ public class CareerType extends BaseModel {
         this.setCode(careerTypeDTO.getCode());
         this.setDescription(careerTypeDTO.getDescription());
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

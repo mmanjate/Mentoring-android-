@@ -26,4 +26,28 @@ public class CareerDTO {
     public Career getCareer() {
         return this.getCareer();
     }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public CareerTypeDTO getCareerTypeDTO() {
+        return careerTypeDTO;
+    }
+
+    public void setCareerTypeDTO(CareerTypeDTO careerTypeDTO) {
+        this.careerTypeDTO = careerTypeDTO;
+    }
 }

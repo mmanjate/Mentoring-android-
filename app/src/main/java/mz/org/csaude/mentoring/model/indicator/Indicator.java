@@ -66,4 +66,52 @@ public class Indicator extends BaseModel {
         this.form = form;
         this.healthFacility = healthFacility;
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Date getPerformedDate() {
+        return performedDate;
+    }
+
+    public void setPerformedDate(Date performedDate) {
+        this.performedDate = performedDate;
+    }
+
+    public Date getReferredMonth() {
+        return referredMonth;
+    }
+
+    public void setReferredMonth(Date referredMonth) {
+        this.referredMonth = referredMonth;
+    }
+
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
+    }
+
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
+    }
+
+    public HealthFacility getHealthFacility() {
+        return healthFacility;
+    }
+
+    public void setHealthFacility(HealthFacility healthFacility) {
+        this.healthFacility = healthFacility;
+    }
 }

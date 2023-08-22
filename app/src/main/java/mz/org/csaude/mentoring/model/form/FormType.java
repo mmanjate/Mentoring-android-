@@ -27,4 +27,19 @@ public class FormType extends BaseModel {
     @DatabaseField(columnName = COLUMN_CODE)
     private String code;
 
+    public String getDescripion() {
+        return descripion;
+    }
+
+    public void setDescripion(String descripion) {
+        this.descripion = descripion;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

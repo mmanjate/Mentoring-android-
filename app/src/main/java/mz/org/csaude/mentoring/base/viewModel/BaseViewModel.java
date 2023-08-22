@@ -38,6 +38,7 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
     protected User currentUser;
 
 
+
     protected List<Listble> selectedListbles;
 
     private NotificationManagerCompat notificationManager;
@@ -137,5 +138,13 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
     public void setViewListRemoveButton(boolean viewListRemoveButton) {
         this.viewListRemoveButton = viewListRemoveButton;
+    }
+
+    public Listble getSelectedListble() {
+        return selectedListble;
+    }
+
+    public void setSelectedListble(Listble selectedListble) {
+        this.selectedListble = selectedListble;
     }
 }

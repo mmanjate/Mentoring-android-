@@ -31,4 +31,12 @@ public class IterationType extends BaseModel {
         this.description = description;
         this.code = code;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

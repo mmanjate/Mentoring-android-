@@ -32,4 +32,20 @@ public class PartnerSetting extends BaseModel {
         this.partner = partner;
         this.setting = setting;
     }
+
+    public Partner getPartner() {
+        return partner;
+    }
+
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
+
+    public Setting getSetting() {
+        return setting;
+    }
+
+    public void setSetting(Setting setting) {
+        this.setting = setting;
+    }
 }

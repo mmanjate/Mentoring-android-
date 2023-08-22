@@ -1,4 +1,4 @@
-package mz.org.csaude.mentoring.listner;
+package mz.org.csaude.mentoring.listner.dialog;
 
 public interface IDialogListener {
 

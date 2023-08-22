@@ -1,4 +1,4 @@
-package mz.org.csaude.mentoring.listner;
+package mz.org.csaude.mentoring.listner.dialog;
 
 import java.sql.SQLException;
 

@@ -111,4 +111,116 @@ public class Mentorship extends BaseModel {
         this.timeOfDay = timeOfDay;
         this.door = door;
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Date getPerformedDate() {
+        return performedDate;
+    }
+
+    public void setPerformedDate(Date performedDate) {
+        this.performedDate = performedDate;
+    }
+
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
+    }
+
+    public Tutored getTutored() {
+        return tutored;
+    }
+
+    public void setTutored(Tutored tutored) {
+        this.tutored = tutored;
+    }
+
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
+    }
+
+    public HealthFacility getHealthFacility() {
+        return healthFacility;
+    }
+
+    public void setHealthFacility(HealthFacility healthFacility) {
+        this.healthFacility = healthFacility;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    public Cabinet getCabinet() {
+        return cabinet;
+    }
+
+    public void setCabinet(Cabinet cabinet) {
+        this.cabinet = cabinet;
+    }
+
+    public IterationType getIterationType() {
+        return iterationType;
+    }
+
+    public void setIterationType(IterationType iterationType) {
+        this.iterationType = iterationType;
+    }
+
+    public Integer getIterationNumber() {
+        return iterationNumber;
+    }
+
+    public void setIterationNumber(Integer iterationNumber) {
+        this.iterationNumber = iterationNumber;
+    }
+
+    public TimeOfDay getTimeOfDay() {
+        return timeOfDay;
+    }
+
+    public void setTimeOfDay(TimeOfDay timeOfDay) {
+        this.timeOfDay = timeOfDay;
+    }
+
+    public Door getDoor() {
+        return door;
+    }
+
+    public void setDoor(Door door) {
+        this.door = door;
+    }
 }

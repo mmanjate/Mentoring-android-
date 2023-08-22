@@ -42,4 +42,36 @@ public class SubmittedSessions {
         this.totalSubmitted = totalSubmitted;
         this.lastUpdate = lastUpdate;
     }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public ProgrammaticArea getProgrammaticArea() {
+        return programmaticArea;
+    }
+
+    public void setProgrammaticArea(ProgrammaticArea programmaticArea) {
+        this.programmaticArea = programmaticArea;
+    }
+
+    public Long getTotalSubmitted() {
+        return totalSubmitted;
+    }
+
+    public void setTotalSubmitted(Long totalSubmitted) {
+        this.totalSubmitted = totalSubmitted;
+    }
+
+    public Calendar getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Calendar lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 }

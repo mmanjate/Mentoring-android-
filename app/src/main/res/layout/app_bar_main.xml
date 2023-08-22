@@ -11,12 +11,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.Mentoring.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.Mentoring.PopupOverlay" />
+        <include android:id="@+id/toolbar" layout="@layout/app_toolbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

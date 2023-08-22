@@ -38,6 +38,12 @@ public class MentorshipVM extends BaseViewModel {
 
     }
 
+    public void nextCategory() {}
+
+    public void previousCategory() {}
+
+    public void finnalizeMentorship() {}
+
     @Bindable
     public String getCode() {
         return this.mentorship.getCode();

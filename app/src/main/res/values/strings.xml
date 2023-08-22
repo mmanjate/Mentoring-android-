@@ -13,4 +13,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="remove">Remove</string>
     <string name="cancel">Cancel</string>
+    <string name="remover">Remover</string>
+    <string name="editar">Editar</string>
 </resources>

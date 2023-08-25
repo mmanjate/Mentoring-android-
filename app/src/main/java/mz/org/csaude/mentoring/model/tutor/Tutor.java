@@ -5,15 +5,19 @@ import static mz.org.csaude.mentoring.model.tutor.Tutor.COLUMN_TABLE_NAME;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.tutor.TutorDAOImpl;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.util.Utilities;
 
 @Data
 @NoArgsConstructor
@@ -54,6 +58,8 @@ public class Tutor extends BaseModel {
 
   @DatabaseField(columnName = COLUMN_USER, canBeNull = false, foreign = true, foreignAutoRefresh = true )
   private User user;
+
+  private List<TutorLocation> tutorLocations;
 
   public Tutor(String code, String name, String surname, String phoneNumber, String email, Career career, Partner partner, User user) {
     this.code = code;
@@ -129,4 +135,13 @@ public class Tutor extends BaseModel {
   public void setUser(User user) {
     this.user = user;
   }
+
+  public List<TutorLocation> getTutorLocations() {
+    return tutorLocations;
+  }
+
+  public void setTutorLocations(List<TutorLocation> tutorLocations) {
+    this.tutorLocations = tutorLocations;
+  }
+
 }

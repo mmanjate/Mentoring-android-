@@ -15,4 +15,13 @@
     <string name="cancel">Cancel</string>
     <string name="remover">Remover</string>
     <string name="editar">Editar</string>
+    <string name="session_date">Data da tutoria</string>
+    <string name="start">Hora de inicio</string>
+    <string name="end_time">Hora de Término</string>
+    <string name="provincia">Província</string>
+    <string name="distrito">Distrito</string>
+    <string name="hf">Unidade Sanitária</string>
+    <string name="cabinet">Gabinete</string>
+    <string name="time_of_day">Horário</string>
+    <string name="door">Porta</string>
 </resources>

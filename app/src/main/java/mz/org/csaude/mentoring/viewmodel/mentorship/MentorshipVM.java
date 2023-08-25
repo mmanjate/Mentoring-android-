@@ -9,10 +9,12 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import mz.org.csaude.mentoring.BR;
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.location.Cabinet;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
+import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.model.mentorship.Door;
 import mz.org.csaude.mentoring.model.mentorship.IterationType;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
@@ -20,6 +22,8 @@ import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.service.location.ProvinceService;
+import mz.org.csaude.mentoring.service.location.ProvinceServiceImpl;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipService;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipServiceImpl;
 
@@ -28,9 +32,15 @@ public class MentorshipVM extends BaseViewModel {
     private Mentorship mentorship;
     private MentorshipService mentorshipService;
 
+    private ProvinceService provinceService;
+
+    private Province selectedProvince;
+
+
     public MentorshipVM(@NonNull Application application) {
         super(application);
         this.mentorshipService = new MentorshipServiceImpl(application, getCurrentUser());
+        provinceService = new ProvinceServiceImpl(application, getCurrentUser());
     }
 
     @Override
@@ -63,6 +73,16 @@ public class MentorshipVM extends BaseViewModel {
         this.mentorship.setStartDate(startDate);
        // notifyPropertyChanged(BR.startDate);
     }
+
+    public Listble getProvince() {
+        return provinceService.getAllOfTutor(mentorship.getTutor());
+    }
+
+    public void setProvince(Listble province) {
+        this.selectedProvince = (Province) province;
+        // notifyPropertyChanged(BR.startDate);
+    }
+
 
     @Bindable
     public Date getEndDate() {

@@ -7,6 +7,7 @@ import androidx.databinding.Bindable;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
@@ -22,6 +23,8 @@ import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.service.form.FormService;
+import mz.org.csaude.mentoring.service.form.FormServiceImpl;
 import mz.org.csaude.mentoring.service.location.ProvinceService;
 import mz.org.csaude.mentoring.service.location.ProvinceServiceImpl;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipService;
@@ -36,11 +39,16 @@ public class MentorshipVM extends BaseViewModel {
 
     private Province selectedProvince;
 
+    private List<Form> tutorForm;
+
+    private FormService formService;
+
 
     public MentorshipVM(@NonNull Application application) {
         super(application);
         this.mentorshipService = new MentorshipServiceImpl(application, getCurrentUser());
         provinceService = new ProvinceServiceImpl(application, getCurrentUser());
+        formService = new FormServiceImpl(application, getCurrentUser());
     }
 
     @Override
@@ -69,18 +77,19 @@ public class MentorshipVM extends BaseViewModel {
         return this.mentorship.getStartDate();
     }
 
-    public void setName(Date startDate) {
+    public void setStartDate(Date startDate) {
         this.mentorship.setStartDate(startDate);
-       // notifyPropertyChanged(BR.startDate);
+        notifyPropertyChanged(BR.startDate);
     }
 
+    @Bindable
     public Listble getProvince() {
         return provinceService.getAllOfTutor(mentorship.getTutor());
     }
 
     public void setProvince(Listble province) {
         this.selectedProvince = (Province) province;
-        // notifyPropertyChanged(BR.startDate);
+         notifyPropertyChanged(BR.province);
     }
 
 
@@ -91,7 +100,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setEndDate(Date endDate) {
         this.mentorship.setEndDate(endDate);
-        // notifyPropertyChanged(BR.startDate);
+         notifyPropertyChanged(BR.endDate);
     }
 
     @Bindable
@@ -101,7 +110,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setPerformedDate(Date performedDate) {
         this.mentorship.setPerformedDate(performedDate);
-        // notifyPropertyChanged(BR.startDate);
+        notifyPropertyChanged(BR.performedDate);
     }
 
     @Bindable
@@ -121,7 +130,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setTutored(Tutored tutored) {
         this.mentorship.setTutored(tutored);
-        // notifyPropertyChanged(BR.startDate);
+         notifyPropertyChanged(BR.tutored);
     }
 
     @Bindable
@@ -131,7 +140,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setForm(Form form) {
         this.mentorship.setForm(form);
-        // notifyPropertyChanged(BR.startDate);
+         notifyPropertyChanged(BR.form);
     }
 
     @Bindable
@@ -141,7 +150,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setHealthFacility(HealthFacility healthFacility) {
         this.mentorship.setHealthFacility(healthFacility);
-        // notifyPropertyChanged(BR.startDate);
+         notifyPropertyChanged(BR.healthFacility);
     }
 
     @Bindable
@@ -151,7 +160,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setSession(Session session) {
         this.mentorship.setSession(session);
-        // notifyPropertyChanged(BR.startDate);
+        notifyPropertyChanged(BR.session);
     }
 
     @Bindable
@@ -161,7 +170,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setCabinet(Cabinet cabinet) {
         this.mentorship.setCabinet(cabinet);
-        // notifyPropertyChanged(BR.startDate);
+         notifyPropertyChanged(BR.cabinet);
     }
 
     @Bindable
@@ -171,7 +180,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setCabinet(IterationType iterationType) {
         this.mentorship.setIterationType(iterationType);
-        // notifyPropertyChanged(BR.startDate);
+         notifyPropertyChanged(BR.iterationType);
     }
 
     @Bindable
@@ -181,7 +190,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setIterationNumber(Integer iterationNumber) {
         this.mentorship.setIterationNumber(iterationNumber);
-        // notifyPropertyChanged(BR.startDate);
+         notifyPropertyChanged(BR.iterationNumber);
     }
 
     @Bindable
@@ -191,7 +200,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setTimeOfDay(TimeOfDay timeOfDay) {
         this.mentorship.setTimeOfDay(timeOfDay);
-        // notifyPropertyChanged(BR.startDate);
+         notifyPropertyChanged(BR.timeOfDay);
     }
 
     @Bindable
@@ -201,7 +210,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public void setDoor(Door door) {
         this.mentorship.setDoor(door);
-        // notifyPropertyChanged(BR.startDate);
+         notifyPropertyChanged(BR.door);
     }
 
     public void save() {
@@ -209,6 +218,18 @@ public class MentorshipVM extends BaseViewModel {
             this.mentorshipService.save(this.mentorship);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<Form> getTutorForms() {
+        return this.tutorForm;
+    }
+
+    public void loadTutorForms() {
+        try {
+            this.tutorForm = formService.getAllOfTutor(this.mentorship.getTutor());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

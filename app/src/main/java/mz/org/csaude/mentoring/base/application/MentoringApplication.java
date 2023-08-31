@@ -23,7 +23,6 @@ public class MentoringApplication  extends Application {
 
     private static final String BASE_URL = "http://10.10.12.99:8087";
 
-    @Getter
     private Retrofit retrofit;
     private ObjectMapper mapper;
 

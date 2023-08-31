@@ -7,25 +7,37 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.form.FormDAO;
+import mz.org.csaude.mentoring.dao.programmaticArea.TutorProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.model.form.Form;
+import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.user.User;
 
 public class FormServiceImpl extends BaseServiceImpl<Form> implements FormService{
 
     FormDAO formDAO;
 
+    TutorProgrammaticAreaDAO tutorProgrammaticAreaDAO;
+
     public FormServiceImpl(Application application, User currentUser) {
         super(application, currentUser);
+        init(application, currentUser);
     }
 
     public FormServiceImpl(Application application) {
         super(application);
+        init(application, null);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
-        this.formDAO = getDataBaseHelper().getFormDAO();
+    public void init(Application application, User currentUser) {
+        try {
+            super.init(application, currentUser);
+            this.formDAO = getDataBaseHelper().getFormDAO();
+            this.tutorProgrammaticAreaDAO = getDataBaseHelper().getTutorProgrammaticAreaDAO();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -53,5 +65,10 @@ public class FormServiceImpl extends BaseServiceImpl<Form> implements FormServic
     @Override
     public Form getById(int id) throws SQLException {
         return this.formDAO.queryForId(id);
+    }
+
+    @Override
+    public List<Form> getAllOfTutor(Tutor tutor) throws SQLException {
+        return formDAO.getAllOfTutor(tutor, application);
     }
 }

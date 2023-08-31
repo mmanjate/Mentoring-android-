@@ -37,6 +37,7 @@ import mz.org.csaude.mentoring.dao.session.SessionStatusDAO;
 import mz.org.csaude.mentoring.dao.setting.SettingDAO;
 import mz.org.csaude.mentoring.dao.tutor.TutorDAO;
 import mz.org.csaude.mentoring.dao.tutor.TutorLocationDAO;
+import mz.org.csaude.mentoring.dao.tutor.TutorTutoredDao;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDao;
 import mz.org.csaude.mentoring.model.Question.Question;
 import mz.org.csaude.mentoring.model.Question.QuestionType;
@@ -66,6 +67,7 @@ import mz.org.csaude.mentoring.model.setting.PartnerSetting;
 import mz.org.csaude.mentoring.model.setting.Setting;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutor.TutorLocation;
+import mz.org.csaude.mentoring.model.tutor.TutorTutored;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 
 public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
@@ -130,6 +132,8 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
     private QuestionTypeDAO questionTypeDAO;
 
     private SessionStatusDAO sessionStatusDAO;
+
+    private TutorTutoredDao tutorTutoredDao;
 
     private static MentoringDataBaseHelper dataBaseHelper;
 
@@ -327,6 +331,13 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return sessionStatusDAO;
     }
+
+    public TutorTutoredDao getTutorTutoredDao() throws SQLException {
+        if(tutorTutoredDao == null){
+            tutorTutoredDao = getDao(TutorTutored.class);
+        }
+        return tutorTutoredDao;
+    }
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
 
@@ -359,6 +370,7 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, QuestionType.class);
             TableUtils.createTableIfNotExists(connectionSource, SessionStatus.class);
             TableUtils.createTableIfNotExists(connectionSource, PartnerSetting.class);
+            TableUtils.createTableIfNotExists(connectionSource, TutorTutored.class);
 
 
         } catch (SQLException e) {

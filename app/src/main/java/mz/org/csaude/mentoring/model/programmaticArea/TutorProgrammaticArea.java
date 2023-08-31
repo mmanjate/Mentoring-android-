@@ -27,16 +27,13 @@ public class TutorProgrammaticArea extends BaseModel {
     @DatabaseField(columnName = COLUMN_PROGRAMMATIC_AREA, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private ProgrammaticArea programmaticArea;
 
-    @Transient
-    private Boolean mapAsUser = Boolean.FALSE;
 
     public TutorProgrammaticArea() {
     }
 
-    public TutorProgrammaticArea(Tutor tutor, ProgrammaticArea programmaticArea, Boolean mapAsUser) {
+    public TutorProgrammaticArea(Tutor tutor, ProgrammaticArea programmaticArea) {
         this.tutor = tutor;
         this.programmaticArea = programmaticArea;
-        this.mapAsUser = mapAsUser;
     }
 
     public Tutor getTutor() {
@@ -53,13 +50,5 @@ public class TutorProgrammaticArea extends BaseModel {
 
     public void setProgrammaticArea(ProgrammaticArea programmaticArea) {
         this.programmaticArea = programmaticArea;
-    }
-
-    public Boolean getMapAsUser() {
-        return mapAsUser;
-    }
-
-    public void setMapAsUser(Boolean mapAsUser) {
-        this.mapAsUser = mapAsUser;
     }
 }

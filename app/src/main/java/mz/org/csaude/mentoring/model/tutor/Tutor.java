@@ -19,10 +19,7 @@ import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.util.Utilities;
 
-@Data
-@NoArgsConstructor
 @DatabaseTable(tableName = COLUMN_TABLE_NAME, daoClass = TutorDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
 public class Tutor extends BaseModel {
 
   public static final String COLUMN_TABLE_NAME = "tutor";
@@ -60,6 +57,9 @@ public class Tutor extends BaseModel {
   private User user;
 
   private List<TutorLocation> tutorLocations;
+
+  public Tutor() {
+  }
 
   public Tutor(String code, String name, String surname, String phoneNumber, String email, Career career, Partner partner, User user) {
     this.code = code;

@@ -5,6 +5,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 
@@ -20,5 +21,11 @@ public class TutoredDaoImpl extends BaseDaoImpl<Tutored, Integer> implements Tut
 
     public TutoredDaoImpl(ConnectionSource connectionSource, DatabaseTableConfig<Tutored> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
+    }
+
+    @Override
+    public boolean checkTutoredExistance(String uuid) throws SQLException {
+        List<Tutored> tutoreds = this.queryForEq("uuid", uuid);
+        return !tutoreds.isEmpty();
     }
 }

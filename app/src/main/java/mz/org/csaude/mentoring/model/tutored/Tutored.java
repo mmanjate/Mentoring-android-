@@ -7,6 +7,7 @@ import lombok.*;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDaoImpl;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
+import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.user.User;
 
@@ -43,7 +44,7 @@ public class Tutored extends BaseModel {
     @DatabaseField(columnName = COLUMN_CAREER, canBeNull = false, foreign = true, foreignAutoRefresh = true )
     private Career career;
 
-    @DatabaseField(columnName = COLUMN_USER, canBeNull = false, foreign = true, foreignAutoRefresh = true )
+    @DatabaseField(columnName = COLUMN_USER, canBeNull = true, foreign = true, foreignAutoRefresh = true )
     private User user;
 
     public Tutored(String code, String name, String surname, String phoneNumber, String email, Career career, User user) {
@@ -54,6 +55,15 @@ public class Tutored extends BaseModel {
         this.email = email;
         this.career = career;
         this.user = user;
+    }
+
+    public Tutored(TutoredDTO tutoredDTO) {
+        this.setUuid(tutoredDTO.getUuid());
+        this.setCode(tutoredDTO.getCode());
+        this.setEmail(tutoredDTO.getEmail());
+        this.setName(tutoredDTO.getName());
+        this.setSurname(tutoredDTO.getSurname());
+        this.setPhoneNumber(tutoredDTO.getPhoneNumber());
     }
 
     public String getCode() {

@@ -14,6 +14,8 @@ import mz.org.csaude.mentoring.model.career.Career;
 @AllArgsConstructor
 public class CareerDTO {
 
+    private int id;
+
     @JsonProperty(value = "uuid")
     private String uuid;
 
@@ -25,6 +27,14 @@ public class CareerDTO {
 
     public Career getCareer() {
         return this.getCareer();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUuid() {

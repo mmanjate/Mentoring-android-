@@ -5,6 +5,7 @@ import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
+import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -30,4 +31,7 @@ public interface SyncDataService {
 
     @GET("/careers")
     Call<List<CareerDTO>> getCareers();
+
+    @GET("/tutored")
+    Call<List<TutoredDTO>> getTutoreds();
 }

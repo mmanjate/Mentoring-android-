@@ -53,7 +53,7 @@ public class MentorshipVM extends BaseViewModel {
 
     @Override
     public void preInit() {
-
+        this.mentorship = new Mentorship();
     }
 
     public void nextCategory() {}

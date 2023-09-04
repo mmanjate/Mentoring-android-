@@ -26,7 +26,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.login.ui.LoginActivity"
+            android:name=".view.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,11 +48,6 @@
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.Mentoring.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

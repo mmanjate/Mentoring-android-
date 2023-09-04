@@ -9,6 +9,7 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
+import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.career.CareerService;
 import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
@@ -16,6 +17,8 @@ import mz.org.csaude.mentoring.service.location.CabinetService;
 import mz.org.csaude.mentoring.service.location.CabinetServiceImpl;
 import mz.org.csaude.mentoring.service.setting.SettingService;
 import mz.org.csaude.mentoring.service.setting.SettingServiceImpl;
+import mz.org.csaude.mentoring.service.tutored.TutoredService;
+import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -121,6 +124,35 @@ public class LoadMetadataServiceImpl extends BaseRestService implements LoadMeta
             @Override
             public void onFailure(Call<List<CareerDTO>> call, Throwable t) {
                 Toast.makeText(activity, "Não foi possivel carregar os TIPOS DE CARREIRAS. Tente mais tarde....", Toast.LENGTH_SHORT).show();
+                Log.i("METADATA LOAD --", t.getMessage(), t);
+            }
+        });
+
+        Call<List<TutoredDTO>> tutoredsCall = syncDataService.getTutoreds();
+
+        tutoredsCall.enqueue(new Callback<List<TutoredDTO>>() {
+            @Override
+            public void onResponse(Call<List<TutoredDTO>> call, Response<List<TutoredDTO>> response) {
+                List<TutoredDTO> data = response.body();
+                if (data == null) {
+                    // to do...
+                }
+
+                try {
+                    TutoredService tutoredService = new TutoredServiceImpl(LoadMetadataServiceImpl.APP);
+                    Toast.makeText(activity, "Carregando os TUTORADOS...", Toast.LENGTH_SHORT).show();
+                    tutoredService.savedOrUpdateTutoreds(data);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                Toast.makeText(activity, "TUTORADOS carregados com sucesso!", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<List<TutoredDTO>> call, Throwable t) {
+                Toast.makeText(activity, "Não foi possivel carregar os tutorados. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

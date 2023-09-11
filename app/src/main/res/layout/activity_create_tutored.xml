@@ -52,6 +52,16 @@
                     android:hint="@string/telephone"
                     android:padding="8dp"/>
 
+            <EditText
+                    android:id="@+id/tutored_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/fields_background"
+                    android:hint="@string/email"
+                    android:padding="8dp"/>
+
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

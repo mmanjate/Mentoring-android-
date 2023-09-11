@@ -4,17 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
-import mz.org.csaude.mentoring.dao.tutored.TutoredDao;
 import mz.org.csaude.mentoring.databinding.ActivityCreateTutoredBinding;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
-import mz.org.csaude.mentoring.listner.recyclerView.ClickListener;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.career.CareerType;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
@@ -23,7 +20,6 @@ import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import mz.org.csaude.mentoring.util.Utilities;
-import mz.org.csaude.mentoring.view.tutored.fragment.TutoredFragment;
 import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
 import org.apache.commons.lang3.StringUtils;
 
@@ -40,8 +36,6 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
     private List<Tutored> tutoredList;
     private ListableSpinnerAdapter careerAdapter;
     private ListableSpinnerAdapter careerTypeAdapter;
-    private List<Career> careerList;
-    private List<CareerType> careerTypeList;
     private TutoredService tutoredService;
     private CareerService careerService;
     private Tutored tutored;
@@ -98,11 +92,17 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
                         return;
                     }
                 }
+                String tutoredEmail = activityCreateTutoredBinding.tutoredEmail.getText().toString();
+                if (!StringUtils.isEmpty(tutoredEmail)) {
+                    if(Utilities.validadeEmail(getApplicationContext(), activityCreateTutoredBinding.tutoredEmail))
+                    {
+                        return;
+                    }
+                }
                 selectedCareer = (Career) activityCreateTutoredBinding.spnPosition.getSelectedItem();
-                tutored = new Tutored(tutoredName, tutoredSurname, tutoredPhoneNumber, "", selectedCareer, null);
+                tutored = new Tutored(tutoredName, tutoredSurname, tutoredPhoneNumber, tutoredEmail, selectedCareer, getCurrentUser());
                 tutored = getRelatedViewModel().save();
                 Utilities.displayAlertDialog(getApplicationContext(), getString(R.string.record_successfully_saved)).show();
-                intent.putExtra("createdTutored", tutored);
                 Map<String, Object> params = new HashMap<>();
                 params.put("createdTutored", tutored);
                 nextActivity(TutoredActivity.class, params);

@@ -547,4 +547,18 @@ public class Utilities {
 
         return false;
     }
+    public static boolean validadeEmail(Context context, TextView view){
+        String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(regexPattern);
+        Matcher matcher = pattern.matcher(view.getText().toString());
+
+        if (!matcher.find()) {
+            view.setError(context.getString(R.string.email_invalid));
+            view.requestFocus();
+            return true;
+        }
+
+        return false;
+    }
 }

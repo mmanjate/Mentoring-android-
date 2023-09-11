@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".view.tutored.fragment.TutoredFragment">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/initial_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tutoreds_list"
+                    android:background="@drawable/shape_normal"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:paddingLeft="@dimen/dimen_10dp"
+                    app:drawableEndCompat="@drawable/ic_arrows_down_24"
+                    android:layout_margin="@dimen/dimen_5dp"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_tutoreds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"/>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/new_tutored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:src="@drawable/ic_add_icon_24"
+                app:backgroundTint="@color/colorPrimary"
+                app:elevation="6dp"
+                android:layout_margin="@dimen/fab_margin"
+                app:pressedTranslationZ="12dp"/>
+    </FrameLayout>
+</layout>

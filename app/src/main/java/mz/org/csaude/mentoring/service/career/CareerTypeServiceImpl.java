@@ -5,6 +5,7 @@ import android.app.Application;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.career.CareerTypeDAO;
 import mz.org.csaude.mentoring.model.career.CareerType;
@@ -64,5 +65,10 @@ public class CareerTypeServiceImpl extends BaseServiceImpl<CareerType> implement
             return careerType;
         }
         return careerTypes.get(0);
+    }
+
+    @Override
+    public Listble getAllCareerTypes() {
+        return null;
     }
 }

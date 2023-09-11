@@ -5,6 +5,8 @@ import android.app.Application;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.base.databasehelper.MentoringDataBaseHelper;
+import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.tutor.TutorTutoredDao;
 import mz.org.csaude.mentoring.model.tutor.TutorTutored;

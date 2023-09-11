@@ -21,6 +21,7 @@ import java.util.Map;
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.common.ApplicationStep;
+import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.util.Utilities;
 
@@ -43,6 +44,10 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
      * {@link PackageInfo} application info
      */
     private PackageInfo pinfo;
+
+    private Tutored tutored;
+
+    private Integer positionRemoved;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -309,5 +314,12 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
         this.relatedViewModel.setViewListRemoveButton(viewListRemoveButton);
     }
 
+    public Integer getPositionRemoved() {
+        return positionRemoved;
+    }
+
+    public void setPositionRemoved(Integer positionRemoved) {
+        this.positionRemoved = positionRemoved;
+    }
 
 }

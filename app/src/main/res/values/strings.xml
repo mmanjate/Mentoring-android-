@@ -34,4 +34,16 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="login">Entrar</string>
+    <string name="new_tutored">New Tutored</string>
+    <string name="tutoreds_list">Tutored List</string>
+    <string name="record_successfully_saved">Record successfully saved</string>
+    <string name="record_sucessfully_removed">Record successfully removed</string>
+    <string name="submit">Save</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="telephone">Telephone</string>
+    <string name="career">Career</string>
+    <string name="position">Position</string>
+    <string name="required_field">Required</string>
+    <string name="phone_number_invalid">Invalid Phone Number</string>
 </resources>

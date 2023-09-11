@@ -10,12 +10,13 @@ import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.model.user.UserIndividual;
 
 @Data
 @NoArgsConstructor
 @DatabaseTable(tableName = Tutored.COLUMN_TABLE_NAME, daoClass = TutoredDaoImpl.class)
 @EqualsAndHashCode(callSuper=false)
-public class Tutored extends BaseModel {
+public class Tutored extends BaseModel implements UserIndividual {
 
     public static final String COLUMN_TABLE_NAME = "tutored";
     public static final String COLUMN_EMAIL = "email";

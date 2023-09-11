@@ -5,7 +5,10 @@
 
         android:color="@color/button_stroke"/>
     <corners
-        android:radius="@dimen/dimen_2dp" />
+        android:bottomLeftRadius="@dimen/dimen_15dp"
+        android:topLeftRadius="@dimen/dimen_15dp"
+        android:topRightRadius="@dimen/dimen_0dp"
+        android:bottomRightRadius="@dimen/dimen_0dp"/>
 
     <padding
         android:left="@dimen/dimen_1dp"

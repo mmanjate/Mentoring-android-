@@ -17,10 +17,11 @@ import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.model.user.UserIndividual;
 import mz.org.csaude.mentoring.util.Utilities;
 
 @DatabaseTable(tableName = COLUMN_TABLE_NAME, daoClass = TutorDAOImpl.class)
-public class Tutor extends BaseModel {
+public class Tutor extends BaseModel implements UserIndividual {
 
   public static final String COLUMN_TABLE_NAME = "tutor";
   public static final String COLUMN_EMAIL = "email";

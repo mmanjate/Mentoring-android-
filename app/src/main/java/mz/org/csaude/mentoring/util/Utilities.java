@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -28,6 +29,7 @@ import androidx.work.WorkManager;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -481,6 +483,28 @@ public class Utilities {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    private static final String LOG_TAG = "CryptUtils";
+
+    /**
+     * Generates a SHA-1 hash of password and salt and returns it as hex-encoded string.
+     * @param password the password to encrypt
+     * @param salt random string that should be used to salt the password
+     * @return hex-encoded string of hash
+     */
+    public static String encryptPassword(String password, String salt) {
+        final String algorithm = "SHA-1";
+        try {
+            MessageDigest digester = MessageDigest.getInstance(algorithm);
+            byte[] saltedPassword = (password + salt).getBytes();
+            byte[] hash = digester.digest(saltedPassword);
+
+            return String.format("%040x", new BigInteger(1, hash));
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(LOG_TAG, "Algorithm " + algorithm, e);
+            return null;
         }
     }
 

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import mz.org.csaude.mentoring.model.session.Session;
 
-public class SessionDAOImpl extends BaseDaoImpl<Session, Integer> {
+public class SessionDAOImpl extends BaseDaoImpl<Session, Integer> implements SessionDAO{
 
     public SessionDAOImpl(Class<Session> dataClass) throws SQLException {
         super(dataClass);

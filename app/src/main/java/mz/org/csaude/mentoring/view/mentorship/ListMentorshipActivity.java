@@ -33,7 +33,7 @@ public class ListMentorshipActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        ListMentorshipAdapter listMentorshipAdapter = new ListMentorshipAdapter(listMentorshipVM.getMentorshipsByTutor("0807983dd3b34f109fb75756862d4a72"));
+        ListMentorshipAdapter listMentorshipAdapter = new ListMentorshipAdapter(listMentorshipVM.getMentorshipsByTutor(getCurrentUser().getUuid()));
 
         recyclerView.setAdapter(listMentorshipAdapter);
     }

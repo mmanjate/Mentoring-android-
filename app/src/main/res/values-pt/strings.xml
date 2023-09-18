@@ -26,4 +26,5 @@
     <string name="time_of_day">Horário</string>
     <string name="door">Porta</string>
     <string name="login">Entrar</string>
+    <string name="local">Local</string>
 </resources>

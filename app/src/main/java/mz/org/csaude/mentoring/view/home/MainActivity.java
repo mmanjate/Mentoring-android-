@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
-    private LoadMetadataService loadMetadataService;
+
 
     ProgressDialog progressDialog;
 
@@ -44,10 +44,6 @@ public class MainActivity extends BaseActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        // Load metadata
-        loadMetadataService = new LoadMetadataServiceImpl();
-        loadMetadataService.load(MainActivity.this, progressDialog,
-                null);
 
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override

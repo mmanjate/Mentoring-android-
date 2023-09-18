@@ -9,7 +9,7 @@ import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataService;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 
-public class SplashVM extends BaseViewModel implements RestResponseListener<> {
+public class SplashVM extends BaseViewModel implements RestResponseListener {
 
     private LoadMetadataService loadMetadataService;
 
@@ -29,5 +29,5 @@ public class SplashVM extends BaseViewModel implements RestResponseListener<> {
         loadMetadataService.load();
     }
 
-    do
+
 }

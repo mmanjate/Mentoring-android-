@@ -33,4 +33,11 @@ public class HealthFacility extends BaseModel {
     public void setDistrict(District district) {
         this.district = district;
     }
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
 }

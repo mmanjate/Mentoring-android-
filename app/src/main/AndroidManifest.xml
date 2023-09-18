@@ -35,6 +35,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".view.mentorship.ListMentorshipActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.mentorship.MentorshipActivity"
             android:exported="true" />
         <activity

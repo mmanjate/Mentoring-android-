@@ -56,8 +56,8 @@ public class Utilities {
     private Utilities() {
     }
 
-    public static Utilities getInstance(){
-        if (instance == null){
+    public static Utilities getInstance() {
+        if (instance == null) {
             instance = new Utilities();
         }
         return instance;
@@ -70,8 +70,7 @@ public class Utilities {
     static {
         try {
             digester = MessageDigest.getInstance("MD5");
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
@@ -87,8 +86,7 @@ public class Utilities {
         for (int i = 0; i < hash.length; i++) {
             if ((0xff & hash[i]) < 0x10) {
                 hexString.append("0" + Integer.toHexString((0xFF & hash[i])));
-            }
-            else {
+            } else {
                 hexString.append(Integer.toHexString(0xFF & hash[i]));
             }
         }
@@ -97,7 +95,7 @@ public class Utilities {
 
     public static boolean isNetworkAvailable(Context context) {
 
-        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
@@ -127,6 +125,7 @@ public class Utilities {
     public static AlertDialog displayAlertDialog(final Context mContext, final String alertMessage) {
         return genericDisplayAlertDialog(mContext, alertMessage, null);
     }
+
     /**
      * Common AppCompat Alert Dialog to be used in the Application everywhere
      *
@@ -148,8 +147,7 @@ public class Utilities {
         return builder.create();
     }
 
-    private static AlertDialog displayConfirmationDialog(final Context mContext, final String dialogMesg, String positive, String negative, int position, BaseModel baseModel, IListbleDialogListener listener)
-    {
+    private static AlertDialog displayConfirmationDialog(final Context mContext, final String dialogMesg, String positive, String negative, int position, BaseModel baseModel, IListbleDialogListener listener) {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(mContext)
                 // set message, title, and icon
                 .setTitle(mContext.getResources().getString(R.string.app_name))
@@ -158,9 +156,9 @@ public class Utilities {
                 .setPositiveButton(positive, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        if (baseModel != null){
+                        if (baseModel != null) {
                             listener.remove(baseModel);
-                        }else {
+                        } else {
                             try {
                                 listener.remove(position);
                             } catch (SQLException e) {
@@ -183,8 +181,7 @@ public class Utilities {
         return myQuittingDialogBox;
     }
 
-    public static AlertDialog displayConfirmationDialog(final Context mContext, final String dialogMesg, String positive, String negative, IDialogListener listener)
-    {
+    public static AlertDialog displayConfirmationDialog(final Context mContext, final String dialogMesg, String positive, String negative, IDialogListener listener) {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(mContext)
                 // set message, title, and icon
                 .setTitle(mContext.getResources().getString(R.string.app_name))
@@ -214,12 +211,12 @@ public class Utilities {
         return displayConfirmationDialog(mContext, dialogMesg, mContext.getString(R.string.remove), mContext.getString(R.string.cancel), position, null, listener);
     }
 
-    public static AlertDialog displayDeleteConfirmationDialog(final Context mContext, final String dialogMesg,  BaseModel baseModel, IListbleDialogListener listener) {
+    public static AlertDialog displayDeleteConfirmationDialog(final Context mContext, final String dialogMesg, BaseModel baseModel, IListbleDialogListener listener) {
         return displayConfirmationDialog(mContext, dialogMesg, mContext.getString(R.string.remove), mContext.getString(R.string.cancel), 0, baseModel, listener);
     }
 
     @SafeVarargs
-    public static <T> List<T> parseToList(T... obj){
+    public static <T> List<T> parseToList(T... obj) {
         if (obj == null || obj.length == 0) return null;
 
         List<T> list = new ArrayList<T>();
@@ -229,12 +226,12 @@ public class Utilities {
         return list;
     }
 
-    public static <T extends Object, S extends Object> List<S> parseList(List<T> list, Class<S> classe){
+    public static <T extends Object, S extends Object> List<S> parseList(List<T> list, Class<S> classe) {
         if (list == null) return null;
 
         List<S> parsedList = new ArrayList<S>();
 
-        for (T t : list){
+        for (T t : list) {
             parsedList.add((S) t);
         }
 
@@ -256,38 +253,38 @@ public class Utilities {
 
     }*/
 
-    public static boolean stringHasValue(String string){
+    public static boolean stringHasValue(String string) {
         return string != null && !string.isEmpty() && string.trim().length() > 0;
     }
 
-    public static boolean objectNotNull(Object obj){
+    public static boolean objectNotNull(Object obj) {
         return obj != null;
     }
 
-    public static String parseIntToString(int toParse){
+    public static String parseIntToString(int toParse) {
         return String.valueOf(toParse);
     }
 
-    public static String parseDoubleToString(double toParse){
+    public static String parseDoubleToString(double toParse) {
         return String.valueOf(toParse);
     }
 
-    public static String parseLongToString(long toParse){
+    public static String parseLongToString(long toParse) {
         return String.valueOf(toParse);
     }
 
-    public static UUID getNewUUID(){
+    public static UUID getNewUUID() {
         return UUID.randomUUID();
     }
 
     public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService( Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (activity.getCurrentFocus() != null) {
             inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
         }
     }
 
-    public static String garantirXCaracterOnNumber(long number, int x){
+    public static String garantirXCaracterOnNumber(long number, int x) {
         String formatedNumber = "";
         int numberOfCharacterToIncrise = 0;
 
@@ -295,34 +292,34 @@ public class Utilities {
 
         numberOfCharacterToIncrise = x - formatedNumber.length();
 
-        for(int i = 0; i < numberOfCharacterToIncrise; i++) formatedNumber = "0" + formatedNumber;
+        for (int i = 0; i < numberOfCharacterToIncrise; i++) formatedNumber = "0" + formatedNumber;
 
         return formatedNumber;
     }
 
-    public static String concatStrings(String currentString, String toConcant, String scapeStr){
+    public static String concatStrings(String currentString, String toConcant, String scapeStr) {
         if (!stringHasValue(currentString)) return toConcant;
 
         if (!stringHasValue(toConcant)) return currentString;
 
-        return currentString + scapeStr+ toConcant;
+        return currentString + scapeStr + toConcant;
     }
 
-    public static boolean isStringIn(String value, String... inValues){
+    public static boolean isStringIn(String value, String... inValues) {
         if (inValues == null || value == null) return false;
 
-        for (String str : inValues){
+        for (String str : inValues) {
             if (value.equals(str)) return true;
         }
 
         return false;
     }
 
-    public static boolean listHasElements(ArrayList<?> list){
+    public static boolean listHasElements(ArrayList<?> list) {
         return list != null && !list.isEmpty() && list.size() > 0;
     }
 
-    public static <T extends BaseModel> T findOnArray(List<T> list, T toFind){
+    public static <T extends BaseModel> T findOnArray(List<T> list, T toFind) {
         for (T o : list) {
             if (o.equals(toFind)) return o;
         }
@@ -376,7 +373,7 @@ public class Utilities {
             }
         };
 
-        animation.setDuration((long) (actualHeight/ view.getContext().getResources().getDisplayMetrics().density));
+        animation.setDuration((long) (actualHeight / view.getContext().getResources().getDisplayMetrics().density));
         view.startAnimation(animation);
     }
 
@@ -384,7 +381,7 @@ public class Utilities {
         try {
             Double.parseDouble(str);
             return true;
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
     }
@@ -399,8 +396,7 @@ public class Utilities {
     }*/
 
 
-
-    public static void  previewPdfFiles(final Context mContext, File pdfFile) {
+    public static void previewPdfFiles(final Context mContext, File pdfFile) {
         PackageManager packageManager = mContext.getPackageManager();
         Intent testIntent = new Intent(Intent.ACTION_VIEW);
         testIntent.setType("application/pdf");
@@ -411,7 +407,7 @@ public class Utilities {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         // Uri uri = Uri.fromFile(pdfFile);
 
-        Uri uri =  FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".FileProvider", pdfFile);
+        Uri uri = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".FileProvider", pdfFile);
         intent.setDataAndType(uri, "application/pdf");
 
         mContext.startActivity(intent);
@@ -421,12 +417,11 @@ public class Utilities {
     }
 
 
-
     public static boolean checkPermissionsToViewPdf(Activity activity) {
         int hasWriteStoragePermission = ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (hasWriteStoragePermission != PackageManager.PERMISSION_GRANTED) {
             if (!activity.shouldShowRequestPermissionRationale(Manifest.permission.WRITE_CONTACTS)) {
-                showMessageOKCancel(activity,"You need to allow access to Storage to store pdf reports ",
+                showMessageOKCancel(activity, "You need to allow access to Storage to store pdf reports ",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -444,9 +439,7 @@ public class Utilities {
     }
 
 
-
-
-    public static void showMessageOKCancel(Activity activity,String message, DialogInterface.OnClickListener okListener) {
+    public static void showMessageOKCancel(Activity activity, String message, DialogInterface.OnClickListener okListener) {
         new android.app.AlertDialog.Builder(activity)
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
@@ -455,20 +448,30 @@ public class Utilities {
                 .show();
     }
 
-   /* public static void issueNotification(NotificationManagerCompat notificationManagerCompat, Context context, String contentText, String channel, boolean progressStatus, int notificationId) {
+    public static void issueNotification(NotificationManagerCompat notificationManagerCompat, Context context, String contentText, String channel, boolean progressStatus, int notificationId) {
 
         Notification builder = new NotificationCompat.Builder(context, channel)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("iDART MOBILE")
+                .setContentTitle("Tutoria")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(contentText))
                 .setContentText(contentText)
                 .setCategory(NotificationCompat.CATEGORY_STATUS)
                 .setProgress(0, 0, progressStatus)
                 .build();
 
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         notificationManagerCompat.notify(notificationId, builder);
     }
-*/
+
     public static boolean isWorkScheduled(String tag, WorkManager instance) {
         ListenableFuture<List<WorkInfo>> statuses = instance.getWorkInfosByTag(tag);
         try {

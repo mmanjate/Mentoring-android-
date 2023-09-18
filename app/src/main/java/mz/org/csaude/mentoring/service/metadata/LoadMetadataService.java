@@ -10,6 +10,6 @@ import java.sql.SQLException;
 
 public interface LoadMetadataService {
 
-    void load(final BaseActivity activity, final ProgressDialog progressDialog, User currentUser);
+    void load();
 
 }

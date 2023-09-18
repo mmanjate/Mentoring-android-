@@ -1,5 +1,6 @@
 package mz.org.csaude.mentoring.service.metadata;
 
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,14 +29,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class LoadMetadataServiceImpl extends BaseRestService implements LoadMetadataService {
+
+    public LoadMetadataServiceImpl(Application application) {
+        super(application);
+    }
+
     @Override
-    public void load(BaseActivity activity, ProgressDialog progressDialog, User currentUser) {
+    public void load() {
 
-        LoadMetadataServiceImpl.APP = (MentoringApplication) activity.getApplication();
-
-        Retrofit retrofit = LoadMetadataServiceImpl.APP.getRetrofit();
-
-        SyncDataService syncDataService = retrofit.create(SyncDataService.class);
+        SyncDataService syncDataService = getRetrofit().create(SyncDataService.class);
 
         Call<List<SettingDTO>> call = syncDataService.getSettings("49dcfc96e18644d1ae9e82dbb7e873a1");
 
@@ -50,19 +52,19 @@ public class LoadMetadataServiceImpl extends BaseRestService implements LoadMeta
 
                 try {
                     SettingService settingService = new SettingServiceImpl(LoadMetadataServiceImpl.APP);
-                    Toast.makeText(activity, "Carregando os SETTINGS...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getApplicationContext(), "Carregando os SETTINGS...", Toast.LENGTH_SHORT).show();
                     settingService.savedOrUpdateSettings(data);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
 
-                Toast.makeText(activity, "SETTINGS carregados com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(APP.getApplicationContext(), "SETTINGS carregados com sucesso!", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onFailure(Call<List<SettingDTO>> call, Throwable t) {
-                Toast.makeText(activity, "Não foi possivel carregar metadados. Tente mais tarde....", Toast.LENGTH_SHORT).show();
+                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar metadados. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });
@@ -81,25 +83,25 @@ public class LoadMetadataServiceImpl extends BaseRestService implements LoadMeta
 
                 try {
                     CabinetService cabinetService = new CabinetServiceImpl(LoadMetadataServiceImpl.APP);
-                    Toast.makeText(activity, "Carregando os CABINETS...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getApplicationContext(), "Carregando os CABINETS...", Toast.LENGTH_SHORT).show();
                     cabinetService.saveOrUpdateCabinets(data);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
 
-                Toast.makeText(activity, "CABINETS carregados com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(APP.getApplicationContext(), "CABINETS carregados com sucesso!", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onFailure(Call<List<CabinetDTO>> call, Throwable t) {
-                Toast.makeText(activity, "Não foi possivel carregar os CABINETS. Tente mais tarde....", Toast.LENGTH_SHORT).show();
+                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os CABINETS. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
 
         });
 
-        Call<List<CareerDTO>> careersCall = syncDataService.getCareers();
+        Call<List<CareerDTO>> careersCall = syncDataService.getCareers(0, 200);
 
         careersCall.enqueue(new Callback<List<CareerDTO>>() {
             @Override
@@ -111,19 +113,19 @@ public class LoadMetadataServiceImpl extends BaseRestService implements LoadMeta
 
                 try {
                     CareerService careerService = new CareerServiceImpl(LoadMetadataServiceImpl.APP);
-                    Toast.makeText(activity, "Carregando as CARREIRAS...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getApplicationContext(), "Carregando as CARREIRAS...", Toast.LENGTH_SHORT).show();
                     careerService.savedOrUpdateCareers(data);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
 
-                Toast.makeText(activity, "CARREIRAS carregadas com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(APP.getApplicationContext(), "CARREIRAS carregadas com sucesso!", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onFailure(Call<List<CareerDTO>> call, Throwable t) {
-                Toast.makeText(activity, "Não foi possivel carregar os TIPOS DE CARREIRAS. Tente mais tarde....", Toast.LENGTH_SHORT).show();
+                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os TIPOS DE CARREIRAS. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });
@@ -140,19 +142,19 @@ public class LoadMetadataServiceImpl extends BaseRestService implements LoadMeta
 
                 try {
                     TutoredService tutoredService = new TutoredServiceImpl(LoadMetadataServiceImpl.APP);
-                    Toast.makeText(activity, "Carregando os TUTORADOS...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getApplicationContext(), "Carregando os TUTORADOS...", Toast.LENGTH_SHORT).show();
                     tutoredService.savedOrUpdateTutoreds(data);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
 
-                Toast.makeText(activity, "TUTORADOS carregados com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(APP.getApplicationContext(), "TUTORADOS carregados com sucesso!", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onFailure(Call<List<TutoredDTO>> call, Throwable t) {
-                Toast.makeText(activity, "Não foi possivel carregar os tutorados. Tente mais tarde....", Toast.LENGTH_SHORT).show();
+                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os tutorados. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

@@ -25,14 +25,14 @@ import java.util.List;
  */
 public interface SyncDataService {
 
-    @GET("/settings/tutor/{uuid}")
-    Call<List<SettingDTO>> getSettings(@Path("uuid") final String uuid);
+    @GET("/settings/tutor/{uuid}/{offset}/{limit}")
+    Call<List<SettingDTO>> getSettings(@Path("uuid") final String uuid, @Path("offset") long offset, @Path("limit") long limit);
 
     @GET("/healthFacilities/tutor/{uuid}")
     Call<List<HealthFacilityDTO>> getHealthFacilities(@Path("uuid") final String uuid);
 
-    @GET("/cabinets")
-    Call<List<CabinetDTO>> getCabinets();
+    @GET("/cabinets/{offset}/{limit}")
+    Call<List<CabinetDTO>> getCabinets(@Path("offset") long offset, @Path("limit") long limit);
 
     @GET("/careers/career-types")
     Call<List<CareerTypeDTO>> getCareerTypes();
@@ -40,8 +40,8 @@ public interface SyncDataService {
     @GET("/careers/{offset}/{limit}")
     Call<List<CareerDTO>> getCareers(@Path("offset") long offset, @Path("limit") long limit);
 
-    @GET("/tutored")
-    Call<List<TutoredDTO>> getTutoreds();
+    @GET("/tutored/{offset}/{limit}")
+    Call<List<TutoredDTO>> getTutoreds(@Path("offset") long offset, @Path("limit") long limit);
 
     @POST("/login")
     Call<LoginResponse> login(@Body RequestBody body);

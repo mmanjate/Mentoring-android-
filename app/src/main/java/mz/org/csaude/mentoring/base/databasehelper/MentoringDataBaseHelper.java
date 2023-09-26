@@ -39,6 +39,7 @@ import mz.org.csaude.mentoring.dao.tutor.TutorDAO;
 import mz.org.csaude.mentoring.dao.tutor.TutorLocationDAO;
 import mz.org.csaude.mentoring.dao.tutor.TutorTutoredDao;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDao;
+import mz.org.csaude.mentoring.dao.user.UserDao;
 import mz.org.csaude.mentoring.model.Question.Question;
 import mz.org.csaude.mentoring.model.Question.QuestionType;
 import mz.org.csaude.mentoring.model.Question.QuestionsCategory;
@@ -69,6 +70,7 @@ import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutor.TutorLocation;
 import mz.org.csaude.mentoring.model.tutor.TutorTutored;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.model.user.User;
 
 public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
 
@@ -135,6 +137,8 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     private TutorTutoredDao tutorTutoredDao;
 
+    private UserDao userDao;
+
     private static MentoringDataBaseHelper dataBaseHelper;
 
     private MentoringDataBaseHelper(Context context) {
@@ -149,6 +153,12 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
         return dataBaseHelper;
     }
 
+    public UserDao getUserDao() throws SQLException{
+        if(userDao == null){
+            userDao = getDao(User.class);
+        }
+        return userDao;
+    }
     public TutoredDao getTutoredDao() throws SQLException {
         if(tutoredDao == null){
             tutoredDao = getDao(Tutored.class);

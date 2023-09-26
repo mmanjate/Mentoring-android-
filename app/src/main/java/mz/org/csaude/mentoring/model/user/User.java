@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
+import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 
@@ -43,6 +44,14 @@ public class User extends BaseModel {
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
+    }
+
+    public User(UserDTO userDTO) {
+        this.userName = userDTO.getUsername();
+        this.password = userDTO.getPassword();
+        this.salt = userDTO.getSalt();
+        this.admin = userDTO.isAdmin();
+        this.type = userDTO.getType();
     }
 
     public String getUserName() {

@@ -9,6 +9,7 @@ import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
+import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
 import okhttp3.RequestBody;
@@ -48,5 +49,11 @@ public interface SyncDataService {
 
     @GET("/user/getByCredencials/{username}/{password}")
     Call<UserDTO> getByCredencials(@Path("username") final String username, @Path("password") final String password);
+
+    @GET("/tutor/tutors/{limit}/{offset}")
+    Call<List<TutorDTO>> getTutors(@Path("limit") long limit , @Path("offset") long offset);
+
+    @GET("/tutor/user/{userUuid}")
+    Call<TutorDTO> getTutorByUserUuid(@Path("userUuid") String userUuid);
 
 }

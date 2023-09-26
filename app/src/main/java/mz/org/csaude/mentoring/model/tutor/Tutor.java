@@ -14,6 +14,7 @@ import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.tutor.TutorDAOImpl;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
+import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.user.User;
@@ -62,15 +63,12 @@ public class Tutor extends BaseModel implements UserIndividual {
   public Tutor() {
   }
 
-  public Tutor(String code, String name, String surname, String phoneNumber, String email, Career career, Partner partner, User user) {
-    this.code = code;
-    this.name = name;
-    this.surname = surname;
-    this.phoneNumber = phoneNumber;
-    this.email = email;
-    this.career = career;
-    this.partner = partner;
-    this.user = user;
+  public Tutor(TutorDTO tutorDTO) {
+    this.code = tutorDTO.getCode();
+    this.name = tutorDTO.getName();
+    this.surname = tutorDTO.getSunname();
+    this.phoneNumber = tutorDTO.getPhoneNumber();
+    this.email = tutorDTO.getEmail();
   }
 
   public String getCode() {

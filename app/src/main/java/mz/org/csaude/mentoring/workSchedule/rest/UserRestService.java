@@ -1,10 +1,8 @@
-package mz.org.csaude.mentoring.service.user;
+package mz.org.csaude.mentoring.workSchedule.rest;
 
 import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import mz.org.csaude.mentoring.base.auth.LoginRequest;
 import mz.org.csaude.mentoring.base.auth.LoginResponse;
@@ -14,6 +12,7 @@ import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.metadata.SyncDataService;
+import mz.org.csaude.mentoring.service.user.UserSyncService;
 import mz.org.csaude.mentoring.util.Utilities;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -21,14 +20,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserSyncServiceImpl extends BaseRestService implements UserSyncService {
+public class UserRestService extends BaseRestService implements UserSyncService {
 
 
     private SessionManager sessionManager;
 
-    public UserSyncServiceImpl(Application application, User user) {
-        super(application, user);
+    public UserRestService(Application application, User currentUser) {
+        super(application, currentUser);
     }
+
+    public UserRestService(Application application) {
+        super(application);
+    }
+
 
     public void doOnlineLogin (RestResponseListener listener) {
         this.sessionManager = new SessionManager(application.getApplicationContext());

@@ -1,5 +1,6 @@
 package mz.org.csaude.mentoring.workSchedule.work;
 
+import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -14,13 +15,16 @@ import mz.org.csaude.mentoring.workSchedule.rest.CareerRestService;
 
 public class CareerWorker extends BaseWorker<Career> {
 
+    protected CareerRestService careerRestService;
+
     public CareerWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
+        careerRestService = new CareerRestService((Application) this.context.getApplicationContext());
     }
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-        CareerRestService.restGetCareers(offset, limit, this);
+        careerRestService.restGetCareers(offset, limit, this);
     }
 
     @Override

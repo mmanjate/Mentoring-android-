@@ -78,6 +78,9 @@ dependencies {
             because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
         }
     }
+    // https://mvnrepository.com/artifact/androidx.work/work-runtime
+    implementation 'androidx.work:work-runtime:2.8.1'
+
 
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -87,6 +90,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.3'
 
     implementation 'com.google.code.gson:gson:2.10.1'
+
+    implementation "androidx.concurrent:concurrent-futures:1.1.0"
 
     implementation 'com.j256.ormlite:ormlite-android:5.0'
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'

@@ -34,9 +34,13 @@ public abstract class BaseWorker<T extends BaseModel> extends Worker implements 
     protected long updatedRecsQty;
     protected int notificationId;
 
+    protected Context context;
+
     public BaseWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         setWorkStatus(WORK_STATUS_STARTING);
+
+        this.context = context;
         this.notificationId = ThreadLocalRandom.current().nextInt();
     }
 

@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
+import java.util.concurrent.ExecutorService;
+
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
@@ -36,4 +38,5 @@ public class SplashActivity extends BaseActivity {
     public SplashVM getRelatedViewModel() {
         return (SplashVM) super.getRelatedViewModel();
     }
+
 }

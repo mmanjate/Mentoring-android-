@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.partner.PartnerDaoImpl;
+import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
+import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 
 @Data
 @DatabaseTable(tableName = Partner.TABLE_NAME, daoClass = PartnerDaoImpl.class)
@@ -31,7 +33,10 @@ public class Partner extends BaseModel {
         this.name = name;
         this.description = description;
     }
-
+    public Partner(PartnerDTO partnerDTO) {
+        this.name = partnerDTO.getName();
+        this.description = partnerDTO.getDescription();
+    }
     public String getName() {
         return name;
     }

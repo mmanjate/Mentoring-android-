@@ -10,4 +10,6 @@ import java.util.List;
 public interface CareerService extends BaseService<Career> {
 
     void savedOrUpdateCareers(List<CareerDTO> careerDTOS) throws SQLException;
+
+    Career savedOrUpdateCareer(Career career) throws SQLException;
 }

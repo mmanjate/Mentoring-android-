@@ -55,4 +55,16 @@ public class PartnerServiceImpl extends BaseServiceImpl<Partner> implements Part
     public Partner getById(int id) throws SQLException {
         return this.getById(id);
     }
+
+    @Override
+    public Partner savedOrUpdatePartner(Partner partner) throws SQLException {
+
+       List<Partner> partners = this.partnerDao.queryForEq("uuid", partner.getUuid());
+
+       if(partners.isEmpty()){
+           this.partnerDao.createOrUpdate(partner);
+           return partner;
+       }
+        return partners.get(0);
+    }
 }

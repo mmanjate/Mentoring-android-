@@ -38,7 +38,7 @@ public class LoadMetadataServiceImpl extends BaseRestService implements LoadMeta
     public void load() {
 
         SyncDataService syncDataService = getRetrofit().create(SyncDataService.class);
-
+/*
         Call<List<SettingDTO>> call = syncDataService.getSettings("49dcfc96e18644d1ae9e82dbb7e873a1",0, 0);
 
         call.enqueue(new Callback<List<SettingDTO>>() {
@@ -68,7 +68,7 @@ public class LoadMetadataServiceImpl extends BaseRestService implements LoadMeta
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });
-
+*/
         Call<List<CabinetDTO>> cabinetsCall = syncDataService.getCabinets(0,200);
 
         cabinetsCall.enqueue(new Callback<List<CabinetDTO>>() {
@@ -129,7 +129,7 @@ public class LoadMetadataServiceImpl extends BaseRestService implements LoadMeta
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });
-
+/*
         Call<List<TutoredDTO>> tutoredsCall = syncDataService.getTutoreds(0,300);
 
         tutoredsCall.enqueue(new Callback<List<TutoredDTO>>() {
@@ -158,6 +158,6 @@ public class LoadMetadataServiceImpl extends BaseRestService implements LoadMeta
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });
-
+*/
     }
 }

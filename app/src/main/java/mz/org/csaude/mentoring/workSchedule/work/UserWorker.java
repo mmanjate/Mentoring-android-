@@ -11,16 +11,21 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
+import mz.org.csaude.mentoring.service.tutor.TutorService;
+import mz.org.csaude.mentoring.service.tutor.TutorServiceImpl;
+import mz.org.csaude.mentoring.service.user.UserService;
+import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserSyncService;
 import mz.org.csaude.mentoring.workSchedule.rest.UserRestService;
 
 public class UserWorker extends BaseWorker<User> {
 
-    private UserRestService userRestService;
+    private final UserRestService userRestService;
 
     public UserWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        this.userRestService = new UserRestService((Application) getApplicationContext());
+        this.userRestService = new UserRestService((Application) getApplicationContext(), new User(getInputData().getString("username"), getInputData().getString("password")));
     }
 
     @Override
@@ -30,9 +35,13 @@ public class UserWorker extends BaseWorker<User> {
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-        User user = new User(getInputData().getString("username"), getInputData().getString("password"));
+        userRestService.getUserByCedencials(this);
+    }
 
-        userRestService.getUserByCedencials(user);
+    @Override
+    protected void doAfterSearch(String flag, List<User> recs) throws SQLException {
+        changeStatusToFinished();
+        doOnFinish();
     }
 
     @Override

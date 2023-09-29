@@ -7,6 +7,9 @@ import androidx.databinding.Bindable;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.auth.SessionManager;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
@@ -15,6 +18,7 @@ import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserSyncService;
+import mz.org.csaude.mentoring.view.home.MainActivity;
 import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
 import mz.org.csaude.mentoring.workSchedule.rest.UserRestService;
 
@@ -74,13 +78,11 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
 
     @Override
     public void doOnRestSucessResponse(User user) {
-        userSyncService.getUserByCedencials(user);
-        OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runPotLoginSync(user);
+        OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runPostLoginSync(user);
 
         WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
             if (workInfo != null) {
                 if (workInfo.getState() == WorkInfo.State.SUCCEEDED){
-                    WorkInfo.State state = workInfo.getState();
                     goHome();
                 }
             }
@@ -88,7 +90,9 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
     }
 
     private void goHome() {
-
+        Map<String, Object> params = new HashMap<>();
+        params.put("user", getCurrentUser());
+        getRelatedActivity().nextActivityFinishingCurrent(MainActivity.class, params);
     }
 
     @Bindable

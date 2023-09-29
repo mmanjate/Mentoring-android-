@@ -4,14 +4,22 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collections;
+
 import mz.org.csaude.mentoring.base.auth.LoginRequest;
 import mz.org.csaude.mentoring.base.auth.LoginResponse;
 import mz.org.csaude.mentoring.base.auth.SessionManager;
 import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
+import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.SyncDataService;
+import mz.org.csaude.mentoring.service.user.UserService;
+import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserSyncService;
 import mz.org.csaude.mentoring.util.Utilities;
 import okhttp3.MediaType;
@@ -27,10 +35,6 @@ public class UserRestService extends BaseRestService implements UserSyncService 
 
     public UserRestService(Application application, User currentUser) {
         super(application, currentUser);
-    }
-
-    public UserRestService(Application application) {
-        super(application);
     }
 
 
@@ -68,8 +72,7 @@ public class UserRestService extends BaseRestService implements UserSyncService 
     }
 
     @Override
-    public void getUserByCedencials(User user) {
-        this.sessionManager = new SessionManager(application.getApplicationContext());
+    public void getUserByCedencials(RestResponseListener<User> listener) {
 
         SyncDataService syncDataService = getRetrofit().create(SyncDataService.class);
 
@@ -81,7 +84,16 @@ public class UserRestService extends BaseRestService implements UserSyncService 
                 if (response.code() == 200) {
                     UserDTO data = response.body();
 
+                    try {
 
+                        User user1 = new User(data);
+
+                        UserService userService = new UserServiceImpl(LoadMetadataServiceImpl.APP);
+                        userService.savedOrUpdateUser(user1);
+                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Collections.singletonList(user1));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
 
             }

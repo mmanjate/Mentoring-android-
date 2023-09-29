@@ -381,6 +381,7 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, SessionStatus.class);
             TableUtils.createTableIfNotExists(connectionSource, PartnerSetting.class);
             TableUtils.createTableIfNotExists(connectionSource, TutorTutored.class);
+            TableUtils.createTableIfNotExists(connectionSource, User.class);
 
 
         } catch (SQLException e) {

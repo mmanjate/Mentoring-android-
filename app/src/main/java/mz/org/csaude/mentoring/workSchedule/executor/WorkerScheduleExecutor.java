@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.work.Data;
 import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
-import androidx.work.Operation;
 import androidx.work.WorkManager;
 
 import java.util.List;
@@ -15,6 +14,7 @@ import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.workSchedule.work.CabinetWorker;
 import mz.org.csaude.mentoring.workSchedule.work.CareerWorker;
+import mz.org.csaude.mentoring.workSchedule.work.TutorWorker;
 import mz.org.csaude.mentoring.workSchedule.work.UserWorker;
 
 public class WorkerScheduleExecutor {
@@ -63,14 +63,15 @@ public class WorkerScheduleExecutor {
         }
     }
 
-    public OneTimeWorkRequest runPotLoginSync(User user) {
+    public OneTimeWorkRequest runPostLoginSync(User user) {
         Data inputData = new Data.Builder()
                 .putString("username", user.getUserName())
                 .putString("password", user.getPassword())
                 .build();
         OneTimeWorkRequest userOneTimeWorkRequest = new OneTimeWorkRequest.Builder(UserWorker.class).addTag("ONE_TIME_USER_ID" + ONE_TIME_REQUEST_JOB_ID).setInputData(inputData).build();
-        //OneTimeWorkRequest cabinetOneTimeWorkRequest = new OneTimeWorkRequest.Builder(CabinetWorker.class).addTag("ONE_TIME_CABINET_ID" + ONE_TIME_REQUEST_JOB_ID).build();
-        workManager.beginUniqueWork("INITIAL_APP_SETUP", ExistingWorkPolicy.KEEP, userOneTimeWorkRequest).enqueue();
-        return userOneTimeWorkRequest;
+        OneTimeWorkRequest tutorOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutorWorker.class).addTag("ONE_TIME_TUTOR_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+
+        workManager.beginUniqueWork("INITIAL_APP_SETUP", ExistingWorkPolicy.KEEP, userOneTimeWorkRequest).then(tutorOneTimeWorkRequest).enqueue();
+        return tutorOneTimeWorkRequest;
     }
 }

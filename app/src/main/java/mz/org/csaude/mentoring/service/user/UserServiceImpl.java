@@ -39,7 +39,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public List<User> getAll() throws SQLException {
-        return null;
+        return this.userDao.queryForAll();
     }
 
     @Override

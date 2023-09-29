@@ -52,6 +52,7 @@ public class User extends BaseModel {
         this.salt = userDTO.getSalt();
         this.admin = userDTO.isAdmin();
         this.type = userDTO.getType();
+        this.setUuid(userDTO.getUuid());
     }
 
     public String getUserName() {

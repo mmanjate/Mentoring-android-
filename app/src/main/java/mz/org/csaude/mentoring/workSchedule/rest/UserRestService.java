@@ -1,10 +1,12 @@
-package mz.org.csaude.mentoring.service.user;
+package mz.org.csaude.mentoring.workSchedule.rest;
 
 import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.json.JSONObject;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collections;
 
 import mz.org.csaude.mentoring.base.auth.LoginRequest;
 import mz.org.csaude.mentoring.base.auth.LoginResponse;
@@ -12,8 +14,13 @@ import mz.org.csaude.mentoring.base.auth.SessionManager;
 import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
+import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.SyncDataService;
+import mz.org.csaude.mentoring.service.user.UserService;
+import mz.org.csaude.mentoring.service.user.UserServiceImpl;
+import mz.org.csaude.mentoring.service.user.UserSyncService;
 import mz.org.csaude.mentoring.util.Utilities;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -21,14 +28,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserSyncServiceImpl extends BaseRestService implements UserSyncService {
+public class UserRestService extends BaseRestService implements UserSyncService {
 
 
     private SessionManager sessionManager;
 
-    public UserSyncServiceImpl(Application application, User user) {
-        super(application, user);
+    public UserRestService(Application application, User currentUser) {
+        super(application, currentUser);
     }
+
 
     public void doOnlineLogin (RestResponseListener listener) {
         this.sessionManager = new SessionManager(application.getApplicationContext());
@@ -64,8 +72,7 @@ public class UserSyncServiceImpl extends BaseRestService implements UserSyncServ
     }
 
     @Override
-    public void getUserByCedencials(User user) {
-        this.sessionManager = new SessionManager(application.getApplicationContext());
+    public void getUserByCedencials(RestResponseListener<User> listener) {
 
         SyncDataService syncDataService = getRetrofit().create(SyncDataService.class);
 
@@ -77,7 +84,16 @@ public class UserSyncServiceImpl extends BaseRestService implements UserSyncServ
                 if (response.code() == 200) {
                     UserDTO data = response.body();
 
+                    try {
 
+                        User user1 = new User(data);
+
+                        UserService userService = new UserServiceImpl(LoadMetadataServiceImpl.APP);
+                        userService.savedOrUpdateUser(user1);
+                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Collections.singletonList(user1));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
 
             }

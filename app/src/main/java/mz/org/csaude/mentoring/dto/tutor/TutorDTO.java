@@ -19,7 +19,7 @@ public class TutorDTO implements Serializable {
 
     private String sunname;
 
-    @JsonProperty(value = "career")
+    @JsonProperty(value = "careerDTO")
     private CareerDTO careerDTO;
 
     private String phoneNumber;
@@ -28,10 +28,11 @@ public class TutorDTO implements Serializable {
 
     private boolean isUser;
 
-    @JsonProperty(value = "partner")
+
+    @JsonProperty(value = "partnerDTO")
     private PartnerDTO partnerDTO;
 
-    @JsonProperty(value = "user")
+    @JsonProperty(value = "userDTO")
     private UserDTO userDTO;
 
 

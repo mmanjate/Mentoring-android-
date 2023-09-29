@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseRestService;
@@ -13,6 +14,7 @@ import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
+import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.tutor.TutorService;
 import mz.org.csaude.mentoring.service.tutor.TutorServiceImpl;
@@ -24,11 +26,12 @@ import retrofit2.Response;
 
 public class TutorRestService extends BaseRestService {
 
-    public TutorRestService(Application application) {
-        super(application);
+
+    public TutorRestService(Application application, User currentUser) {
+        super(application, currentUser);
     }
 
-    public static void restGetTutor(long offset, long limit, RestResponseListener<Tutor> listener){
+    public void restGetTutor(long offset, long limit, RestResponseListener<Tutor> listener){
 
         Call<List<TutorDTO>> tutorCall = syncDataService.getTutors(limit, offset);
 
@@ -68,9 +71,10 @@ public class TutorRestService extends BaseRestService {
 
     }
 
-    public static void restGetTutoredUserUuid(String userUuid, RestResponseListener<Tutor> listener){
 
-        Call<TutorDTO> tutorCall = syncDataService.getTutorByUserUuid(userUuid);
+    public void restGetTutoredUserUuid(RestResponseListener<Tutor> listener){
+
+        Call<TutorDTO> tutorCall = syncDataService.getTutorByUserUuid(currentUser.getUuid());
 
         tutorCall.enqueue(new Callback<TutorDTO>() {
             @Override
@@ -86,15 +90,12 @@ public class TutorRestService extends BaseRestService {
 
                 try {
 
-                TutorService tutorService = new TutorServiceImpl(LoadMetadataServiceImpl.APP);
+                TutorService tutorService = new TutorServiceImpl(LoadMetadataServiceImpl.APP, currentUser);
                 Toast.makeText(APP.getApplicationContext(), "Carregando os Tutores", Toast.LENGTH_SHORT).show();
                 tutorDTOS.add(data);
                 tutorService.saveOrUpdateTutors(tutorDTOS);
 
-                for (TutorDTO tutorDTO : tutorDTOS){
-                    tutors.add(new Tutor(tutorDTO));
-                }
-                listener.doOnResponse(BaseRestService.REQUEST_SUCESS, tutors);
+                listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Collections.singletonList(new Tutor(tutorDTOS.get(0))));
 
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

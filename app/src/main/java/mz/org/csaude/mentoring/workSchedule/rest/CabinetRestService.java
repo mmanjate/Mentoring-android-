@@ -7,6 +7,7 @@ import android.widget.Toast;
 import mz.org.csaude.mentoring.service.location.CabinetService;
 import mz.org.csaude.mentoring.service.location.CabinetServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
+import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 
 import java.sql.SQLException;
@@ -26,7 +27,7 @@ public class CabinetRestService extends BaseRestService {
         super(application);
     }
 
-    public static void restGetCabinets(long offSet, long limit, RestResponseListener<Cabinet> listener){
+    public void restGetCabinets(long offSet, long limit, RestResponseListener<Cabinet> listener){
 
         Call<List<CabinetDTO>> cabinetsCall = syncDataService.getCabinets(offSet, limit);
 
@@ -36,24 +37,26 @@ public class CabinetRestService extends BaseRestService {
 
                 List<CabinetDTO> data = response.body();
 
-                if(data == null){
-                    //
-                }
-                try {
+                if(!Utilities.listHasElements(data)){
+                    listener.doOnResponse(REQUEST_NO_DATA, null);
+                } else {
+                    try {
 
-                CabinetService cabinetService = new CabinetServiceImpl(LoadMetadataServiceImpl.APP);
-                Toast.makeText(APP.getApplicationContext(), "Carregando os Cabinet", Toast.LENGTH_SHORT).show();
-                cabinetService.saveOrUpdateCabinets(data);
-                List<Cabinet> cabinets = new ArrayList<>();
+                        CabinetService cabinetService = new CabinetServiceImpl(LoadMetadataServiceImpl.APP);
+                        Toast.makeText(APP.getApplicationContext(), "Carregando os Cabinet", Toast.LENGTH_SHORT).show();
+                        cabinetService.saveOrUpdateCabinets(data);
+                        List<Cabinet> cabinets = new ArrayList<>();
 
-                for (CabinetDTO cabinetDTO : data){
-                    cabinets.add(new Cabinet(cabinetDTO));
+                        for (CabinetDTO cabinetDTO : data){
+                            cabinets.add(new Cabinet(cabinetDTO));
+                        }
+                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, cabinets);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Toast.makeText(APP.getApplicationContext(), "CABINETS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 }
-                listener.doOnResponse(BaseRestService.REQUEST_SUCESS, cabinets);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                Toast.makeText(APP.getApplicationContext(), "CABINETS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

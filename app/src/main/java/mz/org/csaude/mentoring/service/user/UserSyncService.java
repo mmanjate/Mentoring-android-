@@ -7,5 +7,5 @@ public interface UserSyncService {
 
     void doOnlineLogin (RestResponseListener listener);
 
-    void getUserByCedencials(User user);
+    void getUserByCedencials(RestResponseListener<User> listener);
 }

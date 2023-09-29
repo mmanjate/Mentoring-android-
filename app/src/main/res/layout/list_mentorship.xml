@@ -13,16 +13,16 @@
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:layout_marginRight="6dp"
-            android:src="@mipmap/ic_process" />
+            android:src="@drawable/ic_add_icon_24" />
 
         <ImageView
             android:id="@+id/selected_row"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="bottom|end"
-            android:background="@drawable/selected_row_icon"
+            android:background="@drawable/ic_add_icon_24"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_check"
+            android:src="@drawable/ic_add_icon_24"
             android:visibility="gone" />
 
     </FrameLayout>

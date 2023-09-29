@@ -4,8 +4,11 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
 
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.auth.SessionManager;
@@ -15,7 +18,9 @@ import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserSyncService;
-import mz.org.csaude.mentoring.service.user.UserSyncServiceImpl;
+import mz.org.csaude.mentoring.view.home.MainActivity;
+import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
+import mz.org.csaude.mentoring.workSchedule.rest.UserRestService;
 
 public class LoginVM extends BaseViewModel implements RestResponseListener<User> {
 
@@ -35,7 +40,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
         super(application);
         userService = new UserServiceImpl(application);
         this.user= new User();
-        this.userSyncService = new UserSyncServiceImpl(application, this.user);
+        this.userSyncService = new UserRestService(application, this.user);
     }
 
     @Override
@@ -73,7 +78,21 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
 
     @Override
     public void doOnRestSucessResponse(User user) {
-        userSyncService.getUserByCedencials(user);
+        OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runPostLoginSync(user);
+
+        WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
+            if (workInfo != null) {
+                if (workInfo.getState() == WorkInfo.State.SUCCEEDED){
+                    goHome();
+                }
+            }
+        });
+    }
+
+    private void goHome() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("user", getCurrentUser());
+        getRelatedActivity().nextActivityFinishingCurrent(MainActivity.class, params);
     }
 
     @Bindable

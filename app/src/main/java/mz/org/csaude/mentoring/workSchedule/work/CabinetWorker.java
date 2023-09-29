@@ -1,5 +1,6 @@
 package mz.org.csaude.mentoring.workSchedule.work;
 
+import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -11,16 +12,19 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
 import mz.org.csaude.mentoring.model.location.Cabinet;
 import mz.org.csaude.mentoring.workSchedule.rest.CabinetRestService;
-import mz.org.csaude.mentoring.workSchedule.rest.CareerRestService;
 
-public class CabinetWork extends BaseWorker<Cabinet> {
-    public CabinetWork(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+public class CabinetWorker extends BaseWorker<Cabinet> {
+
+    private CabinetRestService cabinetRestService;
+
+    public CabinetWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
+        this.cabinetRestService = new CabinetRestService((Application) getApplicationContext());
     }
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-        CabinetRestService.restGetCabinets(offset, limit, this);
+        this.cabinetRestService.restGetCabinets(offset, limit, this);
     }
     @Override
     protected void doOnStart() {

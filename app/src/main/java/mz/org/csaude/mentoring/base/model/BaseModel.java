@@ -20,6 +20,8 @@ public abstract class BaseModel implements Serializable {
     @DatabaseField(columnName = COLUMN_UUID, unique = true)
     private String uuid;
 
+    protected int listPosition;
+
     public int getId() {
         return id;
     }
@@ -34,5 +36,13 @@ public abstract class BaseModel implements Serializable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public void setListPosition(int listPosition) {
+        this.listPosition = listPosition;
+    }
+
+    public int getListPosition() {
+        return listPosition;
     }
 }

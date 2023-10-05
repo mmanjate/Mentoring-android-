@@ -45,7 +45,7 @@ public class CareerVM extends BaseViewModel {
         notifyPropertyChanged(BR.careerType);
     }
 
-    public void setPosition(String position){
+    public void setCareerPosition(String position){
         this.career.setPosition(position);
         notifyPropertyChanged(BR.position);
     }

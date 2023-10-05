@@ -18,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 
+import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -37,6 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.model.BaseModel;
@@ -526,5 +529,39 @@ public class Utilities {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static void validateTextField(Context context, TextView view){
+        if (view.getText().toString().isEmpty()) {
+            view.setError(context.getString(R.string.required_field));
+            view.requestFocus();
+        }
+    }
+
+    public static boolean validadePhoneNumber(Context context, TextView view){
+        Pattern pattern = Pattern.compile("^\\+\\d{12}$");
+        Matcher matcher = pattern.matcher(view.getText().toString());
+
+        if (!matcher.find()) {
+            view.setError(context.getString(R.string.phone_number_invalid));
+            view.requestFocus();
+            return true;
+        }
+
+        return false;
+    }
+    public static boolean validadeEmail(Context context, TextView view){
+        String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(regexPattern);
+        Matcher matcher = pattern.matcher(view.getText().toString());
+
+        if (!matcher.find()) {
+            view.setError(context.getString(R.string.email_invalid));
+            view.requestFocus();
+            return true;
+        }
+
+        return false;
     }
 }

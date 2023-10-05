@@ -4,7 +4,7 @@ public interface Listble {
 
     int getId();
 
-    default int getPosition() {
+    default int getListPosition() {
         return 0;
     }
 

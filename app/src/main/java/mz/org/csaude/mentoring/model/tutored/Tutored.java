@@ -58,6 +58,15 @@ public class Tutored extends BaseModel implements UserIndividual {
         this.user = user;
     }
 
+    public Tutored(String name, String surname, String phoneNumber, String email, Career career, User user) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.career = career;
+        this.user = user;
+    }
+
     public Tutored(TutoredDTO tutoredDTO) {
         this.setUuid(tutoredDTO.getUuid());
         this.setCode(tutoredDTO.getCode());

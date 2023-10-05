@@ -19,6 +19,7 @@ import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.common.ApplicationStep;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.util.LoadingDialog;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
 
@@ -31,6 +32,7 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
     //protected AppSettingsService settingsService;
 
 
+    LoadingDialog loadingDialog;
 
 
     private boolean viewListEditButton;
@@ -50,6 +52,8 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
+
+        callbacks = new PropertyChangeRegistry();
 
         notificationManager = NotificationManagerCompat.from(getApplication());
         this.notificationId = ThreadLocalRandom.current().nextInt();
@@ -148,5 +152,9 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
     public void setSelectedListble(Listble selectedListble) {
         this.selectedListble = selectedListble;
+    }
+
+    public LoadingDialog getLoadingDialog() {
+        return loadingDialog;
     }
 }

@@ -49,4 +49,6 @@
     <string name="phone_number_invalid">Número de telefone inválido</string>
     <string name="email_invalid">E-mail inválido</string>
     <string name="email">E-mail</string>
+    <string name="local">Local</string>
 </resources>
+

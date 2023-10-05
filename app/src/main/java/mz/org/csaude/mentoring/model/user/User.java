@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
+import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 
@@ -18,6 +19,7 @@ public class User extends BaseModel {
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_SALT = "salt";
     public static final String COLUMN_ADMIN= "admin";
+    public static final String COLUMN_TYPE= "type";
 
     @DatabaseField(columnName = COLUMN_USER_NAME)
     private String userName;
@@ -29,7 +31,10 @@ public class User extends BaseModel {
     private String salt;
 
     @DatabaseField(columnName = COLUMN_ADMIN)
-    private String admin;
+    private boolean admin;
+
+    @DatabaseField(columnName = COLUMN_TYPE)
+    private String type;
 
     private UserIndividual userIndividual;
 
@@ -39,6 +44,15 @@ public class User extends BaseModel {
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
+    }
+
+    public User(UserDTO userDTO) {
+        this.userName = userDTO.getUsername();
+        this.password = userDTO.getPassword();
+        this.salt = userDTO.getSalt();
+        this.admin = userDTO.isAdmin();
+        this.type = userDTO.getType();
+        this.setUuid(userDTO.getUuid());
     }
 
     public String getUserName() {
@@ -65,12 +79,20 @@ public class User extends BaseModel {
         this.salt = salt;
     }
 
-    public String getAdmin() {
+    public boolean isAdmin() {
         return admin;
     }
 
-    public void setAdmin(String admin) {
+    public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public boolean isTutor() {

@@ -91,4 +91,17 @@ public class CareerServiceImpl extends BaseServiceImpl<Career> implements Career
     public Listble getAllCareers() {
         return null;
     }
+
+    public Career savedOrUpdateCareer(Career career) throws SQLException {
+
+        List<Career> careers = this.careerDAO.queryForEq("uuid", career.getUuid());
+
+        if(careers.isEmpty()){
+          this.careerDAO.createOrUpdate(career);
+          return career;
+        }
+        return careers.get(0);
+    }
+
+
 }

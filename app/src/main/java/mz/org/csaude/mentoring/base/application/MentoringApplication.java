@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import lombok.Getter;
+import mz.org.csaude.mentoring.base.auth.AuthInterceptorImpl;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -26,10 +26,14 @@ public class MentoringApplication  extends Application {
     private Retrofit retrofit;
     private ObjectMapper mapper;
 
+    AuthInterceptorImpl interceptor;
+
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+
+        interceptor = new AuthInterceptorImpl(getApplicationContext());
 
         mapper = new ObjectMapper();
 
@@ -50,6 +54,7 @@ public class MentoringApplication  extends Application {
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .readTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .build();
 

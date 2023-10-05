@@ -17,16 +17,23 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
 
     public MentorshipServiceImpl(Application application, User currentUser) {
         super(application, currentUser);
+        init(application,currentUser );
     }
 
     public MentorshipServiceImpl(Application application) {
         super(application);
+        init(application, null);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
-        this.mentorshipDAO = getDataBaseHelper().getMentorshipDAO();
+    public void init(Application application, User currentUser){
+        try {
+            super.init(application, currentUser);
+            this.mentorshipDAO = getDataBaseHelper().getMentorshipDAO();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
@@ -54,5 +61,10 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
     @Override
     public Mentorship getById(int id) throws SQLException {
         return this.mentorshipDAO.queryForId(id);
+    }
+
+    @Override
+    public List<Mentorship> getMentorshipByTutor(String uuidTutor) throws SQLException {
+        return this.mentorshipDAO.getMentorshipByTutor(application ,uuidTutor);
     }
 }

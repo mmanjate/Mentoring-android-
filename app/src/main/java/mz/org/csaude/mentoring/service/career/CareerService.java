@@ -16,4 +16,7 @@ public interface CareerService extends BaseService<Career> {
     List<Career> getCareersByCareerType(CareerType careerType) throws SQLException;
 
     Listble getAllCareers();
+
+    Career savedOrUpdateCareer(Career career) throws SQLException;
+
 }

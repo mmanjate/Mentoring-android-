@@ -8,12 +8,19 @@ xmlns:bind="http://schemas.android.com/apk/res-auto">
         <variable
             name="viewModel"
             type="mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM" />
+        <variable name="careerTypeAdapter"         type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
+        <variable name="careerAdapter"          type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
         <import type="android.view.View"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <fragment android:name="mz.org.csaude.mentoring.view.tutored.fragment.TutoredFragment"
+                  android:id="@+id/tutored_fragment"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent" />
 
     </LinearLayout>
 

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.model.career.Career;
+import mz.org.csaude.mentoring.model.career.CareerType;
 
 public class CareerDAOImpl extends BaseDaoImpl<Career, Integer> implements CareerDAO {
 
@@ -27,5 +28,11 @@ public class CareerDAOImpl extends BaseDaoImpl<Career, Integer> implements Caree
     public boolean checkCareerExistance(String uuid) throws SQLException {
         List<Career> careers = this.queryForEq("uuid", uuid);
         return !careers.isEmpty();
+    }
+
+    @Override
+    public List<Career> findByCareerType(CareerType careerType) throws SQLException {
+        List<Career> careers = this.queryForEq("career_type_id", careerType);
+        return careers;
     }
 }

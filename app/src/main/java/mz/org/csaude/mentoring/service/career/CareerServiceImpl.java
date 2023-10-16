@@ -5,6 +5,7 @@ import android.app.Application;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.career.CareerDAO;
 import mz.org.csaude.mentoring.dao.career.CareerTypeDAO;
@@ -81,6 +82,16 @@ public class CareerServiceImpl extends BaseServiceImpl<Career> implements Career
     }
 
     @Override
+    public List<Career> getCareersByCareerType(CareerType careerType) throws SQLException {
+        List<Career> careers = this.careerDAO.findByCareerType(careerType);
+        return careers;
+    }
+
+    @Override
+    public Listble getAllCareers() {
+        return null;
+    }
+
     public Career savedOrUpdateCareer(Career career) throws SQLException {
 
         List<Career> careers = this.careerDAO.queryForEq("uuid", career.getUuid());

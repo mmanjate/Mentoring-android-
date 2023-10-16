@@ -8,6 +8,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.career.CareerDAOImpl;
 import mz.org.csaude.mentoring.dao.career.CareerTypeDAOImpl;
@@ -18,7 +19,7 @@ import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 @NoArgsConstructor
 @DatabaseTable(tableName = CareerType.COLUMN_TABLE_NAME, daoClass = CareerTypeDAOImpl.class)
 @EqualsAndHashCode(callSuper=false)
-public class CareerType extends BaseModel {
+public class CareerType extends BaseModel implements Listble {
 
     public static final String COLUMN_TABLE_NAME = "career_type";
 
@@ -43,8 +44,19 @@ public class CareerType extends BaseModel {
         this.setDescription(careerTypeDTO.getDescription());
     }
 
+    @Override
+    public int getListPosition() {
+        return Listble.super.getListPosition();
+    }
+
+    @Override
     public String getDescription() {
-        return description;
+        return this.description;
+    }
+
+    @Override
+    public int getDrawable() {
+        return 0;
     }
 
     public void setDescription(String description) {

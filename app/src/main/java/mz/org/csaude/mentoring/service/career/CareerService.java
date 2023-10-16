@@ -12,4 +12,6 @@ public interface CareerService extends BaseService<Career> {
     void savedOrUpdateCareers(List<CareerDTO> careerDTOS) throws SQLException;
 
     Career savedOrUpdateCareer(Career career) throws SQLException;
+
+    Career getByuuid(String uuid);
 }

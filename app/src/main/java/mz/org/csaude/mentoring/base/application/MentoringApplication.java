@@ -9,6 +9,9 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import mz.org.csaude.mentoring.base.auth.AuthInterceptorImpl;
+import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.service.ronda.RondaService;
+import mz.org.csaude.mentoring.service.ronda.RondaServiceImpl;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -21,11 +24,14 @@ public class MentoringApplication  extends Application {
 
     // 10.10.12.97 http://10.0.2.2:8087  192.168.16.104
 
-    private static final String BASE_URL = "http://10.10.12.57:8087";
+    private static final String BASE_URL = "http://10.10.12.65:8087";
+
+    private User authenticatedUser;
 
     private Retrofit retrofit;
     private ObjectMapper mapper;
 
+    private RondaService rondaService;
     AuthInterceptorImpl interceptor;
 
     @Override
@@ -67,5 +73,18 @@ public class MentoringApplication  extends Application {
 
     public Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    public User getAuthenticatedUser() {
+        return authenticatedUser;
+    }
+
+    public void setAuthenticatedUser(User authenticatedUser) {
+        this.authenticatedUser = authenticatedUser;
+    }
+
+    public RondaService getRondaService() {
+        if (this.rondaService == null) this.rondaService = new RondaServiceImpl(this);
+        return rondaService;
     }
 }

@@ -15,20 +15,15 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
 
     MentorshipDAO mentorshipDAO;
 
-    public MentorshipServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-        init(application,currentUser );
-    }
 
     public MentorshipServiceImpl(Application application) {
         super(application);
-        init(application, null);
     }
 
     @Override
-    public void init(Application application, User currentUser){
+    public void init(Application application){
         try {
-            super.init(application, currentUser);
+            super.init(application);
             this.mentorshipDAO = getDataBaseHelper().getMentorshipDAO();
         } catch (SQLException e) {
             throw new RuntimeException(e);

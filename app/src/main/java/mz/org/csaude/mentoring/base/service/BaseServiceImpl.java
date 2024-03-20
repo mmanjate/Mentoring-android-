@@ -4,6 +4,7 @@ import android.app.Application;
 
 import java.sql.SQLException;
 
+import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.databasehelper.MentoringDataBaseHelper;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.model.user.User;
@@ -16,26 +17,16 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     public static Application app;
     protected User currentUser;
 
-    public BaseServiceImpl(Application application, User currentUser) {
-        try {
-            init(application,currentUser);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public BaseServiceImpl(Application application) {
         try {
-            init(application,null);
+            init(application);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void init(Application application, User currentUser) throws SQLException {
+    public void init(Application application) throws SQLException {
         this.dataBaseHelper = MentoringDataBaseHelper.getInstance(application);
-
-        this.currentUser = currentUser;
         this.application=application;
         BaseServiceImpl.app = application;
     }
@@ -53,6 +44,6 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     }
 
     public User getCurrentUser() {
-        return currentUser;
+        return ((MentoringApplication) this.application).getAuthenticatedUser();
     }
 }

@@ -47,6 +47,9 @@ public interface SyncDataService {
     @POST("/login")
     Call<LoginResponse> login(@Body RequestBody body);
 
+   /* @POST("users/refresh-token/")
+    suspend fun refreshAccessToken(): TokenResponse*/
+
     @GET("/user/getByCredencials/{username}/{password}")
     Call<UserDTO> getByCredencials(@Path("username") final String username, @Path("password") final String password);
 

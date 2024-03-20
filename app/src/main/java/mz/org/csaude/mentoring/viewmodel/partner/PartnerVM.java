@@ -22,7 +22,7 @@ public class PartnerVM extends BaseViewModel {
     public PartnerVM(@NonNull Application application) {
         super(application);
 
-        this.partnerService = new PartnerServiceImpl(application, getCurrentUser());
+        this.partnerService = new PartnerServiceImpl(application);
     }
 
     @Override

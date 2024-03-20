@@ -22,7 +22,7 @@ public class TutorVM extends BaseViewModel {
 
     public TutorVM(@NonNull Application application) {
         super(application);
-        this.tutorService = new TutorServiceImpl(application, getCurrentUser());
+        this.tutorService = new TutorServiceImpl(application);
     }
 
     @Bindable

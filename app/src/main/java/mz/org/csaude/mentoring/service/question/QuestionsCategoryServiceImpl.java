@@ -15,17 +15,14 @@ implements QuestionsCategoryService{
 
     QuestionsCategoryDAO questionsCategoryDAO;
 
-    public QuestionsCategoryServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
 
     public QuestionsCategoryServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.questionsCategoryDAO = getDataBaseHelper().getQuestionsCategoryDAO();
     }
     @Override

@@ -15,6 +15,9 @@ public class LoginResponse {
     @SerializedName("username")
     private String username;
 
+    @SerializedName("expires_in")
+    private Long expires_in;
+
     public int getStatusCode() {
         return statusCode;
     }
@@ -40,4 +43,11 @@ public class LoginResponse {
         this.access_token = access_token;
     }
 
+    public Long getExpires_in() {
+        return expires_in;
+    }
+
+    public void setExpires_in(Long expires_in) {
+        this.expires_in = expires_in;
+    }
 }

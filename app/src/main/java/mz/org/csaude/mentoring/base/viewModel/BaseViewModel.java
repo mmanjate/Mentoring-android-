@@ -16,6 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
+import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.common.ApplicationStep;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
 import mz.org.csaude.mentoring.model.user.User;
@@ -113,6 +114,12 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
         //notifyPropertyChanged(BR.currentUser);
+    }
+
+    @NonNull
+    @Override
+    public MentoringApplication getApplication() {
+        return super.getApplication();
     }
 
     @Bindable

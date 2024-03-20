@@ -14,17 +14,14 @@ public class SessionStatusServiceImpl extends BaseServiceImpl<SessionStatus> imp
 
     SessionStatusDAO sessionStatusDAO;
 
-    public SessionStatusServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
 
     public SessionStatusServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.sessionStatusDAO = getDataBaseHelper().getSessionStatusDAO();
     }
 

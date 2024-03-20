@@ -10,7 +10,7 @@ ext.minimumSdkVersion = 28
 
 android {
     namespace 'mz.org.csaude.mentoring'
-    compileSdk 33
+    compileSdk 34
 
     buildFeatures {
         dataBinding = true
@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId "mz.org.csaude.mentoring"
         minSdk 28
-        targetSdk 33
+        targetSdk 34
         versionCode generateVersionCode()
         versionName generateVersionName()
 
@@ -66,6 +66,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.6.0'
     implementation 'androidx.navigation:navigation-ui:2.6.0'
     implementation 'androidx.annotation:annotation:1.6.0'
+    implementation 'androidx.activity:activity:1.8.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

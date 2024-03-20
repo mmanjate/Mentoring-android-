@@ -21,17 +21,14 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
 
     CareerDAO careerDAO;
 
-    public TutoredServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
 
     public TutoredServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.tutoredDao = getDataBaseHelper().getTutoredDao();
         this.careerDAO = getDataBaseHelper().getCareerDAO();
     }

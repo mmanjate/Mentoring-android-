@@ -26,7 +26,7 @@ public class AnswerVM extends BaseViewModel {
     public AnswerVM(@NonNull Application application) {
         super(application);
 
-        this.answerService = new AnswerServiceImpl(application, getCurrentUser());
+        this.answerService = new AnswerServiceImpl(application);
     }
 
     @Override

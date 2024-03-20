@@ -14,17 +14,13 @@ public class QuestionTypeServiceImpl extends BaseServiceImpl<QuestionType> imple
 
     QuestionTypeDAO questionTypeDAO;
 
-    public QuestionTypeServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
-
     public QuestionTypeServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.questionTypeDAO = getDataBaseHelper().getQuestionTypeDAO();
     }
 

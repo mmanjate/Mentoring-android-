@@ -15,17 +15,15 @@ public class TutorLocationServiceImpl extends BaseServiceImpl<TutorLocation> imp
 
     TutorLocationDAO tutorLocationDAO;
 
-    public TutorLocationServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
+
 
     public TutorLocationServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.tutorLocationDAO = getDataBaseHelper().getTutorLocationDAO();
     }
 

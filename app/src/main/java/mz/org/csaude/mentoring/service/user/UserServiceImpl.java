@@ -12,13 +12,15 @@ import mz.org.csaude.mentoring.model.user.User;
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
     private UserDao userDao;
+
     public UserServiceImpl(Application application) {
         super(application);
     }
 
+
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
        this.userDao = getDataBaseHelper().getUserDao();
     }
 

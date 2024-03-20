@@ -24,7 +24,7 @@ public class IndicatorVM extends BaseViewModel {
 
     public IndicatorVM(@NonNull Application application) {
         super(application);
-        this.indicatorService = new IndicatorServiceImpl(application, getCurrentUser());
+        this.indicatorService = new IndicatorServiceImpl(application);
     }
 
     @Override

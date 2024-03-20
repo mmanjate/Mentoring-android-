@@ -15,17 +15,13 @@ public class CareerTypeServiceImpl extends BaseServiceImpl<CareerType> implement
 
     CareerTypeDAO careerTypeDAO;
 
-    public CareerTypeServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
-
     public CareerTypeServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.careerTypeDAO = getDataBaseHelper().getCareerTypeDAO();
     }
 

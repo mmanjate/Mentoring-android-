@@ -22,7 +22,7 @@ public class HealthFacilityVM extends BaseViewModel {
 
     public HealthFacilityVM(@NonNull Application application) {
         super(application);
-        this.healthFacilityService = new HealthFacilityServiceImpl(application, getCurrentUser());
+        this.healthFacilityService = new HealthFacilityServiceImpl(application);
     }
 
     @Override

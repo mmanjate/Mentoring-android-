@@ -14,17 +14,14 @@ public class IndicatorServiceImpl extends BaseServiceImpl<Indicator> implements 
 
     IndicatorDAO indicatorDAO;
 
-    public IndicatorServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
 
     public IndicatorServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.indicatorDAO = getDataBaseHelper().getIndicatorDAO();
     }
 

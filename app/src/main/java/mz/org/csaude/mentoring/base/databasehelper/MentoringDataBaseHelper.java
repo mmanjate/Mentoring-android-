@@ -32,6 +32,10 @@ import mz.org.csaude.mentoring.dao.programmaticArea.TutorProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionTypeDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionsCategoryDAO;
+import mz.org.csaude.mentoring.dao.ronda.RondaDAO;
+import mz.org.csaude.mentoring.dao.ronda.RondaMenteeDAO;
+import mz.org.csaude.mentoring.dao.ronda.RondaMentorDAO;
+import mz.org.csaude.mentoring.dao.rondatype.RondaTypeDAO;
 import mz.org.csaude.mentoring.dao.session.SessionDAO;
 import mz.org.csaude.mentoring.dao.session.SessionStatusDAO;
 import mz.org.csaude.mentoring.dao.setting.SettingDAO;
@@ -62,6 +66,10 @@ import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
 import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.ronda.RondaMentee;
+import mz.org.csaude.mentoring.model.ronda.RondaMentor;
+import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
 import mz.org.csaude.mentoring.model.setting.PartnerSetting;
@@ -138,6 +146,14 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
     private TutorTutoredDao tutorTutoredDao;
 
     private UserDao userDao;
+
+    private RondaDAO rondaDAO;
+
+    private RondaMentorDAO rondaMentorDAO;
+
+    private RondaMenteeDAO rondaMenteeDAO;
+
+    private RondaTypeDAO rondaTypeDAO;
 
     private static MentoringDataBaseHelper dataBaseHelper;
 
@@ -348,6 +364,35 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return tutorTutoredDao;
     }
+
+    public RondaTypeDAO getRondaTypeDAO() throws SQLException {
+        if(rondaTypeDAO == null){
+            rondaTypeDAO = getDao(RondaType.class);
+        }
+        return rondaTypeDAO;
+    }
+
+    public RondaMenteeDAO getRondaMenteeDAO() throws SQLException {
+        if(rondaMenteeDAO == null){
+            rondaMenteeDAO = getDao(RondaMentee.class);
+        }
+        return rondaMenteeDAO;
+    }
+
+    public RondaMentorDAO getRondaMentorDAO() throws SQLException {
+        if(rondaMentorDAO == null){
+            rondaMentorDAO = getDao(RondaMentor.class);
+        }
+        return rondaMentorDAO;
+    }
+
+    public RondaDAO getRondaDAO() throws SQLException {
+        if(rondaDAO == null){
+            rondaDAO = getDao(Ronda.class);
+        }
+        return rondaDAO;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
 
@@ -382,6 +427,10 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, PartnerSetting.class);
             TableUtils.createTableIfNotExists(connectionSource, TutorTutored.class);
             TableUtils.createTableIfNotExists(connectionSource, User.class);
+            TableUtils.createTableIfNotExists(connectionSource, Ronda.class);
+            TableUtils.createTableIfNotExists(connectionSource, RondaType.class);
+            TableUtils.createTableIfNotExists(connectionSource, RondaMentee.class);
+            TableUtils.createTableIfNotExists(connectionSource, RondaMentor.class);
 
 
         } catch (SQLException e) {

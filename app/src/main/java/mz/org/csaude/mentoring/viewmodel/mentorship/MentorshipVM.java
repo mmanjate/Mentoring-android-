@@ -46,9 +46,9 @@ public class MentorshipVM extends BaseViewModel {
 
     public MentorshipVM(@NonNull Application application) {
         super(application);
-        this.mentorshipService = new MentorshipServiceImpl(application, getCurrentUser());
-        provinceService = new ProvinceServiceImpl(application, getCurrentUser());
-        formService = new FormServiceImpl(application, getCurrentUser());
+        this.mentorshipService = new MentorshipServiceImpl(application);
+        provinceService = new ProvinceServiceImpl(application);
+        formService = new FormServiceImpl(application);
     }
 
     @Override

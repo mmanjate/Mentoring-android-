@@ -21,7 +21,7 @@ public class CabinetVM extends BaseViewModel {
 
     public CabinetVM(@NonNull Application application) {
         super(application);
-        this.cabinetService = new CabinetServiceImpl(application, getCurrentUser());
+        this.cabinetService = new CabinetServiceImpl(application);
     }
 
     @Override

@@ -31,17 +31,14 @@ public class TutorServiceImpl extends BaseServiceImpl<Tutor> implements TutorSer
 
     UserService userService;
 
-    public TutorServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
 
     public TutorServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.tutorDAO = getDataBaseHelper().getTutorDAO();
         this.careerService = new CareerServiceImpl(application);
         this.partnerService = new PartnerServiceImpl(application);
@@ -85,11 +82,10 @@ public class TutorServiceImpl extends BaseServiceImpl<Tutor> implements TutorSer
 
                 Tutor tutor = new Tutor(tutorDTO);
 
-                tutor.setCareer(careerService.getByuuid(tutor.getCareer().getUuid()));
+                tutor.setCareer(careerService.getByuuid(tutorDTO.getCareerDTO().getUuid()));
                 //Career career = this.careerService.savedOrUpdateCareer(new Career(tutorDTO.getCareerDTO()));
                 Partner partner = this.partnerService.savedOrUpdatePartner(new Partner(tutorDTO.getPartnerDTO()));
 
-                tutor.setCareer(career);
                 tutor.setPartner(partner);
                 tutor.setUser(getCurrentUser());
 

@@ -50,8 +50,8 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
             Bundle bundle = intent.getExtras();
             //activityCreateTutoredBinding.setViewModel((TutoredVM)getRelatedViewModel());
         }
-        tutoredService = new TutoredServiceImpl(getApplication(), getCurrentUser());
-        careerService = new CareerServiceImpl(getApplication(), getCurrentUser());
+        tutoredService = new TutoredServiceImpl(getApplication());
+        careerService = new CareerServiceImpl(getApplication());
         populateView();
         setPositions(0);
 

@@ -23,7 +23,7 @@ public class QuestionVM extends BaseViewModel {
 
     public QuestionVM(@NonNull Application application) {
         super(application);
-        this.questionService = new QuestionServiceImpl(application, getCurrentUser());
+        this.questionService = new QuestionServiceImpl(application);
     }
 
     @Override

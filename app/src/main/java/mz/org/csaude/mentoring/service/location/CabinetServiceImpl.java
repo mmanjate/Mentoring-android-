@@ -16,17 +16,13 @@ public class CabinetServiceImpl extends BaseServiceImpl<Cabinet> implements Cabi
 
     CabinetDAO cabinetDAO;
 
-    public CabinetServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
-
     public CabinetServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.cabinetDAO = getDataBaseHelper().getCabinetDAO();
     }
 

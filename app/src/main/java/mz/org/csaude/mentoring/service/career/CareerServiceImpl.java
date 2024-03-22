@@ -23,17 +23,13 @@ public class CareerServiceImpl extends BaseServiceImpl<Career> implements Career
 
     CareerTypeService careerTypeService;
 
-    public CareerServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
-
     public CareerServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.careerDAO = getDataBaseHelper().getCareerDAO();
         this.careerTypeDAO = getDataBaseHelper().getCareerTypeDAO();
         this.careerTypeService = new CareerTypeServiceImpl(application);
@@ -101,6 +97,11 @@ public class CareerServiceImpl extends BaseServiceImpl<Career> implements Career
           return career;
         }
         return careers.get(0);
+    }
+
+    @Override
+    public Career getByuuid(String uuid) {
+        return null;
     }
 
 

@@ -90,7 +90,7 @@ public class TutorRestService extends BaseRestService {
 
                 try {
 
-                TutorService tutorService = new TutorServiceImpl(LoadMetadataServiceImpl.APP, currentUser);
+                TutorService tutorService = new TutorServiceImpl(LoadMetadataServiceImpl.APP);
                 Toast.makeText(APP.getApplicationContext(), "Carregando os Tutores", Toast.LENGTH_SHORT).show();
                 tutorDTOS.add(data);
                 tutorService.saveOrUpdateTutors(tutorDTOS);

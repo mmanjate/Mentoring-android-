@@ -16,17 +16,13 @@ public class ProvinceServiceImpl extends BaseServiceImpl<Province> implements Pr
 
     ProvinceDAO provinceDAO;
 
-    public ProvinceServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
-
     public ProvinceServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.provinceDAO = getDataBaseHelper().getProvinceDAO();
     }
 

@@ -23,7 +23,7 @@ public class FormTargetVM extends BaseViewModel {
 
     public FormTargetVM(@NonNull Application application) {
         super(application);
-        this.formTargetService = new FormTargetServiceImpl(application, getCurrentUser());
+        this.formTargetService = new FormTargetServiceImpl(application);
     }
 
     @Override

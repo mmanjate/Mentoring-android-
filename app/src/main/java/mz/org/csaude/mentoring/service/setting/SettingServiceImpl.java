@@ -15,12 +15,9 @@ public class SettingServiceImpl extends BaseServiceImpl<Setting> implements Sett
 
     SettingDAO settingDAO;
 
-    public SettingServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
 
     public SettingServiceImpl(Application application) {
-        super(application, null);
+        super(application);
         try {
             this.settingDAO = getDataBaseHelper().getSettingDAO();
         } catch (SQLException e) {
@@ -29,8 +26,8 @@ public class SettingServiceImpl extends BaseServiceImpl<Setting> implements Sett
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.settingDAO = getDataBaseHelper().getSettingDAO();
     }
     @Override

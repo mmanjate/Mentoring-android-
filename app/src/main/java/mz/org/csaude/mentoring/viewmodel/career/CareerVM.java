@@ -22,7 +22,7 @@ public class CareerVM extends BaseViewModel {
     public CareerVM(@NonNull Application application) {
         super(application);
 
-        this.careerService = new CareerServiceImpl(application, getCurrentUser());
+        this.careerService = new CareerServiceImpl(application);
     }
 
     @Override

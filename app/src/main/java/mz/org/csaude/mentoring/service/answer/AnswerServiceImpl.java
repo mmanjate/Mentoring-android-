@@ -14,16 +14,13 @@ public class AnswerServiceImpl extends BaseServiceImpl<Answer> implements Answer
 
     AnswerDAO answerDAO;
 
-    public AnswerServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
 
     public AnswerServiceImpl(Application application) {
         super(application);
     }
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.answerDAO = getDataBaseHelper().getAnswerDAO();
     }
 

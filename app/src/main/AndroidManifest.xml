@@ -26,6 +26,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.ronda.RondaListActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Mentoring.NoActionBar">
@@ -38,8 +41,7 @@
         <activity
             android:name=".view.login.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.Mentoring.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.Mentoring.NoActionBar"></activity>
         <activity
             android:name=".view.mentorship.ListMentorshipActivity"
             android:exported="false" />
@@ -56,7 +58,7 @@
             android:name=".view.home.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.Mentoring.NoActionBar"></activity>
+            android:theme="@style/Theme.Mentoring.NoActionBar" />
     </application>
 
 </manifest>

@@ -35,8 +35,8 @@ public class ListMentorshipVM extends BaseViewModel {
     public ListMentorshipVM(@NonNull Application application) {
         super(application);
 
-        this.mentorshipService = new MentorshipServiceImpl(application, getCurrentUser());
-        this.sessionService = new SessionServiceImpl(application, getCurrentUser());
+        this.mentorshipService = new MentorshipServiceImpl(application);
+        this.sessionService = new SessionServiceImpl(application);
     }
 
     @Override

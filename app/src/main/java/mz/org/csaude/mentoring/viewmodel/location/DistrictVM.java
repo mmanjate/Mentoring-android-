@@ -22,7 +22,7 @@ public class DistrictVM extends BaseViewModel {
 
     public DistrictVM(@NonNull Application application) {
         super(application);
-        this.districtService = new DistrictServiceImpl(application, getCurrentUser());
+        this.districtService = new DistrictServiceImpl(application);
     }
 
     @Override

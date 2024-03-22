@@ -23,7 +23,7 @@ public class ProgrammaticAreaVM extends BaseViewModel {
     public ProgrammaticAreaVM(@NonNull Application application) {
         super(application);
 
-        this.programmaticAreaService = new ProgrammaticAreaServiceImpl(application, getCurrentUser());
+        this.programmaticAreaService = new ProgrammaticAreaServiceImpl(application);
     }
 
     @Override

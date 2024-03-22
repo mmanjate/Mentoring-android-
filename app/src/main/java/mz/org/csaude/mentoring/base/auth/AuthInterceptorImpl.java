@@ -22,8 +22,8 @@ public class AuthInterceptorImpl implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request newRequest = chain.request().newBuilder()
-                                    .header("Authorization","Bearer "+ this.sessionManager.fetchAuthToken())
-                                    .build();
+                .header("Authorization","Bearer "+ this.sessionManager.fetchAuthToken())
+                .build();
 
         return chain.proceed(newRequest);
     }

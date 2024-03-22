@@ -36,9 +36,9 @@ public class TutoredVM extends BaseViewModel {
     public TutoredVM(@NonNull Application application) {
         super(application);
 
-        this.tutoredService = new TutoredServiceImpl(application, getCurrentUser());
-        this.careerTypeService = new CareerTypeServiceImpl(application, getCurrentUser());
-        this.careerService = new CareerServiceImpl(application, getCurrentUser());
+        this.tutoredService = new TutoredServiceImpl(application);
+        this.careerTypeService = new CareerTypeServiceImpl(application);
+        this.careerService = new CareerServiceImpl(application);
     }
 
     @Override

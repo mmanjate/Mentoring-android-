@@ -14,17 +14,15 @@ public class HealthFacilityServiceImpl extends BaseServiceImpl<HealthFacility> i
 
     HealthFacilityDAO healthFacilityDAO;
 
-    public HealthFacilityServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
+
 
     public HealthFacilityServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.healthFacilityDAO = getDataBaseHelper().getHealthFacilityDAO();
     }
 

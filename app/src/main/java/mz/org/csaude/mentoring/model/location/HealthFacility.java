@@ -6,6 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.career.CareerDAOImpl;
 import mz.org.csaude.mentoring.dao.location.HealthFacilityDAOImpl;
@@ -15,7 +16,7 @@ import mz.org.csaude.mentoring.model.career.CareerType;
 @NoArgsConstructor
 @DatabaseTable(tableName = HealthFacility.COLUMN_TABLE_NAME, daoClass = HealthFacilityDAOImpl.class)
 @EqualsAndHashCode(callSuper=false)
-public class HealthFacility extends BaseModel {
+public class HealthFacility extends BaseModel implements Listble {
 
     public static final String COLUMN_TABLE_NAME = "health_facility";
     public static final String COLUMN_DISTRICT = "district_id";
@@ -39,5 +40,20 @@ public class HealthFacility extends BaseModel {
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public int getDrawable() {
+        return 0;
+    }
+
+    @Override
+    public String getCode() {
+        return null;
     }
 }

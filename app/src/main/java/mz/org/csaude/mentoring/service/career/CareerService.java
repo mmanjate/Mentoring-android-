@@ -19,4 +19,6 @@ public interface CareerService extends BaseService<Career> {
 
     Career savedOrUpdateCareer(Career career) throws SQLException;
 
+    Career getByuuid(String uuid);
+
 }

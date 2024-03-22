@@ -19,20 +19,16 @@ public class FormServiceImpl extends BaseServiceImpl<Form> implements FormServic
 
     TutorProgrammaticAreaDAO tutorProgrammaticAreaDAO;
 
-    public FormServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-        init(application, currentUser);
-    }
+
 
     public FormServiceImpl(Application application) {
         super(application);
-        init(application, null);
     }
 
     @Override
-    public void init(Application application, User currentUser) {
+    public void init(Application application) {
         try {
-            super.init(application, currentUser);
+            super.init(application);
             this.formDAO = getDataBaseHelper().getFormDAO();
             this.tutorProgrammaticAreaDAO = getDataBaseHelper().getTutorProgrammaticAreaDAO();
         } catch (SQLException e) {

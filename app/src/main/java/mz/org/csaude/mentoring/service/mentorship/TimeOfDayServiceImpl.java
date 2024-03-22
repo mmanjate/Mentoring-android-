@@ -14,17 +14,14 @@ public class TimeOfDayServiceImpl extends BaseServiceImpl<TimeOfDay> implements 
 
     TimeOfDayDAO timeOfDayDAO;
 
-    public TimeOfDayServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
 
     public TimeOfDayServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.timeOfDayDAO = getDataBaseHelper().getTimeOfDayDAO();
     }
 

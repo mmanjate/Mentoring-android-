@@ -24,7 +24,7 @@ public class FormVM extends BaseViewModel {
 
     public FormVM(@NonNull Application application) {
         super(application);
-        this.formService = new FormServiceImpl(application, getCurrentUser());
+        this.formService = new FormServiceImpl(application);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class SessionVM extends BaseViewModel {
 
     public SessionVM(@NonNull Application application) {
         super(application);
-        this.sessionService = new SessionServiceImpl(application, getCurrentUser());
+        this.sessionService = new SessionServiceImpl(application);
     }
 
     @Override

@@ -14,17 +14,14 @@ public class FormQuestionServiceImpl extends BaseServiceImpl<FormQuestion> imple
 
     FormQuestionDAO formQuestionDAO;
 
-    public FormQuestionServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
 
     public FormQuestionServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.formQuestionDAO = getDataBaseHelper().getFormQuestionDAO();
     }
     @Override

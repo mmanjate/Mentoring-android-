@@ -14,17 +14,13 @@ public class DoorServiceImpl extends BaseServiceImpl<Door> implements DoorServic
 
     DoorDAO doorDAO;
 
-    public DoorServiceImpl(Application application, User currentUser) {
-        super(application, currentUser);
-    }
-
     public DoorServiceImpl(Application application) {
         super(application);
     }
 
     @Override
-    public void init(Application application, User currentUser) throws SQLException {
-        super.init(application, currentUser);
+    public void init(Application application) throws SQLException {
+        super.init(application);
         this.doorDAO = getDataBaseHelper().getDoorDAO();
     }
 

@@ -21,7 +21,7 @@ public class SettingVM extends BaseViewModel {
 
     public SettingVM(@NonNull Application application) {
         super(application);
-        this.settingService = new SettingServiceImpl(application, getCurrentUser());
+        this.settingService = new SettingServiceImpl(application);
     }
 
     @Override

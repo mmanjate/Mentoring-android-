@@ -4,13 +4,14 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.location.DistrictDAOImpl;
 
 @Data
 @DatabaseTable(tableName = District.TABLE_NAME, daoClass = DistrictDAOImpl.class)
 @EqualsAndHashCode(callSuper=false)
-public class District extends BaseModel {
+public class District extends BaseModel implements Listble {
 
     public static final String TABLE_NAME = "district";
 
@@ -46,5 +47,20 @@ public class District extends BaseModel {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    @Override
+    public String getDescription() {
+        return this.district;
+    }
+
+    @Override
+    public int getDrawable() {
+        return 0;
+    }
+
+    @Override
+    public String getCode() {
+        return null;
     }
 }

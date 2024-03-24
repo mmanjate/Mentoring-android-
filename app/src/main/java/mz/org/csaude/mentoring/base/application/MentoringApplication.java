@@ -10,6 +10,12 @@ import java.util.concurrent.TimeUnit;
 
 import mz.org.csaude.mentoring.base.auth.AuthInterceptorImpl;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.service.location.DistrictService;
+import mz.org.csaude.mentoring.service.location.DistrictServiceImpl;
+import mz.org.csaude.mentoring.service.location.HealthFacilityService;
+import mz.org.csaude.mentoring.service.location.HealthFacilityServiceImpl;
+import mz.org.csaude.mentoring.service.location.ProvinceService;
+import mz.org.csaude.mentoring.service.location.ProvinceServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
 import mz.org.csaude.mentoring.service.ronda.RondaServiceImpl;
 import okhttp3.OkHttpClient;
@@ -32,6 +38,12 @@ public class MentoringApplication  extends Application {
     private ObjectMapper mapper;
 
     private RondaService rondaService;
+
+    private DistrictService districtService;
+
+    private ProvinceService provinceService;
+
+    private HealthFacilityService healthFacilityService;
     AuthInterceptorImpl interceptor;
 
     @Override
@@ -86,5 +98,20 @@ public class MentoringApplication  extends Application {
     public RondaService getRondaService() {
         if (this.rondaService == null) this.rondaService = new RondaServiceImpl(this);
         return rondaService;
+    }
+
+    public DistrictService getDistrictService() {
+        if (this.districtService == null) this.districtService = new DistrictServiceImpl(this);
+        return districtService;
+    }
+
+    public ProvinceService getProvinceService() {
+        if (this.provinceService == null) this.provinceService = new ProvinceServiceImpl(this);
+        return provinceService;
+    }
+
+    public HealthFacilityService getHealthFacilityService() {
+        if (this.healthFacilityService == null) this.healthFacilityService = new HealthFacilityServiceImpl(this);
+        return healthFacilityService;
     }
 }

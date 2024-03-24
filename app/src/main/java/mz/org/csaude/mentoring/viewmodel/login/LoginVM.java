@@ -67,7 +67,8 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
     }
 
     public void doLogin() {
-        userSyncService.doOnlineLogin(this);
+        goHome();
+        //userSyncService.doOnlineLogin(this);
         /*try {
             this.userService.login(this.user);
         } catch (SQLException e) {
@@ -91,7 +92,6 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
 
     private void goHome() {
         Map<String, Object> params = new HashMap<>();
-        params.put("user", getCurrentUser());
         getRelatedActivity().nextActivityFinishingCurrent(MainActivity.class, params);
     }
 

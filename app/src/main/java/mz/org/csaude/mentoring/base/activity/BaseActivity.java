@@ -87,15 +87,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
         }
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("mz.org.fgh.idartlite.ACTION_LOGOUT");
-        registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Log.d("onReceive","Logout in progress");
-                //nextActivity(LoginActivity.class);
-                finish();
-            }
-        }, intentFilter);
+        intentFilter.addAction("mz.org.csaude.mentoring.ACTION_LOGOUT");
+
     }
 
 

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="viewModel" type="mz.org.csaude.mentoring.viewmodel.ronda.RondaVM" />
+        <variable name="provinceAdapter"    type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
+        <variable name="districtAdapter"    type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
+        <variable name="healthFacilityAdapter"    type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
+        <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
+        <import type="android.view.View"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.ronda.RondaActivity">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <include layout="@layout/app_toolbar" />
+        </com.google.android.material.appbar.AppBarLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/dimen_15dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:id="@+id/initial_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_normal"
+                android:padding="3dp"
+                android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:text="Iniciar Ronda - Dados iniciais"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="@dimen/dimen_10dp"/>
+
+                <ImageButton
+                    android:id="@+id/btn_show_collapse"
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="match_parent"
+                    android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                    android:background="@color/background_layout"
+                    android:src="@drawable/baseline_expand_circle_down_24"
+                    android:layout_marginRight="@dimen/dimen_2dp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/initial_data_lyt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_4dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Data de Inicio"
+                    style="@style/input_labels"
+                    />
+                <EditText
+                    android:id="@+id/prescription_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_calendar"
+                    android:text="@{DateUtilities.formatToDDMMYYYY(viewModel.startDate)}"
+                    android:enabled="@{!viewModel.currentStep.applicationStepDisplay}"
+                    style="@style/bottom_border_edit_text_style"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Província"
+                    style="@style/input_labels"
+                    />
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_province"
+                    android:layout_width="fill_parent"
+                    style="@style/bottom_spinner_style"
+                    android:layout_height="wrap_content"
+                    app:adapter="@{provinceAdapter}"
+                    bind:selectedOpt="@={viewModel.selectedProvince}"/>
+                />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Distrito"
+                    style="@style/input_labels"
+                    />
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_district"
+                    android:layout_width="fill_parent"
+                    style="@style/bottom_spinner_style"
+                    android:layout_height="wrap_content"
+                    app:adapter="@{districtAdapter}"
+                    bind:selectedOpt="@={viewModel.selectedDistrict}"/>
+                />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Unidade Sanitária"
+                    style="@style/input_labels"
+                    />
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_health_facility"
+                    android:layout_width="fill_parent"
+                    style="@style/bottom_spinner_style"
+                    android:layout_height="wrap_content"
+                    app:adapter="@{healthFacilityAdapter}"
+                    bind:selectedOpt="@={viewModel.healthFacility}"/>
+                />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/mentees_lyt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_normal"
+                android:padding="3dp"
+                android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:text="Iniciar Ronda - Mentorados"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="@dimen/dimen_10dp"/>
+
+                <ImageButton
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="match_parent"
+                    android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                    android:background="@color/background_layout"
+                    android:src="@drawable/baseline_expand_circle_down_24"
+                    android:layout_marginRight="@dimen/dimen_2dp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/mentee_data_lyt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.currentStep.applicationStepDisplay ? View.GONE : View.VISIBLE}"
+                android:text="Nome/NUIT"
+                style="@style/input_labels"
+                />
+            <AutoCompleteTextView
+                android:id="@+id/aut_cmp_drugs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:dropDownWidth="wrap_content"
+                android:drawableRight="@drawable/baseline_person_search_24"
+                android:visibility="@{viewModel.currentStep.applicationStepDisplay ? View.GONE : View.VISIBLE}"
+                style="@style/bottom_border_edit_text_style"
+                android:text="@{viewModel.selectedDrug.description}"
+                android:padding="@dimen/dimen_4dp"
+                />
+            <ImageButton
+                android:id="@+id/imv_add_selected_drug"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/baseline_arrow_circle_down_24"
+                android:visibility="@{viewModel.currentStep.applicationStepDisplay ? View.GONE : View.VISIBLE}"
+                android:clickable="@{!viewModel.currentStep.applicationStepDisplay}"
+                android:onClick="@{() -> viewModel.addSelectedDrug()}"
+                android:layout_margin="@dimen/dimen_10dp"
+                android:background="@drawable/button_shape"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lista de Mentorandos Seleccionados"
+                style="@style/input_labels"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_selected_drugs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:background="@drawable/listble_shape"
+                android:scrollbars="vertical"/>
+        </LinearLayout>
+
+        </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

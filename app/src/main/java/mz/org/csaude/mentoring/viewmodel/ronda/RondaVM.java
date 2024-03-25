@@ -37,6 +37,8 @@ public class RondaVM extends BaseViewModel {
 
     private List<HealthFacility> healthFacilities;
 
+    private Tutored selectedMentee;
+
     public RondaVM(@NonNull Application application) {
         super(application);
 
@@ -114,5 +116,19 @@ public class RondaVM extends BaseViewModel {
     public void setSelectedDistrict(Listble selectedDistrict) {
         this.selectedDistrict = (District) selectedDistrict;
         notifyPropertyChanged(BR.selectedDistrict);
+    }
+
+    @Bindable
+    public Tutored getSelectedMentee() {
+        return selectedMentee;
+    }
+
+    public void setSelectedMentee(Tutored selectedMentee) {
+        this.selectedMentee = selectedMentee;
+        notifyPropertyChanged(BR.selectedMentee);
+    }
+
+    public void addSelectedMentee() {
+
     }
 }

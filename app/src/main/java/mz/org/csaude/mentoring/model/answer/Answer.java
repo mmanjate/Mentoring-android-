@@ -14,7 +14,7 @@ import mz.org.csaude.mentoring.model.indicator.Indicator;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.setting.Setting;
 
-@Data
+
 @DatabaseTable(tableName = Answer.TABLE_NAME, daoClass = AnswerDAOImpl.class)
 @EqualsAndHashCode(callSuper=false)
 public class Answer extends BaseModel {

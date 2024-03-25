@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import mz.org.csaude.mentoring.R;
+import mz.org.csaude.mentoring.adapter.recyclerview.tutored.TutoredAdapter;
 import mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
@@ -25,6 +26,8 @@ public class RondaActivity extends BaseActivity {
     private ListableSpinnerAdapter districtAdapter;
     private ListableSpinnerAdapter provinceAdapter;
     private ListableSpinnerAdapter healthFacilityAdapter;
+
+    private TutoredAdapter tutoredAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

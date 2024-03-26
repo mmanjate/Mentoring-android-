@@ -2,15 +2,14 @@ package mz.org.csaude.mentoring.adapter.tutored;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import mz.org.csaude.mentoring.R;
-import mz.org.csaude.mentoring.adapter.recyclerview.generic.AbstractRecycleViewAdapter;
 import mz.org.csaude.mentoring.databinding.TutoredListItemBinding;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

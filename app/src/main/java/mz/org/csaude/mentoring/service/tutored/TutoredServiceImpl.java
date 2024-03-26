@@ -8,13 +8,13 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.career.CareerDAO;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDao;
-import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
-import mz.org.csaude.mentoring.model.career.Career;
-import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.service.career.CareerService;
+import mz.org.csaude.mentoring.service.employee.EmployeeService;
+import mz.org.csaude.mentoring.service.employee.EmployeeServiceImpl;
 
 public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements TutoredService{
 
@@ -22,6 +22,7 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
 
     CareerDAO careerDAO;
 
+    EmployeeService employeeService;
 
     public TutoredServiceImpl(Application application) {
         super(application);
@@ -32,6 +33,7 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
         super.init(application);
         this.tutoredDao = getDataBaseHelper().getTutoredDao();
         this.careerDAO = getDataBaseHelper().getCareerDAO();
+        this.employeeService = new EmployeeServiceImpl(application);
     }
 
     public Tutored save(Tutored tutored) throws SQLException {
@@ -66,14 +68,10 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
         for (TutoredDTO tutoredDTO: tutoredDTOS) {
             boolean doesTutoredExist = this.tutoredDao.checkTutoredExistance(tutoredDTO.getUuid());
             if(!doesTutoredExist){
-                CareerDTO careerDTO = tutoredDTO.getCareerDTO();
-                List<Career> careers = this.careerDAO.queryForEq("uuid", careerDTO.getUuid());
-                if(careers.isEmpty()){
-                    throw new RuntimeException("Respectiva carreira com uuid: "+careerDTO.getUuid()+" nao existe!");
-                }
-                Career career = careers.get(0);
+                Employee employee = this.employeeService.saveOrUpdateEmployee(new Employee(tutoredDTO.getEmployeeDTO()));
+
                 Tutored tutored = new Tutored(tutoredDTO);
-                tutored.setCareer(career);
+                tutored.setEmployee(employee);
                 this.tutoredDao.createOrUpdate(tutored);
             }
         }

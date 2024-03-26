@@ -12,7 +12,6 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
-import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.HealthFacility;

@@ -1,7 +1,7 @@
 package mz.org.csaude.mentoring.view.tutored;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,7 +13,6 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityTutoredBinding;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.view.tutored.fragment.TutoredFragment;
-import mz.org.csaude.mentoring.viewmodel.home.HomeVM;
 import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
 
 public class TutoredActivity extends BaseActivity {

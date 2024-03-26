@@ -5,6 +5,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import mz.org.csaude.mentoring.model.location.Province;
 
@@ -20,5 +21,13 @@ public class ProvinceDAOImpl extends BaseDaoImpl<Province, Integer> implements P
 
     public ProvinceDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<Province> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
+    }
+
+
+    @Override
+    public boolean checkProvinceExistance(String uuid) throws SQLException {
+            List<Province> provinces = this.queryForEq("uuid", uuid);
+            return !provinces.isEmpty();
+
     }
 }

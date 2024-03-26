@@ -36,8 +36,8 @@ public class ListMentorshipAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         ((MentorShipViewHolder) holder).binding.mentorshipFormName.setText(mentorships.get(position).getForm().getName());
         ((MentorShipViewHolder) holder).binding.sessionStatus.setText(mentorships.get(position).getSession().getStatus().equals("COMPLETE") ? "complete" : "incomplete");
-        ((MentorShipViewHolder) holder).binding.tutoredName.setText(mentorships.get(position).getTutored().getName());
-        ((MentorShipViewHolder) holder).binding.healthFacility.setText(mentorships.get(position).getHealthFacility().getName());
+        ((MentorShipViewHolder) holder).binding.tutoredName.setText(mentorships.get(position).getTutored().getEmployee().getName());
+        ((MentorShipViewHolder) holder).binding.healthFacility.setText(mentorships.get(position).getHealthFacility().getDescription());
         ((MentorShipViewHolder) holder).binding.processDate.setText("(" + mentorships.get(position).getSession().getStartDate().toString() + ")");
 
     }

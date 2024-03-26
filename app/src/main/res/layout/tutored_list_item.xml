@@ -49,7 +49,7 @@
                     android:id="@+id/prescriptionId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{tutored.name}"
+                    android:text="@{tutored.employee.name}"
                     android:paddingBottom="@dimen/dimen_10dp"
                     android:textSize="@dimen/dimen_12dp"
                     android:textStyle="bold"/>
@@ -73,13 +73,13 @@
                         android:id="@+id/dataLevantamento"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{tutored.career.position}" />
+                         />
 
                     <TextView
                         android:id="@+id/supply"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{tutored.phoneNumber}" />
+                        android:text="@{tutored.employee.phoneNumber}" />
 
                 </LinearLayout>
 

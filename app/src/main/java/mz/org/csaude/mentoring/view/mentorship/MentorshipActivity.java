@@ -46,7 +46,7 @@ public class MentorshipActivity extends BaseActivity {
             formsRcv.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
             formsRcv.setAdapter(formAdapter);
         }
-        mentorshipBinding.formSelectionLayout.setVisibility(View.VISIBLE);
+
     }
 
     @Override

@@ -5,7 +5,8 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewModel" type="mz.org.csaude.mentoring.viewmodel.mentorship.MentorShipListVM" />
+            name="viewModel" type="mz.org.csaude.mentoring.viewmodel.session.SessionListVM" />
+        <variable name="menteesAdapter"    type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
 
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
         <import type="android.view.View"/>
@@ -14,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.mentorship.ListMentorshipActivity">
+        tools:context=".view.session.SessionListActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout2"
@@ -39,36 +40,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
 
-            <LinearLayout
-                android:id="@+id/initial_data"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_normal"
-                android:padding="3dp"
-                android:layout_marginBottom="@dimen/dimen_15dp"
-                android:onClick="@{(view) -> viewModel.openCollapse(view)}"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="@dimen/dimen_0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="8"
-                    android:text="@{viewModel.mentorshipTitle}"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:gravity="center_vertical|left"
-                    android:paddingLeft="@dimen/dimen_10dp"/>
-
-                <ImageButton
-                    android:id="@+id/btn_show_collapse"
-                    android:layout_width="@dimen/dimen_0dp"
-                    android:layout_height="match_parent"
-                    android:onClick="@{(view) -> viewModel.openCollapse(view)}"
-                    android:background="@color/background_layout"
-                    android:src="@drawable/baseline_expand_circle_down_24"
-                    android:layout_marginRight="@dimen/dimen_2dp"
-                    android:layout_weight="1"/>
-            </LinearLayout>
+                android:text="Mentorando"
+                style="@style/input_labels"
+                />
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spn_mentees"
+                android:layout_width="fill_parent"
+                style="@style/bottom_spinner_style"
+                android:layout_height="wrap_content"
+                app:adapter="@{menteesAdapter}"
+                bind:selectedOpt="@={viewModel.selectedMentee}"/>
+            />
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -93,7 +78,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             android:contentDescription="@string/submit"
-            android:onClick="@{()->viewModel.createNewMentorship()}"
+            android:onClick="@{()->viewModel.createSession()}"
             android:src="@drawable/baseline_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

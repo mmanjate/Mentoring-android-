@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.ronda.RondaAdapter;
+import mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityMentoringCycleListBinding;
@@ -22,6 +23,8 @@ public class RondaListActivity extends BaseActivity {
 
     private ActivityMentoringCycleListBinding mentoringCycleListBinding;
     private RecyclerView rondasRecyclerView;
+
+
 
     private RondaAdapter rondaAdapter;
 

@@ -21,9 +21,13 @@ public class SessionVM extends BaseViewModel {
 
     private SessionService sessionService;
 
+    private Date endDate;
+
+    private SessionStatus status;
+
     public SessionVM(@NonNull Application application) {
         super(application);
-        this.sessionService = new SessionServiceImpl(application);
+        this.sessionService = getApplication().getSessionService();
     }
 
     @Override
@@ -36,60 +40,20 @@ public class SessionVM extends BaseViewModel {
         return this.session.getStartDate();
     }
 
-    public void setName(Date startDate) {
+    public void setStartDate(Date startDate) {
         this.session.setStartDate(startDate);
         notifyPropertyChanged(BR.startDate);
     }
 
-    private Date endDate;
 
-    @Bindable
-    public Date getEndDate() {
-        return this.session.getEndDate();
-    }
 
-    public void setEndDate(Date endDate) {
-        this.session.setEndDate(endDate);
-        notifyPropertyChanged(BR.endDate);
-    }
-
-    @Bindable
-    public Date getPerformedDate() {
-        return this.session.getPerformedDate();
-    }
-
-    public void setPerformedDate(Date performedDate) {
-        this.session.setPerformedDate(performedDate);
-        notifyPropertyChanged(BR.performedDate);
-    }
-
-    private SessionStatus status;
-
-    @Bindable
-    public SessionStatus getStatus() {
-        return this.session.getStatus();
-    }
-
-    public void setStatus(SessionStatus status) {
-        this.session.setStatus(status);
-        notifyPropertyChanged(BR.status);
-    }
-
-    @Bindable
-    public String getReason() {
-        return this.session.getReason();
-    }
-
-    public void setReason(String reason) {
-        this.session.setReason(reason);
-        notifyPropertyChanged(BR.reason);
-    }
 
     public void save() {
         try {
             this.sessionService.save(this.session);
         } catch (SQLException e) {
             e.printStackTrace();
+            //Mostrar mensagem de erro
         }
     }
 }

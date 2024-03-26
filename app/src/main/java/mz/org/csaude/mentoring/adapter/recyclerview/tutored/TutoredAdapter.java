@@ -1,5 +1,6 @@
 package mz.org.csaude.mentoring.adapter.recyclerview.tutored;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import mz.org.csaude.mentoring.R;
+import mz.org.csaude.mentoring.adapter.recyclerview.generic.AbstractRecycleViewAdapter;
 import mz.org.csaude.mentoring.databinding.TutoredListItemBinding;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 
-public class TutoredAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TutoredAdapter extends AbstractRecycleViewAdapter<Tutored> {
 
     List<Tutored> tutoredList;
 
-    public TutoredAdapter(List<Tutored> tutoredList) {
-        this.tutoredList = tutoredList;
+    public TutoredAdapter(RecyclerView recyclerView, List<Tutored> records, Activity activity) {
+        super(recyclerView, records, activity);
     }
+
 
     @NonNull
     @Override

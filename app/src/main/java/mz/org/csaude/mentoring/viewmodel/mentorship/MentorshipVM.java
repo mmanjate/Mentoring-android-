@@ -46,9 +46,9 @@ public class MentorshipVM extends BaseViewModel {
 
     public MentorshipVM(@NonNull Application application) {
         super(application);
-        this.mentorshipService = new MentorshipServiceImpl(application);
-        provinceService = new ProvinceServiceImpl(application);
-        formService = new FormServiceImpl(application);
+        this.mentorshipService = getApplication().getMentorshipService();
+        provinceService = getApplication().getProvinceService();
+        formService = getApplication().getFormService();
     }
 
     @Override
@@ -231,5 +231,9 @@ public class MentorshipVM extends BaseViewModel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void nextStep() {
+
     }
 }

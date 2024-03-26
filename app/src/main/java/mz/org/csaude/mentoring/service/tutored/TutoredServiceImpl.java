@@ -11,6 +11,7 @@ import mz.org.csaude.mentoring.dao.tutored.TutoredDao;
 import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.model.career.Career;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.career.CareerService;
@@ -77,5 +78,10 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
             }
         }
 
+    }
+
+    @Override
+    public List<Tutored> getAllOfRonda(Ronda currRonda) {
+        return null;
     }
 }

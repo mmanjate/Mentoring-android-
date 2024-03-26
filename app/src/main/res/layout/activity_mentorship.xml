@@ -7,8 +7,8 @@
     <data>
         <variable
             name="viewModel" type="mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipVM" />
-        <variable name="provinceAdapter"         type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
-        <variable name="districtAdapter"          type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
+        <variable name="sectorAdapter"         type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
+        <variable name="doorAdapter"          type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
         <import type="android.view.View"/>
     </data>
@@ -53,98 +53,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     >
-                    <RelativeLayout
-                        android:id="@+id/form_selection_layout"
-                        android:layout_width="match_parent"
-                        android:visibility="visible"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/form_ttle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Formulários"
-                            android:textColor="@color/white"
-                            android:background="@drawable/shape_normal"
-                            android:layout_margin="@dimen/dimen_10dp"
-                            android:gravity="center"
-                            android:textSize="15sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/form_ttle"
-                            android:layout_margin="@dimen/dimen_5dp"
-                            android:orientation="vertical">
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rcv_forms"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_4dp"
-                                android:background="@drawable/listble_shape"/>
-
-                            <Button
-                                android:id="@+id/btn_procced_after_form"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/button_shape_red"
-                                android:onClick="@{()-> viewModel.finnalizeMentorship()}"
-                                android:text="Prosseguir"
-                                android:layout_marginTop="@dimen/dimen_12dp"
-                                android:paddingLeft="@dimen/dimen_4dp"
-                                android:visibility="@{viewModel.currentStep.applicationStepEdit ? View.VISIBLE : View.GONE}"
-                                android:paddingRight="@dimen/dimen_4dp"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="@dimen/dimen_10dp"
-                                android:textColor="@color/white"/>
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/tutored_selection_layout"
-                        android:layout_width="match_parent"
-                        android:visibility="gone"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/tutored_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Tutorando"
-                            android:textColor="@color/white"
-                            android:background="@drawable/shape_normal"
-                            android:layout_margin="@dimen/dimen_10dp"
-                            android:gravity="center"
-                            android:textSize="15sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tutored_title"
-                            android:layout_margin="@dimen/dimen_5dp"
-                            android:orientation="vertical">
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rcv_tutored"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_4dp"
-                                android:background="@drawable/listble_shape"/>
-
-                            <Button
-                                android:id="@+id/btn_procced_after_tutored"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/button_shape_red"
-                                android:onClick="@{()-> viewModel.finnalizeMentorship()}"
-                                android:text="Prosseguir"
-                                android:layout_marginTop="@dimen/dimen_12dp"
-                                android:paddingLeft="@dimen/dimen_4dp"
-                                android:visibility="@{viewModel.currentStep.applicationStepEdit ? View.VISIBLE : View.GONE}"
-                                android:paddingRight="@dimen/dimen_4dp"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="@dimen/dimen_10dp"
-                                android:textColor="@color/white"/>
-                        </LinearLayout>
-                    </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/healthfacility_selection_layout"
@@ -162,7 +70,7 @@
                             android:layout_marginBottom="@dimen/dimen_10dp"
                             android:background="@drawable/shape_normal"
                             android:gravity="center"
-                            android:text="Unidade Sanitária"
+                            android:text="Período da Avaliação"
                             android:textColor="@color/white"
                             android:textSize="15sp" />
 
@@ -261,64 +169,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/provincia"
-                                style="@style/input_labels"
-                                />
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/spn_province"
-                                android:layout_width="fill_parent"
-                                style="@style/bottom_spinner_style"
-                                android:layout_height="wrap_content"
-                                app:adapter="@{provinceAdapter}"
-                                bind:selectedOpt="@={viewModel.province}"
-                                />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/distrito"
-                                style="@style/input_labels"
-                                />
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/spn_district"
-                                android:layout_width="fill_parent"
-                                style="@style/bottom_spinner_style"
-                                android:layout_height="wrap_content"
-                                app:adapter="@{districtAdapter}"
-                                />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/hf"
-                                style="@style/input_labels"
-                                />
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/spn_hf"
-                                android:layout_width="fill_parent"
-                                style="@style/bottom_spinner_style"
-                                android:layout_height="wrap_content"
-                                app:adapter="@{districtAdapter}"
-                                />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/cabinet"
-                                style="@style/input_labels"
-                                />
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/spn_cabinet"
-                                android:layout_width="fill_parent"
-                                style="@style/bottom_spinner_style"
-                                android:layout_height="wrap_content"
-                                app:adapter="@{districtAdapter}"
-                                />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/time_of_day"
+                                android:text="Sector"
                                 style="@style/input_labels"
                                 />
                             <androidx.appcompat.widget.AppCompatSpinner
@@ -326,7 +177,7 @@
                                 android:layout_width="fill_parent"
                                 style="@style/bottom_spinner_style"
                                 android:layout_height="wrap_content"
-                                app:adapter="@{districtAdapter}"
+                                app:adapter="@{sectorAdapter}"
                                 />
 
                             <TextView
@@ -340,23 +191,47 @@
                                 android:layout_width="fill_parent"
                                 style="@style/bottom_spinner_style"
                                 android:layout_height="wrap_content"
-                                app:adapter="@{districtAdapter}"
+                                app:adapter="@{doorAdapter}"
                                 />
 
-                            <Button
-                                android:id="@+id/btn_validate_healthfacility"
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/button_shape"
-                                android:onClick="@{()-> viewModel.finnalizeMentorship()}"
-                                android:text="Prosseguir"
-                                android:layout_marginTop="@dimen/dimen_12dp"
-                                android:paddingLeft="@dimen/dimen_4dp"
-                                android:visibility="@{viewModel.currentStep.applicationStepEdit ? View.VISIBLE : View.GONE}"
-                                android:paddingRight="@dimen/dimen_4dp"
-                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/dimen_10dp"
                                 android:layout_marginBottom="@dimen/dimen_10dp"
-                                android:textColor="@color/white"/>
+                                android:background="@drawable/shape_normal"
+                                android:gravity="center"
+                                android:text="Tipo de Avaliação"
+                                android:textColor="@color/white"
+                                android:textSize="15sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RadioGroup
+                                    android:id="@+id/rdgSearchType"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:checkedButton="@+id/rdLocal">
+
+                                    <RadioButton
+                                        android:id="@+id/rdLocal"
+                                        android:layout_weight="2"
+                                        android:layout_width="@dimen/dimen_0dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="Consulta" />
+
+                                    <RadioButton
+                                        android:id="@+id/rdOnline"
+                                        android:layout_weight="2"
+                                        android:layout_width="@dimen/dimen_0dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="Ficha" />
+                                </RadioGroup>
+                            </LinearLayout>
 
 
                         </LinearLayout>
@@ -365,7 +240,7 @@
                     <RelativeLayout
                         android:id="@+id/selection_layout"
                         android:layout_width="match_parent"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_height="wrap_content">
 
                         <LinearLayout
@@ -423,33 +298,22 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
+                        <ScrollView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:layout_below="@+id/navigation"
-                            android:orientation="vertical">
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rcv_questions"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_4dp"
-                                android:background="@drawable/listble_shape"/>
-
-                            <Button
-                                android:id="@+id/btn_close_inventory"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/button_shape_red"
-                                android:onClick="@{()-> viewModel.finnalizeMentorship()}"
-                                android:text="Terminar Sessão"
-                                android:layout_marginTop="@dimen/dimen_12dp"
-                                android:paddingLeft="@dimen/dimen_4dp"
-                                android:visibility="@{viewModel.currentStep.applicationStepEdit ? View.VISIBLE : View.GONE}"
-                                android:paddingRight="@dimen/dimen_4dp"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="@dimen/dimen_10dp"
-                                android:textColor="@color/white"/>
-                        </LinearLayout>
+                                android:orientation="vertical">
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rcv_questions"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_4dp"
+                                    android:background="@drawable/listble_shape"/>
+                            </LinearLayout>
+                        </ScrollView>
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -458,6 +322,17 @@
 
 
         </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/submit"
+            android:onClick="@{()->viewModel.nextStep()}"
+            android:src="@drawable/baseline_navigate_next_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

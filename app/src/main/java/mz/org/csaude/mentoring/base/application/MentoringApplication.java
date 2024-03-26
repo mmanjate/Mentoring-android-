@@ -10,8 +10,24 @@ import java.util.concurrent.TimeUnit;
 
 import mz.org.csaude.mentoring.base.auth.AuthInterceptorImpl;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.service.form.FormService;
+import mz.org.csaude.mentoring.service.form.FormServiceImpl;
+import mz.org.csaude.mentoring.service.location.DistrictService;
+import mz.org.csaude.mentoring.service.location.DistrictServiceImpl;
+import mz.org.csaude.mentoring.service.location.HealthFacilityService;
+import mz.org.csaude.mentoring.service.location.HealthFacilityServiceImpl;
+import mz.org.csaude.mentoring.service.location.ProvinceService;
+import mz.org.csaude.mentoring.service.location.ProvinceServiceImpl;
+import mz.org.csaude.mentoring.service.mentorship.MentorshipService;
+import mz.org.csaude.mentoring.service.mentorship.MentorshipServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
 import mz.org.csaude.mentoring.service.ronda.RondaServiceImpl;
+import mz.org.csaude.mentoring.service.session.SessionService;
+import mz.org.csaude.mentoring.service.session.SessionServiceImpl;
+import mz.org.csaude.mentoring.service.tutor.TutorService;
+import mz.org.csaude.mentoring.service.tutor.TutorServiceImpl;
+import mz.org.csaude.mentoring.service.tutored.TutoredService;
+import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -32,6 +48,21 @@ public class MentoringApplication  extends Application {
     private ObjectMapper mapper;
 
     private RondaService rondaService;
+
+    private DistrictService districtService;
+
+    private ProvinceService provinceService;
+
+    private SessionService sessionService;
+
+    private TutoredService tutoredService;
+
+    private TutorService tutorService;
+    private HealthFacilityService healthFacilityService;
+
+    private FormService formService;
+
+    private MentorshipService mentorshipService;
     AuthInterceptorImpl interceptor;
 
     @Override
@@ -86,5 +117,45 @@ public class MentoringApplication  extends Application {
     public RondaService getRondaService() {
         if (this.rondaService == null) this.rondaService = new RondaServiceImpl(this);
         return rondaService;
+    }
+
+    public DistrictService getDistrictService() {
+        if (this.districtService == null) this.districtService = new DistrictServiceImpl(this);
+        return districtService;
+    }
+
+    public ProvinceService getProvinceService() {
+        if (this.provinceService == null) this.provinceService = new ProvinceServiceImpl(this);
+        return provinceService;
+    }
+
+    public HealthFacilityService getHealthFacilityService() {
+        if (this.healthFacilityService == null) this.healthFacilityService = new HealthFacilityServiceImpl(this);
+        return healthFacilityService;
+    }
+
+    public SessionService getSessionService() {
+        if (this.sessionService == null) this.sessionService = new SessionServiceImpl(this);
+        return sessionService;
+    }
+
+    public TutorService getTutorService() {
+        if (this.tutorService == null) this.tutorService = new TutorServiceImpl(this);
+        return tutorService;
+    }
+
+    public TutoredService getTutoredService() {
+        if (this.tutoredService == null) this.tutoredService = new TutoredServiceImpl(this);
+        return tutoredService;
+    }
+
+    public MentorshipService getMentorshipService() {
+        if (this.mentorshipService == null) this.mentorshipService = new MentorshipServiceImpl(this);
+        return mentorshipService;
+    }
+
+    public FormService getFormService() {
+        if (this.formService == null) this.formService = new FormServiceImpl(this);
+        return formService;
     }
 }

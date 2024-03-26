@@ -39,4 +39,9 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
     public Ronda getById(int id) throws SQLException {
         return null;
     }
+
+    @Override
+    public List<Ronda> doSearch(long offset, long limit) {
+        return null;
+    }
 }

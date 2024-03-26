@@ -5,8 +5,10 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import mz.org.csaude.mentoring.model.location.District;
+import mz.org.csaude.mentoring.model.location.Province;
 
 public class DistrictDAOImpl extends BaseDaoImpl<District, Integer> implements DistrictDAO {
 
@@ -21,4 +23,11 @@ public class DistrictDAOImpl extends BaseDaoImpl<District, Integer> implements D
     public DistrictDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<District> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
+
+    @Override
+    public List<District> getByProvince(Province province) throws SQLException {
+        return queryBuilder().where().eq(District.COLUMN_PROVINCE, province.getId()).query();
+    }
+
+
 }

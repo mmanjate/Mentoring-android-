@@ -4,6 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.*;
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDaoImpl;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
@@ -16,7 +17,7 @@ import mz.org.csaude.mentoring.model.user.UserIndividual;
 @NoArgsConstructor
 @DatabaseTable(tableName = Tutored.COLUMN_TABLE_NAME, daoClass = TutoredDaoImpl.class)
 @EqualsAndHashCode(callSuper=false)
-public class Tutored extends BaseModel implements UserIndividual {
+public class Tutored extends BaseModel implements Listble {
 
     public static final String COLUMN_TABLE_NAME = "tutored";
     public static final String COLUMN_EMAIL = "email";
@@ -74,6 +75,16 @@ public class Tutored extends BaseModel implements UserIndividual {
         this.setName(tutoredDTO.getName());
         this.setSurname(tutoredDTO.getSurname());
         this.setPhoneNumber(tutoredDTO.getPhoneNumber());
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public int getDrawable() {
+        return 0;
     }
 
     public String getCode() {

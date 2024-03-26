@@ -5,7 +5,9 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewModel" type="mz.org.csaude.mentoring.viewmodel.ronda.RondaSearchVM" />
+            name="viewModel" type="mz.org.csaude.mentoring.viewmodel.session.SessionListVM" />
+        <variable name="menteesAdapter"    type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
+
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
         <import type="android.view.View"/>
     </data>
@@ -13,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ronda.RondaListActivity">
+        tools:context=".view.session.SessionListActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout2"
@@ -34,8 +36,24 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:padding="@dimen/dimen_5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mentorando"
+                style="@style/input_labels"
+                />
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spn_mentees"
+                android:layout_width="fill_parent"
+                style="@style/bottom_spinner_style"
+                android:layout_height="wrap_content"
+                app:adapter="@{menteesAdapter}"
+                bind:selectedOpt="@={viewModel.selectedMentee}"/>
+            />
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -60,7 +78,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             android:contentDescription="@string/submit"
-            android:onClick="@{()->viewModel.createNewRonda()}"
+            android:onClick="@{()->viewModel.createSession()}"
             android:src="@drawable/baseline_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

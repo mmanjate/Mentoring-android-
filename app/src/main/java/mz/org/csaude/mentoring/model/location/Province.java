@@ -6,6 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.location.ProvinceDAOImpl;
 
@@ -13,7 +14,7 @@ import mz.org.csaude.mentoring.dao.location.ProvinceDAOImpl;
 @NoArgsConstructor
 @DatabaseTable(tableName = Province.COLUMN_TABLE_NAME, daoClass = ProvinceDAOImpl.class)
 @EqualsAndHashCode(callSuper = false)
-public class Province extends BaseModel {
+public class Province extends BaseModel implements Listble {
 
     public static final String COLUMN_TABLE_NAME = "province";
 
@@ -24,6 +25,16 @@ public class Province extends BaseModel {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public int getDrawable() {
+        return 0;
+    }
+
+    @Override
+    public String getCode() {
+        return null;
     }
 
     public void setDescription(String description) {

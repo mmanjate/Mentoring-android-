@@ -91,7 +91,6 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
 
     private void goHome() {
         Map<String, Object> params = new HashMap<>();
-        params.put("user", getCurrentUser());
         getRelatedActivity().nextActivityFinishingCurrent(MainActivity.class, params);
     }
 

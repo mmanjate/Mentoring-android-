@@ -76,11 +76,11 @@
             android:id="@+id/inUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_10dp"
             android:background="@drawable/edit_text_border"
+            android:drawableLeft="@drawable/ic_person"
             android:inputType="text"
             android:padding="8dp"
-            android:drawableLeft="@drawable/ic_person"
-            android:layout_marginBottom="@dimen/dimen_10dp"
             android:text="@={viewModel.userName}" />
 
         <TextView

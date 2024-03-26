@@ -11,7 +11,7 @@
     <color name="colorPrimary">#20B5DA</color>
     <color name="colorPrimaryDark">#023373</color>
     <color name="colorAccent">#87B5F3</color>
-    <color name="background_layout">#0061A9</color>
+    <color name="background_layout">#0288d1</color>
     <color name="list_icon">#DBDBDC</color>
 
     <color name="button_light_back">#2896CA</color>

@@ -8,6 +8,7 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.location.DistrictDAO;
 import mz.org.csaude.mentoring.model.location.District;
+import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.model.user.User;
 
 public class DistrictServiceImpl extends BaseServiceImpl<District> implements DistrictService {
@@ -50,5 +51,10 @@ public class DistrictServiceImpl extends BaseServiceImpl<District> implements Di
     @Override
     public District getById(int id) throws SQLException {
         return this.districtDAO.queryForId(id);
+    }
+
+    @Override
+    public List<District> getByProvince(Province selectedProvince) throws SQLException{
+        return this.districtDAO.getByProvince(selectedProvince);
     }
 }

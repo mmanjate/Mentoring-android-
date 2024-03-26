@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.base.viewModel;
 
 import android.app.Application;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
@@ -163,5 +164,13 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
     public LoadingDialog getLoadingDialog() {
         return loadingDialog;
+    }
+
+    public void openCollapse(View view) {
+        if (view.getParent()== null) {
+            //relatedView.setVisibility(View.GONE);
+        } else {
+            //relatedView.setVisibility(View.VISIBLE);
+        }
     }
 }

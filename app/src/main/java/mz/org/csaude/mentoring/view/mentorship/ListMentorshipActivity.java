@@ -1,6 +1,6 @@
 package mz.org.csaude.mentoring.view.mentorship;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,8 +10,7 @@ import mz.org.csaude.mentoring.adapter.recyclerview.listmentorship.ListMentorshi
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityListMentorshipBinding;
-import mz.org.csaude.mentoring.viewmodel.mentorship.ListMentorshipVM;
-import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
+import mz.org.csaude.mentoring.viewmodel.mentorship.MentorShipListVM;
 
 import android.os.Bundle;
 
@@ -23,28 +22,17 @@ public class ListMentorshipActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityListMentorshipBinding.inflate(getLayoutInflater());
-
-        ListMentorshipVM listMentorshipVM = this.getRelatedViewModel();
-
-        setContentView(binding.getRoot());
-
-        RecyclerView recyclerView = binding.recyclerViewMentorship;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-
-        ListMentorshipAdapter listMentorshipAdapter = new ListMentorshipAdapter(listMentorshipVM.getMentorshipsByTutor(getCurrentUser().getUuid()));
-
-        recyclerView.setAdapter(listMentorshipAdapter);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_list_mentorship);
+        binding.setViewModel(getRelatedViewModel());
     }
 
     @Override
     public BaseViewModel initViewModel() {
-        return new ViewModelProvider(this).get(ListMentorshipVM.class);
+        return new ViewModelProvider(this).get(MentorShipListVM.class);
     }
 
     @Override
-    public ListMentorshipVM getRelatedViewModel() {
-        return (ListMentorshipVM) super.getRelatedViewModel();
+    public MentorShipListVM getRelatedViewModel() {
+        return (MentorShipListVM) super.getRelatedViewModel();
     }
 }

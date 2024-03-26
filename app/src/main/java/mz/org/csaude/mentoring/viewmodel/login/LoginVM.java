@@ -67,8 +67,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
     }
 
     public void doLogin() {
-        goHome();
-        //userSyncService.doOnlineLogin(this);
+        userSyncService.doOnlineLogin(this);
         /*try {
             this.userService.login(this.user);
         } catch (SQLException e) {

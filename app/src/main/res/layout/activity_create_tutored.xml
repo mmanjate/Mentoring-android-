@@ -73,8 +73,6 @@
                     android:layout_width="fill_parent"
                     style="@style/spinner_style"
                     android:layout_height="wrap_content"
-                    app:adapter="@{careerTypeAdapter}"
-                    bind:selectedOpt="@={viewModel.careerType}"
 
             />
 
@@ -89,8 +87,6 @@
                     android:layout_width="fill_parent"
                     style="@style/spinner_style"
                     android:layout_height="wrap_content"
-                    app:adapter="@{careerAdapter}"
-                    bind:selectedOpt="@={viewModel.career}"
 
             />
 

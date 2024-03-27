@@ -100,7 +100,7 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
                     }
                 }
                 selectedCareer = (Career) activityCreateTutoredBinding.spnPosition.getSelectedItem();
-                tutored = new Tutored(tutoredName, tutoredSurname, tutoredPhoneNumber, tutoredEmail, selectedCareer, getCurrentUser());
+               // tutored = new Tutored(tutoredName, tutoredSurname, tutoredPhoneNumber, tutoredEmail, selectedCareer, getCurrentUser());
                 tutored = getRelatedViewModel().save();
                 Utilities.displayAlertDialog(getApplicationContext(), getString(R.string.record_successfully_saved)).show();
                 Map<String, Object> params = new HashMap<>();

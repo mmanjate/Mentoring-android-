@@ -5,7 +5,6 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
-import lombok.Data;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.ronda.RondaMenteeDAOImpl;
 import mz.org.csaude.mentoring.model.tutored.Tutored;

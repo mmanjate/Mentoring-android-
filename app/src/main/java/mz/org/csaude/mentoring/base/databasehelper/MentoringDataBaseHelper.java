@@ -13,6 +13,7 @@ import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.dao.answer.AnswerDAO;
 import mz.org.csaude.mentoring.dao.career.CareerDAO;
 import mz.org.csaude.mentoring.dao.career.CareerTypeDAO;
+import mz.org.csaude.mentoring.dao.employee.EmployeeDAO;
 import mz.org.csaude.mentoring.dao.form.FormDAO;
 import mz.org.csaude.mentoring.dao.form.FormTargetDAO;
 import mz.org.csaude.mentoring.dao.form.FormTypeDAO;
@@ -21,12 +22,14 @@ import mz.org.csaude.mentoring.dao.indicator.IndicatorDAO;
 import mz.org.csaude.mentoring.dao.location.CabinetDAO;
 import mz.org.csaude.mentoring.dao.location.DistrictDAO;
 import mz.org.csaude.mentoring.dao.location.HealthFacilityDAO;
+import mz.org.csaude.mentoring.dao.location.LocationDAO;
 import mz.org.csaude.mentoring.dao.location.ProvinceDAO;
 import mz.org.csaude.mentoring.dao.mentorship.DoorDAO;
 import mz.org.csaude.mentoring.dao.mentorship.IterationTypeDAO;
 import mz.org.csaude.mentoring.dao.mentorship.MentorshipDAO;
 import mz.org.csaude.mentoring.dao.mentorship.TimeOfDayDAO;
 import mz.org.csaude.mentoring.dao.partner.PartnerDao;
+import mz.org.csaude.mentoring.dao.professionalCategoryDAO.ProfessionalCategoryDAO;
 import mz.org.csaude.mentoring.dao.programmaticArea.ProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.dao.programmaticArea.TutorProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionDAO;
@@ -50,6 +53,7 @@ import mz.org.csaude.mentoring.model.Question.QuestionsCategory;
 import mz.org.csaude.mentoring.model.answer.Answer;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.career.CareerType;
+import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.form.FormTarget;
 import mz.org.csaude.mentoring.model.form.FormType;
@@ -58,12 +62,14 @@ import mz.org.csaude.mentoring.model.indicator.Indicator;
 import mz.org.csaude.mentoring.model.location.Cabinet;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
+import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.model.mentorship.Door;
 import mz.org.csaude.mentoring.model.mentorship.IterationType;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
 import mz.org.csaude.mentoring.model.partner.Partner;
+import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
 import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
@@ -154,6 +160,12 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
     private RondaMenteeDAO rondaMenteeDAO;
 
     private RondaTypeDAO rondaTypeDAO;
+
+    private ProfessionalCategoryDAO professionalCategoryDAO;
+
+    private LocationDAO locationDAO;
+
+    private EmployeeDAO employeeDAO;
 
     private static MentoringDataBaseHelper dataBaseHelper;
 
@@ -393,6 +405,27 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
         return rondaDAO;
     }
 
+    public ProfessionalCategoryDAO getProfessionalCategoryDAO() throws SQLException {
+        if (professionalCategoryDAO == null){
+            professionalCategoryDAO = getDao(ProfessionalCategory.class);
+        }
+        return professionalCategoryDAO;
+    }
+
+    public LocationDAO getLocationDAO() throws SQLException {
+        if (locationDAO == null){
+            locationDAO = getDao(Location.class);
+        }
+        return locationDAO;
+    }
+
+    public EmployeeDAO getEmployeeDAO() throws SQLException {
+        if(employeeDAO == null){
+            employeeDAO = getDao(Employee.class);
+        }
+        return employeeDAO;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
 
@@ -431,7 +464,9 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, RondaType.class);
             TableUtils.createTableIfNotExists(connectionSource, RondaMentee.class);
             TableUtils.createTableIfNotExists(connectionSource, RondaMentor.class);
-
+            TableUtils.createTableIfNotExists(connectionSource, ProfessionalCategory.class);
+            TableUtils.createTableIfNotExists(connectionSource, Employee.class);
+            TableUtils.createTableIfNotExists(connectionSource, Location.class);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

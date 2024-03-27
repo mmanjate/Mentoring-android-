@@ -9,5 +9,8 @@ import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.Province;
 
 public interface DistrictDAO extends Dao<District, Integer> {
+
+    public boolean checkDistrictxistance(final String uuid) throws SQLException;
     List<District> getByProvince(Province province) throws SQLException;
+
 }

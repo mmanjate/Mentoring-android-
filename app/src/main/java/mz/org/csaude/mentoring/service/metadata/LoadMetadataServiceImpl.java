@@ -1,29 +1,19 @@
 package mz.org.csaude.mentoring.service.metadata;
 
 import android.app.Application;
-import android.app.ProgressDialog;
 import android.util.Log;
 import android.widget.Toast;
-import mz.org.csaude.mentoring.base.activity.BaseActivity;
-import mz.org.csaude.mentoring.base.application.MentoringApplication;
+
 import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.dto.location.CabinetDTO;
-import mz.org.csaude.mentoring.dto.setting.SettingDTO;
-import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
-import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.career.CareerService;
 import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
 import mz.org.csaude.mentoring.service.location.CabinetService;
 import mz.org.csaude.mentoring.service.location.CabinetServiceImpl;
-import mz.org.csaude.mentoring.service.setting.SettingService;
-import mz.org.csaude.mentoring.service.setting.SettingServiceImpl;
-import mz.org.csaude.mentoring.service.tutored.TutoredService;
-import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -35,4 +35,12 @@ public class CareerDAOImpl extends BaseDaoImpl<Career, Integer> implements Caree
         List<Career> careers = this.queryForEq("career_type_id", careerType);
         return careers;
     }
+
+    @Override
+    public Career findByUuid(String uuid) throws SQLException {
+
+        List<Career> careers = this.queryForEq("uuid", uuid);
+
+        return careers.get(0);
+    }
 }

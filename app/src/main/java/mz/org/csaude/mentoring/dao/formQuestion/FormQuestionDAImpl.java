@@ -6,7 +6,6 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 
-import mz.org.csaude.mentoring.dao.form.FormTargetDAO;
 import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 
 public class FormQuestionDAImpl extends BaseDaoImpl<FormQuestion, Integer> implements FormQuestionDAO {

@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -48,11 +47,11 @@ public class TutoredVM extends BaseViewModel {
 
     @Bindable
     public String getName() {
-        return this.tutored.getName();
+        return this.tutored.getEmployee().getName();
     }
 
     public void setName(String name) {
-        this.tutored.setName(name);
+        this.tutored.getEmployee().setName(name);
         notifyPropertyChanged(BR.name);
     }
     public List<CareerType> getCareerTypes() throws SQLException {

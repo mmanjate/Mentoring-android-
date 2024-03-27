@@ -7,6 +7,7 @@ import mz.org.csaude.mentoring.model.partner.Partner;
 
 public class PartnerDTO implements Serializable {
 
+    private String uuid;
     private String name;
 
     private String description;
@@ -15,6 +16,7 @@ public class PartnerDTO implements Serializable {
     }
 
     public PartnerDTO(Partner partner) {
+        this.setUuid(partner.getUuid());
         this.name = partner.getName();
         this.description = partner.getDescription();
     }
@@ -33,5 +35,13 @@ public class PartnerDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

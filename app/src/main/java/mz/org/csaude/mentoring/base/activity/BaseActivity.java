@@ -1,13 +1,10 @@
 package mz.org.csaude.mentoring.base.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 
 import androidx.annotation.Nullable;
@@ -18,7 +15,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.common.ApplicationStep;
 import mz.org.csaude.mentoring.model.tutored.Tutored;

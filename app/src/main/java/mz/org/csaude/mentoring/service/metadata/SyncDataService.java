@@ -1,13 +1,13 @@
 package mz.org.csaude.mentoring.service.metadata;
 
-import org.json.JSONObject;
-
-import mz.org.csaude.mentoring.base.auth.LoginRequest;
 import mz.org.csaude.mentoring.base.auth.LoginResponse;
 import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 import mz.org.csaude.mentoring.dto.location.CabinetDTO;
+import mz.org.csaude.mentoring.dto.location.DistrictDTO;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
+import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
+import mz.org.csaude.mentoring.dto.professionalcategory.ProfessionalCategoryDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
@@ -43,7 +43,6 @@ public interface SyncDataService {
 
     @GET("/tutored/{offset}/{limit}")
     Call<List<TutoredDTO>> getTutoreds(@Path("offset") long offset, @Path("limit") long limit);
-
     @POST("/login")
     Call<LoginResponse> login(@Body RequestBody body);
 
@@ -58,5 +57,18 @@ public interface SyncDataService {
 
     @GET("/tutor/user/{userUuid}")
     Call<TutorDTO> getTutorByUserUuid(@Path("userUuid") String userUuid);
+
+    @GET("/province/provinces")
+    Call<List<ProvinceDTO>> getProvinces();
+
+    @GET("healthfacility/getall")
+    Call<List<HealthFacilityDTO>> getHealthFacilitys();
+
+    @GET("district/districts")
+    Call<List<DistrictDTO>> getDistricts();
+
+    @GET("professionalcategory/getall")
+    Call<List<ProfessionalCategoryDTO>> getProfessionalCategory();
+
 
 }

@@ -10,7 +10,6 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
-import mz.org.csaude.mentoring.workSchedule.rest.CareerRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
 
 public class TutoredWork extends BaseWorker<Tutored> {

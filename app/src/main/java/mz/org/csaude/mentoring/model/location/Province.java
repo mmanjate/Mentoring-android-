@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.location.ProvinceDAOImpl;
+import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
 
 @Data
 @NoArgsConstructor
@@ -20,11 +21,11 @@ public class Province extends BaseModel implements Listble {
 
     public static final String COLUMN_DESIGNATION = "designation";
 
-    @DatabaseField(columnName = COLUMN_DESIGNATION, canBeNull = false, unique = true)
-    private String description;
+    @DatabaseField(columnName = COLUMN_DESIGNATION)
+    private String designation;
 
     public String getDescription() {
-        return description;
+        return designation;
     }
 
     @Override
@@ -38,6 +39,13 @@ public class Province extends BaseModel implements Listble {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.designation = description;
     }
+
+    public Province(ProvinceDTO provinceDTO) {
+        this.setDescription(provinceDTO.getDesignation());
+        this.setUuid(provinceDTO.getUuid());
+    }
+
+
 }

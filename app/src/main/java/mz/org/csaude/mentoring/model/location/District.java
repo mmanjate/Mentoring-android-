@@ -2,11 +2,14 @@ package mz.org.csaude.mentoring.model.location;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.location.DistrictDAOImpl;
+import mz.org.csaude.mentoring.dto.location.DistrictDTO;
 
 @Data
 @DatabaseTable(tableName = District.TABLE_NAME, daoClass = DistrictDAOImpl.class)
@@ -33,6 +36,12 @@ public class District extends BaseModel implements Listble {
         this.district = district;
     }
 
+    public District(DistrictDTO districtDTO) {
+        this.setUuid(districtDTO.getUuid());
+        this.setDescription(districtDTO.getDescription());
+        if(districtDTO.getProvinceDTO() != null) this.setProvince(new Province(districtDTO.getProvinceDTO()));
+    }
+
     public Province getProvince() {
         return province;
     }
@@ -41,17 +50,8 @@ public class District extends BaseModel implements Listble {
         this.province = province;
     }
 
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    @Override
     public String getDescription() {
-        return this.district;
+        return district;
     }
 
     @Override
@@ -63,4 +63,10 @@ public class District extends BaseModel implements Listble {
     public String getCode() {
         return null;
     }
+
+    public void setDescription(String district) {
+        this.district = district;
+    }
+
+
 }

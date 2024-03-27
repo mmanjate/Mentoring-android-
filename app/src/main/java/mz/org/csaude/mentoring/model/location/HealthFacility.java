@@ -8,9 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.dao.career.CareerDAOImpl;
 import mz.org.csaude.mentoring.dao.location.HealthFacilityDAOImpl;
-import mz.org.csaude.mentoring.model.career.CareerType;
+import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
 
 @Data
 @NoArgsConstructor
@@ -24,6 +23,12 @@ public class HealthFacility extends BaseModel implements Listble {
     @DatabaseField(columnName = COLUMN_DISTRICT, canBeNull = false, foreign = true, foreignAutoRefresh = true )
     private District district;
 
+    public HealthFacility(HealthFacilityDTO healthFacilityDTO) {
+        this.setUuid(healthFacilityDTO.getUuid());
+        this.setDescription(healthFacilityDTO.getHealthFacility());
+        if (healthFacilityDTO.getDistrictDTO() != null) this.setDistrict( new District(healthFacilityDTO.getDistrictDTO()));
+    }
+
     @DatabaseField(columnName = COLUMN_NAME)
     private String name;
 
@@ -35,16 +40,11 @@ public class HealthFacility extends BaseModel implements Listble {
         this.district = district;
     }
 
-    public String getName() {
+    public String getDescription() {
         return name;
     }
-    public void setName(String name) {
+    public void setDescription(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
     }
 
     @Override

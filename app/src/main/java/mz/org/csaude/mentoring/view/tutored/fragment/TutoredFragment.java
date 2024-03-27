@@ -26,7 +26,6 @@ import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.tutored.CreateTutoredActivity;
 import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
 
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

@@ -22,4 +22,9 @@ public class UserDaoImpl extends BaseDaoImpl<User, Integer> implements UserDao {
     public UserDaoImpl(ConnectionSource connectionSource, DatabaseTableConfig<User> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
+
+    @Override
+    public User getByCredentials(User user) throws SQLException {
+        return queryBuilder().where().eq(User.COLUMN_USER_NAME, user.getUserName()).and().eq(User.COLUMN_PASSWORD, user.getPassword()).queryForFirst();
+    }
 }

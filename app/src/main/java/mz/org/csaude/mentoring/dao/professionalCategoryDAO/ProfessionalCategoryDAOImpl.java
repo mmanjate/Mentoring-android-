@@ -7,9 +7,10 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
 
-public class ProfessionalCategoryDAOImpl extends BaseDaoImpl<ProfessionalCategory, Integer> implements ProfessionalCategoryDAO{
+public class ProfessionalCategoryDAOImpl extends MentoringBaseDaoImpl<ProfessionalCategory, Integer> implements ProfessionalCategoryDAO{
 
 
     public ProfessionalCategoryDAOImpl(Class<ProfessionalCategory> dataClass) throws SQLException {

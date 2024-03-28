@@ -11,12 +11,13 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.base.databasehelper.MentoringDataBaseHelper;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 
-public class FormDAOImpl extends BaseDaoImpl<Form, Integer> implements FormDAO {
+public class FormDAOImpl extends MentoringBaseDaoImpl<Form, Integer> implements FormDAO {
 
     public FormDAOImpl(Class<Form> dataClass) throws SQLException {
         super(dataClass);

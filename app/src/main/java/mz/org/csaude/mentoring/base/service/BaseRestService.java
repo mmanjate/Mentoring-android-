@@ -19,7 +19,7 @@ public class BaseRestService {
 
     public static MentoringApplication APP;
 
-    protected Application application;
+    protected MentoringApplication application;
 
     protected User currentUser;
     protected static SyncDataService syncDataService;
@@ -27,15 +27,22 @@ public class BaseRestService {
     protected Gson gson;
 
     public BaseRestService(Application application, User currentUser) {
-        init(application,currentUser);
+        init((MentoringApplication) application,currentUser);
     }
 
     public BaseRestService(Application application) {
-        init(application,null);
+        init((MentoringApplication) application,null);
     }
 
+    public static MentoringApplication getAPP() {
+        return APP;
+    }
 
-    private void init(Application application, User currentUser){
+    public MentoringApplication getApplication() {
+        return application;
+    }
+
+    private void init(MentoringApplication application, User currentUser){
         //restServiceExecutor = ExecutorThreadProvider.getInstance().getExecutorService();
 
 

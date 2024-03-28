@@ -55,6 +55,8 @@ public class Employee extends BaseModel implements Listble {
 
     private Set<Location> locations;
 
+    public Employee() {
+    }
 
     public Employee(String name, String surname, int nuit, ProfessionalCategory professionalCategory, int trainingYear, String phoneNumber, String email, Partner partner) {
         this.name = name;
@@ -154,7 +156,7 @@ public class Employee extends BaseModel implements Listble {
         this.email = email;
     }
 
-    public Listble getPartner() {
+    public Partner getPartner() {
         return partner;
     }
 

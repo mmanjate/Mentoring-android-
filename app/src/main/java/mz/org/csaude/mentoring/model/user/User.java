@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
+import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 
@@ -20,6 +21,7 @@ public class User extends BaseModel {
     public static final String COLUMN_SALT = "salt";
     public static final String COLUMN_ADMIN= "admin";
     public static final String COLUMN_TYPE= "type";
+    public static final String COLUMN_EMPLOYEE= "employee_id";
 
     @DatabaseField(columnName = COLUMN_USER_NAME)
     private String userName;
@@ -36,9 +38,14 @@ public class User extends BaseModel {
     @DatabaseField(columnName = COLUMN_TYPE)
     private String type;
 
-    private UserIndividual userIndividual;
+    @DatabaseField(columnName = COLUMN_EMPLOYEE, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private Employee employee;
 
     public User() {
+    }
+
+    public User(String uuid) {
+        super(uuid);
     }
 
     public User(String userName, String password) {
@@ -50,9 +57,16 @@ public class User extends BaseModel {
         this.userName = userDTO.getUsername();
         this.password = userDTO.getPassword();
         this.salt = userDTO.getSalt();
-        this.admin = userDTO.isAdmin();
-        this.type = userDTO.getType();
         this.setUuid(userDTO.getUuid());
+        this.setEmployee(new Employee(userDTO.getEmployeeDTO()));
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public String getUserName() {
@@ -93,21 +107,5 @@ public class User extends BaseModel {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public boolean isTutor() {
-        return this.userIndividual instanceof Tutor;
-    }
-
-    public boolean isTutored() {
-        return this.userIndividual instanceof Tutored;
-    }
-
-    public UserIndividual getUserIndividual() {
-        return userIndividual;
-    }
-
-    public void setUserIndividual(UserIndividual userIndividual) {
-        this.userIndividual = userIndividual;
     }
 }

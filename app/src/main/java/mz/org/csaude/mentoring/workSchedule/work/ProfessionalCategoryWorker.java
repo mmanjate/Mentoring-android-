@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.work.WorkerParameters;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
@@ -28,6 +29,12 @@ public class ProfessionalCategoryWorker extends BaseWorker<ProfessionalCategory>
     @Override
     protected void doOnFinish() {
 
+    }
+
+    @Override
+    protected void doAfterSearch(String flag, List<ProfessionalCategory> recs) throws SQLException {
+        changeStatusToFinished();
+        doOnFinish();
     }
 
     @Override

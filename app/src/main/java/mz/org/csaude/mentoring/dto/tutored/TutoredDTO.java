@@ -2,15 +2,14 @@ package mz.org.csaude.mentoring.dto.tutored;
 
 import java.io.Serializable;
 
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 
 /**
  * @author Jose Julai Ritsure
  */
-public class TutoredDTO implements Serializable {
-
-    private String uuid;
+public class TutoredDTO extends BaseEntityDTO {
 
     private EmployeeDTO employeeDTO;
 
@@ -18,15 +17,8 @@ public class TutoredDTO implements Serializable {
     }
 
     public TutoredDTO(Tutored tutored) {
-        this.setUuid(tutored.getUuid());
+        super(tutored);
         this.setEmployeeDTO(new EmployeeDTO(tutored.getEmployee()));
-    }
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public EmployeeDTO getEmployeeDTO() {

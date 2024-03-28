@@ -54,7 +54,7 @@
                     android:paddingStart="@dimen/dimen_15dp"
                     android:paddingTop="@dimen/dimen_20dp"
                     android:textStyle="bold"
-                    android:text="Tutoria"/>
+                    android:text="Mentoria"/>
             </LinearLayout>
 
         </LinearLayout>

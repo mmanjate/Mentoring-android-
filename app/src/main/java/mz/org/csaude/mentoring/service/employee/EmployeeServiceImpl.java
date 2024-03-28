@@ -8,29 +8,21 @@ import java.util.Set;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.employee.EmployeeDAO;
+import mz.org.csaude.mentoring.dao.location.LocationDAO;
+import mz.org.csaude.mentoring.dao.partner.PartnerDao;
+import mz.org.csaude.mentoring.dao.professionalCategoryDAO.ProfessionalCategoryDAO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
-import mz.org.csaude.mentoring.dto.professionalcategory.ProfessionalCategoryDTO;
 import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.location.Location;
-import mz.org.csaude.mentoring.model.partner.Partner;
-import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
-import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.service.location.LocationService;
-import mz.org.csaude.mentoring.service.location.LocationServiceImpls;
-import mz.org.csaude.mentoring.service.partner.PartnerService;
-import mz.org.csaude.mentoring.service.partner.PartnerServiceImpl;
-import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryService;
-import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryServiceImpl;
 
 public class EmployeeServiceImpl extends BaseServiceImpl<Employee> implements EmployeeService {
 
     private EmployeeDAO employeeDAO;
 
-    private ProfessionalCategoryService professionalCategoryService;
+    private ProfessionalCategoryDAO professionalCategoryDAO;
+    private LocationDAO locationDAO;
 
-    private PartnerService partnerService;
-
-    private LocationService locationService;
+    private PartnerDao partnerDao;
 
     public EmployeeServiceImpl(Application application) {
         super(application);
@@ -40,9 +32,9 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee> implements Em
     public void init(Application application ) throws SQLException {
         super.init(application );
         this.employeeDAO = getDataBaseHelper().getEmployeeDAO();
-        this.professionalCategoryService = new ProfessionalCategoryServiceImpl(application );
-        this.partnerService = new PartnerServiceImpl(application );
-        this.locationService = new LocationServiceImpls(application );
+        professionalCategoryDAO = dataBaseHelper.getProfessionalCategoryDAO();
+        locationDAO = dataBaseHelper.getLocationDAO();
+        partnerDao = dataBaseHelper.getPartnerDao();
     }
 
     @Override
@@ -82,26 +74,35 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee> implements Em
     }
 
     @Override
-    public Employee saveOrUpdateEmployee(Employee employee) throws SQLException {
+    public Employee saveOrUpdateEmployee(Employee e) throws SQLException {
 
-        List<Employee> employees = this.employeeDAO.queryForEq("uuid", employee.getUuid());
-        if(employees.isEmpty()){
-            ProfessionalCategory professionalCategory = this.professionalCategoryService.saveOrUpdateProfessionalCategory(new ProfessionalCategoryDTO(employee.getProfessionalCategory()));
-            Partner partner = this.partnerService.savedOrUpdatePartner((Partner) employee.getPartner());
-            Set<Location> locations = employee.getLocations();
-            this.saveLocationFromEmplyee(locations);
-            employee.setProfessionalCategory(professionalCategory);
-            employee.setPartner(partner);
+        Employee employee = this.employeeDAO.getByUuid(e.getUuid());
+        if(employee == null){
+            e.setProfessionalCategory(professionalCategoryDAO.getByUuid(e.getProfessionalCategory().getUuid()));
+            e.setPartner(partnerDao.getByUuid(e.getPartner().getUuid()));
+            this.employeeDAO.createOrUpdate(e);
+            saveLocationFromEmplyee(e.getLocations());
+            return e;
+        } else {
+            employee.setProfessionalCategory(professionalCategoryDAO.getByUuid(e.getProfessionalCategory().getUuid()));
+            employee.setPartner(partnerDao.getByUuid(e.getPartner().getUuid()));
             this.employeeDAO.createOrUpdate(employee);
-            return employee;
+            saveLocationFromEmplyee(employee.getLocations());
+            return e;
         }
-        return employees.get(0);
     }
 
     private void saveLocationFromEmplyee(Set<Location> locations) throws SQLException {
 
         for (Location location : locations){
-            this.locationService.saveOrUpdate(location);
+            if (location.getProvince() != null) location.setProvince(getDataBaseHelper().getProvinceDAO().getByUuid(location.getProvince().getUuid()));
+            if (location.getDistrict() != null) location.setDistrict(getDataBaseHelper().getDistrictDAO().getByUuid(location.getDistrict().getUuid()));
+            if (getDataBaseHelper().getHealthFacilityDAO().getByUuid(location.getHealthFacility().getUuid()) == null) {
+                getDataBaseHelper().getHealthFacilityDAO().create(location.getHealthFacility());
+            }
+            //if (location.getHealthFacility() != null) location.setHealthFacility(getDataBaseHelper().getHealthFacilityDAO().getByUuid(location.getHealthFacility().getUuid()));
+
+            getApplication().getLocationService().saveOrUpdate(location);
         }
     }
 }

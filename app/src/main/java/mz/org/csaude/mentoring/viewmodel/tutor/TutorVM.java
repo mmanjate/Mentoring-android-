@@ -24,7 +24,7 @@ public class TutorVM extends BaseViewModel {
         super(application);
         this.tutorService = new TutorServiceImpl(application);
     }
-
+/*
     @Bindable
     public String getCode() {
         return this.tutor.getCode();
@@ -95,7 +95,7 @@ public class TutorVM extends BaseViewModel {
     public void setUser(Partner partner) {
         this.tutor.setPartner(partner);
           notifyPropertyChanged(BR.partner);
-    }
+    }*/
 
 
     @Override

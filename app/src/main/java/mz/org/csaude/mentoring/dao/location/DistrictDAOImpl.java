@@ -7,11 +7,12 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.Province;
 
-public class DistrictDAOImpl extends BaseDaoImpl<District, Integer> implements DistrictDAO {
+public class DistrictDAOImpl extends MentoringBaseDaoImpl<District, Integer> implements DistrictDAO {
 
     public DistrictDAOImpl(Class<District> dataClass) throws SQLException {
         super(dataClass);

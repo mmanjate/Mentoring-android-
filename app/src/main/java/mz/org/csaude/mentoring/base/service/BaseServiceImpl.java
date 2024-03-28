@@ -13,8 +13,8 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
 
     protected MentoringDataBaseHelper dataBaseHelper;
 
-    protected Application application;
-    public static Application app;
+    protected MentoringApplication application;
+    public static MentoringApplication app;
     protected User currentUser;
 
     public BaseServiceImpl(Application application) {
@@ -27,19 +27,19 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
 
     public void init(Application application) throws SQLException {
         this.dataBaseHelper = MentoringDataBaseHelper.getInstance(application);
-        this.application=application;
-        BaseServiceImpl.app = application;
+        this.application= (MentoringApplication) application;
+        BaseServiceImpl.app = (MentoringApplication) application;
     }
 
     public MentoringDataBaseHelper getDataBaseHelper() {
         return dataBaseHelper;
     }
 
-    public Application getApplication() {
+    public MentoringApplication getApplication() {
         return application;
     }
 
-    public static Application getApp() {
+    public static MentoringApplication getApp() {
         return app;
     }
 

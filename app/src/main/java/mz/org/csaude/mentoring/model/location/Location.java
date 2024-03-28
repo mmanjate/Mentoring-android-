@@ -67,15 +67,15 @@ public class Location extends BaseModel implements Listble {
         this.employee = employee;
     }
 
-    public Listble getProvince() {
+    public Province getProvince() {
         return province;
     }
 
-    public void setProvince(Listble province) {
-        this.province = (Province) province;
+    public void setProvince(Province province) {
+        this.province = province;
     }
 
-    public Listble getDistrict() {
+    public District getDistrict() {
         return district;
     }
 
@@ -83,12 +83,12 @@ public class Location extends BaseModel implements Listble {
         this.district = district;
     }
 
-    public Listble getHealthFacility() {
+    public HealthFacility getHealthFacility() {
         return healthFacility;
     }
 
-    public void setHealthFacility(Listble healthFacility) {
-        this.healthFacility =(HealthFacility) healthFacility;
+    public void setHealthFacility(HealthFacility healthFacility) {
+        this.healthFacility = healthFacility;
     }
 
     public String getLocationLevel() {

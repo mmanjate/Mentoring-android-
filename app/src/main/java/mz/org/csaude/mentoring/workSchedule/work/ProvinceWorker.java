@@ -24,13 +24,19 @@ public class ProvinceWorker extends BaseWorker<Province> {
     }
 
     @Override
-    public void doOnlineSearch(long offset, long limit) throws SQLException {
+    protected void doAfterSearch(String flag, List<Province> recs) throws SQLException {
+        changeStatusToFinished();
+        doOnFinish();
+    }
 
+    @Override
+    public void doOnlineSearch(long offset, long limit) throws SQLException {
+        this.provinceRestService.restGetProvince(this);
     }
 
     @Override
     protected void doOnStart() {
-        this.provinceRestService.restGetProvince(this);
+
 
     }
 

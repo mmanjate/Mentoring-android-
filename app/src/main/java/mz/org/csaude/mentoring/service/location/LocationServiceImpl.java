@@ -12,20 +12,13 @@ import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.location.Province;
-import mz.org.csaude.mentoring.model.user.User;
 
-public class LocationServiceImpls extends BaseServiceImpl<Location> implements LocationService {
+public class LocationServiceImpl extends BaseServiceImpl<Location> implements LocationService {
 
 
     private LocationDAO locationDAO;
 
-    private ProvinceService provinceService;
-
-    private DistrictService districtService;
-
-    private HealthFacilityService healthFacilityService;
-
-    public LocationServiceImpls(Application application) {
+    public LocationServiceImpl(Application application) {
         super(application);
     }
 
@@ -33,9 +26,6 @@ public class LocationServiceImpls extends BaseServiceImpl<Location> implements L
     public void init(Application application) throws SQLException {
         super.init(application);
      this.locationDAO = getDataBaseHelper().getLocationDAO();
-     this.provinceService = new ProvinceServiceImpl(application );
-     this.districtService = new DistrictServiceImpl(application );
-     this.healthFacilityService = new HealthFacilityServiceImpl(application);
     }
     @Override
     public Location save(Location record) throws SQLException {
@@ -74,17 +64,15 @@ public class LocationServiceImpls extends BaseServiceImpl<Location> implements L
     @Override
     public Location saveOrUpdate(Location location) throws SQLException {
 
-        List<Location> locations = this.locationDAO.checkLocation(location.getUuid());
+        Location l = this.locationDAO.getByUuid(location.getUuid());
 
-        if (locations.isEmpty()){
-
-            Province province = this.provinceService.savedOrUpdateProvince(new ProvinceDTO((Province) location.getProvince()));
-            District district = this.districtService.savedOrUpdateDistrict((District) location.getDistrict());
-            location.setDistrict(district);
-            location.setProvince(province);
-            this.locationDAO.createOrUpdate(location);
+        if (l == null){
+            this.locationDAO.create(location);
+            return location;
+        } else {
+            location.setId(l.getId());
+            this.locationDAO.update(location);
             return location;
         }
-        return locations.get(0);
     }
 }

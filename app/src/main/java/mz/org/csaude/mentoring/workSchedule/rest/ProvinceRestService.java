@@ -41,7 +41,7 @@ public class ProvinceRestService extends BaseRestService {
                 }
                 try {
 
-                ProvinceService provinceService = new ProvinceServiceImpl(LoadMetadataServiceImpl.APP);
+                ProvinceService provinceService = getApplication().getProvinceService();
                 Toast.makeText(APP.getApplicationContext(), "Carregando as Provincias ", Toast.LENGTH_SHORT).show();
                 provinceService.savedOrUpdateProvince(data);
 

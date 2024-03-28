@@ -7,6 +7,7 @@ import androidx.databinding.Bindable;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserSyncService;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.home.MainActivity;
 import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
 import mz.org.csaude.mentoring.workSchedule.rest.UserRestService;
@@ -38,7 +40,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
 
     public LoginVM(@NonNull Application application) {
         super(application);
-        userService = new UserServiceImpl(application);
+        userService = getApplication().getUserService();
         this.user= new User();
         this.userSyncService = new UserRestService(application, this.user);
     }
@@ -67,18 +69,43 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
     }
 
     public void doLogin() {
-        userSyncService.doOnlineLogin(this);
-        /*try {
-            this.userService.login(this.user);
+        setAuthenticating(true);
+        try {
+            if (AppHasUser()) {
+            doLocalLogin();
+        } else {
+            userSyncService.doOnlineLogin(this);
+        }
         } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
+            throw new RuntimeException(e);
+        }
+    }
 
+    private void doLocalLogin() throws SQLException {
+        User logedUser = userService.login(this.user);
+
+        if (logedUser != null) {
+            getApplication().setAuthenticatedUser(logedUser);
+            goHome();
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), "Utilizador ou senha inválida").show();
+        }
+
+        setAuthenticating(false);
+    }
+
+    private boolean AppHasUser() {
+        try {
+            return Utilities.listHasElements(userService.getAll());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void doOnRestSucessResponse(User user) {
-        OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runPostLoginSync(user);
+        goHome();
+        /*OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runPostLoginSync(user);
 
         WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
             if (workInfo != null) {
@@ -86,7 +113,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
                     goHome();
                 }
             }
-        });
+        });*/
     }
 
     private void goHome() {

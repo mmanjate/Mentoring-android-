@@ -20,6 +20,9 @@ public class ProfessionalCategory extends BaseModel implements Listble{
     @DatabaseField(columnName = COLUMN_DESCRIPTION)
     private String description;
 
+    public ProfessionalCategory() {
+    }
+
     @DatabaseField(columnName = COLUMN_CODE)
     private  String code;
 

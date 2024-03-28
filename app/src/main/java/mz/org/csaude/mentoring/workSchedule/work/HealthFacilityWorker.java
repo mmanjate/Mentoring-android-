@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.work.WorkerParameters;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
@@ -25,6 +26,17 @@ public class HealthFacilityWorker extends BaseWorker<HealthFacility> {
     protected void doOnStart() {
 
         this.healthFacilityRestService.restGetHealthFacility(this);
+    }
+
+    @Override
+    public void doOnlineSearch(long offset, long limit) throws SQLException {
+        this.healthFacilityRestService.restGetHealthFacility(this);
+    }
+
+    @Override
+    protected void doAfterSearch(String flag, List<HealthFacility> recs) throws SQLException {
+        changeStatusToFinished();
+        doOnFinish();
     }
 
     @Override

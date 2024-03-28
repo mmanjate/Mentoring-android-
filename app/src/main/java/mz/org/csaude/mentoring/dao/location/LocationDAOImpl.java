@@ -7,9 +7,10 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.location.Location;
 
-public class LocationDAOImpl extends BaseDaoImpl<Location, Integer> implements LocationDAO{
+public class LocationDAOImpl extends MentoringBaseDaoImpl<Location, Integer> implements LocationDAO{
 
 
     public LocationDAOImpl(Class<Location> dataClass) throws SQLException {

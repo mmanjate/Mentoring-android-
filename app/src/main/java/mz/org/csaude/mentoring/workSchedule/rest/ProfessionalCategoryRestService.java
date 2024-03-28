@@ -37,7 +37,7 @@ public class ProfessionalCategoryRestService extends BaseRestService {
 
                          }
                    try {
-                   ProfessionalCategoryService professionalCategoryService = new ProfessionalCategoryServiceImpl(LoadMetadataServiceImpl.APP);
+                   ProfessionalCategoryService professionalCategoryService = getApplication().getProfessionalCategoryService();
                    Toast.makeText(APP.getApplicationContext(), "Carregando as ProfessionalCategory ", Toast.LENGTH_SHORT).show();
                    professionalCategoryService.saveOrUpdateProfessionalCategorys(data);
 

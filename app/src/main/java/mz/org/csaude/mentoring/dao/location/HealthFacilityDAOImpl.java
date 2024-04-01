@@ -7,11 +7,12 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 
-public class HealthFacilityDAOImpl extends BaseDaoImpl<HealthFacility, Integer> implements HealthFacilityDAO{
+public class HealthFacilityDAOImpl extends MentoringBaseDaoImpl<HealthFacility, Integer> implements HealthFacilityDAO{
 
 
     public HealthFacilityDAOImpl(Class<HealthFacility> dataClass) throws SQLException {

@@ -160,7 +160,7 @@ public class Employee extends BaseModel implements Listble {
         this.email = email;
     }
 
-    public Listble getPartner() {
+    public Partner getPartner() {
         return partner;
     }
 

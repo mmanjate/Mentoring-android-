@@ -87,14 +87,11 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee> implements Em
         List<Employee> employees = this.employeeDAO.queryForEq("uuid", employee.getUuid());
         if(employees.isEmpty()){
             ProfessionalCategory professionalCategory = this.professionalCategoryService.saveOrUpdateProfessionalCategory(new ProfessionalCategoryDTO(employee.getProfessionalCategory()));
-          if(employee.getPartner() != null ) {
-              Partner partner = this.partnerService.savedOrUpdatePartner((Partner) employee.getPartner());
-              employee.setPartner(partner);
-          }
+            Partner partner = this.partnerService.savedOrUpdatePartner((Partner) employee.getPartner());
             Set<Location> locations = employee.getLocations();
-           // this.saveLocationFromEmplyee(locations);
+            this.saveLocationFromEmplyee(locations);
             employee.setProfessionalCategory(professionalCategory);
-
+            employee.setPartner(partner);
             this.employeeDAO.createOrUpdate(employee);
             return employee;
         }

@@ -44,7 +44,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_gravity="bottom|center"
-                    app:srcCompat="@drawable/ic_logimage" />
+                    app:srcCompat="@drawable/mentoring" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -52,9 +52,9 @@
                     android:layout_weight="2"
                     style="@style/login_app_name_style"
                     android:paddingStart="@dimen/dimen_15dp"
-                    android:paddingTop="@dimen/dimen_20dp"
+                    android:gravity="center_vertical"
                     android:textStyle="bold"
-                    android:text="Tutoria"/>
+                    android:text="Mentoria"/>
             </LinearLayout>
 
         </LinearLayout>

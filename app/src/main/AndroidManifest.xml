@@ -30,20 +30,23 @@
             android:exported="false" />
         <activity
             android:name=".view.ronda.RondaActivity"
-            android:exported="true">
+            android:exported="false"
+            android:theme="@style/Theme.Mentoring.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".view.ronda.RondaListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Mentoring.NoActionBar"  />
+        <activity
+            android:name=".view.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Mentoring.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.ronda.RondaListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.splash.SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Mentoring.NoActionBar"></activity>
         <activity
             android:name=".view.login.LoginActivity"
             android:exported="true"

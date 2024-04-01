@@ -53,7 +53,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public User login(User user) throws SQLException {
         // login online
         // login offline
-        return null;
+        return this.userDao.getByCredentials(user);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
        List<User> users = this.userDao.queryForEq("uuid", user.getUuid());
 
        if(users.isEmpty()){
+           getApplication().getEmployeeService().saveOrUpdateEmployee(user.getEmployee());
            this.userDao.createOrUpdate(user);
            return user;
        }

@@ -1,13 +1,19 @@
 package mz.org.csaude.mentoring.dto.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
+import mz.org.csaude.mentoring.base.model.BaseModel;
+import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.model.user.UserIndividual;
 
 
-public class UserDTO {
+public class UserDTO extends BaseEntityDTO {
 
     private String username;
 
@@ -15,35 +21,18 @@ public class UserDTO {
 
     private String salt;
 
-    private String type;
-
-    private boolean admin;
-
-    private String uuid;
-
-
-    private UserIndividual userIndividual;
+    private EmployeeDTO employeeDTO;
 
     public UserDTO() {
+        super();
     }
 
     public UserDTO(User user) {
+        super(user);
+        this.setEmployeeDTO(new EmployeeDTO(user.getEmployee()));
         this.setUsername(user.getUserName());
         this.setPassword(user.getPassword());
-        this.setType(user.getType());
-        this.setAdmin(user.isAdmin());
         this.setSalt(user.getSalt());
-        this.setUserIndividual(user.getUserIndividual());
-        this.setUuid(user.getUuid());
-
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getUsername() {
@@ -70,27 +59,11 @@ public class UserDTO {
         this.salt = salt;
     }
 
-    public String getType() {
-        return type;
+    public EmployeeDTO getEmployeeDTO() {
+        return employeeDTO;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    public UserIndividual getUserIndividual() {
-        return userIndividual;
-    }
-
-    public void setUserIndividual(UserIndividual userIndividual) {
-        this.userIndividual = userIndividual;
+    public void setEmployeeDTO(EmployeeDTO employeeDTO) {
+        this.employeeDTO = employeeDTO;
     }
 }

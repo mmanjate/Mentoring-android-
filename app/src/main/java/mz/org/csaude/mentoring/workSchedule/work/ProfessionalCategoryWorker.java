@@ -36,6 +36,12 @@ public class ProfessionalCategoryWorker extends BaseWorker<ProfessionalCategory>
     }
 
     @Override
+    protected void doAfterSearch(String flag, List<ProfessionalCategory> recs) throws SQLException {
+        changeStatusToFinished();
+        doOnFinish();
+    }
+
+    @Override
     protected void doSave(List<ProfessionalCategory> recs) {
 
     }

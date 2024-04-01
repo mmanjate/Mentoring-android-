@@ -7,9 +7,10 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.location.Province;
 
-public class ProvinceDAOImpl extends BaseDaoImpl<Province, Integer> implements ProvinceDAO {
+public class ProvinceDAOImpl extends MentoringBaseDaoImpl<Province, Integer> implements ProvinceDAO {
 
     public ProvinceDAOImpl(Class<Province> dataClass) throws SQLException {
         super(dataClass);

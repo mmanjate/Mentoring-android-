@@ -11,6 +11,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
 import mz.org.csaude.mentoring.model.location.District;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.workSchedule.rest.DistrictRestService;
 
 public class DistrictWorker extends BaseWorker<District> {
@@ -23,12 +24,19 @@ public class DistrictWorker extends BaseWorker<District> {
     }
 
     @Override
-    public void doOnlineSearch(long offset, long limit) throws SQLException {
-
+    protected void doAfterSearch(String flag, List<District> recs) throws SQLException {
+        changeStatusToFinished();
+        doOnFinish();
     }
+
+    @Override
+    public void doOnlineSearch(long offset, long limit) throws SQLException {
+        this.districtRestService.restGetDistricts(this);
+    }
+
     @Override
     protected void doOnStart() {
-        this.districtRestService.restGetDistricts(this);
+
     }
 
     @Override

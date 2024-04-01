@@ -10,4 +10,6 @@ import mz.org.csaude.mentoring.model.tutor.Tutor;
 public interface TutorService extends BaseService<Tutor> {
 
     public void saveOrUpdateTutors(List<TutorDTO> tutorDTOS) throws SQLException;
+
+    public Tutor saveOrUpdate(Tutor tutor) throws SQLException;
 }

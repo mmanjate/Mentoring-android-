@@ -7,6 +7,7 @@ import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.dto.location.DistrictDTO;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
 import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
+import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.dto.professionalcategory.ProfessionalCategoryDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
@@ -55,20 +56,22 @@ public interface SyncDataService {
     @GET("/tutor/tutors/{limit}/{offset}")
     Call<List<TutorDTO>> getTutors(@Path("limit") long limit , @Path("offset") long offset);
 
-    @GET("/tutor/user/{userUuid}")
-    Call<TutorDTO> getTutorByUserUuid(@Path("userUuid") String userUuid);
+    @GET("/mentor/employee/{uuid}")
+    Call<TutorDTO> getTutorByEmployeeUuid(@Path("uuid") String userUuid);
 
-    @GET("/province/provinces")
+    @GET("/province/getall")
     Call<List<ProvinceDTO>> getProvinces();
 
     @GET("healthfacility/getall")
     Call<List<HealthFacilityDTO>> getHealthFacilitys();
 
-    @GET("district/districts")
+    @GET("district/getall")
     Call<List<DistrictDTO>> getDistricts();
 
     @GET("professionalcategory/getall")
     Call<List<ProfessionalCategoryDTO>> getProfessionalCategory();
 
 
+    @GET("partner/getall")
+    Call<List<PartnerDTO>> getPartners();
 }

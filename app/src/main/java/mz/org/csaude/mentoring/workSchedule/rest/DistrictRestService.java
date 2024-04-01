@@ -41,7 +41,7 @@ public class DistrictRestService extends BaseRestService {
                 } else {
 
                     try {
-                        DistrictService districtService = new DistrictServiceImpl(LoadMetadataServiceImpl.APP);
+                        DistrictService districtService = getApplication().getDistrictService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Distritos...", Toast.LENGTH_SHORT).show();
                         districtService.savedOrUpdateDistricts(data);
 

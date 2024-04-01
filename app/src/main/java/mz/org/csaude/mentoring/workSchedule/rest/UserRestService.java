@@ -54,10 +54,15 @@ public class UserRestService extends BaseRestService implements UserSyncService 
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.code() == 200) {
                     LoginResponse data = response.body();
+                    try {
+                        getApplication().setAuthenticatedUser(getApplication().getUserService().savedOrUpdateUser(new User(data.getUserDTO())));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
 
                     if (Utilities.stringHasValue(data.getAccess_token())) {
-                        sessionManager.saveAuthToken(data.getAccess_token(), data.getExpires_in());
-                        listener.doOnRestSucessResponse(currentUser);
+                        sessionManager.saveAuthToken(data.getAccess_token(), data.getRefresh_token(), data.getExpires_in());
+                        listener.doOnRestSucessResponse(getApplication().getAuthenticatedUser());
                     }
                 }
 

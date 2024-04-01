@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.base.searchparams.AbstractSearchParams;
 import mz.org.csaude.mentoring.base.service.BaseRestService;
@@ -44,6 +45,9 @@ public abstract class BaseWorker<T extends BaseModel> extends Worker implements 
         this.notificationId = ThreadLocalRandom.current().nextInt();
     }
 
+    protected MentoringApplication getApplication() {
+        return (MentoringApplication) getApplicationContext();
+    }
     @Override
     public Result doWork() {
         try {

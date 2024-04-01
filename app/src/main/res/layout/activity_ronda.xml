@@ -187,7 +187,7 @@
                 style="@style/input_labels"
                 />
             <AutoCompleteTextView
-                android:id="@+id/aut_cmp_drugs"
+                android:id="@+id/aut_cmp_mentees"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="40"
@@ -199,7 +199,7 @@
                 android:padding="@dimen/dimen_4dp"
                 />
             <ImageButton
-                android:id="@+id/imv_add_selected_drug"
+                android:id="@+id/imv_add_selected_mentee"
                 android:layout_width="70dp"
                 android:layout_height="60dp"
                 app:srcCompat="@drawable/baseline_arrow_circle_down_24"

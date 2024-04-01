@@ -21,6 +21,14 @@ public class AuthInterceptorImpl implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
+
+        String accessToken = sessionManager.fetchAuthToken();
+
+        /*if (accessToken != null && sessionManager.isAccessTokenExpired()) {
+            String refreshToken = sessionManager.getRefreshToken();
+
+            String refreshedToken = runBlo
+        }*/
         Request newRequest = chain.request().newBuilder()
                 .header("Authorization","Bearer "+ this.sessionManager.fetchAuthToken())
                 .build();

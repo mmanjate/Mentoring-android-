@@ -7,103 +7,345 @@
         tools:context=".view.tutored.CreateTutoredActivity">
     <data>
         <variable
-                name="viewModel"
-                type="mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM"/>
-        <variable name="careerTypeAdapter"
-                  type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
+            name="viewModel"
+            type="mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM"/>
+        <variable
+            name="viewModelProvince"
+            type="mz.org.csaude.mentoring.viewmodel.location.ProvinceVM" />
+
+        <variable
+            name="professionalCategoryAdapter"
+            type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter" />
         <variable name="careerAdapter" type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
+        <variable
+            name="provinceAdapter"
+            type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter" />
+        <variable
+            name="districtAdapter"
+            type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter" />
+        <variable
+            name="healthfacilityAdapter"
+            type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter" />
+        <variable
+            name="menteeLaborfoAdapter"
+            type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter" />
+
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
         <import type="android.view.View"/>
+        <import type="mz.org.csaude.mentoring.model.tutored.Tutored"/>
+        <import type="mz.org.csaude.mentoring.util.Utilities"/>
+        
+        <variable
+            name="tutored"
+            type="mz.org.csaude.mentoring.model.tutored.Tutored" />
     </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="@dimen/dimen_12dp">
 
-            <EditText
-                    android:id="@+id/tutored_name"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/fields_background"
-                    android:hint="@string/name"
-                    android:padding="8dp"/>
+                    android:orientation="vertical">
 
-            <EditText
-                    android:id="@+id/tutored_surname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/fields_background"
-                    android:hint="@string/surname"
-                    android:padding="8dp"/>
+                    <LinearLayout
+                        android:id="@+id/identification_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_normal"
+                        android:paddingVertical="6dp"
+                        android:layout_marginVertical="10dp"
+                        android:orientation="horizontal"
+                        android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}">
 
-            <EditText
-                    android:id="@+id/tutored_phone_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/fields_background"
-                    android:hint="@string/telephone"
-                    android:padding="8dp"/>
+                        <TextView
+                            android:layout_width="@dimen/dimen_0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="8"
+                            android:text="Identificação do Mentorando"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:drawableLeft="@drawable/baseline_contact_page_24"
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="10dp"/>
 
-            <EditText
-                    android:id="@+id/tutored_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/fields_background"
-                    android:hint="@string/email"
-                    android:padding="8dp"/>
+                        <ImageButton
+                            android:id="@+id/btn_identification_data"
+                            android:layout_width="@dimen/dimen_0dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/background_layout"
+                            android:src="@drawable/sharp_arrow_drop_up_24"
+                            android:layout_marginRight="@dimen/dimen_2dp"
+                            android:layout_weight="1"/>
 
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/career"
-                    style="@style/input_labels"
-            />
-            <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spn_career"
-                    android:layout_width="fill_parent"
-                    style="@style/spinner_style"
-                    android:layout_height="wrap_content"
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/identification_data_lyt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="4dp">
 
-            />
+                        <EditText
+                            android:id="@+id/tutored_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/fields_background"
+                            android:hint="@string/name"
+                            android:text="@={viewModel.name}"
+                            android:padding="8dp"/>
 
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/position"
-                    style="@style/input_labels"
-            />
-            <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spn_position"
-                    android:layout_width="fill_parent"
-                    style="@style/spinner_style"
-                    android:layout_height="wrap_content"
+                        <EditText
+                            android:id="@+id/tutored_surname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/fields_background"
+                            android:hint="@string/surname"
+                            android:text="@={viewModel.surname}"
+                            android:padding="8dp"/>
 
-            />
+                        <EditText
+                            android:id="@+id/tutored_phone_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/fields_background"
+                            android:hint="@string/telephone"
+                            android:text="@={viewModel.phoneNumber}"
+                            android:padding="8dp"/>
 
-            <Button
-                    android:id="@+id/save_tutored"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="30dp"
-                    android:background="#00695C"
-                    android:text="@string/submit"
-                    android:textAllCaps="false"
-                    android:textColor="#fff"
-                    android:textStyle="bold"/>
+                        <EditText
+                            android:id="@+id/tutored_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/fields_background"
+                            android:hint="@string/email"
+                            android:text="@={viewModel.email}"
+                            android:padding="8dp"/>
 
+                        <EditText
+                            android:id="@+id/tutored_nuit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/fields_background"
+                            android:hint="@string/nuit"
+                            android:padding="8dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/laboral_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_normal"
+                        android:paddingVertical="6dp"
+                        android:layout_marginVertical="10dp"
+                        android:orientation="horizontal"
+                        android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}">
+
+                        <TextView
+                            android:layout_width="@dimen/dimen_0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="8"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dimen_15dp"
+                            android:text="Informação Laboral"
+                            android:drawableLeft="@drawable/baseline_contact_page_24"
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="@dimen/dimen_10dp"/>
+
+                        <ImageButton
+                            android:id="@+id/btn_laboral_data"
+                            android:layout_width="@dimen/dimen_0dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/background_layout"
+                            android:layout_marginRight="2dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/sharp_arrow_drop_up_24"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/laboral_lyt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/professional_category"
+                            style="@style/input_labels"
+                            />
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/spn_professional_category"
+                            android:layout_width="fill_parent"
+                            style="@style/spinner_style"
+                            android:layout_height="wrap_content"
+                            app:adapter="@{professionalCategoryAdapter}"
+                            bind:selectedOpt="@={viewModel.professionalCategory}"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/vinculo_laboral"
+                            style="@style/input_labels"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/spn_mentee_labor_info"
+                            style="@style/spinner_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            app:adapter="@{menteeLaborfoAdapter}"
+                            bind:selectedOpt="@={viewModel.menteeLabor}"
+                         />
+
+                        <EditText
+                            android:id="@+id/ong_names"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/fields_background"
+                            android:hint="Nome Da ONG"
+                            android:padding="8dp"
+                            />
+
+                        <EditText
+                            android:id="@+id/training_year"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/fields_background"
+                            android:hint="Ano de Formação"
+                            android:padding="8dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/healt_unit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/shape_normal"
+                        android:layout_marginVertical="@dimen/dimen_10dp"
+                        android:paddingVertical="6dp"
+                        android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}">
+
+                        <TextView
+                            android:layout_width="@dimen/dimen_0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="8"
+                            android:text="Unidade Sanitaria"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dimen_15dp"
+                            android:drawableLeft="@drawable/baseline_local_hospital_24"
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="@dimen/dimen_10dp"/>
+
+                        <ImageButton
+                            android:id="@+id/btn_healt_unit"
+                            android:layout_width="@dimen/dimen_0dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/sharp_arrow_drop_up_24"
+                            android:layout_weight="1"
+                            android:background="@color/background_layout"
+                            android:layout_marginRight="@dimen/dimen_2dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/healt_unit_lyt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Province *"
+                            style="@style/input_labels"
+                            />
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/spn_province"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/spinner_style"
+                            app:adapter="@{provinceAdapter}"
+                            bind:selectedOpt= "@={viewModel.province}"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Distric *"
+                            style="@style/input_labels"
+                            />
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/spn_district"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/spinner_style"
+                            app:adapter="@{districtAdapter}"
+                            bind:selectedOpt="@={viewModel.district}"/>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Unidade Sanitaria *"
+                            style="@style/input_labels"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/spn_healthfacility"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/spinner_style"
+                            app:adapter="@{healthfacilityAdapter}"
+                            bind:selectedOpt="@={viewModel.healthFacility}"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/save_tutored"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="30dp"
+                        android:background="#00695C"
+                        android:text="@string/submit"
+                        android:textAllCaps="false"
+                        android:textColor="#fff"
+                        android:textStyle="bold"
+                        android:onClick="@{() -> viewModel.save()}"/>
+
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
 
 

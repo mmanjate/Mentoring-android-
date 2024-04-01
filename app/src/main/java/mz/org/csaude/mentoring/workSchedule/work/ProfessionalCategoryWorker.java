@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.work.WorkerParameters;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
@@ -21,8 +22,12 @@ public class ProfessionalCategoryWorker extends BaseWorker<ProfessionalCategory>
     }
 
     @Override
+    public void doOnlineSearch(long offset, long limit) throws SQLException {
+        this.professionalCategoryRestService.restGetProfessionalCategory(this);
+    }
+    @Override
     protected void doOnStart() {
-      this.professionalCategoryRestService.restGetProfessionalCategory(this);
+
     }
 
     @Override

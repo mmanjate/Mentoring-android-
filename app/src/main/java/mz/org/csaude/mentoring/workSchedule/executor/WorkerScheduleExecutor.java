@@ -14,7 +14,11 @@ import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.workSchedule.work.CabinetWorker;
 import mz.org.csaude.mentoring.workSchedule.work.CareerWorker;
+import mz.org.csaude.mentoring.workSchedule.work.HealthFacilityWorker;
+import mz.org.csaude.mentoring.workSchedule.work.ProfessionalCategoryWorker;
+import mz.org.csaude.mentoring.workSchedule.work.ProvinceWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutorWorker;
+import mz.org.csaude.mentoring.workSchedule.work.TutoredWork;
 import mz.org.csaude.mentoring.workSchedule.work.UserWorker;
 
 public class WorkerScheduleExecutor {
@@ -47,11 +51,15 @@ public class WorkerScheduleExecutor {
         return instance;
     }
     public OneTimeWorkRequest runinitialSync() {
-        OneTimeWorkRequest cabinetOneTimeWorkRequest = new OneTimeWorkRequest.Builder(CabinetWorker.class).addTag("ONE_TIME_CABINET_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        //OneTimeWorkRequest cabinetOneTimeWorkRequest = new OneTimeWorkRequest.Builder(CabinetWorker.class).addTag("ONE_TIME_CABINET_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest tutoredOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutoredWork.class).addTag("ONE_TIME_TUTORED_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest professionalCategoryOneTimeWorkRequest = new OneTimeWorkRequest.Builder(ProfessionalCategoryWorker.class).addTag("ONE_TIME_PROFESSIONAL_CATEGORY_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest provinceOneTimeWorkRequest = new OneTimeWorkRequest.Builder(ProvinceWorker.class).addTag("ONE_TIME_PROVINCE_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest healthFacilityOneTimeWorkRequest = new OneTimeWorkRequest.Builder(HealthFacilityWorker.class).addTag("ONE_TIME_HEALTHFACILITY_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest careerOneTimeWorkRequest = new OneTimeWorkRequest.Builder(CareerWorker.class).addTag("ONE_TIME_CAREER_ID" + ONE_TIME_REQUEST_JOB_ID).build();
 
-        workManager.beginUniqueWork("INITIAL_APP_SETUP", ExistingWorkPolicy.KEEP, cabinetOneTimeWorkRequest).then(careerOneTimeWorkRequest).enqueue();
-        return careerOneTimeWorkRequest;
+        workManager.beginUniqueWork("INITIAL_APP_SETUP", ExistingWorkPolicy.KEEP, healthFacilityOneTimeWorkRequest).then(tutoredOneTimeWorkRequest).enqueue();
+        return healthFacilityOneTimeWorkRequest;
 
         //return (ListenableFuture) workManager.beginUniqueWork("INITIAL_APP_SETUP", ExistingWorkPolicy.KEEP, Arrays.asList(cabinetOneTimeWorkRequest, careerOneTimeWorkRequest)).enqueue().getResult();
     }

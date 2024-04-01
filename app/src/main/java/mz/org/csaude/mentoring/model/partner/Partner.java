@@ -24,6 +24,9 @@ public class Partner extends BaseModel implements Listble {
     @DatabaseField(columnName = COLUMN_DESCRIPTION)
     private String description;
 
+    public Partner() {
+    }
+
     public Partner(String name, String description) {
         this.name = name;
         this.description = description;

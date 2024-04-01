@@ -29,8 +29,6 @@ public class MainActivity extends BaseActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
-
-
     ProgressDialog progressDialog;
 
     @Override
@@ -45,13 +43,6 @@ public class MainActivity extends BaseActivity {
         progressDialog = new ProgressDialog(this);
 
 
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -81,13 +72,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public BaseViewModel initViewModel() {
-        return new ViewModelProvider(this).get(HomeVM.class);
+        return null;
     }
 
-    @Override
-    public HomeVM getRelatedViewModel() {
-        return (HomeVM) super.getRelatedViewModel();
-    }
 
     @Override
     protected void onDestroy() {

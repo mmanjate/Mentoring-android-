@@ -26,7 +26,7 @@ import java.sql.SQLException;
 /**
  * @author Jose Julai Ritsure
  */
-public class GenericFragment extends Fragment implements GenericActivity, IListbleDialogListener {
+public abstract class GenericFragment extends Fragment implements GenericActivity, IListbleDialogListener {
 
     protected BaseViewModel relatedViewModel;
 
@@ -37,7 +37,6 @@ public class GenericFragment extends Fragment implements GenericActivity, IListb
         this.relatedViewModel = initViewModel();
         if (this.relatedViewModel != null) {
             this.relatedViewModel.setRelatedActivity(getMyActivity());
-            this.relatedViewModel.setCurrentUser(getCurrentUser());
             //this.relatedViewModel.setRelatedFragment(this);
 
         }
@@ -57,15 +56,6 @@ public class GenericFragment extends Fragment implements GenericActivity, IListb
         return (BaseActivity) getActivity();
     }
 
-    public User getCurrentUser() {
-        return getMyActivity().getCurrentUser();
-    }
-
-    @Override
-    public BaseViewModel initViewModel() {
-        return relatedViewModel;
-    }
-
     @Override
     public void remove(int position) throws SQLException {
 
@@ -83,6 +73,10 @@ public class GenericFragment extends Fragment implements GenericActivity, IListb
         recyclerView.addItemDecoration(new DividerItemDecoration(context, 0));
         recyclerView.setAdapter(adapter);
 
+    }
+
+    public BaseViewModel getRelatedViewModel() {
+        return relatedViewModel;
     }
 
 }

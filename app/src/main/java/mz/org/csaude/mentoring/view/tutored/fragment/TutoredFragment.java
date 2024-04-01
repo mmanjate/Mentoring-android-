@@ -76,7 +76,6 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
                                                                  public void onClick(View view) {
                                                                      Intent intent = new Intent(getContext(), CreateTutoredActivity.class);
                                                                      Bundle bundle = new Bundle();
-                                                                     bundle.putSerializable("user", getCurrentUser());
                                                                      intent.putExtras(bundle);
                                                                      startActivity(intent);
                                                                  }
@@ -122,7 +121,8 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
         }
     }
 
-    private TutoredVM getRelatedViewModel() {
+    @Override
+    public TutoredVM getRelatedViewModel() {
         return (TutoredVM) getMyActivity().getRelatedViewModel();
     }
 

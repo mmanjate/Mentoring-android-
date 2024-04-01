@@ -21,23 +21,39 @@ xmlns:bind="http://schemas.android.com/apk/res-auto">
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_0dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:src="@drawable/mentoring"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                style="@style/splash_app_name_style"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="Mentoria"/>
             <ProgressBar
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/dimen_10dp"
-                android:layout_gravity="right|bottom"/>
+                android:layout_gravity="center|bottom"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0dp"
                 android:text="Carregando, por favor aguarde ..."
-                android:layout_weight="0.6"
+                android:layout_weight="1"
                 android:textSize="16sp"
-                android:textColor="@color/logo"
-                android:gravity="right"
-                android:paddingEnd="@dimen/dimen_18dp"
-                android:layout_margin="@dimen/dimen_10dp"
-                android:paddingRight="@dimen/dimen_18dp" />
+                android:textColor="#e91e63"
+                android:gravity="top|center"
+                android:layout_margin="@dimen/dimen_10dp"/>
 
 
         </LinearLayout>

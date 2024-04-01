@@ -104,8 +104,8 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
 
     @Override
     public void doOnRestSucessResponse(User user) {
-        goHome();
-        /*OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runPostLoginSync(user);
+        //goHome();
+        OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runPostLoginSync(user);
 
         WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
             if (workInfo != null) {
@@ -113,7 +113,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
                     goHome();
                 }
             }
-        });*/
+        });
     }
 
     private void goHome() {
@@ -128,7 +128,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
 
     public void setAuthenticating(boolean authenticating) {
         this.authenticating = authenticating;
-        notifyChange();
+        notifyPropertyChanged(BR.authenticating);
     }
 
     @Bindable

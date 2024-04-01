@@ -9,13 +9,11 @@ public class SessionManager {
 
     public final static String USER_TOKEN = "user_token";
 
-    public final static String REFRESH_TOKEN = "user_token";
+    public final static String REFRESH_TOKEN = "user_refresh_token";
     public final static String TOKEN_EXPIRE_TIME = "token_expiration";
     private Context context;
 
     SharedPreferences sharedPref;
-
-    private long accessTokenExpirationTime = 0;
 
     public SessionManager(Context context) {
         this.context = context;
@@ -24,6 +22,7 @@ public class SessionManager {
 
     public boolean isAccessTokenExpired() {
         long currentTimeMillis = System.currentTimeMillis();
+        long accessTokenExpirationTime = getTokenExpiration();
         return accessTokenExpirationTime > 0 && currentTimeMillis >= accessTokenExpirationTime;
     }
     public void saveAuthToken(String token, String refeshToken, long accessTokenExpirationTime) {
@@ -36,5 +35,13 @@ public class SessionManager {
 
     public String fetchAuthToken() {
         return sharedPref.getString(USER_TOKEN, null);
+    }
+
+    public String getRefreshToken() {
+        return sharedPref.getString(REFRESH_TOKEN, null);
+    }
+
+    public Long getTokenExpiration() {
+        return Long.parseLong(sharedPref.getString(TOKEN_EXPIRE_TIME, null));
     }
 }

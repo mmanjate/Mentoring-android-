@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Mentoring</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_session">SessionActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -50,5 +51,7 @@
     <string name="email_invalid">E-mail inválido</string>
     <string name="email">E-mail</string>
     <string name="local">Local</string>
+    <string name="session_closure">Fecho da Sessão</string>
+    <string name="back">Voltar</string>
 </resources>
 

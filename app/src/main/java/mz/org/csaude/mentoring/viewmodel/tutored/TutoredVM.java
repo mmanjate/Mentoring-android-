@@ -37,7 +37,6 @@ import mz.org.csaude.mentoring.service.location.DistrictServiceImpl;
 import mz.org.csaude.mentoring.service.location.HealthFacilityService;
 import mz.org.csaude.mentoring.service.location.HealthFacilityServiceImpl;
 import mz.org.csaude.mentoring.service.location.LocationService;
-import mz.org.csaude.mentoring.service.location.LocationServiceImpls;
 import mz.org.csaude.mentoring.service.location.ProvinceService;
 import mz.org.csaude.mentoring.service.location.ProvinceServiceImpl;
 import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryService;
@@ -87,18 +86,19 @@ public class TutoredVM extends BaseViewModel {
 
     private List<SimpleValue> menteeLabors;
 
+    private Partner selectedNgo;
+
     public TutoredVM(@NonNull Application application) {
         super(application);
 
         this.initialDataVisible = true;
-        this.tutoredService = new TutoredServiceImpl(application );
-        this.professionalCategoryService = new ProfessionalCategoryServiceImpl(application );
-        this.careerService = new CareerServiceImpl(application );
-        this.provinceService = new ProvinceServiceImpl(application );
-        this.districtService = new DistrictServiceImpl(application );
-        this.healthFacilityService = new HealthFacilityServiceImpl(application );
-        this.employeeService = new EmployeeServiceImpl(application);
-        this.locationService = new LocationServiceImpls(application);
+        this.tutoredService = getApplication().getTutoredService();
+        this.professionalCategoryService = getApplication().getProfessionalCategoryService();
+        this.provinceService = getApplication().getProvinceService();
+        this.districtService = getApplication().getDistrictService();
+        this.healthFacilityService = getApplication().getHealthFacilityService();
+        this.employeeService = getApplication().getEmployeeService();
+        this.locationService = getApplication().getLocationService();
         districts = new ArrayList<>();
         healthFacilities = new ArrayList<>();
         menteeLabors = new ArrayList<>();
@@ -185,6 +185,16 @@ public class TutoredVM extends BaseViewModel {
         return provinceService.getAll();
     }
 
+    @Bindable
+    public Listble getSelectedNgo() {
+        return selectedNgo;
+    }
+
+    public void setSelectedNgo(Listble selectedNgo) {
+        this.selectedNgo = (Partner) selectedNgo;
+        notifyPropertyChanged(BR.selectedNgo);
+    }
+
     private void doSave(){
 
           if(StringUtils.isEmpty(employee.getName())){
@@ -228,15 +238,13 @@ public class TutoredVM extends BaseViewModel {
         employee.setProfessionalCategory((ProfessionalCategory) getProfessionalCategory());
         tutored.setUuid(Utilities.getNewUUID().toString());
         tutored.setEmployee(employee);
-
           employee.setUuid(Utilities.getNewUUID().toString());
-
           location.setUuid(Utilities.getNewUUID().toString());
           location.setEmployee(employee);
-          location.setProvince(getProvince());
+          location.setProvince((Province) getProvince());
           location.setDistrict((District) getDistrict());
-          location.setHealthFacility(getHealthFacility());
-          location.setLocationLevel("NATINALITE");
+          location.setHealthFacility((HealthFacility) getHealthFacility());
+          location.setLocationLevel("N/A");
 
         location.setEmployee(employee);
 
@@ -410,4 +418,14 @@ public class TutoredVM extends BaseViewModel {
         return (CreateTutoredActivity) super.getRelatedActivity();
     }
 
+    public void createNewTutored() {
+        getRelatedActivity().nextActivity(CreateTutoredActivity.class);
+    }
+    public List getAllPartners() {
+        try {
+            return getApplication().getPartnerService().getAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -47,6 +47,7 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
     private ListableSpinnerAdapter healthfacilityAdapter;
     private ListableSpinnerAdapter professionalCategoryAdapter;
 
+    private ListableSpinnerAdapter ngoAdapter;
     private ListableSpinnerAdapter menteeLaborfoAdapter;
     private TutoredService tutoredService;
     private CareerService careerService;
@@ -60,7 +61,7 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
 
         activityCreateTutoredBinding.laboralLyt.setVisibility(View.GONE);
         activityCreateTutoredBinding.healtUnitLyt.setVisibility(View.GONE);
-        activityCreateTutoredBinding.ongNames.setVisibility(View.GONE);
+        activityCreateTutoredBinding.spnNgo.setVisibility(View.GONE);
 
         Intent intent = this.getIntent();
         if (intent != null) {
@@ -113,9 +114,9 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
             }
         } else if(view.equals(activityCreateTutoredBinding.spnMenteeLaborInfo)){
             if (activityCreateTutoredBinding.spnMenteeLaborInfo.getSelectedItem() == "ONG"){
-                activityCreateTutoredBinding.ongNames.setVisibility(View.VISIBLE);
+                activityCreateTutoredBinding.spnNgo.setVisibility(View.VISIBLE);
             }else{
-                activityCreateTutoredBinding.ongNames.setVisibility(View.GONE);
+                activityCreateTutoredBinding.spnNgo.setVisibility(View.GONE);
             }
         }
 
@@ -141,6 +142,9 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
             menteeLaborfoAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getMenteeLabors());
             activityCreateTutoredBinding.spnMenteeLaborInfo.setAdapter(menteeLaborfoAdapter);
             activityCreateTutoredBinding.setMenteeLaborfoAdapter(menteeLaborfoAdapter);
+
+            ngoAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getAllPartners());
+            activityCreateTutoredBinding.setNgoAdapter(ngoAdapter);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -181,9 +185,9 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
 
     public void reloadVisibilityOngName(boolean resultOng){
         if(resultOng){
-            activityCreateTutoredBinding.ongNames.setVisibility(View.VISIBLE);
+            activityCreateTutoredBinding.spnNgo.setVisibility(View.VISIBLE);
         } else {
-            activityCreateTutoredBinding.ongNames.setVisibility(View.GONE);
+            activityCreateTutoredBinding.spnNgo.setVisibility(View.GONE);
         }
 
     }

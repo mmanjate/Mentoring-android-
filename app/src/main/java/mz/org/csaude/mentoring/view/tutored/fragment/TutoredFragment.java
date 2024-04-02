@@ -55,6 +55,7 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fragmentTutoredBinding.setViewModel(getRelatedViewModel());
         this.rcvTutoreds = fragmentTutoredBinding.rcvTutoreds;
         this.tutoreds = new ArrayList<>();
         try {
@@ -63,41 +64,11 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
             e.printStackTrace();
         }
 
-        //Tutored tutored = (Tutored) savedInstanceState.get("createdTutored");
-        //this.tutoreds.add(tutored);
-
         if (Utilities.listHasElements(this.tutoreds)) {
             this.tutoredItemAdapter = new TutoredAdapter(rcvTutoreds, this.tutoreds, getMyActivity());
             displayDataOnRecyclerView(rcvTutoreds, tutoredItemAdapter, getContext());
         }
 
-        fragmentTutoredBinding.newTutored.setOnClickListener(new View.OnClickListener() {
-                                                                 @Override
-                                                                 public void onClick(View view) {
-                                                                     Intent intent = new Intent(getContext(), CreateTutoredActivity.class);
-                                                                     Bundle bundle = new Bundle();
-                                                                     intent.putExtras(bundle);
-                                                                     startActivity(intent);
-                                                                 }
-                                                             }
-        );
-/*
-        rcvTutoreds.addOnItemTouchListener(new ClickListener(getContext(), rcvTutoreds, new ClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                displayPopupMenu(view, position);
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-                displayPopupMenu(view, position);
-            }
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-        })); */
     }
 
     @Override

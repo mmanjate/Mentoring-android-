@@ -3,28 +3,65 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <data>
+        <variable
+            name="viewModel"
+            type="mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".view.tutored.fragment.TutoredFragment">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <include layout="@layout/app_toolbar" />
+        </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="@dimen/dimen_5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
+
+            <LinearLayout
+                android:id="@+id/initial_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@drawable/shape_normal"
+                android:padding="3dp"
+                android:orientation="horizontal">
 
-            <TextView
-                    android:id="@+id/initial_data"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/tutoreds_list"
-                    android:background="@drawable/shape_normal"
+                    android:layout_weight="8"
+                    android:text="Lista de Mentorandos"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:paddingLeft="@dimen/dimen_10dp"
-                    app:drawableEndCompat="@drawable/ic_arrows_down_24"
-                    android:layout_margin="@dimen/dimen_5dp"/>
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="@dimen/dimen_10dp"/>
+
+                <ImageButton
+                    android:id="@+id/btn_show_collapse"
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/background_layout"
+                    android:src="@drawable/baseline_expand_circle_down_24"
+                    android:layout_marginRight="@dimen/dimen_2dp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -35,14 +72,16 @@
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/new_tutored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:src="@drawable/ic_add_icon_24"
-                app:backgroundTint="@color/colorPrimary"
-                app:elevation="6dp"
-                android:layout_margin="@dimen/fab_margin"
-                app:pressedTranslationZ="12dp"/>
-    </FrameLayout>
+            android:id="@+id/new_tutored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:onClick="@{()->viewModel.createNewTutored()}"
+            android:src="@drawable/baseline_add_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="Criar novo mentorando" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

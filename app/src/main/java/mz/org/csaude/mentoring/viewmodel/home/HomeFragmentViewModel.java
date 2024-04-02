@@ -9,6 +9,7 @@ import java.util.Map;
 
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.view.ronda.RondaListActivity;
+import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
 
 public class HomeFragmentViewModel extends BaseViewModel {
 
@@ -17,8 +18,7 @@ public class HomeFragmentViewModel extends BaseViewModel {
     }
 
     public void goToMentoringRounds() {
-        Map<String, Object> params = new HashMap<>();
-        getRelatedActivity().nextActivityFinishingCurrent(RondaListActivity.class, params);
+        getRelatedActivity().nextActivity(RondaListActivity.class);
     }
 
     public void goToBaseSessions() {
@@ -26,7 +26,7 @@ public class HomeFragmentViewModel extends BaseViewModel {
     }
 
     public void goToMentees() {
-
+        getRelatedActivity().nextActivity(TutoredActivity.class);
     }
 
     public void goToLearningResources() {

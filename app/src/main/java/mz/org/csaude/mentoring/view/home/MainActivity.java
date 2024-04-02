@@ -8,6 +8,7 @@ import android.view.Menu;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -20,6 +21,7 @@ import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityMainBinding;
+import mz.org.csaude.mentoring.databinding.NavHeaderMainBinding;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataService;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.viewmodel.home.HomeVM;
@@ -43,12 +45,16 @@ public class MainActivity extends BaseActivity {
         progressDialog = new ProgressDialog(this);
 
 
+        NavHeaderMainBinding _bind = DataBindingUtil.inflate(getLayoutInflater(), R.layout.nav_header_main, binding.navView, false);
+        binding.navView.addHeaderView(_bind.getRoot());
+        _bind.setUser(getCurrentUser());
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+        //navigationView.getHeaderView(0).get
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_settings, R.id.nav_personal_info, R.id.nav_credentials, R.id.nav_log_out)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

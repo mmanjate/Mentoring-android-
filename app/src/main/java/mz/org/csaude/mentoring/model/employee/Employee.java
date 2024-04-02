@@ -3,7 +3,9 @@ package mz.org.csaude.mentoring.model.employee;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
@@ -53,7 +55,7 @@ public class Employee extends BaseModel implements Listble {
     @DatabaseField(columnName = COLUMN_PARTNER, foreign = true, foreignAutoRefresh = true)
     private Partner partner;
 
-    private Set<Location> locations;
+    private List<Location> locations;
 
     public Employee() {
     }
@@ -92,8 +94,8 @@ public class Employee extends BaseModel implements Listble {
         if(employeeDTO.getPartnerDTO() != null) this.setPartner(new Partner(employeeDTO.getPartnerDTO()));
     }
 
-    private Set<Location> retriveLocations(Set<LocationDTO> locationDTOSet) {
-        Set<Location> locations = new HashSet<>();
+    private List<Location> retriveLocations(List<LocationDTO> locationDTOSet) {
+        List<Location> locations = new ArrayList<>();
         for (LocationDTO locationDTO : locationDTOSet) {
             Location location = new Location(locationDTO, this);
             locations.add(location);
@@ -166,11 +168,11 @@ public class Employee extends BaseModel implements Listble {
 
 
 
-    public Set<Location> getLocations() {
+    public List<Location> getLocations() {
         return locations;
     }
 
-    public void setLocations(Set<Location> locations) {
+    public void setLocations(List<Location> locations) {
         this.locations = locations;
     }
 
@@ -187,5 +189,9 @@ public class Employee extends BaseModel implements Listble {
     @Override
     public String getCode() {
         return null;
+    }
+
+    public String getFullName() {
+        return this.name + " " + this.surname;
     }
 }

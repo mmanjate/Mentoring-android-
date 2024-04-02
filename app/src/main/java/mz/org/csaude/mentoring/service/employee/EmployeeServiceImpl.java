@@ -86,13 +86,14 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee> implements Em
         } else {
             employee.setProfessionalCategory(professionalCategoryDAO.getByUuid(e.getProfessionalCategory().getUuid()));
             employee.setPartner(partnerDao.getByUuid(e.getPartner().getUuid()));
+            employee.setLocations(e.getLocations());
             this.employeeDAO.createOrUpdate(employee);
             saveLocationFromEmplyee(employee.getLocations());
             return e;
         }
     }
 
-    private void saveLocationFromEmplyee(Set<Location> locations) throws SQLException {
+    private void saveLocationFromEmplyee(List<Location> locations) throws SQLException {
 
         for (Location location : locations){
             if (location.getProvince() != null) location.setProvince(getDataBaseHelper().getProvinceDAO().getByUuid(location.getProvince().getUuid()));

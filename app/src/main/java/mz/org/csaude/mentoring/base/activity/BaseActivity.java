@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.common.ApplicationStep;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
@@ -219,9 +220,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
      * @return the application current {@link User}
      */
     public User getCurrentUser() {
-        if (getRelatedViewModel() == null) return null;
-
-        return getRelatedViewModel().getCurrentUser();
+        return ((MentoringApplication) getApplication()).getAuthenticatedUser();
     }
 
     /**

@@ -79,7 +79,16 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
     }
 
     @Override
+    public Tutored savedOrUpdateTutored(Tutored tutored) throws SQLException {
+
+        this.tutoredDao.createOrUpdate(tutored);
+        return tutored;
+    }
+
+    @Override
     public List<Tutored> getAllOfRonda(Ronda currRonda) {
         return null;
     }
+
+
 }

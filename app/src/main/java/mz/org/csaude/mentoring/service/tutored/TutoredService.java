@@ -12,5 +12,7 @@ public interface TutoredService extends BaseService<Tutored> {
 
     void savedOrUpdateTutoreds(List<TutoredDTO> tutoredDTOS) throws SQLException;
 
+    Tutored savedOrUpdateTutored(Tutored tutored) throws SQLException;
+
     List<Tutored> getAllOfRonda(Ronda currRonda);
 }

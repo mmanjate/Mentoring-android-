@@ -22,8 +22,12 @@ public class ProfessionalCategoryWorker extends BaseWorker<ProfessionalCategory>
     }
 
     @Override
+    public void doOnlineSearch(long offset, long limit) throws SQLException {
+        this.professionalCategoryRestService.restGetProfessionalCategory(this);
+    }
+    @Override
     protected void doOnStart() {
-      this.professionalCategoryRestService.restGetProfessionalCategory(this);
+
     }
 
     @Override

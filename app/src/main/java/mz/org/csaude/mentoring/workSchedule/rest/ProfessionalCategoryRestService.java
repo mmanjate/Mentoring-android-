@@ -63,4 +63,44 @@ public class ProfessionalCategoryRestService extends BaseRestService {
         });
 
     }
+
+    public void restGetProfessionalCategory(){
+
+        Call<List<ProfessionalCategoryDTO>> callProfessionalCategoryDTO = syncDataService.getProfessionalCategory();
+
+        callProfessionalCategoryDTO.enqueue(new Callback<List<ProfessionalCategoryDTO>>() {
+            @Override
+            public void onResponse(Call<List<ProfessionalCategoryDTO>> call, Response<List<ProfessionalCategoryDTO>> response) {
+
+                List<ProfessionalCategoryDTO> data = response.body();
+                if ( data == null){
+
+                }
+                try {
+                    ProfessionalCategoryService professionalCategoryService = new ProfessionalCategoryServiceImpl(LoadMetadataServiceImpl.APP);
+                    Toast.makeText(APP.getApplicationContext(), "Carregando as ProfessionalCategory ", Toast.LENGTH_SHORT).show();
+                    professionalCategoryService.saveOrUpdateProfessionalCategorys(data);
+
+                    List<ProfessionalCategory> professionalCategories = new ArrayList<>();
+
+                    for (ProfessionalCategoryDTO professionalCategoryDTO : data){
+                        professionalCategories.add(new ProfessionalCategory(professionalCategoryDTO));
+                    }
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                Toast.makeText(APP.getApplicationContext(), "ProfessionalCategory carregadas com sucesso!", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ProfessionalCategoryDTO>> call, Throwable t) {
+                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as PROVINCIAS. Tente mais tarde....", Toast.LENGTH_SHORT).show();
+                Log.i("METADATA LOAD --", t.getMessage(), t);
+            }
+        });
+
+    }
 }

@@ -1,5 +1,7 @@
 package mz.org.csaude.mentoring.model.employee;
 
+import androidx.databinding.Bindable;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -16,6 +18,7 @@ import mz.org.csaude.mentoring.dto.location.LocationDTO;
 import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
+import mz.org.csaude.mentoring.util.Utilities;
 
 
 @DatabaseTable(tableName = Employee.TABLE_NAME, daoClass = EmployeeDAOImpl.class)
@@ -102,6 +105,7 @@ public class Employee extends BaseModel implements Listble {
         }
         return locations;
     }
+
     public String getName() {
         return name;
     }
@@ -135,7 +139,7 @@ public class Employee extends BaseModel implements Listble {
     }
 
     public int getTrainingYear() {
-        return trainingYear;
+        return  trainingYear;
     }
 
     public void setTrainingYear(int trainingYear) {

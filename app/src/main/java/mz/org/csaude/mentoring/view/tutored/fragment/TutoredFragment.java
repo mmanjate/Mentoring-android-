@@ -81,7 +81,7 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
                                                                  }
                                                              }
         );
-
+/*
         rcvTutoreds.addOnItemTouchListener(new ClickListener(getContext(), rcvTutoreds, new ClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -97,7 +97,7 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
             }
-        }));
+        })); */
     }
 
     @Override
@@ -133,7 +133,7 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
         PopupMenu popup = new PopupMenu(view.getContext(), view);
         MenuInflater inflater = popup.getMenuInflater();
         popup.setOnMenuItemClickListener(TutoredFragment.this::onMenuItemClick);
-        inflater.inflate(R.menu.edit_remove_menu, popup.getMenu());
+ //       inflater.inflate(R.menu.edit_remove_menu, popup.getMenu());
         popup.getMenu().getItem(0).setVisible(true);
         popup.show();
     }
@@ -169,8 +169,9 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
                 rcvTutoreds.removeViewAt(position);
                 rcvTutoreds.getAdapter().notifyItemRangeChanged(position, rcvTutoreds.getAdapter().getItemCount());
                 getRelatedViewModel().deleteTutored(getRelatedViewModel().getTutored());
-            } catch (SQLException e) {
                 Utilities.displayAlertDialog(TutoredFragment.this.getContext(), getString(R.string.record_sucessfully_removed)).show();
+            } catch (SQLException e) {
+                Utilities.displayAlertDialog(TutoredFragment.this.getContext(), errorMsg).show();
             }
 
         } else {

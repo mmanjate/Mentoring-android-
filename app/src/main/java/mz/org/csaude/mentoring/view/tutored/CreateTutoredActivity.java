@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.work.OneTimeWorkRequest;
+
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
@@ -14,13 +16,19 @@ import mz.org.csaude.mentoring.databinding.ActivityCreateTutoredBinding;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.career.CareerType;
+import mz.org.csaude.mentoring.model.location.HealthFacility;
+import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.service.career.CareerService;
 import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
+import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.Utilities;
+import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
+import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
@@ -34,80 +42,109 @@ import java.util.Map;
 public class CreateTutoredActivity extends BaseActivity implements IDialogListener {
     private ActivityCreateTutoredBinding activityCreateTutoredBinding;
     private List<Tutored> tutoredList;
-    private ListableSpinnerAdapter careerAdapter;
-    private ListableSpinnerAdapter careerTypeAdapter;
+    private ListableSpinnerAdapter provinceAdapter;
+    private ListableSpinnerAdapter districtAdapter;
+    private ListableSpinnerAdapter healthfacilityAdapter;
+    private ListableSpinnerAdapter professionalCategoryAdapter;
+
+    private ListableSpinnerAdapter menteeLaborfoAdapter;
     private TutoredService tutoredService;
     private CareerService careerService;
     private Tutored tutored;
-    private Career selectedCareer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runinitialSync();
         activityCreateTutoredBinding = DataBindingUtil.setContentView(this, R.layout.activity_create_tutored);
+
+        activityCreateTutoredBinding.laboralLyt.setVisibility(View.GONE);
+        activityCreateTutoredBinding.healtUnitLyt.setVisibility(View.GONE);
+        activityCreateTutoredBinding.ongNames.setVisibility(View.GONE);
+
         Intent intent = this.getIntent();
         if (intent != null) {
+
+           // getRelatedViewModel().setTutored((Tutored) bundle.ge);
+
             Bundle bundle = intent.getExtras();
-            //activityCreateTutoredBinding.setViewModel((TutoredVM)getRelatedViewModel());
+            activityCreateTutoredBinding.setViewModel((TutoredVM)getRelatedViewModel());
+            getRelatedViewModel().setInitialDataVisible(true);
         }
         tutoredService = new TutoredServiceImpl(getApplication());
         careerService = new CareerServiceImpl(getApplication());
-        populateView();
-        setPositions(0);
+        populateForm();
 
-        activityCreateTutoredBinding.spnCareer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    }
 
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                setPositions(i);
+    public void changeFormSectionVisibility(View view){
+
+        if(view.equals(activityCreateTutoredBinding.laboralData)){
+            if(activityCreateTutoredBinding.laboralLyt.getVisibility() == View.VISIBLE){
+                activityCreateTutoredBinding.btnLaboralData.setImageResource(R.drawable.sharp_arrow_drop_up_24);
+             switchLayout();
+                Utilities.collapse(activityCreateTutoredBinding.laboralLyt);
+            } else {
+               switchLayout();
+                Utilities.expand(activityCreateTutoredBinding.laboralLyt);
+                activityCreateTutoredBinding.btnLaboralData.setImageResource(R.drawable.baseline_arrow_drop_down_24);
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+        } else if(view.equals(activityCreateTutoredBinding.healtUnit)){
+            if(activityCreateTutoredBinding.healtUnitLyt.getVisibility() == View.VISIBLE){
+                activityCreateTutoredBinding.btnHealtUnit.setImageResource(R.drawable.sharp_arrow_drop_up_24);
+                switchLayout();
+                Utilities.collapse(activityCreateTutoredBinding.healtUnitLyt);
+            } else {
+                switchLayout();
+                Utilities.expand(activityCreateTutoredBinding.healtUnitLyt);
+                activityCreateTutoredBinding.btnHealtUnit.setImageResource(R.drawable.baseline_arrow_drop_down_24);
             }
-        });
 
-        activityCreateTutoredBinding.saveTutored.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String tutoredName = activityCreateTutoredBinding.tutoredName.getText().toString();
-                if (StringUtils.isEmpty(tutoredName)) {
-                    Utilities.validateTextField(getApplicationContext(), activityCreateTutoredBinding.tutoredName);
-                    return;
-                }
-                String tutoredSurname = activityCreateTutoredBinding.tutoredSurname.getText().toString();
-                if (StringUtils.isEmpty(tutoredSurname)) {
-                    Utilities.validateTextField(getApplicationContext(), activityCreateTutoredBinding.tutoredSurname);
-                    return;
-                }
-                String tutoredPhoneNumber = activityCreateTutoredBinding.tutoredPhoneNumber.getText().toString();
-                if (StringUtils.isEmpty(tutoredPhoneNumber)) {
-                    Utilities.validateTextField(getApplicationContext(), activityCreateTutoredBinding.tutoredPhoneNumber);
-                    return;
-                }
-                if (!StringUtils.isEmpty(tutoredPhoneNumber)) {
-                    if(Utilities.validadePhoneNumber(getApplicationContext(), activityCreateTutoredBinding.tutoredPhoneNumber))
-                    {
-                        return;
-                    }
-                }
-                String tutoredEmail = activityCreateTutoredBinding.tutoredEmail.getText().toString();
-                if (!StringUtils.isEmpty(tutoredEmail)) {
-                    if(Utilities.validadeEmail(getApplicationContext(), activityCreateTutoredBinding.tutoredEmail))
-                    {
-                        return;
-                    }
-                }
-                selectedCareer = (Career) activityCreateTutoredBinding.spnPosition.getSelectedItem();
-               // tutored = new Tutored(tutoredName, tutoredSurname, tutoredPhoneNumber, tutoredEmail, selectedCareer, getCurrentUser());
-                tutored = getRelatedViewModel().save();
-                Utilities.displayAlertDialog(getApplicationContext(), getString(R.string.record_successfully_saved)).show();
-                Map<String, Object> params = new HashMap<>();
-                params.put("createdTutored", tutored);
-                nextActivity(TutoredActivity.class, params);
+        }  else if(view.equals(activityCreateTutoredBinding.identificationData)){
+            if(activityCreateTutoredBinding.identificationDataLyt.getVisibility() == View.VISIBLE){
+                switchLayout();
+                Utilities.collapse(activityCreateTutoredBinding.identificationDataLyt);
+                activityCreateTutoredBinding.btnIdentificationData.setImageResource(R.drawable.sharp_arrow_drop_up_24);
+            } else {
+                switchLayout();
+                Utilities.expand(activityCreateTutoredBinding.identificationDataLyt);
+                activityCreateTutoredBinding.btnIdentificationData.setImageResource(R.drawable.baseline_arrow_drop_down_24);
             }
-        });
+        } else if(view.equals(activityCreateTutoredBinding.spnMenteeLaborInfo)){
+            if (activityCreateTutoredBinding.spnMenteeLaborInfo.getSelectedItem() == "ONG"){
+                activityCreateTutoredBinding.ongNames.setVisibility(View.VISIBLE);
+            }else{
+                activityCreateTutoredBinding.ongNames.setVisibility(View.GONE);
+            }
+        }
+
+    }
+
+    private void switchLayout(){
+        getRelatedViewModel().setInitialDataVisible(!getRelatedViewModel().isInitialDataVisible());
+
+    }
+
+    private void populateForm(){
+
+        try {
+            List<Province> provinces = getRelatedViewModel().getAllProvince();
+            provinceAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, provinces);
+            activityCreateTutoredBinding.spnProvince.setAdapter(provinceAdapter);
+            activityCreateTutoredBinding.setProvinceAdapter(provinceAdapter);
+
+            professionalCategoryAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getAllProfessionalCategys());
+            activityCreateTutoredBinding.spnProfessionalCategory.setAdapter(professionalCategoryAdapter);
+            activityCreateTutoredBinding.setProfessionalCategoryAdapter(professionalCategoryAdapter);
+
+            menteeLaborfoAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getMenteeLabors());
+            activityCreateTutoredBinding.spnMenteeLaborInfo.setAdapter(menteeLaborfoAdapter);
+            activityCreateTutoredBinding.setMenteeLaborfoAdapter(menteeLaborfoAdapter);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -122,39 +159,39 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
 
     @Override
     public void doOnDeny() {
-
-    }
-
-    private void populateView() {
-        try {
-            List<CareerType> careerTypes = getRelatedViewModel().getCareerTypes();
-            careerTypeAdapter = new ListableSpinnerAdapter(CreateTutoredActivity.this, R.layout.simple_auto_complete_item, careerTypes);
-            activityCreateTutoredBinding.spnCareer.setAdapter(careerTypeAdapter);
-            activityCreateTutoredBinding.setCareerTypeAdapter(careerTypeAdapter);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setPositions(int selectedCareerType){
-        CareerType careerType = (CareerType) activityCreateTutoredBinding.spnCareer.getItemAtPosition(selectedCareerType);
-        try {
-            List<Career> careers = careerService.getCareersByCareerType(careerType);
-            careerAdapter = new ListableSpinnerAdapter(CreateTutoredActivity.this, R.layout.simple_auto_complete_item, careers);
-            activityCreateTutoredBinding.spnPosition.setAdapter(careerAdapter);
-            activityCreateTutoredBinding.setCareerAdapter(careerAdapter);
-            careerAdapter.notifyDataSetChanged();
-            activityCreateTutoredBinding.getCareerAdapter().notifyDataSetChanged();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public TutoredVM getRelatedViewModel() {
-        TutoredVM tutoredVM = (TutoredVM) super.getRelatedViewModel();
-        return tutoredVM;
+        return (TutoredVM) super.getRelatedViewModel();
     }
 
+    public void reloadDistrcitAdapter() {
+        districtAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getDistricts());
+        activityCreateTutoredBinding.spnDistrict.setAdapter(districtAdapter);
+        activityCreateTutoredBinding.setDistrictAdapter(districtAdapter);
+    }
+
+    public void reloadHealthFacility(){
+        healthfacilityAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getHealthFacilities());
+        activityCreateTutoredBinding.spnHealthfacility.setAdapter(healthfacilityAdapter);
+        activityCreateTutoredBinding.setHealthfacilityAdapter(healthfacilityAdapter);
+
+    }
+
+    public void reloadVisibilityOngName(boolean resultOng){
+        if(resultOng){
+            activityCreateTutoredBinding.ongNames.setVisibility(View.VISIBLE);
+        } else {
+            activityCreateTutoredBinding.ongNames.setVisibility(View.GONE);
+        }
+
+    }
+    public ActivityCreateTutoredBinding getActivityCreateTutoredBinding() {
+        return activityCreateTutoredBinding;
+    }
+
+    public void setActivityCreateTutoredBinding(ActivityCreateTutoredBinding activityCreateTutoredBinding) {
+        this.activityCreateTutoredBinding = activityCreateTutoredBinding;
+    }
 }

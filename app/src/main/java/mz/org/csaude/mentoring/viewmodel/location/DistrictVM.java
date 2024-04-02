@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
@@ -29,7 +30,6 @@ public class DistrictVM extends BaseViewModel {
     public void preInit() {
 
     }
-
     @Bindable
     public Province getProvince() {
         return this.district.getProvince();
@@ -42,19 +42,28 @@ public class DistrictVM extends BaseViewModel {
 
     @Bindable
     public String getDistrict() {
-        return this.district.getDistrict();
+        return this.district.getDescription();
     }
 
     public void setProvince(String district) {
-        this.district.setDistrict(district);
+        this.district.setDescription(district);
         notifyPropertyChanged(BR.district);
     }
+
 
     public void save() {
         try {
             this.districtService.save(this.district);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<District> getAllDistricts(){
+        try {
+            return this.districtService.getAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

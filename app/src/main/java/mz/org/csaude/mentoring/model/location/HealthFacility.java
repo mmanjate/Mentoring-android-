@@ -11,12 +11,9 @@ import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.location.HealthFacilityDAOImpl;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
 
-@Data
-@NoArgsConstructor
-@DatabaseTable(tableName = HealthFacility.COLUMN_TABLE_NAME, daoClass = HealthFacilityDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
-public class HealthFacility extends BaseModel implements Listble {
 
+@DatabaseTable(tableName = HealthFacility.COLUMN_TABLE_NAME, daoClass = HealthFacilityDAOImpl.class)
+public class HealthFacility extends BaseModel implements Listble {
     public static final String COLUMN_TABLE_NAME = "health_facility";
     public static final String COLUMN_DISTRICT = "district_id";
     public static final String COLUMN_NAME = "name";
@@ -27,6 +24,9 @@ public class HealthFacility extends BaseModel implements Listble {
         this.setUuid(healthFacilityDTO.getUuid());
         this.setDescription(healthFacilityDTO.getHealthFacility());
         if (healthFacilityDTO.getDistrictDTO() != null) this.setDistrict( new District(healthFacilityDTO.getDistrictDTO()));
+    }
+
+    public HealthFacility() {
     }
 
     @DatabaseField(columnName = COLUMN_NAME)

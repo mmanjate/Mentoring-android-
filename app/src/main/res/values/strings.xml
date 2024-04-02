@@ -46,9 +46,12 @@
     <string name="career">Career</string>
     <string name="position">Position</string>
     <string name="required_field">Required</string>
+    <string name="vinculo_laboral">Vinculo Laboral</string>
     <string name="phone_number_invalid">Invalid Phone Number</string>
     <string name="email_invalid">Invalid Email</string>
+    <string name="professional_category">Categoria Profissional</string>
     <string name="email">Email</string>
+    <string name="nuit">Nuit</string>
     <string name="local">Local</string>
     <string name="session_closure">Fecho da Sessão</string>
     <string name="session_submission_state">Período de submissão</string>

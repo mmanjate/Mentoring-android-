@@ -538,6 +538,7 @@ public class Utilities {
         }
     }
 
+
     public static boolean validadePhoneNumber(Context context, TextView view){
         Pattern pattern = Pattern.compile("^\\+\\d{12}$");
         Matcher matcher = pattern.matcher(view.getText().toString());

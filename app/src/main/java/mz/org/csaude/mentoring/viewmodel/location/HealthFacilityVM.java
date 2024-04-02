@@ -22,7 +22,7 @@ public class HealthFacilityVM extends BaseViewModel {
 
     public HealthFacilityVM(@NonNull Application application) {
         super(application);
-        this.healthFacilityService = new HealthFacilityServiceImpl(application);
+        this.healthFacilityService = new HealthFacilityServiceImpl(application );
     }
 
     @Override
@@ -42,12 +42,11 @@ public class HealthFacilityVM extends BaseViewModel {
 
     @Bindable
     public String getHealthFacility() {
-        //return this.healthFacility.getHealthFacility();
-        return "";
+        return this.healthFacility.getDescription();
     }
 
     public void setHealthFacility(String healthFacility) {
-       // this.healthFacility.setHealthFacility(healthFacility);
+       this.healthFacility.setDescription(healthFacility);
         notifyPropertyChanged(BR.district);
     }
 

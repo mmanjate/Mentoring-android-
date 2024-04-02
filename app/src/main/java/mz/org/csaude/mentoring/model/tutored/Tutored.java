@@ -14,10 +14,8 @@ import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.user.UserIndividual;
 
 
-@Data
-@NoArgsConstructor
+
 @DatabaseTable(tableName = Tutored.COLUMN_TABLE_NAME, daoClass = TutoredDaoImpl.class)
-@EqualsAndHashCode(callSuper=false)
 public class Tutored extends BaseModel implements Listble {
 
     public static final String COLUMN_TABLE_NAME = "tutored";
@@ -25,6 +23,9 @@ public class Tutored extends BaseModel implements Listble {
 
     @DatabaseField(columnName = COLUMN_EMPLOYEE, foreign = true, foreignAutoRefresh = true )
     private Employee employee;
+
+    public Tutored() {
+    }
 
     public Tutored(Employee employee) {
         this.setEmployee(employee);

@@ -26,6 +26,9 @@ public class ProfessionalCategory extends BaseModel implements Listble{
     @DatabaseField(columnName = COLUMN_CODE)
     private  String code;
 
+    public ProfessionalCategory() {
+    }
+
     public ProfessionalCategory(ProfessionalCategoryDTO professionalCategoryDTO) {
         this.setUuid(professionalCategoryDTO.getUuid());
         this.setDescription(professionalCategoryDTO.getDescription());
@@ -42,7 +45,7 @@ public class ProfessionalCategory extends BaseModel implements Listble{
 
     @Override
     public String getDescription() {
-        return null;
+        return this.description;
     }
 
     @Override

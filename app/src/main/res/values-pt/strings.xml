@@ -46,12 +46,16 @@
     <string name="telephone">Telefone</string>
     <string name="career">Carreira</string>
     <string name="position">Posição</string>
+    <string name="vinculo_laboral">Vinculo Laboral</string>
     <string name="required_field">Preenchimento obrigatório</string>
     <string name="phone_number_invalid">Número de telefone inválido</string>
     <string name="email_invalid">E-mail inválido</string>
     <string name="email">E-mail</string>
+    <string name="professional_category">Categoria Profissional</string>
+    <string name="nuit">Nuit</string>
     <string name="local">Local</string>
     <string name="session_closure">Fecho da Sessão</string>
     <string name="back">Voltar</string>
+    <string name="session_submission_state">Período de submissão</string>
 </resources>
 

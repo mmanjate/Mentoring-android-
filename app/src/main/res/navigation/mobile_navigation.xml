@@ -12,14 +12,21 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="mz.org.csaude.mentoring.view.home.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_settings"
+        android:name="mz.org.csaude.mentoring.view.home.ui.settings.SettingsFragment"
         android:label="Configurações"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="mz.org.csaude.mentoring.view.home.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_personal_info"
+        android:name="mz.org.csaude.mentoring.view.home.ui.personalinfo.PersonalInfoFragment"
         android:label="Meus Dados"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_credentials"
+        android:name="mz.org.csaude.mentoring.view.home.ui.credentials.CredentialsFragment"
+        android:label="Mentor"
+        tools:layout="@layout/fragment_credentials" />
+
 </navigation>

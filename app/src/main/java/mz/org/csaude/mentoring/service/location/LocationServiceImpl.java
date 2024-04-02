@@ -4,11 +4,13 @@ import android.app.Application;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.location.LocationDAO;
 import mz.org.csaude.mentoring.dto.location.LocationDTO;
 import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
+import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.location.Province;
@@ -74,5 +76,10 @@ public class LocationServiceImpl extends BaseServiceImpl<Location> implements Lo
             this.locationDAO.update(location);
             return location;
         }
+    }
+
+    @Override
+    public List<Location> getAllOfEmploee(Employee employee) throws SQLException {
+        return this.locationDAO.getAllOfEmploee(employee);
     }
 }

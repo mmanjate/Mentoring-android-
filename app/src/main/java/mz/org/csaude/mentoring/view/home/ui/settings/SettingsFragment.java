@@ -1,4 +1,4 @@
-package mz.org.csaude.mentoring.view.home.ui.gallery;
+package mz.org.csaude.mentoring.view.home.ui.settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import mz.org.csaude.mentoring.base.fragment.GenericFragment;
+import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.FragmentGalleryBinding;
 
-public class GalleryFragment extends Fragment {
+public class SettingsFragment extends GenericFragment {
 
     private FragmentGalleryBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
@@ -33,5 +30,10 @@ public class GalleryFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public BaseViewModel initViewModel() {
+        return  new ViewModelProvider(this).get(SettingsVM.class);
     }
 }

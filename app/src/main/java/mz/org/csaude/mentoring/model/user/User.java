@@ -61,6 +61,9 @@ public class User extends BaseModel {
         this.setEmployee(new Employee(userDTO.getEmployeeDTO()));
     }
 
+    public String getFullName () {
+        return this.employee.getFullName();
+    }
     public Employee getEmployee() {
         return employee;
     }

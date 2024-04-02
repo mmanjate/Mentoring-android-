@@ -6,8 +6,10 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
+import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.location.Location;
 
 public class LocationDAOImpl extends MentoringBaseDaoImpl<Location, Integer> implements LocationDAO{
@@ -29,5 +31,10 @@ public class LocationDAOImpl extends MentoringBaseDaoImpl<Location, Integer> imp
     public  List<Location> checkLocation(String uuid) throws SQLException {
 
         return this.queryForEq("uuid", uuid);
+    }
+
+    @Override
+    public List<Location> getAllOfEmploee(Employee employee) throws SQLException {
+        return queryBuilder().where().eq(Location.COLUMN_EMPLOYEE, employee.getId()).query();
     }
 }

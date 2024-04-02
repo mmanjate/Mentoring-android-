@@ -1,7 +1,9 @@
 package mz.org.csaude.mentoring.dto.employee;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import lombok.NoArgsConstructor;
@@ -32,7 +34,7 @@ public class EmployeeDTO implements Serializable {
 
     private PartnerDTO partnerDTO;
 
-    private Set<LocationDTO> locationDTOSet;
+    private List<LocationDTO> locationDTOSet;
 
     public EmployeeDTO(Employee employee) {
         this.setUuid(employee.getUuid());
@@ -42,13 +44,13 @@ public class EmployeeDTO implements Serializable {
         this.setEmail(employee.getEmail());
         this.setPhoneNumber(employee.getPhoneNumber());
         this.setTrainingYear(employee.getTrainingYear());
-        this.setLocationDTOSet( setLocations(employee.getLocations()));
+        this.setLocationDTOSet(setLocations(employee.getLocations()));
         if(employee.getProfessionalCategory() != null) this.setProfessionalCategoryDTO(new ProfessionalCategoryDTO(employee.getProfessionalCategory()));
        if(employee.getPartner() != null) this.setPartnerDTO(new PartnerDTO((Partner) employee.getPartner()));
     }
 
-    private Set<LocationDTO> setLocations(Set<Location> locationSet) {
-        Set<LocationDTO> locationDTOSet = new HashSet<>();
+    private List<LocationDTO> setLocations(List<Location> locationSet) {
+        List<LocationDTO> locationDTOSet = new ArrayList<>();
 
         for (Location location : locationSet) {
             locationDTOSet.add(new LocationDTO(location));
@@ -127,11 +129,11 @@ public class EmployeeDTO implements Serializable {
         this.partnerDTO = partnerDTO;
     }
 
-    public Set<LocationDTO> getLocationDTOSet() {
+    public List<LocationDTO> getLocationDTOSet() {
         return locationDTOSet;
     }
 
-    public void setLocationDTOSet(Set<LocationDTO> locationDTOSet) {
+    public void setLocationDTOSet(List<LocationDTO> locationDTOSet) {
         this.locationDTOSet = locationDTOSet;
     }
 }

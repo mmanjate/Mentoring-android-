@@ -11,9 +11,10 @@ import java.util.List;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.location.District;
+import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.location.Location;
+import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.service.location.LocationService;
-import mz.org.csaude.mentoring.service.location.LocationServiceImpls;
 
 public class LocationVM extends BaseViewModel {
 
@@ -23,7 +24,7 @@ public class LocationVM extends BaseViewModel {
 
     public LocationVM(@NonNull Application application) {
         super(application);
-        this.locationService = new LocationServiceImpls(application );
+        this.locationService = getApplication().getLocationService();
     }
 
     @Override
@@ -35,7 +36,7 @@ public class LocationVM extends BaseViewModel {
        return this.location.getProvince();
     }
     public void setProvince(Listble province){
-        this.location.setProvince(province);
+        this.location.setProvince((Province) province);
     }
     @Bindable
     public Listble getDistrict(){
@@ -51,7 +52,7 @@ public class LocationVM extends BaseViewModel {
     }
 
     public void setHealthFacility(Listble healthFacility){
-        this.location.setHealthFacility((Listble) healthFacility);
+        this.location.setHealthFacility((HealthFacility) healthFacility);
     }
     @Bindable
     public String getLocationLevel(){

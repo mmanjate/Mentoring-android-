@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.databasehelper.MentoringDataBaseHelper;
 import mz.org.csaude.mentoring.base.model.BaseModel;
+import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.user.User;
 
 public abstract class BaseServiceImpl<T extends BaseModel> implements BaseService<T>{
@@ -45,5 +46,10 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
 
     public User getCurrentUser() {
         return ((MentoringApplication) this.application).getAuthenticatedUser();
+    }
+
+    @Override
+    public T getByuuid(String uuid) throws SQLException {
+        return null;
     }
 }

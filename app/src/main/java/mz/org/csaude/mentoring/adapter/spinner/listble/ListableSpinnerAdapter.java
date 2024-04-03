@@ -68,7 +68,7 @@ public class ListableSpinnerAdapter extends ArrayAdapter {
         TextView label = convertView.findViewById(R.id.label);
         ImageView icon = convertView.findViewById(R.id.item_icon);
 
-        icon.setImageResource(R.drawable.ic_menu_camera);
+        //icon.setImageResource(R.drawable.ic_menu_camera);
 
 
         label.setText(((Listble)dataList.get(position)).getDescription());

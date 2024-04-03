@@ -10,4 +10,7 @@ public interface PartnerService extends BaseService<Partner> {
     Partner savedOrUpdatePartner(Partner partner) throws SQLException;
 
     void saveAll(List<Partner> partners) throws SQLException;
+
+    Partner getMISAU() throws SQLException;
+
 }

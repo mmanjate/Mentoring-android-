@@ -17,6 +17,7 @@ import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.workSchedule.work.CabinetWorker;
 import mz.org.csaude.mentoring.workSchedule.work.CareerWorker;
 import mz.org.csaude.mentoring.workSchedule.work.DistrictWorker;
+import mz.org.csaude.mentoring.workSchedule.work.HealthFacilityWorker;
 import mz.org.csaude.mentoring.workSchedule.work.PartnerWorker;
 import mz.org.csaude.mentoring.workSchedule.work.ProfessionalCategoryWorker;
 import mz.org.csaude.mentoring.workSchedule.work.ProvinceWorker;
@@ -72,8 +73,11 @@ public class WorkerScheduleExecutor {
                 .build();
         OneTimeWorkRequest userOneTimeWorkRequest = new OneTimeWorkRequest.Builder(UserWorker.class).addTag("ONE_TIME_USER_ID" + ONE_TIME_REQUEST_JOB_ID).setInputData(inputData).build();*/
         OneTimeWorkRequest tutorOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutorWorker.class).addTag("ONE_TIME_TUTOR_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest hfOneTimeWorkRequest = new OneTimeWorkRequest.Builder(HealthFacilityWorker.class).addTag("ONE_TIME_HF_ID" + ONE_TIME_REQUEST_JOB_ID).build();
 
-        workManager.enqueue( tutorOneTimeWorkRequest);
-        return tutorOneTimeWorkRequest;
+        workManager.beginUniqueWork("INITIAL_MENTOR_APP_SETUP", ExistingWorkPolicy.KEEP, tutorOneTimeWorkRequest)
+                .then(hfOneTimeWorkRequest).enqueue();
+
+        return hfOneTimeWorkRequest;
     }
 }

@@ -153,6 +153,7 @@
                             android:id="@+id/tutored_phone_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:inputType="phone"
                             android:background="@drawable/fields_background"
                             android:hint="@string/telephone"
                             android:text="@={viewModel.phoneNumber}"
@@ -168,6 +169,7 @@
                             android:id="@+id/tutored_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
                             android:background="@drawable/fields_background"
                             android:hint="@string/email"
                             android:text="@={viewModel.email}"
@@ -183,6 +185,7 @@
                             android:id="@+id/tutored_nuit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:inputType="number"
                             android:background="@drawable/fields_background"
                             android:hint="@string/nuit"
                             style="@style/bottom_border_edit_text_style"/>
@@ -193,6 +196,7 @@
                         android:id="@+id/laboral_data"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10dp"
                         android:background="@drawable/shape_normal"
                         android:padding="3dp"
                         android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
@@ -259,6 +263,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="@{viewModel.ONGEmployee ? View.VISIBLE : View.GONE}"
                             android:text="Nome da ONG"
                             style="@style/input_labels"
                             />
@@ -268,6 +273,7 @@
                             style="@style/bottom_spinner_style"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="@{viewModel.ONGEmployee ? View.VISIBLE : View.GONE}"
                             app:adapter="@{ngoAdapter}"
                             bind:selectedOpt="@={viewModel.selectedNgo}"
                             />
@@ -292,6 +298,7 @@
                         android:id="@+id/healt_unit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10dp"
                         android:background="@drawable/shape_normal"
                         android:padding="3dp"
                         android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"

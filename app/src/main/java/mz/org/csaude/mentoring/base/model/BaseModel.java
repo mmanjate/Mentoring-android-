@@ -71,4 +71,8 @@ public abstract class BaseModel implements Serializable {
     public void setLifeCycleStatus(LifeCycleStatus lifeCycleStatus) {
         this.lifeCycleStatus = lifeCycleStatus;
     }
+
+    public String validade() {
+        return null;
+    }
 }

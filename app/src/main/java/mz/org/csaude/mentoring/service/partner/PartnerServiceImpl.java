@@ -75,4 +75,9 @@ public class PartnerServiceImpl extends BaseServiceImpl<Partner> implements Part
             savedOrUpdatePartner(partner);
         }
     }
+
+    @Override
+    public Partner getMISAU() throws SQLException {
+        return this.partnerDao.getMISAU();
+    }
 }

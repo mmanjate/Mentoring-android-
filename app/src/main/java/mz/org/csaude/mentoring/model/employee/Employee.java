@@ -5,6 +5,8 @@ import androidx.databinding.Bindable;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -197,5 +199,16 @@ public class Employee extends BaseModel implements Listble {
 
     public String getFullName() {
         return this.name + " " + this.surname;
+    }
+
+    @Override
+    public String validade() {
+        if(StringUtils.isEmpty(getName())) return "Campo nome nao pode estar vazio";
+        if(StringUtils.isEmpty(getSurname())) return "Campo apelido nao pode estar vazio";
+        if(StringUtils.isEmpty(getPhoneNumber())) return "Campo Telefone nao pode estar vazio";
+        if(StringUtils.isEmpty(getEmail())) return "Campo Email nao pode estar vazio";
+        if(this.getProfessionalCategory() == null) return "Campo Categoria Professional nao pode estar vazio";
+        if(!Utilities.listHasElements(this.locations)) return "Por favor indicar a unidade sanitária.";
+        return super.validade();
     }
 }

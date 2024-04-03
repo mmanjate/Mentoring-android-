@@ -56,8 +56,8 @@ public class ProvinceServiceImpl extends BaseServiceImpl<Province> implements Pr
     }
 
     @Override
-    public Listble getAllOfTutor(Tutor tutor) {
-        return null;
+    public List<Province> getAllOfTutor(Tutor tutor) throws SQLException {
+        return this.provinceDAO.getAllOfTutor(tutor);
     }
 
     @Override

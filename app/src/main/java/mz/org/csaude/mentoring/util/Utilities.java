@@ -30,6 +30,7 @@ import androidx.work.WorkManager;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -565,4 +566,15 @@ public class Utilities {
 
         return false;
     }
+
+    public static <T extends Object, S extends Object> List<S> parse(List<T> list, Class<S> classe) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        if (list == null) return null;
+        List<S> parsedList = new ArrayList<S>();
+
+        for (T t : list){
+            parsedList.add(classe.getDeclaredConstructor(t.getClass()).newInstance(t));
+        }
+        return parsedList;
+    }
+
 }

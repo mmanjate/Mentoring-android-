@@ -11,6 +11,7 @@ import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.tutor.TutorDAO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.model.career.Career;
+import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.user.User;
@@ -93,7 +94,13 @@ public class TutorServiceImpl extends BaseServiceImpl<Tutor> implements TutorSer
     public Tutor saveOrUpdate(Tutor tutor) throws SQLException {
 
         getApplication().getEmployeeService().saveOrUpdateEmployee(tutor.getEmployee());
+        //tutor.setEmployee(getApplication().getEmployeeService().getByuuid(tutor.getEmployee().getUuid()));
         this.tutorDAO.createOrUpdate(tutor);
         return tutor;
+    }
+
+    @Override
+    public Tutor getByEmployee(Employee employee) throws SQLException {
+        return this.tutorDAO.getByEmployee(employee);
     }
 }

@@ -224,15 +224,6 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
     }
 
     /**
-     * Set the current user on the related viewModel
-     *
-     * @param currentUser to be set
-     */
-    public void setCurrentUser(User currentUser) {
-        this.getRelatedViewModel().setCurrentUser(currentUser);
-    }
-
-    /**
      * Change the current {@link ApplicationStep} to {@link ApplicationStep#STEP_INIT}
      */
     protected void changeApplicationStepToInit(){

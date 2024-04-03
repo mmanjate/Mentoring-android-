@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.model.BaseModel;
+import mz.org.csaude.mentoring.model.location.District;
 
 public interface BaseService <T extends BaseModel>{
 
@@ -16,4 +17,6 @@ public interface BaseService <T extends BaseModel>{
     List<T> getAll() throws SQLException;
 
     T getById(int id)  throws SQLException;
+
+    T getByuuid(String uuid) throws SQLException;
 }

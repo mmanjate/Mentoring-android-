@@ -13,6 +13,7 @@ import mz.org.csaude.mentoring.dao.partner.PartnerDao;
 import mz.org.csaude.mentoring.dao.professionalCategoryDAO.ProfessionalCategoryDAO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.employee.Employee;
+import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.location.Location;
 
 public class EmployeeServiceImpl extends BaseServiceImpl<Employee> implements EmployeeService {
@@ -77,6 +78,7 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee> implements Em
     public Employee saveOrUpdateEmployee(Employee e) throws SQLException {
 
         Employee employee = this.employeeDAO.getByUuid(e.getUuid());
+
         if(employee == null){
             e.setProfessionalCategory(professionalCategoryDAO.getByUuid(e.getProfessionalCategory().getUuid()));
             e.setPartner(partnerDao.getByUuid(e.getPartner().getUuid()));
@@ -84,12 +86,13 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee> implements Em
             saveLocationFromEmplyee(e.getLocations());
             return e;
         } else {
+            e.setId(employee.getId());
             employee.setProfessionalCategory(professionalCategoryDAO.getByUuid(e.getProfessionalCategory().getUuid()));
             employee.setPartner(partnerDao.getByUuid(e.getPartner().getUuid()));
             employee.setLocations(e.getLocations());
             this.employeeDAO.createOrUpdate(employee);
             saveLocationFromEmplyee(employee.getLocations());
-            return e;
+            return employee;
         }
     }
 
@@ -98,12 +101,18 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee> implements Em
         for (Location location : locations){
             if (location.getProvince() != null) location.setProvince(getDataBaseHelper().getProvinceDAO().getByUuid(location.getProvince().getUuid()));
             if (location.getDistrict() != null) location.setDistrict(getDataBaseHelper().getDistrictDAO().getByUuid(location.getDistrict().getUuid()));
-            if (getDataBaseHelper().getHealthFacilityDAO().getByUuid(location.getHealthFacility().getUuid()) == null) {
+            HealthFacility h =getDataBaseHelper().getHealthFacilityDAO().getByUuid(location.getHealthFacility().getUuid());
+            if (h == null) {
                 getDataBaseHelper().getHealthFacilityDAO().create(location.getHealthFacility());
+            } else {
+                location.getHealthFacility().setId(h.getId());
             }
-            //if (location.getHealthFacility() != null) location.setHealthFacility(getDataBaseHelper().getHealthFacilityDAO().getByUuid(location.getHealthFacility().getUuid()));
-
             getApplication().getLocationService().saveOrUpdate(location);
         }
+    }
+
+    @Override
+    public Employee getByuuid(String uuid) throws SQLException {
+        return employeeDAO.getByUuid(uuid);
     }
 }

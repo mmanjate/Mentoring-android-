@@ -10,7 +10,7 @@ import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 
 public interface ProvinceService extends BaseService<Province> {
-    Listble getAllOfTutor(Tutor tutor);
+    List<Province> getAllOfTutor(Tutor tutor) throws SQLException;
 
     void savedOrUpdateProvince(List<ProvinceDTO> provinceDTOs) throws SQLException;
 

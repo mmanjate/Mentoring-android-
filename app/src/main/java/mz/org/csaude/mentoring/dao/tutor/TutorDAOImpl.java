@@ -7,6 +7,7 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 
 public class TutorDAOImpl extends BaseDaoImpl<Tutor, Integer> implements TutorDAO {
@@ -29,5 +30,10 @@ public class TutorDAOImpl extends BaseDaoImpl<Tutor, Integer> implements TutorDA
     public boolean checkTutorExistance(String uuid) throws SQLException {
         List<Tutor> tutors = this.queryForEq("uuid", uuid);
         return !tutors.isEmpty();
+    }
+
+    @Override
+    public Tutor getByEmployee(Employee employee) throws SQLException {
+        return queryBuilder().where().eq(Tutor.COLUMN_EMPLOYEE, employee.getId()).queryForFirst();
     }
 }

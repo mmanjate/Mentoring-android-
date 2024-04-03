@@ -81,7 +81,11 @@ public class MentorshipVM extends BaseViewModel {
 
     @Bindable
     public Listble getProvince() {
-        return provinceService.getAllOfTutor(mentorship.getTutor());
+        try {
+            return (Listble) provinceService.getAllOfTutor(mentorship.getTutor());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setProvince(Listble province) {

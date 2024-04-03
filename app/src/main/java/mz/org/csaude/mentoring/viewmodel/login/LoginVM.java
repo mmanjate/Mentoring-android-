@@ -117,6 +117,12 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
     }
 
     private void goHome() {
+        try {
+            getApplication().setCurrTutor(getApplication().getTutorService().getByEmployee(getApplication().getAuthenticatedUser().getEmployee()));
+            getApplication().getCurrMentor().getEmployee().setLocations(getApplication().getLocationService().getAllOfEmploee(getApplication().getAuthenticatedUser().getEmployee()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         Map<String, Object> params = new HashMap<>();
         getRelatedActivity().nextActivityFinishingCurrent(MainActivity.class, params);
     }

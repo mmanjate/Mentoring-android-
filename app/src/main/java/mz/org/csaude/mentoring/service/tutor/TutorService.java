@@ -5,6 +5,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
+import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 
 public interface TutorService extends BaseService<Tutor> {
@@ -12,4 +13,6 @@ public interface TutorService extends BaseService<Tutor> {
     public void saveOrUpdateTutors(List<TutorDTO> tutorDTOS) throws SQLException;
 
     public Tutor saveOrUpdate(Tutor tutor) throws SQLException;
+
+    Tutor getByEmployee(Employee employee) throws SQLException;;
 }

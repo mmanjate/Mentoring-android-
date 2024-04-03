@@ -107,16 +107,6 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
         callbacks.notifyCallbacks(this, fieldId, null);
     }
 
-    @Bindable
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-        //notifyPropertyChanged(BR.currentUser);
-    }
-
     @NonNull
     @Override
     public MentoringApplication getApplication() {
@@ -125,17 +115,17 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
     @Bindable
     public ApplicationStep getCurrentStep(){
-        return getRelatedActivity().getApplicationStep();
+        return getApplication().getApplicationStep();
     }
 
     public String getAppVersionNumber(){
         if (getRelatedActivity() == null) return null;
-        return "Tutoria v"+getRelatedActivity().getAppVersionNumber();
+        return "Mentoria v"+getRelatedActivity().getAppVersionNumber();
     }
 
     public String getAppVersionName(){
         if (getRelatedActivity() == null) return null;
-        return "Tutoria v"+getRelatedActivity().getAppVersionName();
+        return "Mentoria v"+getRelatedActivity().getAppVersionName();
     }
 
     public boolean isViewListEditButton() {

@@ -5,10 +5,13 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
+import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.location.Province;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 
 public class ProvinceDAOImpl extends MentoringBaseDaoImpl<Province, Integer> implements ProvinceDAO {
 
@@ -30,5 +33,14 @@ public class ProvinceDAOImpl extends MentoringBaseDaoImpl<Province, Integer> imp
             List<Province> provinces = this.queryForEq("uuid", uuid);
             return !provinces.isEmpty();
 
+    }
+
+    @Override
+    public List<Province> getAllOfTutor(Tutor tutor) throws SQLException {
+        List<String> provinceList = new ArrayList<>();
+        for (Location location : tutor.getEmployee().getLocations()) {
+            provinceList.add(location.getProvince().getUuid());
+        }
+        return queryBuilder().where().in(Province.COLUMN_UUID, provinceList).query();
     }
 }

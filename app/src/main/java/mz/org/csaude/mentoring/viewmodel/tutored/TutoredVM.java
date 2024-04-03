@@ -27,20 +27,10 @@ import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.service.career.CareerService;
-import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
-import mz.org.csaude.mentoring.service.employee.EmployeeService;
-import mz.org.csaude.mentoring.service.employee.EmployeeServiceImpl;
-import mz.org.csaude.mentoring.service.location.DistrictService;
-import mz.org.csaude.mentoring.service.location.DistrictServiceImpl;
-import mz.org.csaude.mentoring.service.location.HealthFacilityService;
-import mz.org.csaude.mentoring.service.location.HealthFacilityServiceImpl;
-import mz.org.csaude.mentoring.service.location.LocationService;
-import mz.org.csaude.mentoring.service.location.ProvinceService;
-import mz.org.csaude.mentoring.service.location.ProvinceServiceImpl;
 import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryService;
-import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryServiceImpl;
 import mz.org.csaude.mentoring.service.session.SessionService;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
@@ -58,7 +48,6 @@ public class TutoredVM extends BaseViewModel {
 
     private Location location;
 
-    private Employee employee;
 
     private Province province;
 
@@ -68,16 +57,6 @@ public class TutoredVM extends BaseViewModel {
 
     private HealthFacility healthFacility;
 
-    private EmployeeService employeeService;
-
-    private ProvinceService provinceService;
-
-    private DistrictService districtService;
-
-    private HealthFacilityService healthFacilityService;
-
-    private LocationService locationService;
-
     private boolean initialDataVisible;
 
     private List<District> districts;
@@ -86,26 +65,25 @@ public class TutoredVM extends BaseViewModel {
 
     private List<SimpleValue> menteeLabors;
 
+    private boolean ONGEmployee;
     private Partner selectedNgo;
 
     public TutoredVM(@NonNull Application application) {
         super(application);
-
-        this.initialDataVisible = true;
         this.tutoredService = getApplication().getTutoredService();
-        this.professionalCategoryService = getApplication().getProfessionalCategoryService();
-        this.provinceService = getApplication().getProvinceService();
-        this.districtService = getApplication().getDistrictService();
-        this.healthFacilityService = getApplication().getHealthFacilityService();
-        this.employeeService = getApplication().getEmployeeService();
-        this.locationService = getApplication().getLocationService();
+
+        initNewRecord();
         districts = new ArrayList<>();
         healthFacilities = new ArrayList<>();
         menteeLabors = new ArrayList<>();
-        tutored = new Tutored();
-        employee = new Employee();
         location = new Location();
+
         loadMeteeLabors();
+    }
+
+    private void initNewRecord() {
+        this.tutored = new Tutored();
+        this.tutored.setEmployee(new Employee());
     }
 
     @Override
@@ -115,66 +93,67 @@ public class TutoredVM extends BaseViewModel {
 
     @Bindable
     public String getName() {
-        return this.employee.getName();
+        return this.tutored.getEmployee().getName();
     }
 
     public void setName(String name) {
-        this.employee.setName(name);
+        this.tutored.getEmployee().setName(name);
         notifyPropertyChanged(BR.name);
     }
     @Bindable
     public String getSurname(){
-        return this.employee.getSurname();
+        return this.tutored.getEmployee().getSurname();
     }
 
     public void setSurname(String surname){
-       this.employee.setSurname(surname);
+       this.tutored.getEmployee().setSurname(surname);
     }
     @Bindable
     public int getNuit() {
-        return this.employee.getNuit();
+        return this.tutored.getEmployee().getNuit();
     }
     public void setNuit(int nuit) {
-        this.employee.setNuit(nuit);
+        this.tutored.getEmployee().setNuit(nuit);
     }
     public List<ProfessionalCategory> getAllProfessionalCategys() throws SQLException{
-        return this.professionalCategoryService.getAll();
+        return getApplication().getProfessionalCategoryService().getAll();
     }
     @Bindable
     public Listble getProfessionalCategory() {
-        return this.professionalCategory;
+        return this.tutored.getEmployee().getProfessionalCategory();
     }
     public void setProfessionalCategory(Listble professionalCategory) {
-        this.professionalCategory = (ProfessionalCategory) professionalCategory;
+        this.tutored.getEmployee().setProfessionalCategory((ProfessionalCategory) professionalCategory);
+        notifyPropertyChanged(BR.professionalCategory);
     }
     @Bindable
     public int getTrainingYear() {
-        return this.employee.getTrainingYear();
+        return this.tutored.getEmployee().getTrainingYear();
     }
     public void setTrainingYear(int trainingYear) {
-        this.employee.setTrainingYear(trainingYear);
+        this.tutored.getEmployee().setTrainingYear(trainingYear);
     }
     @Bindable
     public String getPhoneNumber() {
-        return this.employee.getPhoneNumber();
+        return this.tutored.getEmployee().getPhoneNumber();
     }
     public void setPhoneNumber(String phoneNumber) {
-        this.employee.setPhoneNumber(phoneNumber);
+        this.tutored.getEmployee().setPhoneNumber(phoneNumber);
     }
     @Bindable
     public String getEmail() {
-        return this.employee.getEmail();
+        return this.tutored.getEmployee().getEmail();
     }
 
     public void setEmail(String email) {
-        this.employee.setEmail(email);
+        this.tutored.getEmployee().setEmail(email);
     }
     @Bindable
     public Listble getPartner() {
-        return this.employee.getPartner();
+        return this.tutored.getEmployee().getPartner();
     }
     public void setPartner(Partner partner) {
-        this.employee.setPartner(partner);
+        this.tutored.getEmployee().setPartner(partner);
     }
 
     public List<Tutored> getAllTutoreds() throws SQLException {
@@ -182,87 +161,53 @@ public class TutoredVM extends BaseViewModel {
     }
 
     public List<Province> getAllProvince() throws SQLException {
-        return provinceService.getAll();
+        List<Province> provinceList = new ArrayList<>();
+        provinceList.add(new Province());
+        provinceList.addAll(getApplication().getProvinceService().getAllOfTutor(getApplication().getCurrMentor()));
+        return provinceList;
     }
 
     @Bindable
     public Listble getSelectedNgo() {
-        return selectedNgo;
+        return  this.tutored.getEmployee().getPartner();
     }
 
     public void setSelectedNgo(Listble selectedNgo) {
-        this.selectedNgo = (Partner) selectedNgo;
+        this.tutored.getEmployee().setPartner((Partner) selectedNgo);
         notifyPropertyChanged(BR.selectedNgo);
     }
 
     private void doSave(){
 
-          if(StringUtils.isEmpty(employee.getName())){
-              Utilities.displayAlertDialog(getRelatedActivity(), "Campo nome nao pode estar vazio", getRelatedActivity()).show();
-              return;
-          }
-
-          if(StringUtils.isEmpty(employee.getSurname())){
-              Utilities.displayAlertDialog(getRelatedActivity(), "Campo sobrenome nao pode estar vazio", getRelatedActivity()).show();
-              return;
-          }
-
-          if(StringUtils.isEmpty(employee.getPhoneNumber())){
-              Utilities.displayAlertDialog(getRelatedActivity(), "Campo Telefone nao pode estar vazio", getRelatedActivity()).show();
-              return;
-          }
-
-        if(StringUtils.isEmpty(employee.getEmail())){
-            Utilities.displayAlertDialog(getRelatedActivity(), "Campo Email nao pode estar vazio", getRelatedActivity()).show();
-            return;
-        }
-        if(this.getProfessionalCategory() == null){
-            Utilities.displayAlertDialog(getRelatedActivity(), "Campo Categoria Professional nao pode estar vazio", getRelatedActivity()).show();
-            return;
-        }
-        if(this.getProvince() == null){
-            Utilities.displayAlertDialog(getRelatedActivity(), "Campo Provincia nao pode estar vazio", getRelatedActivity()).show();
-            return;
-        }
-        /*
-        if( (employee.getNuit() == 0 )){
-            Utilities.displayAlertDialog(getRelatedActivity(), "Campo NUIT nao pode estar vazio", getRelatedActivity()).show();
-            return;
-        }
-
-        if( (employee.getTrainingYear() == 0 )){
-            Utilities.displayAlertDialog(getRelatedActivity(), "Campo Ano de Formacao nao pode estar vazio", getRelatedActivity()).show();
-            return;
-        }
-    */
-        employee.setProfessionalCategory((ProfessionalCategory) getProfessionalCategory());
         tutored.setUuid(Utilities.getNewUUID().toString());
-        tutored.setEmployee(employee);
-          employee.setUuid(Utilities.getNewUUID().toString());
-          location.setUuid(Utilities.getNewUUID().toString());
-          location.setEmployee(employee);
-          location.setProvince((Province) getProvince());
-          location.setDistrict((District) getDistrict());
-          location.setHealthFacility((HealthFacility) getHealthFacility());
-          location.setLocationLevel("N/A");
+        tutored.getEmployee().setUuid(Utilities.getNewUUID().toString());
+        location.setUuid(Utilities.getNewUUID().toString());
+        location.setEmployee(tutored.getEmployee());
+        location.setProvince((Province) getProvince());
+        location.setDistrict((District) getDistrict());
+        location.setHealthFacility((HealthFacility) getHealthFacility());
+        location.setLocationLevel("N/A");
 
-        location.setEmployee(employee);
+        String error = this.tutored.validade();
+        if (Utilities.stringHasValue(error)) {
+            Utilities.displayAlertDialog(getRelatedActivity(), error).show();
+            return;
+        }
 
         try {
-            this.employeeService.saveOrUpdateEmployee(employee);
+            getApplication().getEmployeeService().saveOrUpdateEmployee(tutored.getEmployee());
             this.tutoredService.savedOrUpdateTutored(tutored);
-            this.locationService.saveOrUpdate(location);
+            this.getApplication().getLocationService().saveOrUpdate(location);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         Map<String, Object> params = new HashMap<>();
         params.put("createdTutored", tutored);
-       getRelatedActivity().nextActivity(TutoredActivity.class, params);
+        getRelatedActivity().nextActivity(TutoredActivity.class, params);
     }
+
     public void save(){
-
-            this.doSave();
-
+        this.doSave();
     }
 
 
@@ -284,77 +229,57 @@ public class TutoredVM extends BaseViewModel {
         this.location = location;
     }
 
-    @Bindable
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
 
     public void deleteTutored(Tutored tutored) throws SQLException {
         this.tutoredService.delete(tutored);
     }
 
     public String tutoredHasSessions() {
-        /*boolean hasSessions = false;
-        try {
-            hasSessions = this.episodeService.patientHasEndingEpisode(getDispense().getPrescription().getPatient());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (hasEndingEpisode) {
-            return getRelatedActivity().getString(R.string.dispense_has_final_episode_cant_be_edit);
-        }*/
         return "";
     }
 
     @Bindable
     public Listble getProvince() {
-//        return this.location.getProvince();
         return this.province;
     }
     public void setProvince(Listble province) {
-        //this.location.setProvince((Province) province);
         this.province =(Province) province;
         try {
-        this.districts.clear();
-        this.districts.addAll(this.districtService.getByProvince(this.province));
-         getRelatedActivity().reloadDistrcitAdapter();
-
+            this.districts.clear();
+            this.healthFacilities.clear();
+            if (province.getId() <= 0) return;
+            this.districts.add(new District());
+            if (province.getId() <= 0) return;
+            this.districts.addAll(getApplication().getDistrictService().getByProvinceAndMentor(this.province, getApplication().getCurrMentor()));
+            getCreateTutoredActivity().reloadDistrcitAdapter();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     @Bindable
     public Listble getDistrict(){
-//        return this.location.getDistrict();
         return this.district;
     }
     public void setDistrict(Listble district){
-      //  this.location.setDistrict((District) district);
         try {
-        this.district = (District) district;
-        this.healthFacilities.clear();
-            List<HealthFacility> healthFacilities1 = this.healthFacilityService.getHealthFacilityByDistrict(this.district);
-            this.healthFacilities.addAll(healthFacilities1);
-             getRelatedActivity().reloadHealthFacility();
+            this.district = (District) district;
+            this.healthFacilities.clear();
+            if (district.getId() <= 0) return;
+            this.healthFacilities.add(new HealthFacility());
+            this.healthFacilities.addAll(getApplication().getHealthFacilityService().getHealthFacilityByDistrictAndMentor(this.district, getApplication().getCurrMentor()));
+            getCreateTutoredActivity().reloadHealthFacility();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
     @Bindable
     public Listble getHealthFacility(){
-      //  return this.location.getHealthFacility();
         return this.healthFacility;
     }
 
     public void setHealthFacility(Listble healthFacility){
-        //this.location.setHealthFacility((HealthFacility) healthFacility);
         this.healthFacility = (HealthFacility) healthFacility;
-
     }
 
     @Bindable
@@ -368,7 +293,7 @@ public class TutoredVM extends BaseViewModel {
     }
 
     public void changeInitialDataViewStatus(View view){
-        getRelatedActivity().changeFormSectionVisibility(view);
+        getCreateTutoredActivity().changeFormSectionVisibility(view);
     }
 
     public List<District> getDistricts() {
@@ -405,17 +330,40 @@ public class TutoredVM extends BaseViewModel {
 
 
     public void setMenteeLabor(Listble menteeLabor){
-      SimpleValue selectSimpleValue = (SimpleValue) menteeLabor;
+        if (this.tutored.getEmployee() == null) return;
+        SimpleValue selectSimpleValue = (SimpleValue) menteeLabor;
         if (selectSimpleValue.getDescription().equals("ONG")){
-            getRelatedActivity().reloadVisibilityOngName(true);
+            setONGEmployee(true);
         } else {
-            getRelatedActivity().reloadVisibilityOngName(false);
+            setONGEmployee(false);
+            try {
+                this.tutored.getEmployee().setPartner(getApplication().getPartnerService().getMISAU());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
-    @Override
-    public CreateTutoredActivity getRelatedActivity() {
+    @Bindable
+    public boolean isONGEmployee() {
+        return ONGEmployee;
+    }
+
+    public void setONGEmployee(boolean ONGEmployee) {
+        this.ONGEmployee = ONGEmployee;
+        notifyPropertyChanged(BR.oNGEmployee);
+    }
+
+    private TutoredActivity getTutoredActivity() {
+        return (TutoredActivity) super.getRelatedActivity();
+    }
+
+    public CreateTutoredActivity getCreateTutoredActivity() {
         return (CreateTutoredActivity) super.getRelatedActivity();
+    }
+    @Override
+    public BaseActivity getRelatedActivity() {
+        return super.getRelatedActivity();
     }
 
     public void createNewTutored() {

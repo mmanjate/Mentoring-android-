@@ -3,10 +3,9 @@ package mz.org.csaude.mentoring.view.tutored;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.work.OneTimeWorkRequest;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter;
@@ -14,34 +13,18 @@ import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityCreateTutoredBinding;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
-import mz.org.csaude.mentoring.model.career.Career;
-import mz.org.csaude.mentoring.model.career.CareerType;
-import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.location.Province;
-import mz.org.csaude.mentoring.model.tutored.Tutored;
-import mz.org.csaude.mentoring.service.career.CareerService;
-import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
-import mz.org.csaude.mentoring.service.tutored.TutoredService;
-import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
-import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.Utilities;
-import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
-import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Jose Julai Ritsure
  */
 public class CreateTutoredActivity extends BaseActivity implements IDialogListener {
     private ActivityCreateTutoredBinding activityCreateTutoredBinding;
-    private List<Tutored> tutoredList;
     private ListableSpinnerAdapter provinceAdapter;
     private ListableSpinnerAdapter districtAdapter;
     private ListableSpinnerAdapter healthfacilityAdapter;
@@ -49,19 +32,15 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
 
     private ListableSpinnerAdapter ngoAdapter;
     private ListableSpinnerAdapter menteeLaborfoAdapter;
-    private TutoredService tutoredService;
-    private CareerService careerService;
-    private Tutored tutored;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runinitialSync();
         activityCreateTutoredBinding = DataBindingUtil.setContentView(this, R.layout.activity_create_tutored);
-
-        activityCreateTutoredBinding.laboralLyt.setVisibility(View.GONE);
+        activityCreateTutoredBinding.setViewModel(getRelatedViewModel());
+        /*activityCreateTutoredBinding.laboralLyt.setVisibility(View.GONE);
         activityCreateTutoredBinding.healtUnitLyt.setVisibility(View.GONE);
-        activityCreateTutoredBinding.spnNgo.setVisibility(View.GONE);
+        activityCreateTutoredBinding.spnNgo.setVisibility(View.GONE);*/
 
         Intent intent = this.getIntent();
         if (intent != null) {
@@ -69,56 +48,9 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
            // getRelatedViewModel().setTutored((Tutored) bundle.ge);
 
             Bundle bundle = intent.getExtras();
-            activityCreateTutoredBinding.setViewModel((TutoredVM)getRelatedViewModel());
             getRelatedViewModel().setInitialDataVisible(true);
         }
-        tutoredService = new TutoredServiceImpl(getApplication());
-        careerService = new CareerServiceImpl(getApplication());
-        populateForm();
-
-    }
-
-    public void changeFormSectionVisibility(View view){
-
-        if(view.equals(activityCreateTutoredBinding.laboralData)){
-            if(activityCreateTutoredBinding.laboralLyt.getVisibility() == View.VISIBLE){
-                activityCreateTutoredBinding.btnLaboralData.setImageResource(R.drawable.sharp_arrow_drop_up_24);
-             switchLayout();
-                Utilities.collapse(activityCreateTutoredBinding.laboralLyt);
-            } else {
-               switchLayout();
-                Utilities.expand(activityCreateTutoredBinding.laboralLyt);
-                activityCreateTutoredBinding.btnLaboralData.setImageResource(R.drawable.baseline_arrow_drop_down_24);
-            }
-
-        } else if(view.equals(activityCreateTutoredBinding.healtUnit)){
-            if(activityCreateTutoredBinding.healtUnitLyt.getVisibility() == View.VISIBLE){
-                activityCreateTutoredBinding.btnHealtUnit.setImageResource(R.drawable.sharp_arrow_drop_up_24);
-                switchLayout();
-                Utilities.collapse(activityCreateTutoredBinding.healtUnitLyt);
-            } else {
-                switchLayout();
-                Utilities.expand(activityCreateTutoredBinding.healtUnitLyt);
-                activityCreateTutoredBinding.btnHealtUnit.setImageResource(R.drawable.baseline_arrow_drop_down_24);
-            }
-
-        }  else if(view.equals(activityCreateTutoredBinding.identificationData)){
-            if(activityCreateTutoredBinding.identificationDataLyt.getVisibility() == View.VISIBLE){
-                switchLayout();
-                Utilities.collapse(activityCreateTutoredBinding.identificationDataLyt);
-                activityCreateTutoredBinding.btnIdentificationData.setImageResource(R.drawable.sharp_arrow_drop_up_24);
-            } else {
-                switchLayout();
-                Utilities.expand(activityCreateTutoredBinding.identificationDataLyt);
-                activityCreateTutoredBinding.btnIdentificationData.setImageResource(R.drawable.baseline_arrow_drop_down_24);
-            }
-        } else if(view.equals(activityCreateTutoredBinding.spnMenteeLaborInfo)){
-            if (activityCreateTutoredBinding.spnMenteeLaborInfo.getSelectedItem() == "ONG"){
-                activityCreateTutoredBinding.spnNgo.setVisibility(View.VISIBLE);
-            }else{
-                activityCreateTutoredBinding.spnNgo.setVisibility(View.GONE);
-            }
-        }
+        initAdapters();
 
     }
 
@@ -127,7 +59,7 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
 
     }
 
-    private void populateForm(){
+    private void initAdapters(){
 
         try {
             List<Province> provinces = getRelatedViewModel().getAllProvince();
@@ -183,19 +115,46 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
 
     }
 
-    public void reloadVisibilityOngName(boolean resultOng){
-        if(resultOng){
-            activityCreateTutoredBinding.spnNgo.setVisibility(View.VISIBLE);
-        } else {
-            activityCreateTutoredBinding.spnNgo.setVisibility(View.GONE);
+    public void changeFormSectionVisibility(View view){
+
+        if(view.equals(activityCreateTutoredBinding.laboralData)){
+            if(activityCreateTutoredBinding.laboralLyt.getVisibility() == View.VISIBLE){
+                activityCreateTutoredBinding.btnLaboralData.setImageResource(R.drawable.sharp_arrow_drop_up_24);
+                switchLayout();
+                Utilities.collapse(activityCreateTutoredBinding.laboralLyt);
+            } else {
+                switchLayout();
+                Utilities.expand(activityCreateTutoredBinding.laboralLyt);
+                activityCreateTutoredBinding.btnLaboralData.setImageResource(R.drawable.baseline_arrow_drop_down_24);
+            }
+
+        } else if(view.equals(activityCreateTutoredBinding.healtUnit)){
+            if(activityCreateTutoredBinding.healtUnitLyt.getVisibility() == View.VISIBLE){
+                activityCreateTutoredBinding.btnHealtUnit.setImageResource(R.drawable.sharp_arrow_drop_up_24);
+                switchLayout();
+                Utilities.collapse(activityCreateTutoredBinding.healtUnitLyt);
+            } else {
+                switchLayout();
+                Utilities.expand(activityCreateTutoredBinding.healtUnitLyt);
+                activityCreateTutoredBinding.btnHealtUnit.setImageResource(R.drawable.baseline_arrow_drop_down_24);
+            }
+
+        }  else if(view.equals(activityCreateTutoredBinding.identificationData)){
+            if(activityCreateTutoredBinding.identificationDataLyt.getVisibility() == View.VISIBLE){
+                switchLayout();
+                Utilities.collapse(activityCreateTutoredBinding.identificationDataLyt);
+                activityCreateTutoredBinding.btnIdentificationData.setImageResource(R.drawable.sharp_arrow_drop_up_24);
+            } else {
+                switchLayout();
+                Utilities.expand(activityCreateTutoredBinding.identificationDataLyt);
+                activityCreateTutoredBinding.btnIdentificationData.setImageResource(R.drawable.baseline_arrow_drop_down_24);
+            }
+        } else if(view.equals(activityCreateTutoredBinding.spnMenteeLaborInfo)){
+            if (activityCreateTutoredBinding.spnMenteeLaborInfo.getSelectedItem() == "ONG"){
+                activityCreateTutoredBinding.spnNgo.setVisibility(View.VISIBLE);
+            }else{
+                activityCreateTutoredBinding.spnNgo.setVisibility(View.GONE);
+            }
         }
-
-    }
-    public ActivityCreateTutoredBinding getActivityCreateTutoredBinding() {
-        return activityCreateTutoredBinding;
-    }
-
-    public void setActivityCreateTutoredBinding(ActivityCreateTutoredBinding activityCreateTutoredBinding) {
-        this.activityCreateTutoredBinding = activityCreateTutoredBinding;
     }
 }

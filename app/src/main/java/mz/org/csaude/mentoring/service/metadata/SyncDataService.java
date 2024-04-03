@@ -19,6 +19,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -64,6 +65,9 @@ public interface SyncDataService {
 
     @GET("healthfacility/getall")
     Call<List<HealthFacilityDTO>> getHealthFacilitys();
+
+    @GET("healthfacility/getByDistricts")
+    Call<List<HealthFacilityDTO>> getByDistricts(@Query("uuids") List<String> uuids);
 
     @GET("district/getall")
     Call<List<DistrictDTO>> getDistricts();

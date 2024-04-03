@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import mz.org.csaude.mentoring.base.auth.AuthInterceptorImpl;
+import mz.org.csaude.mentoring.common.ApplicationStep;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.employee.EmployeeService;
 import mz.org.csaude.mentoring.service.employee.EmployeeServiceImpl;
@@ -55,6 +57,8 @@ public class MentoringApplication  extends Application {
 
     private User authenticatedUser;
 
+    private Tutor tutor;
+
     private Retrofit retrofit;
     private ObjectMapper mapper;
 
@@ -82,6 +86,8 @@ public class MentoringApplication  extends Application {
     private PartnerService partnerService;
 
     private ProfessionalCategoryService professionalCategoryService;
+
+    private ApplicationStep applicationStep;
 
     private LocationService locationService;
     AuthInterceptorImpl interceptor;
@@ -212,5 +218,17 @@ public class MentoringApplication  extends Application {
     public PartnerRestService getPartnerRestService() {
         if (partnerRestService == null) this.partnerRestService = new PartnerRestService(this);
         return partnerRestService;
+    }
+
+    public ApplicationStep getApplicationStep() {
+        return this.applicationStep;
+    }
+
+    public Tutor getCurrMentor() {
+        return this.tutor;
+    }
+
+    public void setCurrTutor(Tutor tutor) {
+        this.tutor = tutor;
     }
 }

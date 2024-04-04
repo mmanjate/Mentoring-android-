@@ -17,6 +17,7 @@ import java.util.Map;
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
+import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.career.CareerType;
@@ -41,17 +42,11 @@ import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
 
 public class TutoredVM extends BaseViewModel {
     private TutoredService tutoredService;
-    private ProfessionalCategoryService professionalCategoryService;
-    private CareerService careerService;
-    private SessionService sessionService;
     private Tutored tutored;
 
     private Location location;
 
-
     private Province province;
-
-    private ProfessionalCategory professionalCategory;
 
     private District district;
 
@@ -66,7 +61,6 @@ public class TutoredVM extends BaseViewModel {
     private List<SimpleValue> menteeLabors;
 
     private boolean ONGEmployee;
-    private Partner selectedNgo;
 
     public TutoredVM(@NonNull Application application) {
         super(application);
@@ -178,7 +172,7 @@ public class TutoredVM extends BaseViewModel {
     }
 
     private void doSave(){
-
+        tutored.setSyncStatus(BaseModel.SYNC_STATUS_PENDING);
         tutored.setUuid(Utilities.getNewUUID().toString());
         tutored.getEmployee().setUuid(Utilities.getNewUUID().toString());
         location.setUuid(Utilities.getNewUUID().toString());

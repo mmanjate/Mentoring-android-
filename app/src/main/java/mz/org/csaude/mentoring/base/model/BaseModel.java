@@ -16,13 +16,21 @@ public abstract class BaseModel implements Serializable {
 
     public static final String COLUMN_UUID = "uuid";
 
+    public static final String SYNC_STATUS_PENDING = "PENDING";
+
+    public static final String SYNC_STATUS_SENT = "SENT";
+
     public static final String COLUMN_LIFE_CYCLE_STATUS = "life_cycle_status";
+    public static final String COLUMN_SYNC_STATUS = "sync_status";
 
     @DatabaseField(columnName = COLUMN_ID, canBeNull = false, generatedId = true, allowGeneratedIdInsert = true)
     private int id;
 
     @DatabaseField(columnName = COLUMN_UUID, unique = true)
     private String uuid;
+
+    @DatabaseField(columnName = COLUMN_SYNC_STATUS)
+    private String syncStatus;
 
     public BaseModel() {
     }
@@ -70,6 +78,14 @@ public abstract class BaseModel implements Serializable {
 
     public void setLifeCycleStatus(LifeCycleStatus lifeCycleStatus) {
         this.lifeCycleStatus = lifeCycleStatus;
+    }
+
+    public String getSyncStatus() {
+        return syncStatus;
+    }
+
+    public void setSyncStatus(String syncStatus) {
+        this.syncStatus = syncStatus;
     }
 
     public String validade() {

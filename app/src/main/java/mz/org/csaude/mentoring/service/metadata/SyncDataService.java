@@ -14,6 +14,7 @@ import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -43,8 +44,8 @@ public interface SyncDataService {
     @GET("/careers/{offset}/{limit}")
     Call<List<CareerDTO>> getCareers(@Path("offset") long offset, @Path("limit") long limit);
 
-    @GET("/tutored/{offset}/{limit}")
-    Call<List<TutoredDTO>> getTutoreds(@Path("offset") long offset, @Path("limit") long limit);
+    @GET("/tutored/getTutoreds")
+    Call<List<TutoredDTO>> getTutoreds(@Query("uuids") List<String> uuids);
     @POST("/login")
     Call<LoginResponse> login(@Body RequestBody body);
 
@@ -78,4 +79,7 @@ public interface SyncDataService {
 
     @GET("partner/getall")
     Call<List<PartnerDTO>> getPartners();
+
+    @POST("tutored/save")
+    Call<List<TutoredDTO>> postTutoreds(@Body List<TutoredDTO> tutoredDTOS);
 }

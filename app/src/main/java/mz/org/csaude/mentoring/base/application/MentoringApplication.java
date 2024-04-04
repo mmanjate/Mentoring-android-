@@ -41,6 +41,7 @@ import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
+import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -90,6 +91,8 @@ public class MentoringApplication  extends Application {
     private ApplicationStep applicationStep;
 
     private LocationService locationService;
+
+    private TutoredRestService tutoredRestService;
     AuthInterceptorImpl interceptor;
 
 
@@ -218,6 +221,11 @@ public class MentoringApplication  extends Application {
     public PartnerRestService getPartnerRestService() {
         if (partnerRestService == null) this.partnerRestService = new PartnerRestService(this);
         return partnerRestService;
+    }
+
+    public TutoredRestService getTutoredRestService() {
+        if (tutoredRestService == null) this.tutoredRestService = new TutoredRestService(this);
+        return tutoredRestService;
     }
 
     public ApplicationStep getApplicationStep() {

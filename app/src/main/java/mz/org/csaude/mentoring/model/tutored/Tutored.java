@@ -59,4 +59,9 @@ public class Tutored extends BaseModel implements Listble {
     public String getCode() {
         return null;
     }
+
+    @Override
+    public String validade() {
+        return this.employee.validade();
+    }
 }

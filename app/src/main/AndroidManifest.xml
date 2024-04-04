@@ -53,12 +53,19 @@
             android:theme="@style/Theme.Mentoring.NoActionBar" />
         <activity
             android:name=".view.mentorship.ListMentorshipActivity"
+            android:theme="@style/Theme.Mentoring.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.mentorship.MentorshipActivity"
-            android:exported="true" />
+            android:theme="@style/Theme.Mentoring.NoActionBar"
+            android:exported="false" />
+        <activity
+            android:name=".view.tutored.CreateTutoredActivity"
+            android:theme="@style/Theme.Mentoring.NoActionBar"
+            android:exported="false" />
         <activity
             android:name=".view.tutored.TutoredActivity"
+            android:theme="@style/Theme.Mentoring.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.career.CareerActivity"

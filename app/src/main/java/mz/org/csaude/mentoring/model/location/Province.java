@@ -11,10 +11,7 @@ import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.location.ProvinceDAOImpl;
 import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
 
-@Data
-@NoArgsConstructor
 @DatabaseTable(tableName = Province.COLUMN_TABLE_NAME, daoClass = ProvinceDAOImpl.class)
-@EqualsAndHashCode(callSuper = false)
 public class Province extends BaseModel implements Listble {
 
     public static final String COLUMN_TABLE_NAME = "province";
@@ -40,6 +37,9 @@ public class Province extends BaseModel implements Listble {
 
     public void setDescription(String description) {
         this.designation = description;
+    }
+
+    public Province() {
     }
 
     public Province(ProvinceDTO provinceDTO) {

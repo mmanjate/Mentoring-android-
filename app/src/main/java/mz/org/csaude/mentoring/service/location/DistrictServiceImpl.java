@@ -11,6 +11,7 @@ import mz.org.csaude.mentoring.dto.location.DistrictDTO;
 import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.Province;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.user.User;
 
 public class DistrictServiceImpl extends BaseServiceImpl<District> implements DistrictService {
@@ -57,6 +58,11 @@ public class DistrictServiceImpl extends BaseServiceImpl<District> implements Di
         return this.districtDAO.queryForId(id);
     }
 
+    @Override
+    public District getByuuid(String uuid) throws SQLException {
+        return this.districtDAO.getByUuid(uuid);
+    }
+
 
     @Override
     public void savedOrUpdateDistricts(List<DistrictDTO> districtDTOs) throws SQLException {
@@ -86,5 +92,8 @@ public class DistrictServiceImpl extends BaseServiceImpl<District> implements Di
         return this.districtDAO.getByProvince(selectedProvince);
     }
 
-
+    @Override
+    public List<District> getByProvinceAndMentor(Province province, Tutor mentor) throws SQLException {
+        return districtDAO.getByProvinceAndMentor(province, mentor);
+    }
 }

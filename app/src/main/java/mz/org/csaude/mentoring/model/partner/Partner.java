@@ -17,6 +17,7 @@ public class Partner extends BaseModel implements Listble {
     public static final String COLUMN_NAME = "name";
 
     public static final String COLUMN_DESCRIPTION = "description";
+    public static final String MISAU_UUID = "398f0ffeb8fe11edafa10242ac120002";
 
     @DatabaseField(columnName = COLUMN_NAME, unique = true)
     private String name;

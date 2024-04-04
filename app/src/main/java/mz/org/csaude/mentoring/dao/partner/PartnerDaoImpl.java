@@ -23,4 +23,9 @@ public class PartnerDaoImpl extends MentoringBaseDaoImpl<Partner, Integer> imple
     public PartnerDaoImpl(ConnectionSource connectionSource, DatabaseTableConfig<Partner> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
+
+    @Override
+    public Partner getMISAU() throws SQLException {
+        return queryBuilder().where().eq(Partner.COLUMN_UUID, Partner.MISAU_UUID).queryForFirst();
+    }
 }

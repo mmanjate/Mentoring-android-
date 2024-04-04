@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Mentoring</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_session">SessionActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -53,6 +54,10 @@
     <string name="professional_category">Categoria Profissional</string>
     <string name="nuit">Nuit</string>
     <string name="local">Local</string>
+    <string name="session_closure">Fecho da Sessão</string>
+    <string name="back">Voltar</string>
     <string name="session_submission_state">Período de submissão</string>
+    <string name="save_and_continue">Gravar e Continuar</string>
+    <string name="print">Imprimir</string>
 </resources>
 

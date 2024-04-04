@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="viewModel" type="mz.org.csaude.mentoring.viewmodel.session.SessionClosureVM" />
+        <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
+        <import type="android.view.View"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.session.SessionActivity">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <include layout="@layout/app_toolbar" />
+        </com.google.android.material.appbar.AppBarLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/dimen_15dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <LinearLayout
+                        android:id="@+id/materiais_lyt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_normal"
+                        android:padding="3dp"
+                        android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/dimen_0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="8"
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="@dimen/dimen_10dp"
+                            android:text="Resumo da Sessão"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+                        <ImageButton
+                            android:id="@+id/btn_show_collapse"
+                            android:layout_width="@dimen/dimen_0dp"
+                            android:layout_height="match_parent"
+                            android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                            android:background="@color/background_layout"
+                            android:src="@drawable/baseline_expand_circle_down_24"
+                            android:layout_marginRight="@dimen/dimen_2dp"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/materiais_fields_lyt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen_4dp">
+
+                        <!-- Area abaixo do campo de pesquisa -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/dimen_5dp"
+                            android:background="@drawable/ronda_item_back"
+                            android:padding="15dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:background="@drawable/ronda_item_back"
+                                        android:padding="15dp">
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="13sp"
+                                            android:text="Sinais Vitais"
+                                            android:layout_marginBottom="@dimen/dimen_8dp"
+                                            android:textStyle="bold"
+                                            android:gravity="center_vertical"/>
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="13sp"
+                                            android:text="Sinais Vitais"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/red"
+                                            android:gravity="center_vertical"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/txtv_service_name"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3"
+                                    android:layout_marginRight="@dimen/dimen_5dp"
+                                    android:text="HIV"
+                                    android:textSize="14sp"
+                                    android:layout_gravity="center_vertical"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/red"/>
+                            </LinearLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_marginTop="@dimen/dimen_5dp"
+                                android:layout_height="1dp"
+                                android:background="@color/spinner_back_color"/>
+                        </LinearLayout>
+                        <Button
+                            android:id="@+id/save_and_continue"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/button_shape"
+                            android:drawableLeft="@drawable/baseline_folder_24"
+                            android:text="@string/print"
+                            android:textAllCaps="false"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:onClick="@{() -> viewModel.saveAndContinue()}"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

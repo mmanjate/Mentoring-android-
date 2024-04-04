@@ -57,5 +57,7 @@
     <string name="session_closure">Fecho da Sessão</string>
     <string name="back">Voltar</string>
     <string name="session_submission_state">Período de submissão</string>
+    <string name="save_and_continue">Gravar e Continuar</string>
+    <string name="print">Imprimir</string>
 </resources>
 

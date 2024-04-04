@@ -45,12 +45,12 @@
                     android:orientation="vertical"
                     >
                     <LinearLayout
-                        android:id="@+id/initial_data"
+                        android:id="@+id/pontos_fortes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_normal"
                         android:padding="3dp"
-                        android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                        android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                         android:orientation="horizontal">
 
                         <TextView
@@ -64,17 +64,16 @@
                             android:paddingLeft="@dimen/dimen_10dp"/>
 
                         <ImageButton
-                            android:id="@+id/btn_show_collapse"
+                            android:id="@+id/btn_collapse_pontos_fortes"
                             android:layout_width="@dimen/dimen_0dp"
                             android:layout_height="match_parent"
-                            android:onClick="@{(view) -> viewModel.openCollapse(view)}"
                             android:background="@color/background_layout"
                             android:src="@drawable/baseline_expand_circle_down_24"
                             android:layout_marginRight="@dimen/dimen_2dp"
                             android:layout_weight="1"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/pontos_forte_lyt"
+                        android:id="@+id/pontos_fortes_lyt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -98,12 +97,13 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/aspectos_melhorar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10dp"
                         android:background="@drawable/shape_normal"
                         android:padding="3dp"
-                        android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                        android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                         android:orientation="horizontal">
 
                         <TextView
@@ -117,9 +117,10 @@
                             android:paddingLeft="@dimen/dimen_10dp"/>
 
                         <ImageButton
+                            android:id="@+id/btn_collapse_aspectos_melhorar"
                             android:layout_width="@dimen/dimen_0dp"
                             android:layout_height="match_parent"
-                            android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                            android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                             android:background="@color/background_layout"
                             android:src="@drawable/baseline_expand_circle_down_24"
                             android:layout_marginRight="@dimen/dimen_2dp"
@@ -150,12 +151,13 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/plano_melhoria"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10dp"
                         android:background="@drawable/shape_normal"
                         android:padding="3dp"
-                        android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                        android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                         android:orientation="horizontal">
 
                         <TextView
@@ -169,16 +171,17 @@
                             android:paddingLeft="@dimen/dimen_10dp"/>
 
                         <ImageButton
+                            android:id="@+id/btn_collapse_plano_trabalho"
                             android:layout_width="@dimen/dimen_0dp"
                             android:layout_height="match_parent"
-                            android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                            android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                             android:background="@color/background_layout"
                             android:src="@drawable/baseline_expand_circle_down_24"
                             android:layout_marginRight="@dimen/dimen_2dp"
                             android:layout_weight="1"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/plano_para_melhorar_lyt"
+                        android:id="@+id/plano_melhoraria_lyt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -202,13 +205,13 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/mentees_lyt"
+                        android:id="@+id/observacoes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10dp"
                         android:background="@drawable/shape_normal"
                         android:padding="3dp"
-                        android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                        android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                         android:orientation="horizontal">
 
                         <TextView
@@ -222,9 +225,10 @@
                             android:textSize="15sp" />
 
                         <ImageButton
+                            android:id="@+id/btn_observacoes"
                             android:layout_width="@dimen/dimen_0dp"
                             android:layout_height="match_parent"
-                            android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                            android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                             android:background="@color/background_layout"
                             android:src="@drawable/baseline_expand_circle_down_24"
                             android:layout_marginRight="@dimen/dimen_2dp"
@@ -260,7 +264,7 @@
                         android:layout_marginTop="@dimen/dimen_10dp"
                         android:background="@drawable/shape_normal"
                         android:padding="3dp"
-                        android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                        android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                         android:orientation="horizontal">
 
                         <TextView
@@ -274,9 +278,10 @@
                             android:paddingLeft="@dimen/dimen_10dp"/>
 
                         <ImageButton
+                            android:id="@+id/btn_collapse_data_fim"
                             android:layout_width="@dimen/dimen_0dp"
                             android:layout_height="match_parent"
-                            android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                            android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                             android:background="@color/background_layout"
                             android:src="@drawable/baseline_expand_circle_down_24"
                             android:layout_marginRight="@dimen/dimen_2dp"

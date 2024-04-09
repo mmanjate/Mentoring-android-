@@ -7,8 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import mz.org.csaude.mentoring.R;
+import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.databinding.TutoredListItemBinding;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -19,11 +21,11 @@ import java.util.List;
  */
 public class TutoredAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Activity activity;
+    private BaseActivity activity;
     private List<Tutored> tutoreds;
 
     public TutoredAdapter(RecyclerView recyclerView, List<Tutored> records, Activity activity) {
-        this.activity = activity;
+        this.activity = (BaseActivity) activity;
         this.tutoreds = records;
     }
 
@@ -39,6 +41,7 @@ public class TutoredAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         ((TutoredViewHolder) viewHolder).tutoredListItemBinding.setTutored(tutoreds.get(position));
+        ((TutoredViewHolder) viewHolder).tutoredListItemBinding.setViewModel((TutoredVM) this.activity.getRelatedViewModel());
     }
 
     @Override

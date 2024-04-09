@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
+import mz.org.csaude.mentoring.util.SyncSatus;
 
 import java.io.Serializable;
 
@@ -16,10 +17,6 @@ public abstract class BaseModel implements Serializable {
 
     public static final String COLUMN_UUID = "uuid";
 
-    public static final String SYNC_STATUS_PENDING = "PENDING";
-
-    public static final String SYNC_STATUS_SENT = "SENT";
-
     public static final String COLUMN_LIFE_CYCLE_STATUS = "life_cycle_status";
     public static final String COLUMN_SYNC_STATUS = "sync_status";
 
@@ -30,7 +27,7 @@ public abstract class BaseModel implements Serializable {
     private String uuid;
 
     @DatabaseField(columnName = COLUMN_SYNC_STATUS)
-    private String syncStatus;
+    private SyncSatus syncStatus;
 
     public BaseModel() {
     }
@@ -80,11 +77,11 @@ public abstract class BaseModel implements Serializable {
         this.lifeCycleStatus = lifeCycleStatus;
     }
 
-    public String getSyncStatus() {
+    public SyncSatus getSyncStatus() {
         return syncStatus;
     }
 
-    public void setSyncStatus(String syncStatus) {
+    public void setSyncStatus(SyncSatus syncStatus) {
         this.syncStatus = syncStatus;
     }
 

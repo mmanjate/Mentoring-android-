@@ -42,6 +42,7 @@ public class RondaVM extends BaseViewModel {
     public RondaVM(@NonNull Application application) {
         super(application);
 
+        this.ronda = new Ronda();
         rondaService = getApplication().getRondaService();
     }
 

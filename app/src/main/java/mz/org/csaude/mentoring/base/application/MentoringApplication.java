@@ -5,6 +5,7 @@ import android.app.Application;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -238,5 +239,11 @@ public class MentoringApplication  extends Application {
 
     public void setCurrTutor(Tutor tutor) {
         this.tutor = tutor;
+    }
+
+    public void init() throws SQLException {
+        this.applicationStep = ApplicationStep.fastCreate(ApplicationStep.STEP_INIT);
+        setCurrTutor(getTutorService().getByEmployee(getAuthenticatedUser().getEmployee()));
+        getCurrMentor().getEmployee().setLocations(getLocationService().getAllOfEmploee(getAuthenticatedUser().getEmployee()));
     }
 }

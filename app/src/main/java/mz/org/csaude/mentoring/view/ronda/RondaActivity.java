@@ -37,7 +37,11 @@ public class RondaActivity extends BaseActivity {
         EdgeToEdge.enable(this);
         rondaBinding = DataBindingUtil.setContentView(this, R.layout.activity_ronda);
         rondaBinding.setViewModel(getRelatedViewModel());
-        setContentView(R.layout.activity_ronda);
+
+        setSupportActionBar(rondaBinding.toolbar.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Rondas de Mentorias");
 
 
     }

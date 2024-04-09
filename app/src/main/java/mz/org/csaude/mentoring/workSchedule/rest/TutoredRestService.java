@@ -18,6 +18,7 @@ import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +45,7 @@ public class TutoredRestService extends BaseRestService {
                 if (Utilities.listHasElements(data)) {
                     try {
                         List<Tutored> tutoreds = Utilities.parse(data, Tutored.class);
-                        for (Tutored tutored : tutoreds) { tutored.setSyncStatus(BaseModel.SYNC_STATUS_SENT);}
+                        for (Tutored tutored : tutoreds) { tutored.setSyncStatus(SyncSatus.SENT);}
                         getApplication().getTutoredService().savedOrUpdateTutoreds(tutoreds);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, tutoreds);
                     } catch (SQLException | InstantiationException | IllegalAccessException |

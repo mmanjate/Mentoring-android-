@@ -40,7 +40,7 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
     private boolean viewListEditButton;
     private boolean viewListRemoveButton;
 
-    private Listble selectedListble;
+    protected Listble selectedListble;
     protected User currentUser;
 
 
@@ -162,5 +162,9 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
         } else {
             //relatedView.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void setSelectedRecord(Serializable relatedRecord) {
+        this.selectedListble = (Listble) relatedRecord;
     }
 }

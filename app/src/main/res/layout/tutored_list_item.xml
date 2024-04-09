@@ -8,6 +8,9 @@
         <variable
             name="tutored"
             type="mz.org.csaude.mentoring.model.tutored.Tutored" />
+        <variable
+            name="viewModel"
+            type="mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM" />
 
         <import type="mz.org.csaude.mentoring.util.Utilities"/>
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
@@ -15,7 +18,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/tutored_item_back"
         android:padding="@dimen/dimen_10dp"
+        android:layout_margin="@dimen/dimen_5dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -26,6 +31,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="@dimen/dimen_5dp"
                 bind:srcCompat="@drawable/ic_person_24"/>
         </LinearLayout>
         <LinearLayout
@@ -39,50 +45,42 @@
         android:orientation="vertical"
         android:layout_weight="3">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@{tutored.employee.fullName}"
+            android:textSize="14dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/professionalCategoryId"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dimen_6dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@{tutored.employee.professionalCategory.description}" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2.2"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="@dimen/dimen_6dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text="@{tutored.employee.phoneNumber}"
+                bind:drawableLeftCompat="@drawable/baseline_call_24" />
 
             <TextView
-                android:id="@+id/prescriptionId"
-                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dimen_6dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
-                android:text="@{tutored.employee.name}"
-                android:paddingBottom="@dimen/dimen_10dp"
-                android:textSize="@dimen/dimen_12dp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:paddingLeft="@dimen/dimen_10dp"
-            android:orientation="horizontal">
-
-
-            <LinearLayout
-                android:layout_width="@dimen/dimen_10dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/professionalCategoryId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{tutored.employee.professionalCategory.description}" />
-
-                <TextView
-                    android:id="@+id/supply"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{tutored.employee.phoneNumber}" />
-
-            </LinearLayout>
-
+                android:text="@{Utilities.parseIntToString(tutored.employee.nuit)}"
+                bind:drawableLeftCompat="@drawable/ic_card" />
         </LinearLayout>
 
     </LinearLayout>
@@ -90,19 +88,25 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="0.3">
+            android:padding="@dimen/dimen_5dp"
+            android:layout_weight="0.7">
 
             <ImageButton
                 android:id="@+id/btn_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_edit_24" />
+                android:onClick="@{() -> viewModel.edit(tutored)}"
+                android:background="#e9f1f7"
+                android:src="@drawable/ic_edit" />
 
             <ImageButton
                 android:id="@+id/btn_remove"
+                android:layout_marginTop="@dimen/dimen_10dp"
                 android:layout_width="wrap_content"
+                android:background="#e9f1f7"
+                android:onClick="@{() -> viewModel.delete(tutored)}"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_remove" />
+                android:src="@drawable/ic_delete" />
 
         </LinearLayout>
 

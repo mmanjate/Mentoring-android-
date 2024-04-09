@@ -22,6 +22,9 @@ public class SessionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         sessionBinding = DataBindingUtil.setContentView(this, R.layout.activity_session);
         sessionBinding.setViewModel(getRelatedViewModel());
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override

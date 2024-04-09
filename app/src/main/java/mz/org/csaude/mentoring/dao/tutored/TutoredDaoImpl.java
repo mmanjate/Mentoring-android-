@@ -17,6 +17,7 @@ import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.workSchedule.work.MentoringDataBaseHelper;
 
 public class TutoredDaoImpl extends MentoringBaseDaoImpl<Tutored, Integer> implements TutoredDao {
@@ -55,6 +56,6 @@ public class TutoredDaoImpl extends MentoringBaseDaoImpl<Tutored, Integer> imple
 
     @Override
     public List<Tutored> getAllNotSynced() throws SQLException {
-        return queryForEq(Tutored.COLUMN_SYNC_STATUS, BaseModel.SYNC_STATUS_PENDING);
+        return queryForEq(Tutored.COLUMN_SYNC_STATUS, SyncSatus.PENDING);
     }
 }

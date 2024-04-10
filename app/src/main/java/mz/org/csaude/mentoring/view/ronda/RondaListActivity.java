@@ -35,6 +35,11 @@ public class RondaListActivity extends BaseActivity {
         mentoringCycleListBinding = DataBindingUtil.setContentView(this, R.layout.activity_mentoring_cycle_list);
         mentoringCycleListBinding.setViewModel(getRelatedViewModel());
         rondasRecyclerView = mentoringCycleListBinding.rcvRondas;
+
+        setSupportActionBar(mentoringCycleListBinding.toolbar.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Rondas de Mentorias");
     }
 
     @Override

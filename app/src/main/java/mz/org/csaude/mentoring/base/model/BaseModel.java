@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
+import mz.org.csaude.mentoring.util.SyncSatus;
 
 import java.io.Serializable;
 
@@ -17,12 +18,16 @@ public abstract class BaseModel implements Serializable {
     public static final String COLUMN_UUID = "uuid";
 
     public static final String COLUMN_LIFE_CYCLE_STATUS = "life_cycle_status";
+    public static final String COLUMN_SYNC_STATUS = "sync_status";
 
     @DatabaseField(columnName = COLUMN_ID, canBeNull = false, generatedId = true, allowGeneratedIdInsert = true)
     private int id;
 
     @DatabaseField(columnName = COLUMN_UUID, unique = true)
     private String uuid;
+
+    @DatabaseField(columnName = COLUMN_SYNC_STATUS)
+    private SyncSatus syncStatus;
 
     public BaseModel() {
     }
@@ -70,6 +75,14 @@ public abstract class BaseModel implements Serializable {
 
     public void setLifeCycleStatus(LifeCycleStatus lifeCycleStatus) {
         this.lifeCycleStatus = lifeCycleStatus;
+    }
+
+    public SyncSatus getSyncStatus() {
+        return syncStatus;
+    }
+
+    public void setSyncStatus(SyncSatus syncStatus) {
+        this.syncStatus = syncStatus;
     }
 
     public String validade() {

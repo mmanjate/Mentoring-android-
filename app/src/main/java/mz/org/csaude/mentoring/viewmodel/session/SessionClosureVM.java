@@ -24,7 +24,6 @@ public class SessionClosureVM extends BaseViewModel {
 
     public SessionClosureVM(@NonNull Application application) {
         super(application);
-        this.sessionClosureService = getApplication().getSessionClosureService();
     }
 
     @Override

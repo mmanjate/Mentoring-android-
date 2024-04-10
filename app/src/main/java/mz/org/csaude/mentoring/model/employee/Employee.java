@@ -211,4 +211,10 @@ public class Employee extends BaseModel implements Listble {
         if(!Utilities.listHasElements(this.locations)) return "Por favor indicar a unidade sanitária.";
         return super.validade();
     }
+
+    public void addLocation(Location location) {
+        if (this.locations == null) this.locations = new ArrayList<>();
+        location.setEmployee(this);
+        this.locations.add(location);
+    }
 }

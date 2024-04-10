@@ -2,8 +2,13 @@ package mz.org.csaude.mentoring.view.tutored;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -38,20 +43,20 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
         super.onCreate(savedInstanceState);
         activityCreateTutoredBinding = DataBindingUtil.setContentView(this, R.layout.activity_create_tutored);
         activityCreateTutoredBinding.setViewModel(getRelatedViewModel());
-        /*activityCreateTutoredBinding.laboralLyt.setVisibility(View.GONE);
-        activityCreateTutoredBinding.healtUnitLyt.setVisibility(View.GONE);
-        activityCreateTutoredBinding.spnNgo.setVisibility(View.GONE);*/
 
-        Intent intent = this.getIntent();
-        if (intent != null) {
+        getRelatedViewModel().setInitialDataVisible(true);
 
-           // getRelatedViewModel().setTutored((Tutored) bundle.ge);
+        setUpToolbar();
 
-            Bundle bundle = intent.getExtras();
-            getRelatedViewModel().setInitialDataVisible(true);
-        }
         initAdapters();
 
+    }
+
+    private void setUpToolbar() {
+        setSupportActionBar(activityCreateTutoredBinding.toolbar.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Mentorandos");
     }
 
     private void switchLayout(){

@@ -2,10 +2,13 @@ package mz.org.csaude.mentoring.view.tutored;
 
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
@@ -39,11 +42,37 @@ public class TutoredActivity extends BaseActivity {
                     .commit();
         }
 
+        setUpToolbar();
         getRelatedViewModel().setViewListEditButton(false);
         getRelatedViewModel().setViewListRemoveButton(false);
 
     }
 
+    private void setUpToolbar() {
+        setSupportActionBar(tutoredBinding.toolbar.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Mentorandos");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.utilities_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_upload:
+                getRelatedViewModel().initMenteeUpload();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
     @Override
     public BaseViewModel initViewModel() {
         return new ViewModelProvider(this).get(TutoredVM.class);

@@ -17,6 +17,7 @@ import java.util.Map;
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
+import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.career.CareerType;
@@ -35,23 +36,18 @@ import mz.org.csaude.mentoring.service.session.SessionService;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import mz.org.csaude.mentoring.util.SimpleValue;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.tutored.CreateTutoredActivity;
 import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
 
 public class TutoredVM extends BaseViewModel {
     private TutoredService tutoredService;
-    private ProfessionalCategoryService professionalCategoryService;
-    private CareerService careerService;
-    private SessionService sessionService;
     private Tutored tutored;
 
     private Location location;
 
-
     private Province province;
-
-    private ProfessionalCategory professionalCategory;
 
     private District district;
 
@@ -66,7 +62,6 @@ public class TutoredVM extends BaseViewModel {
     private List<SimpleValue> menteeLabors;
 
     private boolean ONGEmployee;
-    private Partner selectedNgo;
 
     public TutoredVM(@NonNull Application application) {
         super(application);
@@ -82,13 +77,16 @@ public class TutoredVM extends BaseViewModel {
     }
 
     private void initNewRecord() {
-        this.tutored = new Tutored();
-        this.tutored.setEmployee(new Employee());
     }
 
     @Override
     public void preInit() {
-
+        if (getCurrentStep().isApplicationStepEdit()) {
+            this.tutored = (Tutored) this.selectedListble;
+        } else {
+            this.tutored = new Tutored();
+            this.tutored.setEmployee(new Employee());
+        }
     }
 
     @Bindable
@@ -109,11 +107,15 @@ public class TutoredVM extends BaseViewModel {
        this.tutored.getEmployee().setSurname(surname);
     }
     @Bindable
-    public int getNuit() {
-        return this.tutored.getEmployee().getNuit();
+    public String getNuit() {
+        if (this.tutored.getEmployee().getNuit() <= 0) return null;
+        return Utilities.parseIntToString(this.tutored.getEmployee().getNuit());
     }
-    public void setNuit(int nuit) {
-        this.tutored.getEmployee().setNuit(nuit);
+    public void setNuit(String nuit) {
+        if (!Utilities.stringHasValue(nuit)) return;
+
+        this.tutored.getEmployee().setNuit(Integer.parseInt(nuit));
+        notifyPropertyChanged(BR.nuit);
     }
     public List<ProfessionalCategory> getAllProfessionalCategys() throws SQLException{
         return getApplication().getProfessionalCategoryService().getAll();
@@ -127,11 +129,14 @@ public class TutoredVM extends BaseViewModel {
         notifyPropertyChanged(BR.professionalCategory);
     }
     @Bindable
-    public int getTrainingYear() {
-        return this.tutored.getEmployee().getTrainingYear();
+    public String getTrainingYear() {
+        if (this.tutored.getEmployee().getTrainingYear() <= 0) return null;
+        return String.valueOf(this.tutored.getEmployee().getTrainingYear());
     }
-    public void setTrainingYear(int trainingYear) {
-        this.tutored.getEmployee().setTrainingYear(trainingYear);
+    public void setTrainingYear(String trainingYear) {
+        if (!Utilities.stringHasValue(trainingYear)) return;
+        this.tutored.getEmployee().setTrainingYear(Integer.parseInt(trainingYear));
+        notifyPropertyChanged(BR.trainingYear);
     }
     @Bindable
     public String getPhoneNumber() {
@@ -178,15 +183,16 @@ public class TutoredVM extends BaseViewModel {
     }
 
     private void doSave(){
-
+        tutored.setSyncStatus(SyncSatus.PENDING);
         tutored.setUuid(Utilities.getNewUUID().toString());
         tutored.getEmployee().setUuid(Utilities.getNewUUID().toString());
         location.setUuid(Utilities.getNewUUID().toString());
-        location.setEmployee(tutored.getEmployee());
         location.setProvince((Province) getProvince());
         location.setDistrict((District) getDistrict());
         location.setHealthFacility((HealthFacility) getHealthFacility());
         location.setLocationLevel("N/A");
+
+        tutored.getEmployee().addLocation(location);
 
         String error = this.tutored.validade();
         if (Utilities.stringHasValue(error)) {
@@ -375,5 +381,20 @@ public class TutoredVM extends BaseViewModel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void initMenteeUpload() {
+
+    }
+
+    public void edit(Tutored tutored) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("relatedRecord", tutored);
+        getCurrentStep().changeToEdit();
+        getRelatedActivity().nextActivity(CreateTutoredActivity.class, params);
+    }
+
+    public void delete(Tutored tutored) {
+
     }
 }

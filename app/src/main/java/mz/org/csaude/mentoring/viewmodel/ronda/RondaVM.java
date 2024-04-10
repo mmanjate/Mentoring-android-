@@ -37,10 +37,12 @@ public class RondaVM extends BaseViewModel {
     private List<HealthFacility> healthFacilities;
 
     private Tutored selectedMentee;
+    private List<Tutored> menteeList;
 
     public RondaVM(@NonNull Application application) {
         super(application);
 
+        this.ronda = new Ronda();
         rondaService = getApplication().getRondaService();
     }
 
@@ -76,6 +78,15 @@ public class RondaVM extends BaseViewModel {
     public void setHealthFacility(Listble healthFacility) {
         this.ronda.setHealthFacility((HealthFacility) healthFacility);
         notifyPropertyChanged(BR.healthFacility);
+        try {
+            setMenteeList(getApplication().getTutoredService().getAllOfHealthFacility(this.ronda.getHealthFacility()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setMenteeList(List<Tutored> menteeList) {
+        this.menteeList = menteeList;
     }
 
     public void addMentee(Listble mentee) {
@@ -129,5 +140,13 @@ public class RondaVM extends BaseViewModel {
 
     public void addSelectedMentee() {
 
+    }
+
+    public void save() {
+
+    }
+
+    public List<Tutored> getMentees() {
+        return this.menteeList;
     }
 }

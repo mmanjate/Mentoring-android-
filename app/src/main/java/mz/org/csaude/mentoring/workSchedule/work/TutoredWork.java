@@ -19,13 +19,18 @@ public class TutoredWork extends BaseWorker<Tutored> {
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-
-        TutoredRestService.restGetTutored(offset,limit,this);
+        getApplication().getTutoredRestService().restGetTutored(this);
     }
 
     @Override
     protected void doOnStart() {
 
+    }
+
+    @Override
+    protected void doAfterSearch(String flag, List<Tutored> recs) throws SQLException {
+        changeStatusToFinished();
+        doOnFinish();
     }
 
     @Override

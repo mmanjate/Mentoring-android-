@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <include layout="@layout/app_toolbar" />
+            <include android:id="@+id/toolbar" layout="@layout/app_toolbar" />
         </com.google.android.material.appbar.AppBarLayout>
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -158,7 +158,7 @@
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
-                    android:text="Iniciar Ronda - Mentorados"
+                    android:text="@string/iniciar_ronda_mentorados"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:gravity="center_vertical|left"
@@ -184,7 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="@{viewModel.currentStep.applicationStepDisplay ? View.GONE : View.VISIBLE}"
-                android:text="Nome/NUIT"
+                android:text="@string/nome_nuit"
                 style="@style/input_labels"
                 />
             <AutoCompleteTextView
@@ -196,7 +196,6 @@
                 android:drawableRight="@drawable/baseline_person_search_24"
                 android:visibility="@{viewModel.currentStep.applicationStepDisplay ? View.GONE : View.VISIBLE}"
                 style="@style/bottom_border_edit_text_style"
-                android:text="@{viewModel.selectedMentee.employee.name}"
                 android:padding="@dimen/dimen_4dp"
                 />
             <ImageButton
@@ -214,7 +213,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lista de Mentorandos Seleccionados"
+                android:text="@string/lista_de_mentorandos_seleccionados"
                 style="@style/input_labels"
                 />
 
@@ -226,6 +225,17 @@
                 android:background="@drawable/listble_shape"
                 android:scrollbars="vertical"/>
         </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button_shape"
+                android:text="@string/submit"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:onClick="@{() -> viewModel.save()}"/>
 
         </LinearLayout>
             </ScrollView>

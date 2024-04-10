@@ -10,6 +10,7 @@ import mz.org.csaude.mentoring.dao.career.CareerDAO;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDao;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.model.employee.Employee;
+import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.user.User;
@@ -64,23 +65,20 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
     }
 
     @Override
-    public void savedOrUpdateTutoreds(List<TutoredDTO> tutoredDTOS) throws SQLException {
-        for (TutoredDTO tutoredDTO: tutoredDTOS) {
-            boolean doesTutoredExist = this.tutoredDao.checkTutoredExistance(tutoredDTO.getUuid());
-            if(!doesTutoredExist){
-                Employee employee = this.employeeService.saveOrUpdateEmployee(new Employee(tutoredDTO.getEmployeeDTO()));
-
-                Tutored tutored = new Tutored(tutoredDTO);
-                tutored.setEmployee(employee);
-                this.tutoredDao.createOrUpdate(tutored);
-            }
+    public void savedOrUpdateTutoreds(List<Tutored> tutoreds) throws SQLException {
+        for (Tutored tutored: tutoreds) {
+            savedOrUpdateTutored(tutored);
         }
-
     }
 
     @Override
     public Tutored savedOrUpdateTutored(Tutored tutored) throws SQLException {
 
+        Tutored t = this.tutoredDao.getByUuid(tutored.getUuid());
+        if (t != null) {
+            tutored.setId(t.getId());
+        }
+        getApplication().getEmployeeService().saveOrUpdateEmployee(tutored.getEmployee());
         this.tutoredDao.createOrUpdate(tutored);
         return tutored;
     }
@@ -88,6 +86,16 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
     @Override
     public List<Tutored> getAllOfRonda(Ronda currRonda) {
         return null;
+    }
+
+    @Override
+    public List<Tutored> getAllOfHealthFacility(HealthFacility healthFacility) throws SQLException {
+        return this.tutoredDao.getAllOfHealthFacility(healthFacility, getApplication());
+    }
+
+    @Override
+    public List<Tutored> getAllNotSynced() throws SQLException {
+        return this.tutoredDao.getAllNotSynced();
     }
 
 

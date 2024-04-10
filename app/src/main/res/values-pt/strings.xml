@@ -40,7 +40,7 @@
     <string name="new_tutored">Novo Tutorado</string>
     <string name="record_successfully_saved">Registo gravado com sucesso.</string>
     <string name="record_sucessfully_removed">Registo removido com sucesso</string>
-    <string name="submit">Salvar</string>
+    <string name="submit">Gravar</string>
     <string name="name">Nome</string>
     <string name="surname">Apelido</string>
     <string name="telephone">Telefone</string>
@@ -57,6 +57,9 @@
     <string name="session_closure">Fecho da Sessão</string>
     <string name="back">Voltar</string>
     <string name="session_submission_state">Período de submissão</string>
+    <string name="lista_de_mentorandos_seleccionados">Lista de Mentorandos Seleccionados</string>
+    <string name="nome_nuit">Nome/NUIT</string>
+    <string name="iniciar_ronda_mentorados">Iniciar Ronda - Mentorados</string>
     <string name="save_and_continue">Gravar e Continuar</string>
     <string name="print">Imprimir</string>
 </resources>

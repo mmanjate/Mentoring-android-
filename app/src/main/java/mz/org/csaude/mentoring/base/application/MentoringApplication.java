@@ -5,6 +5,7 @@ import android.app.Application;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -41,6 +42,7 @@ import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
+import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -90,6 +92,8 @@ public class MentoringApplication  extends Application {
     private ApplicationStep applicationStep;
 
     private LocationService locationService;
+
+    private TutoredRestService tutoredRestService;
     AuthInterceptorImpl interceptor;
 
 
@@ -220,6 +224,11 @@ public class MentoringApplication  extends Application {
         return partnerRestService;
     }
 
+    public TutoredRestService getTutoredRestService() {
+        if (tutoredRestService == null) this.tutoredRestService = new TutoredRestService(this);
+        return tutoredRestService;
+    }
+
     public ApplicationStep getApplicationStep() {
         return this.applicationStep;
     }
@@ -230,5 +239,11 @@ public class MentoringApplication  extends Application {
 
     public void setCurrTutor(Tutor tutor) {
         this.tutor = tutor;
+    }
+
+    public void init() throws SQLException {
+        this.applicationStep = ApplicationStep.fastCreate(ApplicationStep.STEP_INIT);
+        setCurrTutor(getTutorService().getByEmployee(getAuthenticatedUser().getEmployee()));
+        getCurrMentor().getEmployee().setLocations(getLocationService().getAllOfEmploee(getAuthenticatedUser().getEmployee()));
     }
 }

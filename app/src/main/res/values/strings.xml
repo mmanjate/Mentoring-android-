@@ -55,6 +55,9 @@
     <string name="local">Local</string>
     <string name="session_closure">Fecho da Sessão</string>
     <string name="session_submission_state">Período de submissão</string>
+    <string name="lista_de_mentorandos_seleccionados">Lista de Mentorandos Seleccionados</string>
+    <string name="nome_nuit">Nome/NUIT</string>
+    <string name="iniciar_ronda_mentorados">Iniciar Ronda - Mentorados</string>
     <string name="back">Voltar</string>
     <string name="save_and_continue">Gravar e Continuar</string>
     <string name="print">Imprimir</string>

@@ -33,11 +33,6 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
     protected BaseViewModel relatedViewModel;
 
     /**
-     * {@link ApplicationStep} application current step
-     */
-    private ApplicationStep applicationStep;
-
-    /**
      * {@link PackageInfo} application info
      */
     private PackageInfo pinfo;
@@ -50,8 +45,6 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        applicationStep = ApplicationStep.fastCreate(ApplicationStep.STEP_INIT);
-
         this.relatedViewModel = initViewModel();
 
         Intent intent = this.getIntent();
@@ -59,14 +52,9 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
             Bundle bundle = intent.getExtras();
             if(bundle != null) {
                 if (this.relatedViewModel != null) {
-                    //this.relatedViewModel.setCurrentUser((User) bundle.getSerializable("user"));
-
                     if (bundle.getSerializable("relatedRecord") != null) {
-                        //this.relatedViewModel.setSelectedRecord(bundle.getSerializable("relatedRecord"));
+                        this.relatedViewModel.setSelectedRecord(bundle.getSerializable("relatedRecord"));
                     }
-                }
-                if (Utilities.stringHasValue((String) bundle.getSerializable("step"))) {
-                    applicationStep = ApplicationStep.fastCreate((String) bundle.getSerializable("step"));
                 }
             }
         }
@@ -74,7 +62,6 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
         if (this.relatedViewModel != null) {
             this.relatedViewModel.setRelatedActivity(this);
             //this.relatedViewModel.initLoadingDialog();
-            //if (this.relatedViewModel.getCurrentUser() == null) this.relatedViewModel.setCurrentUser(new User());
         }
 
         try {
@@ -227,46 +214,46 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
      * Change the current {@link ApplicationStep} to {@link ApplicationStep#STEP_INIT}
      */
     protected void changeApplicationStepToInit(){
-        this.applicationStep.changeToInit();
+        getApplicationStep().changeToInit();
     }
 
     /**
      * Change the current {@link ApplicationStep} to {@link ApplicationStep#STEP_LIST}
      */
     protected void changeApplicationStepToList(){
-        this.applicationStep.changeToList();
+        this.getApplicationStep().changeToList();
     }
 
     /**
      * Change the current {@link ApplicationStep} to {@link ApplicationStep#STEP_DISPLAY}
      */
     protected void changeApplicationStepToDisplay(){
-        this.applicationStep.changeToDisplay();
+        getApplicationStep().changeToDisplay();
     }
 
     /**
      * Change the current {@link ApplicationStep} to {@link ApplicationStep#STEP_EDIT}
      */
     protected void changeApplicationStepToEdit(){
-        this.applicationStep.changeToEdit();
+        getApplicationStep().changeToEdit();
     }
 
     /**
      * Change the current {@link ApplicationStep} to {@link ApplicationStep#STEP_SAVE}
      */
     protected void changeApplicationStepToSave(){
-        this.applicationStep.changeToSave();
+        getApplicationStep().changeToSave();
     }
 
     /**
      * Change the current {@link ApplicationStep} to {@link ApplicationStep#STEP_CREATE}
      */
     protected void changeApplicationStepToCreate(){
-        this.applicationStep.changetocreate();
+        getApplicationStep().changetocreate();
     }
 
     protected void changeApplicationStepToDownload(){
-        this.applicationStep.changetoDownload();
+        getApplicationStep().changetoDownload();
     }
 
     /**
@@ -274,7 +261,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
      * @return the application current step
      */
     public ApplicationStep getApplicationStep() {
-        return applicationStep;
+        return ((MentoringApplication) getApplication()).getApplicationStep();
     }
 
     public boolean isViewListEditButton() {

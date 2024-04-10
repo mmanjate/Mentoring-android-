@@ -56,6 +56,7 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentTutoredBinding.setViewModel(getRelatedViewModel());
+
         this.rcvTutoreds = fragmentTutoredBinding.rcvTutoreds;
         this.tutoreds = new ArrayList<>();
         try {
@@ -70,6 +71,7 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
         }
 
     }
+
 
     @Override
     public void onResume() {
@@ -97,36 +99,6 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
         return (TutoredVM) getMyActivity().getRelatedViewModel();
     }
 
-    private void displayPopupMenu(View view, int position) {
-        getRelatedViewModel().setTutored(tutoreds.get(position));
-        getRelatedViewModel().getTutored().setListPosition(position);
-
-        PopupMenu popup = new PopupMenu(view.getContext(), view);
-        MenuInflater inflater = popup.getMenuInflater();
-        popup.setOnMenuItemClickListener(TutoredFragment.this::onMenuItemClick);
- //       inflater.inflate(R.menu.edit_remove_menu, popup.getMenu());
-        popup.getMenu().getItem(0).setVisible(true);
-        popup.show();
-    }
-
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.remove:
-                try {
-                    Tutored tutored = getRelatedViewModel().getTutored();
-                    getRelatedViewModel().deleteTutored(tutored);
-                    getTutoreds().remove(tutored);
-                    setTutoreds(getTutoreds());
-                    Utilities.displayAlertDialog(TutoredFragment.this.getContext(), getString(R.string.record_sucessfully_removed)).show();
-                    tutoredItemAdapter = new TutoredAdapter(rcvTutoreds, this.tutoreds, getMyActivity());
-                    displayDataOnRecyclerView(rcvTutoreds, tutoredItemAdapter, getContext());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            default:
-                return false;
-        }
-    }
 
     @Override
     public void remove(int position) {
@@ -150,22 +122,10 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
         }
     }
 
-    @Override
-    public void remove(BaseModel baseModel) {
-
-    }
 
     @Override
     public BaseViewModel initViewModel() {
         return new ViewModelProvider(this).get(TutoredVM.class);
-    }
-
-    public List<Tutored> getTutoreds() {
-        return this.tutoreds;
-    }
-
-    public void setTutoreds(List<Tutored> tutoreds) {
-        this.tutoreds = tutoreds;
     }
 
 

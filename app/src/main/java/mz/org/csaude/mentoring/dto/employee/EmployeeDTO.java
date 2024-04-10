@@ -14,7 +14,7 @@ import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.partner.Partner;
 
-@NoArgsConstructor
+
 public class EmployeeDTO implements Serializable {
 
     private String uuid;
@@ -35,6 +35,9 @@ public class EmployeeDTO implements Serializable {
     private PartnerDTO partnerDTO;
 
     private List<LocationDTO> locationDTOSet;
+
+    public EmployeeDTO() {
+    }
 
     public EmployeeDTO(Employee employee) {
         this.setUuid(employee.getUuid());

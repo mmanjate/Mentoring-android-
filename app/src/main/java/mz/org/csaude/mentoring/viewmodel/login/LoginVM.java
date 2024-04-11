@@ -17,7 +17,6 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.user.UserService;
-import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserSyncService;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.home.MainActivity;
@@ -110,7 +109,17 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
         WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
             if (workInfo != null) {
                 if (workInfo.getState() == WorkInfo.State.SUCCEEDED){
-                    goHome();
+                    try {
+                        getApplication().init();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    OneTimeWorkRequest menteeRequest = WorkerScheduleExecutor.getInstance(getApplication()).menteesDownload();
+                    WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(menteeRequest.getId()).observe(getRelatedActivity(), info -> {
+                        if (info.getState() == WorkInfo.State.SUCCEEDED){
+                            goHome();
+                        }
+                    });
                 }
             }
         });

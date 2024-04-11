@@ -56,20 +56,16 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentTutoredBinding.setViewModel(getRelatedViewModel());
-
         this.rcvTutoreds = fragmentTutoredBinding.rcvTutoreds;
-        this.tutoreds = new ArrayList<>();
-        try {
-            this.tutoreds = getRelatedViewModel().getAllTutoreds();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        initAdapter();
+    }
 
+    public void initAdapter() {
+        this.tutoreds = getRelatedViewModel().getAllTutoreds();
         if (Utilities.listHasElements(this.tutoreds)) {
             this.tutoredItemAdapter = new TutoredAdapter(rcvTutoreds, this.tutoreds, getMyActivity());
             displayDataOnRecyclerView(rcvTutoreds, tutoredItemAdapter, getContext());
         }
-
     }
 
 
@@ -78,15 +74,10 @@ public class TutoredFragment extends GenericFragment implements IListbleDialogLi
         super.onResume();
         this.rcvTutoreds = fragmentTutoredBinding.rcvTutoreds;
 
-        try {
-            this.tutoreds = getRelatedViewModel().getAllTutoreds();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.tutoreds = getRelatedViewModel().getAllTutoreds();
 
         if (Utilities.listHasElements(tutoreds)) {
-            tutoredItemAdapter = new TutoredAdapter(rcvTutoreds, this.tutoreds, getMyActivity());
-            displayDataOnRecyclerView(rcvTutoreds, tutoredItemAdapter, getContext());
+            initAdapter();
         } else if (getMyActivity().getPositionRemoved() != null) {
             tutoredItemAdapter = new TutoredAdapter(rcvTutoreds, this.tutoreds, getMyActivity());
             tutoredItemAdapter.notifyItemRangeRemoved(0, tutoreds.size());

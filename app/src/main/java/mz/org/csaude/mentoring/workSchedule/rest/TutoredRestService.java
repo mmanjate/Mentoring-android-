@@ -68,16 +68,25 @@ public class TutoredRestService extends BaseRestService {
         List<Tutored> tutoreds = null;
         try {
             tutoreds = getApplication().getTutoredService().getAllNotSynced();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         if (Utilities.listHasElements(tutoreds)) {
-            Call<List<TutoredDTO>> tutoredCall = syncDataService.postTutoreds(Utilities.parseList(tutoreds, TutoredDTO.class));
+            Call<List<TutoredDTO>> tutoredCall = syncDataService.postTutoreds(Utilities.parse(tutoreds, TutoredDTO.class));
             tutoredCall.enqueue(new Callback<List<TutoredDTO>>() {
                 @Override
                 public void onResponse(Call<List<TutoredDTO>> call, Response<List<TutoredDTO>> response) {
-                    response.body();
-                    listener.doOnResponse(BaseRestService.REQUEST_SUCESS, new ArrayList<>());
+                    List<TutoredDTO> data = response.body();
+                    if (response.code() == 201) {
+                        try {
+                            List<Tutored> tutoreds = getApplication().getTutoredService().getAllNotSynced();
+                            for (Tutored tutored : tutoreds) {
+                                tutored.setSyncStatus(SyncSatus.SENT);
+                                getApplication().getTutoredService().update(tutored);
+                            }
+
+                            listener.doOnResponse(BaseRestService.REQUEST_SUCESS, tutoreds);
+                        } catch (SQLException  e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else listener.doOnRestErrorResponse(response.message());
                 }
 
                 @Override
@@ -85,6 +94,9 @@ public class TutoredRestService extends BaseRestService {
                     Log.i("METADATA LOAD --", t.getMessage(), t);
                 }
             });
+        }
+        } catch (SQLException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            throw new RuntimeException(e);
         }
 
     }

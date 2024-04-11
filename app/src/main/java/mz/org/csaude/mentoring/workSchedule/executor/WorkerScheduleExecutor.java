@@ -13,16 +13,14 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.model.setting.Setting;
 import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.util.Utilities;
-import mz.org.csaude.mentoring.workSchedule.work.CabinetWorker;
-import mz.org.csaude.mentoring.workSchedule.work.CareerWorker;
+import mz.org.csaude.mentoring.util.Http;
 import mz.org.csaude.mentoring.workSchedule.work.DistrictWorker;
 import mz.org.csaude.mentoring.workSchedule.work.HealthFacilityWorker;
 import mz.org.csaude.mentoring.workSchedule.work.PartnerWorker;
 import mz.org.csaude.mentoring.workSchedule.work.ProfessionalCategoryWorker;
 import mz.org.csaude.mentoring.workSchedule.work.ProvinceWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutorWorker;
-import mz.org.csaude.mentoring.workSchedule.work.UserWorker;
+import mz.org.csaude.mentoring.workSchedule.work.TutoredWork;
 
 public class WorkerScheduleExecutor {
 
@@ -79,5 +77,21 @@ public class WorkerScheduleExecutor {
                 .then(hfOneTimeWorkRequest).enqueue();
 
         return hfOneTimeWorkRequest;
+    }
+
+    public OneTimeWorkRequest menteesDownload() {
+        OneTimeWorkRequest menteesOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutoredWork.class).addTag("ONE_TIME_MENTEES_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        workManager.enqueue(menteesOneTimeWorkRequest);
+
+        return menteesOneTimeWorkRequest;
+    }
+
+    public OneTimeWorkRequest uploadMentees() {
+        Data inputData = new Data.Builder()
+                .putString("requestType", String.valueOf(Http.POST))
+                .build();
+        OneTimeWorkRequest menteesOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutoredWork.class).addTag("ONE_TIME_MENTEES_ID" + ONE_TIME_REQUEST_JOB_ID).setInputData(inputData).build();
+        workManager.enqueue(menteesOneTimeWorkRequest);
+        return menteesOneTimeWorkRequest;
     }
 }

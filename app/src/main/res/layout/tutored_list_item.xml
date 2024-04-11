@@ -13,6 +13,8 @@
             type="mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM" />
 
         <import type="mz.org.csaude.mentoring.util.Utilities"/>
+        <import type="mz.org.csaude.mentoring.util.SyncSatus"/>
+        <import type="android.view.View"/>
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
     </data>
     <LinearLayout
@@ -26,12 +28,12 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="0.8">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/dimen_5dp"
+                android:padding="3dp"
                 bind:srcCompat="@drawable/ic_person_24"/>
         </LinearLayout>
         <LinearLayout
@@ -43,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="3">
+        android:layout_weight="3.2">
 
         <TextView
             android:layout_width="match_parent"
@@ -69,8 +71,9 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@{tutored.employee.phoneNumber}"
+                android:drawablePadding="@dimen/dimen_5dp"
                 bind:drawableLeftCompat="@drawable/baseline_call_24" />
 
             <TextView
@@ -78,9 +81,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:text="@{Utilities.parseIntToString(tutored.employee.nuit)}"
-                bind:drawableLeftCompat="@drawable/ic_card" />
+                android:layout_height="match_parent"
+                android:text='@{Utilities.concatStrings("NUIT", Utilities.parseIntToString(tutored.employee.nuit), ": ")}'/>
         </LinearLayout>
 
     </LinearLayout>
@@ -88,6 +90,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:visibility="@{tutored.syncStatus == SyncSatus.PENDING ? View.VISIBLE : View.GONE}"
             android:padding="@dimen/dimen_5dp"
             android:layout_weight="0.7">
 
@@ -107,6 +110,21 @@
                 android:onClick="@{() -> viewModel.delete(tutored)}"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_delete" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{tutored.syncStatus == SyncSatus.SENT ? View.VISIBLE : View.GONE}"
+            android:padding="@dimen/dimen_5dp"
+            android:layout_weight="0.7">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/baseline_cloud_done_24"
+                android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
 

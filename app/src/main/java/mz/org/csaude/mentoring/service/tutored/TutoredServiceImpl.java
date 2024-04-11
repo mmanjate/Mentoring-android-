@@ -95,7 +95,11 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
 
     @Override
     public List<Tutored> getAllNotSynced() throws SQLException {
-        return this.tutoredDao.getAllNotSynced();
+        List<Tutored> tutoreds = this.tutoredDao.getAllNotSynced();
+        for (Tutored tutored : tutoreds) {
+            tutored.getEmployee().setLocations(getApplication().getLocationService().getAllOfEmploee(tutored.getEmployee()));
+        }
+        return tutoreds;
     }
 
 

@@ -46,4 +46,9 @@ public class Tutor extends BaseModel {
   public void setEmployee(Employee employee) {
     this.employee = employee;
   }
+
+  @Override
+  public String validade() {
+    return this.employee.validade();
+  }
 }

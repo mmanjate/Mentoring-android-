@@ -17,6 +17,7 @@ import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.career.CareerService;
 import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
+import mz.org.csaude.mentoring.service.employee.EmployeeService;
 import mz.org.csaude.mentoring.service.partner.PartnerService;
 import mz.org.csaude.mentoring.service.partner.PartnerServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserService;
@@ -26,11 +27,11 @@ public class TutorServiceImpl extends BaseServiceImpl<Tutor> implements TutorSer
 
     TutorDAO tutorDAO;
 
-    CareerService careerService;
-
     PartnerService partnerService;
 
     UserService userService;
+
+    private EmployeeService employeeService;
 
 
     public TutorServiceImpl(Application application) {
@@ -41,9 +42,9 @@ public class TutorServiceImpl extends BaseServiceImpl<Tutor> implements TutorSer
     public void init(Application application) throws SQLException {
         super.init(application);
         this.tutorDAO = getDataBaseHelper().getTutorDAO();
-        this.careerService = new CareerServiceImpl(application);
-        this.partnerService = new PartnerServiceImpl(application);
-        this.userService = new UserServiceImpl(application);
+        this.partnerService = getApplication().getPartnerService();
+        this.userService = getApplication().getUserService();
+        this.employeeService = getApplication().getEmployeeService();
     }
 
     @Override
@@ -82,8 +83,9 @@ public class TutorServiceImpl extends BaseServiceImpl<Tutor> implements TutorSer
             if(!doesTutorExiste){
 
                 Tutor tutor = new Tutor(tutorDTO);
-
-
+                Employee employee = new Employee(tutorDTO.getEmployeeDTO());
+                tutor.setEmployee(employee);
+                this.employeeService.saveOrUpdateEmployee(employee);
                 this.tutorDAO.createOrUpdate(tutor);
             }
         }

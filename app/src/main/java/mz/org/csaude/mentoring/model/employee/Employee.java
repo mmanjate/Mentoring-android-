@@ -43,7 +43,7 @@ public class Employee extends BaseModel implements Listble {
     @DatabaseField(columnName = COLUMN_SURNAME)
     private String surname;
 
-    @DatabaseField(columnName = COLUMN_NUIT)
+    @DatabaseField(columnName = COLUMN_NUIT, unique = true)
     private int nuit;
     @DatabaseField(columnName = COLUMN_PROFESSIONAL_CATEGORY, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private ProfessionalCategory professionalCategory;
@@ -51,10 +51,10 @@ public class Employee extends BaseModel implements Listble {
     @DatabaseField(columnName = COLUMN_TRAINING_YEAR)
     private int trainingYear;
 
-    @DatabaseField(columnName = COLUMN_PHONE_NUMBER)
+    @DatabaseField(columnName = COLUMN_PHONE_NUMBER, unique = true)
     private String phoneNumber;
 
-    @DatabaseField(columnName = COLUMN_EMAIL)
+    @DatabaseField(columnName = COLUMN_EMAIL, unique = true)
     private String email;
 
     @DatabaseField(columnName = COLUMN_PARTNER, foreign = true, foreignAutoRefresh = true)

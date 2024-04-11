@@ -5,6 +5,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -40,6 +42,7 @@ import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.tutored.CreateTutoredActivity;
 import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
+import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
 
 public class TutoredVM extends BaseViewModel {
     private TutoredService tutoredService;
@@ -161,8 +164,12 @@ public class TutoredVM extends BaseViewModel {
         this.tutored.getEmployee().setPartner(partner);
     }
 
-    public List<Tutored> getAllTutoreds() throws SQLException {
-        return tutoredService.getAll();
+    public List<Tutored> getAllTutoreds() {
+        try {
+            return tutoredService.getAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Province> getAllProvince() throws SQLException {
@@ -384,7 +391,14 @@ public class TutoredVM extends BaseViewModel {
     }
 
     public void initMenteeUpload() {
-
+        OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).uploadMentees();
+        WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
+            if (workInfo != null) {
+                if (workInfo.getState() == WorkInfo.State.SUCCEEDED){
+                    Utilities.displayAlertDialog(getRelatedActivity(), "Dados de mentorandos enviados com sucesso.").show();
+                }
+            }
+        });
     }
 
     public void edit(Tutored tutored) {

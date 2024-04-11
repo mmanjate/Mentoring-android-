@@ -7,6 +7,8 @@
         <variable
             name="viewModel"
             type="mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM" />
+        <import type="mz.org.csaude.mentoring.util.Utilities"/>
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,10 +65,21 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Não há registos para visualizar!"
+                        android:textColor="@color/colorPrimary"
+                        android:visibility="@{Utilities.listHasElements(viewModel.allTutoreds) ? View.GONE : View.VISIBLE}"
+                        android:textSize="15sp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:padding="10dp"/>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rcv_tutoreds"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="@{Utilities.listHasElements(viewModel.allTutoreds) ? View.VISIBLE : View.GONE}"
                         android:scrollbars="vertical" />
                 </LinearLayout>
             </ScrollView>

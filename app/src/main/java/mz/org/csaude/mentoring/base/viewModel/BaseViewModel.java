@@ -18,6 +18,7 @@ import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
+import mz.org.csaude.mentoring.base.fragment.GenericFragment;
 import mz.org.csaude.mentoring.common.ApplicationStep;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
 import mz.org.csaude.mentoring.model.user.User;
@@ -30,6 +31,8 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
     private PropertyChangeRegistry callbacks;
     private BaseActivity relatedActivity;
+
+    private GenericFragment genericFragment;
 
     //protected AppSettingsService settingsService;
 
@@ -166,5 +169,12 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
     public void setSelectedRecord(Serializable relatedRecord) {
         this.selectedListble = (Listble) relatedRecord;
+    }
+    public GenericFragment getGenericFragment() {
+        return genericFragment;
+    }
+
+    public void setGenericFragment(GenericFragment genericFragment) {
+        this.genericFragment = genericFragment;
     }
 }

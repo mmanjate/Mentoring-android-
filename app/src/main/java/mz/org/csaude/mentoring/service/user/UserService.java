@@ -9,4 +9,5 @@ public interface UserService extends BaseService<User> {
 
     User login(User user) throws SQLException;
     User savedOrUpdateUser(User user) throws SQLException;
+    User getByUserNameAndPassword(User currentUser);
 }

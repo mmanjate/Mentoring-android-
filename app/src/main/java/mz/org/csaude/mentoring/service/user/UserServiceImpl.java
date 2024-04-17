@@ -8,6 +8,7 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.user.UserDao;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.util.Utilities;
 
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
@@ -26,12 +27,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public User save(User record) throws SQLException {
-        return null;
+        this.saveUser(record);
+        return record;
     }
 
     @Override
     public User update(User record) throws SQLException {
-        return null;
+        userDao.update(record);
+        return record;
     }
 
     @Override
@@ -67,5 +70,27 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
            return user;
        }
         return users.get(0);
+    }
+
+    @Override
+    public User getByUserNameAndPassword(User currentUser) {
+        try {
+            return userDao.getByCredentials(currentUser);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void saveUser(User user) throws SQLException {
+        user.setPassword(Utilities.MD5Crypt(user.getPassword()));
+
+        List<User> users = this.userDao.queryForEq("uuid", user.getUuid());
+
+        if (users.isEmpty()){
+            userDao.create(user);
+        }else {
+           this.update(user);
+        }
     }
 }

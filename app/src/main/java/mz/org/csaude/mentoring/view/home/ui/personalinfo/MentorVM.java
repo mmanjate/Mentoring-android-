@@ -31,8 +31,7 @@ import mz.org.csaude.mentoring.service.tutor.TutorService;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.Utilities;
-import mz.org.csaude.mentoring.view.tutor.CreateTutorActivity;
-import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
+
 
 public class MentorVM extends BaseViewModel {
 
@@ -62,10 +61,11 @@ public class MentorVM extends BaseViewModel {
         location = new Location();
 
         loadMeteeLabors();
+        preInit();
     }
 
     public void changeInitialDataViewStatus(View view){
-        getCreateTutorActivity().changeFormSectionVisibility(view);
+        getPersonalInfoFragment().changeFormSectionVisibility(view);
     }
 
     @Override
@@ -227,7 +227,7 @@ public class MentorVM extends BaseViewModel {
             //this.districts.add(new District());
             if (province.getId() <= 0) return;
             this.districts.addAll(getApplication().getDistrictService().getByProvinceAndMentor(this.location.getProvince(), getApplication().getCurrMentor()));
-            getCreateTutorActivity().reloadDistrcitAdapter();
+            getPersonalInfoFragment().reloadDistrcitAdapter();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -244,7 +244,7 @@ public class MentorVM extends BaseViewModel {
             if (district.getId() <= 0) return;
             //this.healthFacilities.add(new HealthFacility());
             this.healthFacilities.addAll(getApplication().getHealthFacilityService().getHealthFacilityByDistrictAndMentor((District) district, getApplication().getCurrMentor()));
-            getCreateTutorActivity().reloadHealthFacility();
+            getPersonalInfoFragment().reloadHealthFacility();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -317,8 +317,9 @@ public class MentorVM extends BaseViewModel {
         this.ONGEmployee = ONGEmployee;
         notifyPropertyChanged(BR.oNGEmployee);
     }
-    public CreateTutorActivity getCreateTutorActivity(){
-        return (CreateTutorActivity) super.getRelatedActivity();
+
+    public PersonalInfoFragment getPersonalInfoFragment(){
+        return (PersonalInfoFragment) super.getGenericFragment();
     }
 
     public List getAllPartners() {

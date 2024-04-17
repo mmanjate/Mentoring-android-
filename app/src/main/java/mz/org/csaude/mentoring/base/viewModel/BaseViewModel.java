@@ -11,6 +11,7 @@ import androidx.databinding.PropertyChangeRegistry;
 import androidx.lifecycle.AndroidViewModel;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -19,6 +20,8 @@ import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.fragment.GenericFragment;
+import mz.org.csaude.mentoring.base.model.BaseModel;
+import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.common.ApplicationStep;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
 import mz.org.csaude.mentoring.model.user.User;
@@ -47,13 +50,16 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
     protected User currentUser;
 
 
-
+    protected BaseModel relatedRecord;
     protected List<Listble> selectedListbles;
 
     private NotificationManagerCompat notificationManager;
 
     protected WorkerScheduleExecutor workerScheduleExecutor;
     protected int notificationId;
+
+
+    protected GenericFragment relatedFragment;
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
@@ -62,6 +68,7 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
         notificationManager = NotificationManagerCompat.from(getApplication());
         this.notificationId = ThreadLocalRandom.current().nextInt();
+
     }
 
     public NotificationManagerCompat getNotificationManager() {
@@ -176,5 +183,29 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
     public void setGenericFragment(GenericFragment genericFragment) {
         this.genericFragment = genericFragment;
+    }
+
+    @Bindable
+    public BaseModel getRelatedRecord() {
+        return relatedRecord;
+    }
+
+    @Bindable
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+        notifyPropertyChanged(BR.currentUser);
+    }
+
+
+    public GenericFragment getRelatedFragment() {
+        return relatedFragment;
+    }
+
+    public void setRelatedFragment(GenericFragment relatedFragment) {
+        this.relatedFragment = relatedFragment;
     }
 }

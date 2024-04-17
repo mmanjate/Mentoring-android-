@@ -1,7 +1,11 @@
 package mz.org.csaude.mentoring.model.user;
 
+import android.content.Context;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import org.apache.commons.lang3.StringUtils;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +16,7 @@ import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.util.Utilities;
 
 @DatabaseTable(tableName = "user", daoClass = UserDaoImpl.class)
 public class User extends BaseModel {
@@ -111,4 +116,18 @@ public class User extends BaseModel {
     public void setType(String type) {
         this.type = type;
     }
+    private String validadeToLogin() {
+        if (!Utilities.stringHasValue(this.userName)) return "O campo Utilizador deve ser preenchido.";
+        if (!Utilities.stringHasValue(this.password)) return "O campo Senha deve ser preenchido.";
+
+        if (this.userName.length() < 3) return "O nome do utilizador deve ter o minimo de tres caracteres";
+        if (this.password.length() < 3) return "A senha deve ter o minimo de tres caracteres";
+
+        return "";
+    }
+
+    public String isValid() {
+        return validadeToLogin();
+    }
+
 }

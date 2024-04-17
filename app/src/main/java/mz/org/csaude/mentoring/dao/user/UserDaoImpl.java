@@ -28,4 +28,9 @@ public class UserDaoImpl extends BaseDaoImpl<User, Integer> implements UserDao {
     public User getByCredentials(User user) throws SQLException {
         return queryBuilder().where().eq(User.COLUMN_USER_NAME, user.getUserName()).and().eq(User.COLUMN_PASSWORD, Utilities.MD5Crypt(user.getPassword())).queryForFirst();
     }
+
+    @Override
+    public User getByUserName(User user) throws SQLException {
+        return queryBuilder().where().eq(User.COLUMN_USER_NAME, user.getUserName()).queryForFirst();
+    }
 }

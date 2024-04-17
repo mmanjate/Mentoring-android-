@@ -5,12 +5,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
-import com.j256.ormlite.field.DatabaseField;
-
 import java.sql.SQLException;
 
 import mz.org.csaude.mentoring.BR;
-import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.user.User;
@@ -25,15 +22,10 @@ public class UserVM extends BaseViewModel {
 
     public UserVM(@NonNull Application application) {
         super(application);
-
     }
 
     protected BaseService initRelatedService() {
         return getApplication().getUserService();
-    }
-
-    protected BaseModel initRecord() {
-        return new User();
     }
 
     public User getRelatedRecord() {
@@ -76,23 +68,24 @@ public class UserVM extends BaseViewModel {
 
     public void setUserPassRepeat(String userPassRepeat) {
         this.userPassRepeat = userPassRepeat;
-        notifyPropertyChanged(androidx.databinding.library.baseAdapters.BR.userPassRepeat);
+        notifyPropertyChanged(BR.userPassRepeat);
     }
 
-    public void save() {
+    public void updatePassword() {
 
         String errors = this.user.isValid();
 
         if (!Utilities.stringHasValue(errors)) {
-
                 try {
-                    getRelatedService().save(getRelatedRecord());
+                    getRelatedService().updatePassword(getRelatedRecord());
                     Utilities.displayAlertDialog(getRelatedFragment().getContext(), "Operação efectuada com sucesso!").show();
                 } catch (SQLException e) {
                     Utilities.displayAlertDialog(getRelatedFragment().getContext(),"Ocorreu um erro ao tentar realizar a operação desejada" + " " + e.getMessage()).show();
                     e.printStackTrace();
                 }
 
+        } else {
+            Utilities.displayAlertDialog(getRelatedFragment().getContext(), errors).show();
         }
     }
 }

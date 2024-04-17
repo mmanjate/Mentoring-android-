@@ -27,7 +27,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public User save(User record) throws SQLException {
-        this.saveUser(record);
+        this.userDao.create(record);
         return record;
     }
 
@@ -54,9 +54,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public User login(User user) throws SQLException {
-        // login online
-        // login offline
-        return this.userDao.getByCredentials(user);
+        User u = this.userDao.getByUserName(user);
+        if (u != null) {
+            user.setPassword(Utilities.MD5Crypt(u.getSalt()+":"+user.getPassword()));
+            return this.userDao.getByCredentials(user);
+        } else return null;
     }
 
     @Override
@@ -82,8 +84,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return null;
     }
 
+    @Override
+    public void updatePassword(User relatedRecord) throws SQLException {
+        userDao.update(relatedRecord);
+    }
+
     private void saveUser(User user) throws SQLException {
-        user.setPassword(Utilities.MD5Crypt(user.getPassword()));
 
         List<User> users = this.userDao.queryForEq("uuid", user.getUuid());
 

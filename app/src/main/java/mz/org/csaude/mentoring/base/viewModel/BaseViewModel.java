@@ -35,7 +35,6 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
     private PropertyChangeRegistry callbacks;
     private BaseActivity relatedActivity;
 
-    private GenericFragment genericFragment;
 
     //protected AppSettingsService settingsService;
 
@@ -47,7 +46,7 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
     private boolean viewListRemoveButton;
 
     protected Listble selectedListble;
-    protected User currentUser;
+
 
 
     protected BaseModel relatedRecord;
@@ -177,29 +176,14 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
     public void setSelectedRecord(Serializable relatedRecord) {
         this.selectedListble = (Listble) relatedRecord;
     }
-    public GenericFragment getGenericFragment() {
-        return genericFragment;
-    }
 
-    public void setGenericFragment(GenericFragment genericFragment) {
-        this.genericFragment = genericFragment;
-    }
-
-    @Bindable
     public BaseModel getRelatedRecord() {
         return relatedRecord;
     }
 
-    @Bindable
     public User getCurrentUser() {
-        return currentUser;
+        return getApplication().getAuthenticatedUser();
     }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-        notifyPropertyChanged(BR.currentUser);
-    }
-
 
     public GenericFragment getRelatedFragment() {
         return relatedFragment;

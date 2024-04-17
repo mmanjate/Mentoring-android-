@@ -319,7 +319,7 @@ public class MentorVM extends BaseViewModel {
     }
 
     public PersonalInfoFragment getPersonalInfoFragment(){
-        return (PersonalInfoFragment) super.getGenericFragment();
+        return (PersonalInfoFragment) super.getRelatedFragment();
     }
 
     public List getAllPartners() {

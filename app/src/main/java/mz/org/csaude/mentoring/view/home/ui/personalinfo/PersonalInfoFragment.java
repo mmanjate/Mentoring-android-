@@ -18,13 +18,13 @@ import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter;
 import mz.org.csaude.mentoring.base.fragment.GenericFragment;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
-import mz.org.csaude.mentoring.databinding.FragmentSlideshowBinding;
+import mz.org.csaude.mentoring.databinding.FragmentMentorInfoBinding;
 import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.util.Utilities;
 
 public class PersonalInfoFragment extends GenericFragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentMentorInfoBinding binding;
 
     private ListableSpinnerAdapter provinceAdapter;
     private ListableSpinnerAdapter districtAdapter;
@@ -36,7 +36,7 @@ public class PersonalInfoFragment extends GenericFragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentMentorInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;

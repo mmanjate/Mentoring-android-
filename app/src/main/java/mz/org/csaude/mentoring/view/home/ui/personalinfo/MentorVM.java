@@ -71,7 +71,7 @@ public class MentorVM extends BaseViewModel {
     @Override
     public void preInit() {
         this.tutor = getApplication().getCurrMentor();
-        List<Location> locations = new ArrayList<>();
+        List<Location> locations;
         try {
             locations = getApplication().getLocationService().getAllOfEmploee(this.tutor.getEmployee());
         } catch (SQLException e) {
@@ -319,7 +319,7 @@ public class MentorVM extends BaseViewModel {
     }
 
     public PersonalInfoFragment getPersonalInfoFragment(){
-        return (PersonalInfoFragment) super.getGenericFragment();
+        return (PersonalInfoFragment) super.getRelatedFragment();
     }
 
     public List getAllPartners() {

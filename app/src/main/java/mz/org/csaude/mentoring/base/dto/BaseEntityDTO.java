@@ -6,7 +6,7 @@ import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
 
 public class BaseEntityDTO implements Serializable {
-    private int id;
+    private Integer id;
 
     private String uuid;
 
@@ -21,11 +21,11 @@ public class BaseEntityDTO implements Serializable {
         this.setLifeCycleStatus(baseEntity.getLifeCycleStatus());
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

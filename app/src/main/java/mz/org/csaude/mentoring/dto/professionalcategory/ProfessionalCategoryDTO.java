@@ -3,17 +3,18 @@ package mz.org.csaude.mentoring.dto.professionalcategory;
 import java.io.Serializable;
 
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
 
 @NoArgsConstructor
-public class ProfessionalCategoryDTO implements Serializable {
+public class ProfessionalCategoryDTO  extends BaseEntityDTO {
 
     private String uuid;
     private String code;
     private String description;
 
     public ProfessionalCategoryDTO(ProfessionalCategory professionalCategory){
-        this.setUuid(professionalCategory.getUuid());
+        super(professionalCategory);
         this.setCode(professionalCategory.getCode());
         this.setDescription(professionalCategory.getDescription());
     }

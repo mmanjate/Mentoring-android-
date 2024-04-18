@@ -3,17 +3,18 @@ package mz.org.csaude.mentoring.dto.location;
 import java.io.Serializable;
 
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.District;
 
 @NoArgsConstructor
-public class DistrictDTO implements Serializable {
+public class DistrictDTO  extends BaseEntityDTO {
 
     private String uuid;
     private String description;
     private ProvinceDTO provinceDTO;
 
     public DistrictDTO(District district) {
-        this.setUuid(district.getUuid());
+        super(district);
         this.setDescription(district.getDescription());
         if (district.getProvince() != null)  this.setProvinceDTO(new ProvinceDTO(district.getProvince()));
     }

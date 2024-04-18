@@ -13,7 +13,7 @@ import mz.org.csaude.mentoring.base.model.BaseModel;
 
 public class SimpleValue extends BaseModel implements Listble {
 
-    private int id;
+    private Integer id;
 
     private String description;
 
@@ -28,16 +28,16 @@ public class SimpleValue extends BaseModel implements Listble {
     public SimpleValue() {
     }
 
-    public SimpleValue(int id, String description) {
+    public SimpleValue(Integer id, String description) {
         this.id = id;
         this.description = description;
     }
 
-    public SimpleValue(int id) {
+    public SimpleValue(Integer id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -65,11 +65,11 @@ public class SimpleValue extends BaseModel implements Listble {
         return new SimpleValue(description);
     }
 
-    public static SimpleValue fastCreate(int id, String description){
+    public static SimpleValue fastCreate(Integer id, String description){
         return new SimpleValue(id, description);
     }
 
-    public static SimpleValue fastCreate(int id){
+    public static SimpleValue fastCreate(Integer id){
         return new SimpleValue(id);
     }
 
@@ -79,9 +79,9 @@ public class SimpleValue extends BaseModel implements Listble {
         if (!(o instanceof SimpleValue)) return false;
         SimpleValue that = (SimpleValue) o;
 
-        if (that == null || (that.id <= 0 && !Utilities.stringHasValue(that.description))) return false;
+        if (that == null || (that.id == null && !Utilities.stringHasValue(that.description))) return false;
 
-        if (id > 0 && that.id > 0) return id == that.id;
+        if (id != null && that.id != null) return id == that.id;
 
         if (Utilities.stringHasValue(this.description)) return this.description.equals(that.description);
 
@@ -100,7 +100,7 @@ public class SimpleValue extends BaseModel implements Listble {
     }
 
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -3,10 +3,11 @@ package mz.org.csaude.mentoring.dto.location;
 import java.io.Serializable;
 
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 
 @NoArgsConstructor
-public class HealthFacilityDTO implements Serializable {
+public class HealthFacilityDTO  extends BaseEntityDTO {
 
     private String uuid;
     private String healthFacility;
@@ -14,7 +15,7 @@ public class HealthFacilityDTO implements Serializable {
     private DistrictDTO districtDTO;
 
     public HealthFacilityDTO(HealthFacility healthFacility){
-        this.setUuid(healthFacility.getUuid());
+        super(healthFacility);
         this.setHealthFacility(healthFacility.getDescription());
         if (healthFacility.getDistrict() != null) this.setDistrictDTO(new DistrictDTO(healthFacility.getDistrict()));
 

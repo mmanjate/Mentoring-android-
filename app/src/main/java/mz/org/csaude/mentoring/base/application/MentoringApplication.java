@@ -1,6 +1,12 @@
 package mz.org.csaude.mentoring.base.application;
 
+import static mz.org.csaude.mentoring.util.Constants.INITIAL_SETUP_STATUS;
+import static mz.org.csaude.mentoring.util.Constants.INITIAL_SETUP_STATUS_COMPLETE;
+import static mz.org.csaude.mentoring.util.Constants.LOGGED_USER;
+
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,8 +15,11 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.auth.AuthInterceptorImpl;
+import mz.org.csaude.mentoring.base.auth.SessionManager;
 import mz.org.csaude.mentoring.common.ApplicationStep;
+import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.employee.EmployeeService;
@@ -41,6 +50,8 @@ import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
+import mz.org.csaude.mentoring.workSchedule.rest.ServerStatusChecker;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
 import okhttp3.OkHttpClient;
@@ -94,7 +105,13 @@ public class MentoringApplication  extends Application {
     private LocationService locationService;
 
     private TutoredRestService tutoredRestService;
+
+    private ServerStatusChecker serverStatusChecker;
     AuthInterceptorImpl interceptor;
+
+    SharedPreferences mentoringSharedPreferences;
+
+    private SessionManager sessionManager;
 
 
     // Rest Services
@@ -105,7 +122,7 @@ public class MentoringApplication  extends Application {
         super.onCreate();
         mInstance = this;
 
-        interceptor = new AuthInterceptorImpl(getApplicationContext());
+        interceptor = new AuthInterceptorImpl(this);
 
         mapper = new ObjectMapper();
 
@@ -145,9 +162,16 @@ public class MentoringApplication  extends Application {
         return authenticatedUser;
     }
 
-    public void setAuthenticatedUser(User authenticatedUser) {
+    public void setAuthenticatedUser(User authenticatedUser, boolean remeberMe) {
         this.authenticatedUser = authenticatedUser;
+        if (remeberMe) {
+          saveUserName();
+        } else {
+            removeUserName();
+        }
     }
+
+
 
     public RondaService getRondaService() {
         if (this.rondaService == null) this.rondaService = new RondaServiceImpl(this);
@@ -245,5 +269,51 @@ public class MentoringApplication  extends Application {
         this.applicationStep = ApplicationStep.fastCreate(ApplicationStep.STEP_INIT);
         setCurrTutor(getTutorService().getByEmployee(getAuthenticatedUser().getEmployee()));
         getCurrMentor().getEmployee().setLocations(getLocationService().getAllOfEmploee(getAuthenticatedUser().getEmployee()));
+    }
+
+    public SharedPreferences getMentoringSharedPreferences() {
+        if (mentoringSharedPreferences == null) mentoringSharedPreferences = this.getSharedPreferences(this.getString(R.string.app_name), Context.MODE_PRIVATE);
+        return mentoringSharedPreferences;
+    }
+
+    public ServerStatusChecker getServerStatusChecker() {
+        if (serverStatusChecker == null) serverStatusChecker = new ServerStatusChecker(this);
+        return serverStatusChecker;
+    }
+
+    public void isServerOnline(ServerStatusListener listener) {
+        getServerStatusChecker().isServerOnline(listener);
+    }
+
+    public boolean isInitialSetupComplete() {
+        String status = mentoringSharedPreferences.getString(INITIAL_SETUP_STATUS, null);
+        if (!Utilities.stringHasValue(status)) return false;
+
+        return mentoringSharedPreferences.getString(INITIAL_SETUP_STATUS, null).equals(INITIAL_SETUP_STATUS_COMPLETE);
+    }
+
+    public void setInitialSetUpComplete() {
+        SharedPreferences.Editor editor = mentoringSharedPreferences.edit();
+        editor.putString(INITIAL_SETUP_STATUS, INITIAL_SETUP_STATUS_COMPLETE);
+        editor.apply();
+    }
+
+    private void saveUserName() {
+        SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
+        editor.putString(LOGGED_USER, authenticatedUser.getUserName());
+        editor.apply();
+    }
+
+    public String getLastUser() {
+        return getMentoringSharedPreferences().getString(LOGGED_USER, null);
+    }
+
+    private void removeUserName() {
+        SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
+        editor.remove(LOGGED_USER);
+        editor.apply();
+    }
+    public void initSessionManager() {
+        this.sessionManager = new SessionManager(this);
     }
 }

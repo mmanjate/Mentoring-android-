@@ -5,7 +5,7 @@ import mz.org.csaude.mentoring.model.user.User;
 
 public interface UserSyncService {
 
-    void doOnlineLogin (RestResponseListener listener);
+    void doOnlineLogin (RestResponseListener listener, boolean remeberMe);
 
     void getUserByCedencials(RestResponseListener<User> listener);
 }

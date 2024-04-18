@@ -28,5 +28,9 @@
         android:name="mz.org.csaude.mentoring.view.home.ui.credentials.CredentialsFragment"
         android:label="Mentor"
         tools:layout="@layout/fragment_credentials" />
-
+    <fragment
+        android:id="@+id/nav_log_out"
+        android:name="mz.org.csaude.mentoring.view.home.ui.logout.LogoutFragment"
+        android:label="Sair"
+        tools:layout="@layout/fragment_logout" />
 </navigation>

@@ -23,11 +23,6 @@ import retrofit2.Response;
 
 public class TutorRestService extends BaseRestService {
 
-
-    public TutorRestService(Application application, User currentUser) {
-        super(application, currentUser);
-    }
-
     public TutorRestService(Application application) {
         super(application);
     }

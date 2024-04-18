@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.location.LocationDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.dto.professionalcategory.ProfessionalCategoryDTO;
@@ -15,7 +16,7 @@ import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.partner.Partner;
 
 
-public class EmployeeDTO implements Serializable {
+public class EmployeeDTO extends BaseEntityDTO {
 
     private String uuid;
     private String name;
@@ -40,7 +41,7 @@ public class EmployeeDTO implements Serializable {
     }
 
     public EmployeeDTO(Employee employee) {
-        this.setUuid(employee.getUuid());
+        super(employee);
         this.setName(employee.getName());
         this.setSurname(employee.getSurname());
         this.setNuit(employee.getNuit());

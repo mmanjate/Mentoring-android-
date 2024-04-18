@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import mz.org.csaude.mentoring.BR;
+import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
@@ -24,6 +25,7 @@ import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.common.ApplicationStep;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
+import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.util.LoadingDialog;
 import mz.org.csaude.mentoring.util.Utilities;
@@ -129,14 +131,17 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
     public String getAppVersionNumber(){
         if (getRelatedActivity() == null) return null;
-        return "Mentoria v"+getRelatedActivity().getAppVersionNumber();
+        return Utilities.parseDoubleToString(getRelatedActivity().getAppVersionNumber());
     }
 
     public String getAppVersionName(){
         if (getRelatedActivity() == null) return null;
-        return "Mentoria v"+getRelatedActivity().getAppVersionName();
+        return getRelatedActivity().getAppVersionName();
     }
 
+    public String getAppName() {
+        return getApplication().getString(R.string.app_name);
+    }
     public boolean isViewListEditButton() {
         return viewListEditButton;
     }

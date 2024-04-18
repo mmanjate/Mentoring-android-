@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mentoring</string>
+    <string name="app_name">Mentoria</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_session">SessionActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -63,5 +63,6 @@
     <string name="save_and_continue">Gravar e Continuar</string>
     <string name="save">Gravar</string>
     <string name="print">Imprimir</string>
+    <string name="server_unavailable">Não foi possivel estabelecer a ligação com o servidor, por faor verifique a sua ligação a Internet ou contacte o administrador.</string>
 </resources>
 

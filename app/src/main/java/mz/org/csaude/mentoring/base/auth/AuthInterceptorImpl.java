@@ -5,6 +5,7 @@ import android.media.session.MediaSessionManager;
 
 import java.io.IOException;
 
+import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -16,7 +17,7 @@ public class AuthInterceptorImpl implements Interceptor {
 
     public AuthInterceptorImpl(Context context) {
         this.context = context;
-        this.sessionManager = new SessionManager(context);
+        this.sessionManager = new SessionManager((MentoringApplication) context);
     }
 
     @Override

@@ -29,6 +29,9 @@ import java.util.List;
  */
 public interface SyncDataService {
 
+    @GET("/settings/check")
+    Call<Void> checkServerStatus();
+
     @GET("/settings/tutor/{uuid}/{offset}/{limit}")
     Call<List<SettingDTO>> getSettings(@Path("uuid") final String uuid, @Path("offset") long offset, @Path("limit") long limit);
 
@@ -81,5 +84,8 @@ public interface SyncDataService {
     Call<List<PartnerDTO>> getPartners();
 
     @POST("tutored/save")
+    Call<TutoredDTO> postTutored(@Body TutoredDTO tutoredDTO);
+
+    @POST("tutored/saveMany")
     Call<List<TutoredDTO>> postTutoreds(@Body List<TutoredDTO> tutoredDTOS);
 }

@@ -17,10 +17,13 @@ import java.util.List;
 import java.util.Map;
 
 import mz.org.csaude.mentoring.BR;
+import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
+import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
+import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.career.CareerType;
 import mz.org.csaude.mentoring.model.employee.Employee;
@@ -37,6 +40,7 @@ import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategory
 import mz.org.csaude.mentoring.service.session.SessionService;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
+import mz.org.csaude.mentoring.util.LifeCycleStatus;
 import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
@@ -44,7 +48,7 @@ import mz.org.csaude.mentoring.view.tutored.CreateTutoredActivity;
 import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
 import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
 
-public class TutoredVM extends BaseViewModel {
+public class TutoredVM extends BaseViewModel implements RestResponseListener<Tutored>, ServerStatusListener {
     private TutoredService tutoredService;
     private Tutored tutored;
 
@@ -190,7 +194,7 @@ public class TutoredVM extends BaseViewModel {
     }
 
     private void doSave(){
-        tutored.setSyncStatus(SyncSatus.PENDING);
+        tutored.setSyncStatus(SyncSatus.SENT);
         tutored.setUuid(Utilities.getNewUUID().toString());
         tutored.getEmployee().setUuid(Utilities.getNewUUID().toString());
         location.setUuid(Utilities.getNewUUID().toString());
@@ -198,7 +202,10 @@ public class TutoredVM extends BaseViewModel {
         location.setDistrict((District) getDistrict());
         location.setHealthFacility((HealthFacility) getHealthFacility());
         location.setLocationLevel("N/A");
+        location.setLifeCycleStatus(LifeCycleStatus.ACTIVE);
 
+        tutored.setLifeCycleStatus(LifeCycleStatus.ACTIVE);
+        tutored.getEmployee().setLifeCycleStatus(LifeCycleStatus.ACTIVE);
         tutored.getEmployee().addLocation(location);
 
         String error = this.tutored.validade();
@@ -207,16 +214,24 @@ public class TutoredVM extends BaseViewModel {
             return;
         }
 
-        try {
-            getApplication().getEmployeeService().saveOrUpdateEmployee(tutored.getEmployee());
-            this.tutoredService.savedOrUpdateTutored(tutored);
-            this.getApplication().getLocationService().saveOrUpdate(location);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        getApplication().isServerOnline(this);
+
+        //getApplication().getEmployeeService().saveOrUpdateEmployee(tutored.getEmployee());
+        //this.tutoredService.savedOrUpdateTutored(tutored);
+        //this.getApplication().getLocationService().saveOrUpdate(location);
+    }
+
+    @Override
+    public void doOnResponse(String flag, List<Tutored> objects) {
+        Utilities.displayAlertDialog(getRelatedActivity(), "Mentorando gravado com sucesso.").show();
         Map<String, Object> params = new HashMap<>();
         params.put("createdTutored", tutored);
         getRelatedActivity().nextActivity(TutoredActivity.class, params);
+    }
+
+    @Override
+    public void doOnRestErrorResponse(String errormsg) {
+        Utilities.displayAlertDialog(getRelatedActivity(), errormsg).show();
     }
 
     public void save(){
@@ -260,9 +275,9 @@ public class TutoredVM extends BaseViewModel {
         try {
             this.districts.clear();
             this.healthFacilities.clear();
-            if (province.getId() <= 0) return;
+            if (province.getId() == null) return;
             this.districts.add(new District());
-            if (province.getId() <= 0) return;
+            if (province.getId() == null) return;
             this.districts.addAll(getApplication().getDistrictService().getByProvinceAndMentor(this.province, getApplication().getCurrMentor()));
             getCreateTutoredActivity().reloadDistrcitAdapter();
         } catch (SQLException e) {
@@ -278,7 +293,7 @@ public class TutoredVM extends BaseViewModel {
         try {
             this.district = (District) district;
             this.healthFacilities.clear();
-            if (district.getId() <= 0) return;
+            if (district.getId() == null) return;
             this.healthFacilities.add(new HealthFacility());
             this.healthFacilities.addAll(getApplication().getHealthFacilityService().getHealthFacilityByDistrictAndMentor(this.district, getApplication().getCurrMentor()));
             getCreateTutoredActivity().reloadHealthFacility();
@@ -410,5 +425,14 @@ public class TutoredVM extends BaseViewModel {
 
     public void delete(Tutored tutored) {
 
+    }
+
+    @Override
+    public void onServerStatusChecked(boolean isOnline) {
+        if (isOnline) {
+            getApplication().getTutoredRestService().restPostTutored(tutored, this);
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.server_unavailable)).show();
+        }
     }
 }

@@ -6,6 +6,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +52,10 @@ public class MentorVM extends BaseViewModel {
     private List<SimpleValue> menteeLabors;
     private boolean ONGEmployee;
     private Partner selectedNgo;
+
+    private String nuit;
+    private String trainingYear;
+
     public MentorVM(@NonNull Application application) {
 
         super(application);
@@ -98,13 +104,6 @@ public class MentorVM extends BaseViewModel {
     public void setSurname(String surname){
         this.tutor.getEmployee().setSurname(surname);
     }
-    @Bindable
-    public int getNuit() {
-        return this.tutor.getEmployee().getNuit();
-    }
-    public void setNuit(int nuit) {
-        this.tutor.getEmployee().setNuit(nuit);
-    }
 
     public List<ProfessionalCategory> getAllProfessionalCategys() throws SQLException {
         return getApplication().getProfessionalCategoryService().getAll();
@@ -117,13 +116,7 @@ public class MentorVM extends BaseViewModel {
         this.tutor.getEmployee().setProfessionalCategory((ProfessionalCategory) professionalCategory);
         notifyPropertyChanged(BR.professionalCategory);
     }
-    @Bindable
-    public int getTrainingYear() {
-        return this.tutor.getEmployee().getTrainingYear();
-    }
-    public void setTrainingYear(int trainingYear) {
-        this.tutor.getEmployee().setTrainingYear(trainingYear);
-    }
+
     @Bindable
     public String getPhoneNumber() {
         return this.tutor.getEmployee().getPhoneNumber();
@@ -291,6 +284,30 @@ public class MentorVM extends BaseViewModel {
     @Bindable
     public Listble getMenteeLabor(){
         return Utilities.findOnArray(this.menteeLabors, SimpleValue.fastCreate("SNS"));
+    }
+
+    @Bindable
+    public String getTrainingYear() {
+        this.trainingYear = Utilities.parseIntToString(this.tutor.getEmployee().getTrainingYear());
+        return this.trainingYear;
+    }
+    public void setTrainingYear(String trainingYear) {
+        this.trainingYear = trainingYear;
+
+        if(!StringUtils.isEmpty(trainingYear) & StringUtils.isNumeric(trainingYear)  ){
+            this.tutor.getEmployee().setTrainingYear(Integer.parseInt(trainingYear));
+        }
+    }
+
+    @Bindable
+    public String getNuit() {
+        this.nuit = Utilities.parseIntToString(this.tutor.getEmployee().getNuit());
+        return this.nuit;
+    }
+    public void setNuit(String nuit) {
+        this.nuit = nuit;
+
+        if(!StringUtils.isEmpty(nuit) & StringUtils.isNumeric(nuit)) this.tutor.getEmployee().setNuit(Integer.parseInt(nuit));
     }
 
     public void setMenteeLabor(Listble menteeLabor){

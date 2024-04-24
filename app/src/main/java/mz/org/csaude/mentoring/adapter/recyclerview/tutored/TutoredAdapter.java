@@ -16,9 +16,6 @@ import mz.org.csaude.mentoring.databinding.TutoredListItemBinding;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 
 public class TutoredAdapter extends AbstractRecycleViewAdapter<Tutored> {
-
-    List<Tutored> tutoredList;
-
     public TutoredAdapter(RecyclerView recyclerView, List<Tutored> records, Activity activity) {
         super(recyclerView, records, activity);
     }
@@ -33,12 +30,7 @@ public class TutoredAdapter extends AbstractRecycleViewAdapter<Tutored> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((TutoredViewHolder) holder).tutoredListItemBinding.setTutored(tutoredList.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return tutoredList.size();
+        ((TutoredViewHolder) holder).tutoredListItemBinding.setTutored(super.records.get(position));
     }
 
     public class TutoredViewHolder extends RecyclerView.ViewHolder {

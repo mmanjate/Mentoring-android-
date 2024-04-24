@@ -16,7 +16,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ronda.RondaActivity">
+        tools:context=".view.ronda.CreateRondaActivity">
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout2"
             android:layout_width="match_parent"
@@ -196,6 +196,7 @@
                 android:drawableRight="@drawable/baseline_person_search_24"
                 android:visibility="@{viewModel.currentStep.applicationStepDisplay ? View.GONE : View.VISIBLE}"
                 style="@style/bottom_border_edit_text_style"
+                android:text="@{viewModel.selectedMentee.employee.name}"
                 android:padding="@dimen/dimen_4dp"
                 />
             <ImageButton

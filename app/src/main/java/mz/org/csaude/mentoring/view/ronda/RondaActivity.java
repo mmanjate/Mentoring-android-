@@ -1,70 +1,91 @@
 package mz.org.csaude.mentoring.view.ronda;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import mz.org.csaude.mentoring.R;
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.ListbleRecycleViewAdapter;
+import mz.org.csaude.mentoring.adapter.recyclerview.ronda.RondaAdapter;
 import mz.org.csaude.mentoring.adapter.recyclerview.tutored.TutoredAdapter;
-import mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
-import mz.org.csaude.mentoring.databinding.ActivityRondaBinding;
-import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.databinding.ActivityMentoringCycleListBinding;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.viewmodel.ronda.RondaSearchVM;
-import mz.org.csaude.mentoring.viewmodel.ronda.RondaVM;
 
 public class RondaActivity extends BaseActivity {
-
-    private ActivityRondaBinding rondaBinding;
-
-    private ListableSpinnerAdapter districtAdapter;
-    private ListableSpinnerAdapter provinceAdapter;
-    private ListableSpinnerAdapter healthFacilityAdapter;
-
-    private TutoredAdapter tutoredAdapter;
+    private ActivityMentoringCycleListBinding mentoringCycleListBinding;
+    private RecyclerView rondasRecyclerView;
+    private ListbleRecycleViewAdapter listbleRecycleViewAdapter;
+    private RondaAdapter rondaAdapter;
+    List<Listble> rondas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        rondaBinding = DataBindingUtil.setContentView(this, R.layout.activity_ronda);
-        rondaBinding.setViewModel(getRelatedViewModel());
-
-        setSupportActionBar(rondaBinding.toolbar.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Rondas de Mentorias");
-
-
+        mentoringCycleListBinding = DataBindingUtil.setContentView(this, R.layout.activity_mentoring_cycle_list);
+        mentoringCycleListBinding.setViewModel(getRelatedViewModel());
+        rondasRecyclerView = mentoringCycleListBinding.rcvRondas;
+        Intent intent = this.getIntent();
+        Bundle bundle = new Bundle();
+        if(intent!=null && intent.getExtras()!=null) {
+            Ronda ronda = (Ronda) intent.getExtras().get("createdRonda");
+            String title = (String) intent.getExtras().get("title");
+            bundle.putSerializable("createdRonda", ronda);
+            bundle.putSerializable("title", title);
+            setUpToolbar(title);
+            initAdapter();
+        }
     }
 
     @Override
     public BaseViewModel initViewModel() {
-        return new ViewModelProvider(this).get(RondaVM.class);
+        return new ViewModelProvider(this).get(RondaSearchVM.class);
     }
-
     @Override
-    public RondaVM getRelatedViewModel() {
-        return (RondaVM) super.getRelatedViewModel();
+    public RondaSearchVM getRelatedViewModel() {
+        return (RondaSearchVM) super.getRelatedViewModel();
+    }
+    public void initAdapter() {
+        this.rondas = getRelatedViewModel().getAllRondas();
+        if (Utilities.listHasElements(this.rondas)) {
+            populateRecyclerView();
+        }
     }
 
-    public void reloadMenteesAdapter() {
-        ArrayAdapter<Tutored> drugArrayAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getMentees());
-        rondaBinding.autCmpMentees.setThreshold(1);
-        rondaBinding.autCmpMentees.setAdapter(drugArrayAdapter);
+    private void setUpToolbar(String title) {
+        setSupportActionBar(mentoringCycleListBinding.toolbar.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(title);
+        getRelatedViewModel().setViewListEditButton(false);
+        getRelatedViewModel().setViewListRemoveButton(false);
     }
 
-    public void reloadDistrcitAdapter() {
-        districtAdapter = new ListableSpinnerAdapter(RondaActivity.this, R.layout.simple_auto_complete_item, getRelatedViewModel().getDistricts());
-        rondaBinding.spnDistrict.setAdapter(districtAdapter);
-        rondaBinding.setDistrictAdapter(districtAdapter);
+    private void populateRecyclerView(){
+        if (rondaAdapter != null) {
+            rondaAdapter.notifyDataSetChanged();
+        }else {
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            rondasRecyclerView.setLayoutManager(mLayoutManager);
+            rondasRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            rondasRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
+
+            rondaAdapter = new RondaAdapter(rondasRecyclerView, getRelatedViewModel().getRondaList(), this);
+            rondasRecyclerView.setAdapter(rondaAdapter);
+        }
     }
 }

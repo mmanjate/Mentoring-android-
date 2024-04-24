@@ -5,52 +5,68 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.searchparams.AbstractSearchParams;
+import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.base.viewModel.SearchVM;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
-import mz.org.csaude.mentoring.view.ronda.RondaActivity;
-import mz.org.csaude.mentoring.view.ronda.RondaListActivity;
+import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
 
-public class RondaSearchVM extends SearchVM<Ronda> {
-
+public class RondaSearchVM extends BaseViewModel {
     private final RondaService rondaService;
+    private List<Listble> rondas;
+    private Ronda ronda;
     public RondaSearchVM(@NonNull Application application) {
         super(application);
+        this.rondas = new ArrayList<>();
         this.rondaService = getApplication().getRondaService();
     }
-
     @Override
     public void preInit() {
-
-    }
-
-    @Override
-    public List<Ronda> doSearch(long offset, long limit) throws SQLException {
-        return rondaService.doSearch(offset, limit);
-    }
-
-    @Override
-    public void displaySearchResults() {
-        //getRelatedActivity().
-    }
-
-    @Override
-    public AbstractSearchParams<Ronda> initSearchParams() {
-        return null;
-    }
-
-    @Override
-    protected void doOnNoRecordFound() {
-
+        if (getCurrentStep().isApplicationStepEdit()) {
+            this.ronda = (Ronda) this.selectedListble;
+        } else {
+            this.ronda = new Ronda();
+        }
+        this.rondas = new ArrayList<>();
     }
 
     public void createNewRonda() {
         Map<String, Object> params = new HashMap<>();
-        getRelatedActivity().nextActivityFinishingCurrent(RondaActivity.class, params);
+        getRelatedActivity().nextActivityFinishingCurrent(CreateRondaActivity.class, params);
+    }
+    public List<Listble> getAllRondas() {
+        try {
+            List<Ronda> rondaList = rondaService.getAll();
+            for (Ronda ronda : rondaList) {
+                this.rondas.add(ronda);
+            }
+            return this.rondas;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Ronda> getRondaList() {
+        try {
+            List<Ronda> rondaList = rondaService.getAll();
+            return rondaList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Listble> getRondas() {
+        return this.rondas;
+    }
+
+    public void setRondas(List<Listble> rondas) {
+        this.rondas = rondas;
     }
 }

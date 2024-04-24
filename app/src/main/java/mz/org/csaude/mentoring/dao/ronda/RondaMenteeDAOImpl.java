@@ -1,14 +1,14 @@
 package mz.org.csaude.mentoring.dao.ronda;
 
-import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 
-public class RondaMenteeDAOImpl extends BaseDaoImpl<RondaMentee, Integer> implements RondaMenteeDAO {
+public class RondaMenteeDAOImpl extends MentoringBaseDaoImpl<RondaMentee, Integer> implements RondaMenteeDAO {
     public RondaMenteeDAOImpl(Class<RondaMentee> dataClass) throws SQLException {
         super(dataClass);
     }

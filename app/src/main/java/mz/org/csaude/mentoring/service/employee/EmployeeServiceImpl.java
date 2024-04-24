@@ -103,6 +103,7 @@ public class EmployeeServiceImpl extends BaseServiceImpl<Employee> implements Em
             if (location.getDistrict() != null) location.setDistrict(getDataBaseHelper().getDistrictDAO().getByUuid(location.getDistrict().getUuid()));
             HealthFacility h =getDataBaseHelper().getHealthFacilityDAO().getByUuid(location.getHealthFacility().getUuid());
             if (h == null) {
+                location.getHealthFacility().setDistrict(getDataBaseHelper().getDistrictDAO().getByUuid(location.getHealthFacility().getDistrict().getUuid()));
                 getDataBaseHelper().getHealthFacilityDAO().create(location.getHealthFacility());
             } else {
                 location.getHealthFacility().setId(h.getId());

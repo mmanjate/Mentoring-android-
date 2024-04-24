@@ -26,9 +26,9 @@ public class DistrictRestService extends BaseRestService {
         super(application);
     }
 
-    public void restGetDistricts(RestResponseListener<District> listener){
+    public void restGetDistricts(long offset, long limit, RestResponseListener<District> listener){
 
-        Call<List<DistrictDTO>> districtsCall = syncDataService.getDistricts();
+        Call<List<DistrictDTO>> districtsCall = syncDataService.getDistricts(offset, limit);
 
         districtsCall.enqueue(new Callback<List<DistrictDTO>>() {
             @Override

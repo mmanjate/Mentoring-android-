@@ -31,7 +31,7 @@ public class DistrictWorker extends BaseWorker<District> {
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-        this.districtRestService.restGetDistricts(this);
+        this.districtRestService.restGetDistricts(offset, limit, this);
     }
 
     @Override

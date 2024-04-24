@@ -51,7 +51,7 @@ public class TutoredDaoImpl extends MentoringBaseDaoImpl<Tutored, Integer> imple
         QueryBuilder<Tutored, Integer> tutoredQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getTutoredDao().queryBuilder();
         tutoredQb.join(employeeQb).where().eq(Tutored.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE);
 
-        return tutoredQb.orderBy(Employee.COLUMN_NAME, true).query();
+        return tutoredQb.orderBy(Employee.COLUMN_ID, true).query();
     }
 
     @Override

@@ -29,12 +29,12 @@
             android:name=".view.session.SessionListActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ronda.RondaActivity"
+            android:name=".view.ronda.CreateRondaActivity"
             android:exported="false"
             android:theme="@style/Theme.Mentoring.NoActionBar" >
         </activity>
         <activity
-            android:name=".view.ronda.RondaListActivity"
+            android:name=".view.ronda.RondaActivity"
             android:exported="false"
             android:theme="@style/Theme.Mentoring.NoActionBar"  />
         <activity
@@ -52,11 +52,11 @@
             android:exported="true"
             android:theme="@style/Theme.Mentoring.NoActionBar" />
         <activity
-            android:name=".view.mentorship.ListMentorshipActivity"
+            android:name=".view.mentorship.MentorshipActivity"
             android:theme="@style/Theme.Mentoring.NoActionBar"
             android:exported="false" />
         <activity
-            android:name=".view.mentorship.MentorshipActivity"
+            android:name=".view.mentorship.CreateMentorshipActivity"
             android:theme="@style/Theme.Mentoring.NoActionBar"
             android:exported="false" />
         <activity

@@ -24,9 +24,9 @@ public class ProfessionalCategoryRestService extends BaseRestService {
     public ProfessionalCategoryRestService(Application application) {
         super(application);
     }
-    public void restGetProfessionalCategory(RestResponseListener<ProfessionalCategory> listener){
+    public void restGetProfessionalCategory(long offset, long limit, RestResponseListener<ProfessionalCategory> listener){
 
-       Call<List<ProfessionalCategoryDTO>> callProfessionalCategoryDTO = syncDataService.getProfessionalCategory();
+       Call<List<ProfessionalCategoryDTO>> callProfessionalCategoryDTO = syncDataService.getProfessionalCategory(offset, limit);
 
         callProfessionalCategoryDTO.enqueue(new Callback<List<ProfessionalCategoryDTO>>() {
             @Override
@@ -64,9 +64,9 @@ public class ProfessionalCategoryRestService extends BaseRestService {
 
     }
 
-    public void restGetProfessionalCategory(){
+    public void restGetProfessionalCategory(long offset, long limit){
 
-        Call<List<ProfessionalCategoryDTO>> callProfessionalCategoryDTO = syncDataService.getProfessionalCategory();
+        Call<List<ProfessionalCategoryDTO>> callProfessionalCategoryDTO = syncDataService.getProfessionalCategory(offset, limit);
 
         callProfessionalCategoryDTO.enqueue(new Callback<List<ProfessionalCategoryDTO>>() {
             @Override

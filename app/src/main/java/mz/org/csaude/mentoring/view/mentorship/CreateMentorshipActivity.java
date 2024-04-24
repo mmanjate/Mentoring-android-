@@ -1,6 +1,5 @@
 package mz.org.csaude.mentoring.view.mentorship;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.form.FormAdapter;
@@ -18,9 +16,8 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityMentorshipBinding;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipVM;
-import mz.org.csaude.mentoring.viewmodel.tutor.TutorVM;
 
-public class MentorshipActivity extends BaseActivity {
+public class CreateMentorshipActivity extends BaseActivity {
 
     private ActivityMentorshipBinding mentorshipBinding;
 

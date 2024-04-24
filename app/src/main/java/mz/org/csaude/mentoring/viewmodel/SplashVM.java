@@ -48,7 +48,7 @@ public class SplashVM extends BaseViewModel implements RestResponseListener {
     }
 
     public void initAppConfiguration() {
-        OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runinitialSync();
+        OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runInitialSync();
 
         WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
             if (workInfo != null) {

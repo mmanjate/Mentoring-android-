@@ -7,6 +7,7 @@ import lombok.Data;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.rondatype.RondaTypeDAOImpl;
 import mz.org.csaude.mentoring.dao.session.SessionDAOImpl;
+import mz.org.csaude.mentoring.dto.location.RondaTypeDTO;
 import mz.org.csaude.mentoring.model.session.Session;
 
 
@@ -17,17 +18,25 @@ public class RondaType extends BaseModel {
     public static final String COLUMN_CODE = "code";
 
     @DatabaseField(columnName = COLUMN_DESCRIPTION)
-    private String descripion;
+    private String description;
 
     @DatabaseField(columnName = COLUMN_CODE)
     private String code;
+    public RondaType() {
 
-    public String getDescripion() {
-        return descripion;
+    }
+    public RondaType(RondaTypeDTO rondaTypeDTO) {
+        this.setDescription(rondaTypeDTO.getDescription());
+        this.setCode(rondaTypeDTO.getCode());
+        this.setUuid(rondaTypeDTO.getUuid());
     }
 
-    public void setDescripion(String descripion) {
-        this.descripion = descripion;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCode() {

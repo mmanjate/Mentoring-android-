@@ -40,8 +40,14 @@ import mz.org.csaude.mentoring.service.partner.PartnerService;
 import mz.org.csaude.mentoring.service.partner.PartnerServiceImpl;
 import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryService;
 import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryServiceImpl;
+import mz.org.csaude.mentoring.service.ronda.RondaMenteeService;
+import mz.org.csaude.mentoring.service.ronda.RondaMenteeServiceImpl;
+import mz.org.csaude.mentoring.service.ronda.RondaMentorService;
+import mz.org.csaude.mentoring.service.ronda.RondaMentorServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
 import mz.org.csaude.mentoring.service.ronda.RondaServiceImpl;
+import mz.org.csaude.mentoring.service.ronda.RondaTypeService;
+import mz.org.csaude.mentoring.service.ronda.RondaTypeServiceImpl;
 import mz.org.csaude.mentoring.service.session.SessionService;
 import mz.org.csaude.mentoring.service.session.SessionServiceImpl;
 import mz.org.csaude.mentoring.service.tutor.TutorService;
@@ -107,6 +113,9 @@ public class MentoringApplication  extends Application {
     private TutoredRestService tutoredRestService;
 
     private ServerStatusChecker serverStatusChecker;
+    private RondaMenteeService rondaMenteeService;
+    private RondaMentorService rondaMentorService;
+    private RondaTypeService rondaTypeService;
     AuthInterceptorImpl interceptor;
 
     SharedPreferences mentoringSharedPreferences;
@@ -251,6 +260,20 @@ public class MentoringApplication  extends Application {
     public TutoredRestService getTutoredRestService() {
         if (tutoredRestService == null) this.tutoredRestService = new TutoredRestService(this);
         return tutoredRestService;
+    }
+
+    public RondaMenteeService getRondaMenteeService() {
+        if (this.rondaMenteeService == null) this.rondaMenteeService = new RondaMenteeServiceImpl(this);
+        return rondaMenteeService;
+    }
+
+    public RondaMentorService getRondaMentorService() {
+        if (this.rondaMentorService == null) this.rondaMentorService = new RondaMentorServiceImpl(this);
+        return rondaMentorService;
+    }
+    public RondaTypeService getRondaTypeService() {
+        if (this.rondaTypeService == null) this.rondaTypeService = new RondaTypeServiceImpl(this);
+        return rondaTypeService;
     }
 
     public ApplicationStep getApplicationStep() {

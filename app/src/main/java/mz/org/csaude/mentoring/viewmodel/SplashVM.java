@@ -1,6 +1,5 @@
 package mz.org.csaude.mentoring.viewmodel;
 
-import static mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor.getInstance;
 
 import android.app.Application;
 import android.util.Log;
@@ -33,7 +32,6 @@ import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
 
 public class SplashVM extends BaseViewModel implements RestResponseListener, ServerStatusListener {
 
-    ListenableFuture listenableFuture;
 
     public SplashVM(@NonNull Application application) {
         super(application);
@@ -67,7 +65,7 @@ public class SplashVM extends BaseViewModel implements RestResponseListener, Ser
     @Override
     public void onServerStatusChecked(boolean isOnline) {
         if (isOnline) {
-            OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runinitialSync();
+            OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runInitialSync();
 
             WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
                 if (workInfo != null) {

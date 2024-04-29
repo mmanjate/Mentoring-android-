@@ -73,7 +73,7 @@ public class WorkerScheduleExecutor {
         OneTimeWorkRequest iterationTypesOneTimeWorkRequest = new OneTimeWorkRequest.Builder(IterationTypeWorker.class).addTag("ONE_TIME_ITERATION_TYPES_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest timesOfDayOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TimeOfDayWorker.class).addTag("ONE_TIME_TIME_OF_DAY_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest doorsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(DoorWorker.class).addTag("ONE_TIME_DOORS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
-        OneTimeWorkRequest questionsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(QuestionWorker.class).addTag("ONE_TIME_QUESTIONS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        //OneTimeWorkRequest questionsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(QuestionWorker.class).addTag("ONE_TIME_QUESTIONS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
 
         workManager.beginUniqueWork("INITIAL_APP_SETUP", ExistingWorkPolicy.KEEP, provinceOneTimeWorkRequest)
                 .then(Arrays.asList(districtOneTimeWorkRequest, partnersOneTimeWorkRequest))
@@ -84,7 +84,7 @@ public class WorkerScheduleExecutor {
                 .then(iterationTypesOneTimeWorkRequest)
                 .then(timesOfDayOneTimeWorkRequest)
                 .then(doorsOneTimeWorkRequest)
-                .then(questionsOneTimeWorkRequest)
+               // .then(questionsOneTimeWorkRequest)
                 .then(categoriesOneTimeWorkRequest).enqueue();
         return categoriesOneTimeWorkRequest;
 
@@ -107,7 +107,8 @@ public class WorkerScheduleExecutor {
 
     public OneTimeWorkRequest menteesDownload() {
         OneTimeWorkRequest menteesOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutoredWorker.class).addTag("ONE_TIME_MENTEES_ID" + ONE_TIME_REQUEST_JOB_ID).build();
-        workManager.enqueue(menteesOneTimeWorkRequest);
+        OneTimeWorkRequest mentorFormsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(FormWorker.class).addTag("ONE_TIME_MENTOR_FORMS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        workManager.enqueue(Arrays.asList(menteesOneTimeWorkRequest,mentorFormsOneTimeWorkRequest));
 
         return menteesOneTimeWorkRequest;
     }

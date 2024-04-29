@@ -11,6 +11,7 @@ import mz.org.csaude.mentoring.dao.ronda.RondaDAO;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
+import mz.org.csaude.mentoring.util.RondaType;
 
 public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaService {
     RondaDAO rondaDAO;
@@ -53,6 +54,11 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
     @Override
     public int countRondas() throws SQLException {
         return this.rondaDAO.queryForAll().size();
+    }
+
+    @Override
+    public List<Ronda> getAllByRondaType(RondaType rondaType) throws SQLException {
+        return this.rondaDAO.getAllByRondaType(rondaType, this.getApplication());
     }
 
     @Override

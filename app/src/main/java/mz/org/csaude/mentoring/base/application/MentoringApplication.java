@@ -47,6 +47,7 @@ import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
+import mz.org.csaude.mentoring.workSchedule.rest.FormRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
 import okhttp3.OkHttpClient;
@@ -65,7 +66,7 @@ public class MentoringApplication  extends Application {
 
     // http://10.10.12.97:8087
 
-    private static final String BASE_URL = "http://10.10.12.97:8087";
+    private static final String BASE_URL = "http://192.168.16.104:8087";
 
     private User authenticatedUser;
 
@@ -108,10 +109,9 @@ public class MentoringApplication  extends Application {
     private RondaMentorService rondaMentorService;
     private RondaTypeService rondaTypeService;
     AuthInterceptorImpl interceptor;
-
-
     // Rest Services
     private PartnerRestService partnerRestService;
+    private FormRestService formRestService;
 
     @Override
     public void onCreate() {
@@ -254,6 +254,10 @@ public class MentoringApplication  extends Application {
     public RondaTypeService getRondaTypeService() {
         if (this.rondaTypeService == null) this.rondaTypeService = new RondaTypeServiceImpl(this);
         return rondaTypeService;
+    }
+    public FormRestService getFormRestService() {
+        if (formRestService == null) this.formRestService = new FormRestService(this);
+        return formRestService;
     }
 
     public ApplicationStep getApplicationStep() {

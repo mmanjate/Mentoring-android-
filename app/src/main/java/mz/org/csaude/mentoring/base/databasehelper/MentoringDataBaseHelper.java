@@ -14,6 +14,7 @@ import mz.org.csaude.mentoring.dao.answer.AnswerDAO;
 import mz.org.csaude.mentoring.dao.career.CareerDAO;
 import mz.org.csaude.mentoring.dao.career.CareerTypeDAO;
 import mz.org.csaude.mentoring.dao.employee.EmployeeDAO;
+import mz.org.csaude.mentoring.dao.evaluation.EvaluationTypeDAO;
 import mz.org.csaude.mentoring.dao.form.FormDAO;
 import mz.org.csaude.mentoring.dao.form.FormTargetDAO;
 import mz.org.csaude.mentoring.dao.form.FormTypeDAO;
@@ -35,6 +36,7 @@ import mz.org.csaude.mentoring.dao.programmaticArea.TutorProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionTypeDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionsCategoryDAO;
+import mz.org.csaude.mentoring.dao.responseType.ResponseTypeDAO;
 import mz.org.csaude.mentoring.dao.ronda.RondaDAO;
 import mz.org.csaude.mentoring.dao.ronda.RondaMenteeDAO;
 import mz.org.csaude.mentoring.dao.ronda.RondaMentorDAO;
@@ -47,9 +49,10 @@ import mz.org.csaude.mentoring.dao.tutor.TutorLocationDAO;
 import mz.org.csaude.mentoring.dao.tutor.TutorTutoredDao;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDao;
 import mz.org.csaude.mentoring.dao.user.UserDao;
-import mz.org.csaude.mentoring.model.Question.Question;
-import mz.org.csaude.mentoring.model.Question.QuestionType;
-import mz.org.csaude.mentoring.model.Question.QuestionsCategory;
+import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
+import mz.org.csaude.mentoring.model.question.Question;
+import mz.org.csaude.mentoring.model.question.QuestionType;
+import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 import mz.org.csaude.mentoring.model.answer.Answer;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.career.CareerType;
@@ -72,6 +75,7 @@ import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
 import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
+import mz.org.csaude.mentoring.model.responseType.ResponseType;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.ronda.RondaMentor;
@@ -166,6 +170,8 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
     private LocationDAO locationDAO;
 
     private EmployeeDAO employeeDAO;
+    private EvaluationTypeDAO evaluationTypeDAO;
+    private ResponseTypeDAO responseTypeDAO;
 
     private static MentoringDataBaseHelper dataBaseHelper;
 
@@ -425,6 +431,18 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return employeeDAO;
     }
+    public EvaluationTypeDAO getEvaluationTypeDAO() throws SQLException {
+        if(evaluationTypeDAO == null){
+            evaluationTypeDAO = getDao(EvaluationType.class);
+        }
+        return evaluationTypeDAO;
+    }
+    public ResponseTypeDAO getResponseTypeDAO() throws SQLException {
+        if(responseTypeDAO == null){
+            responseTypeDAO = getDao(ResponseType.class);
+        }
+        return responseTypeDAO;
+    }
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
@@ -467,6 +485,8 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, ProfessionalCategory.class);
             TableUtils.createTableIfNotExists(connectionSource, Employee.class);
             TableUtils.createTableIfNotExists(connectionSource, Location.class);
+            TableUtils.createTableIfNotExists(connectionSource, EvaluationType.class);
+            TableUtils.createTableIfNotExists(connectionSource, ResponseType.class);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

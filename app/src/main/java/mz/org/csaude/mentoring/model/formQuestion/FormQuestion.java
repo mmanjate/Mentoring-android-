@@ -6,11 +6,12 @@ import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.dao.answer.AnswerTypeDAOImpl;
 import mz.org.csaude.mentoring.dao.formQuestion.FormQuestionDAImpl;
-import mz.org.csaude.mentoring.model.Question.Question;
+import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
+import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.form.Form;
-import mz.org.csaude.mentoring.model.setting.Setting;
+import mz.org.csaude.mentoring.model.question.QuestionsCategory;
+import mz.org.csaude.mentoring.model.responseType.ResponseType;
 
 @Data
 @DatabaseTable(tableName = FormQuestion.TABLE_NAME, daoClass = FormQuestionDAImpl.class)
@@ -21,6 +22,8 @@ public class FormQuestion extends BaseModel {
     public static final String COLUMN_FORM = "form_id";
 
     public static final String COLUMN_QUESTION = "question_id";
+    public static final String COLUMN_EVALUATION_TYPE = "evaluation_type_id";
+    public static final String COLUMN_RESPONSE_TYPE = "response_type_id";
 
     public static final String COLUMN_MANDATORY = "mandatory";
 
@@ -33,6 +36,10 @@ public class FormQuestion extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_QUESTION, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Question question;
+    @DatabaseField(columnName = COLUMN_EVALUATION_TYPE, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private EvaluationType evaluationType;
+    @DatabaseField(columnName = COLUMN_RESPONSE_TYPE, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private ResponseType responseType;
 
     @DatabaseField(columnName = COLUMN_MANDATORY)
     private boolean mandatory;
@@ -72,6 +79,22 @@ public class FormQuestion extends BaseModel {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public EvaluationType getEvaluationType() {
+        return evaluationType;
+    }
+
+    public void setEvaluationType(EvaluationType evaluationType) {
+        this.evaluationType = evaluationType;
+    }
+
+    public ResponseType getResponseType() {
+        return responseType;
+    }
+
+    public void setResponseType(ResponseType responseType) {
+        this.responseType = responseType;
     }
 
     public void setMandatory(boolean mandatory) {

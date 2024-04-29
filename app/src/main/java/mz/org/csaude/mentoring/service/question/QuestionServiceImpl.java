@@ -7,8 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.question.QuestionDAO;
-import mz.org.csaude.mentoring.model.Question.Question;
-import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.model.question.Question;
 
 public class QuestionServiceImpl extends BaseServiceImpl<Question> implements QuestionService {
 

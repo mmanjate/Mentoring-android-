@@ -9,15 +9,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
+import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.Http;
 import mz.org.csaude.mentoring.util.Utilities;
-import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
 
-public class TutoredWork extends BaseWorker<Tutored> {
+public class FormWorker extends BaseWorker<Form> {
     private String requestType;
 
-    public TutoredWork(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public FormWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         requestType = getInputData().getString("requestType");
     }
@@ -25,9 +25,9 @@ public class TutoredWork extends BaseWorker<Tutored> {
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
         if (Utilities.stringHasValue(requestType) && requestType.equalsIgnoreCase(String.valueOf(Http.POST))) {
-            getApplication().getTutoredRestService().restPostTutored(this);
+            getApplication().getFormRestService().restPostForm(this);
         } else {
-            getApplication().getTutoredRestService().restGetTutored(this);
+            getApplication().getFormRestService().restGetForm(this);
         }
     }
 
@@ -37,7 +37,7 @@ public class TutoredWork extends BaseWorker<Tutored> {
     }
 
     @Override
-    protected void doAfterSearch(String flag, List<Tutored> recs) throws SQLException {
+    protected void doAfterSearch(String flag, List<Form> recs) throws SQLException {
         changeStatusToFinished();
         doOnFinish();
     }
@@ -48,7 +48,7 @@ public class TutoredWork extends BaseWorker<Tutored> {
     }
 
     @Override
-    protected void doSave(List<Tutored> recs) {
+    protected void doSave(List<Form> recs) {
 
     }
 }

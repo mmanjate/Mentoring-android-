@@ -7,6 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.mentorship.TimeOfDayDAO;
+import mz.org.csaude.mentoring.dto.mentorship.TimeOfDayDTO;
 import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
 import mz.org.csaude.mentoring.model.user.User;
 
@@ -50,5 +51,23 @@ public class TimeOfDayServiceImpl extends BaseServiceImpl<TimeOfDay> implements 
     @Override
     public TimeOfDay getById(int id) throws SQLException {
         return this.timeOfDayDAO.queryForId(id);
+    }
+
+    @Override
+    public void saveOrUpdateTimesOfDay(List<TimeOfDayDTO> timeOfDayDTOS) throws SQLException {
+        for (TimeOfDayDTO timeOfDayDTO: timeOfDayDTOS) {
+              this.saveOrUpdateTimeOfDay(timeOfDayDTO);
+        }
+    }
+
+    @Override
+    public TimeOfDay saveOrUpdateTimeOfDay(TimeOfDayDTO timeOfDayDTO) throws SQLException {
+        TimeOfDay tOd = this.timeOfDayDAO.getByUuid(timeOfDayDTO.getUuid());
+        TimeOfDay timeOfDay = timeOfDayDTO.getTimeOfDay();
+        if(tOd!=null) {
+            timeOfDay.setId(tOd.getId());
+        }
+        this.timeOfDayDAO.createOrUpdate(timeOfDay);
+        return timeOfDay;
     }
 }

@@ -1,4 +1,4 @@
-package mz.org.csaude.mentoring.model.Question;
+package mz.org.csaude.mentoring.model.question;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

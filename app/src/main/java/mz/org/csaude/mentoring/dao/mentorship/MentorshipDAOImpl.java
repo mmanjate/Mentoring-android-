@@ -11,11 +11,12 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.base.databasehelper.MentoringDataBaseHelper;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 
-public class MentorshipDAOImpl extends BaseDaoImpl<Mentorship, Integer> implements MentorshipDAO{
+public class MentorshipDAOImpl extends MentoringBaseDaoImpl<Mentorship, Integer> implements MentorshipDAO{
 
     public MentorshipDAOImpl(Class<Mentorship> dataClass) throws SQLException {
         super(dataClass);

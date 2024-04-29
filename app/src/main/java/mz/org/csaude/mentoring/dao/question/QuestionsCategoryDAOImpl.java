@@ -1,14 +1,16 @@
 package mz.org.csaude.mentoring.dao.question;
 
-import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 
-import mz.org.csaude.mentoring.model.Question.QuestionsCategory;
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
+import mz.org.csaude.mentoring.dao.evaluation.EvaluationTypeDAO;
+import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
+import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 
-public class QuestionsCategoryDAOImpl extends BaseDaoImpl<QuestionsCategory, Integer> implements QuestionsCategoryDAO{
+public class QuestionsCategoryDAOImpl extends MentoringBaseDaoImpl<QuestionsCategory, Integer> implements QuestionsCategoryDAO {
 
 
     public QuestionsCategoryDAOImpl(Class<QuestionsCategory> dataClass) throws SQLException {

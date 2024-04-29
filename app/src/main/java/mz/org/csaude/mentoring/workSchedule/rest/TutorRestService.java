@@ -17,6 +17,7 @@ import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.tutor.TutorService;
 import mz.org.csaude.mentoring.service.tutor.TutorServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,13 +45,16 @@ public class TutorRestService extends BaseRestService {
 
                 TutorService tutorService = new TutorServiceImpl(LoadMetadataServiceImpl.APP);
                 Toast.makeText(APP.getApplicationContext(), "Carregando os Tutores", Toast.LENGTH_SHORT).show();
-                tutorService.saveOrUpdateTutors(data);
 
                 List<Tutor> tutors = new ArrayList<>();
                 for (TutorDTO tutorDTO : data){
-                    tutors.add(new Tutor(tutorDTO));
+                    tutorDTO.setSyncSatus(SyncSatus.SENT);
+                    tutorDTO.getTutor().getEmployee().setSyncStatus(SyncSatus.SENT);
+                    tutorDTO.getTutor().setSyncStatus(SyncSatus.SENT);
+                    tutors.add(tutorDTO.getTutor());
                 }
-                listener.doOnResponse(BaseRestService.REQUEST_SUCESS, tutors);
+                    tutorService.saveOrUpdateTutors(data);
+                    listener.doOnResponse(BaseRestService.REQUEST_SUCESS, tutors);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

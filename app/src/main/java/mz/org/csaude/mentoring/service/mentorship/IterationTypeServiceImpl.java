@@ -7,6 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.mentorship.IterationTypeDAO;
+import mz.org.csaude.mentoring.dto.mentorship.IterationTypeDTO;
 import mz.org.csaude.mentoring.model.mentorship.IterationType;
 import mz.org.csaude.mentoring.model.user.User;
 
@@ -51,5 +52,23 @@ public class IterationTypeServiceImpl extends BaseServiceImpl<IterationType> imp
     @Override
     public IterationType getById(int id) throws SQLException {
         return this.iterationTypeDAO.queryForId(id);
+    }
+
+    @Override
+    public void saveOrUpdateIterationTypes(List<IterationTypeDTO> iterationTypeDTOS) throws SQLException {
+        for (IterationTypeDTO iterationTypeDTO: iterationTypeDTOS) {
+            this.saveOrUpdateIterationType(iterationTypeDTO);
+        }
+    }
+
+    @Override
+    public IterationType saveOrUpdateIterationType(IterationTypeDTO iterationTypeDTO) throws SQLException {
+        IterationType it = this.iterationTypeDAO.getByUuid(iterationTypeDTO.getUuid());
+        IterationType iterationType = iterationTypeDTO.getIterationType();
+        if(it!=null) {
+            iterationType.setId(it.getId());
+        }
+        this.iterationTypeDAO.createOrUpdate(iterationType);
+        return iterationType;
     }
 }

@@ -41,7 +41,7 @@ public abstract class BaseModel implements Serializable {
     }
 
     @DatabaseField(columnName = COLUMN_LIFE_CYCLE_STATUS)
-    private LifeCycleStatus lifeCycleStatus;
+    private LifeCycleStatus lifeCycleStatus = LifeCycleStatus.ACTIVE;
 
     protected int listPosition;
 

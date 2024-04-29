@@ -58,6 +58,7 @@ import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.workSchedule.rest.ServerStatusChecker;
 import mz.org.csaude.mentoring.util.Utilities;
+import mz.org.csaude.mentoring.workSchedule.rest.FormRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
 import okhttp3.OkHttpClient;
@@ -125,6 +126,7 @@ public class MentoringApplication  extends Application {
 
     // Rest Services
     private PartnerRestService partnerRestService;
+    private FormRestService formRestService;
 
     @Override
     public void onCreate() {
@@ -274,6 +276,10 @@ public class MentoringApplication  extends Application {
     public RondaTypeService getRondaTypeService() {
         if (this.rondaTypeService == null) this.rondaTypeService = new RondaTypeServiceImpl(this);
         return rondaTypeService;
+    }
+    public FormRestService getFormRestService() {
+        if (formRestService == null) this.formRestService = new FormRestService(this);
+        return formRestService;
     }
 
     public ApplicationStep getApplicationStep() {

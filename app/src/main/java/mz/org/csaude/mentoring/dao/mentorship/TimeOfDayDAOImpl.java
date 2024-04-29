@@ -6,9 +6,10 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
 
-public class TimeOfDayDAOImpl extends BaseDaoImpl<TimeOfDay, Integer> implements TimeOfDayDAO {
+public class TimeOfDayDAOImpl extends MentoringBaseDaoImpl<TimeOfDay, Integer> implements TimeOfDayDAO {
 
     public TimeOfDayDAOImpl(Class<TimeOfDay> dataClass) throws SQLException {
         super(dataClass);

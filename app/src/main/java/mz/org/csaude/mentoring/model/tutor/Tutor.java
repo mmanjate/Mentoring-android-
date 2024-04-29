@@ -38,6 +38,7 @@ public class Tutor extends BaseModel {
   public Tutor(TutorDTO tutorDTO) {
     super(tutorDTO);
     this.setEmployee(new Employee(tutorDTO.getEmployeeDTO()));
+    this.setSyncStatus(tutorDTO.getSyncSatus());
   }
   public Employee getEmployee() {
     return employee;

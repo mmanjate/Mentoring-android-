@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
+import mz.org.csaude.mentoring.util.SyncSatus;
 
 public class BaseEntityDTO implements Serializable {
     private Integer id;
@@ -11,6 +12,8 @@ public class BaseEntityDTO implements Serializable {
     private String uuid;
 
     private LifeCycleStatus lifeCycleStatus;
+
+    private SyncSatus syncSatus = SyncSatus.PENDING;
 
     public BaseEntityDTO() {
     }
@@ -43,5 +46,13 @@ public class BaseEntityDTO implements Serializable {
 
     public void setLifeCycleStatus(LifeCycleStatus lifeCycleStatus) {
         this.lifeCycleStatus = lifeCycleStatus;
+    }
+
+    public SyncSatus getSyncSatus() {
+        return syncSatus;
+    }
+
+    public void setSyncSatus(SyncSatus syncSatus) {
+        this.syncSatus = syncSatus;
     }
 }

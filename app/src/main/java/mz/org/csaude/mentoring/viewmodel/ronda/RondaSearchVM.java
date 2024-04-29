@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.viewmodel.ronda;
 
 import android.app.Application;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
@@ -16,6 +17,7 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.base.viewModel.SearchVM;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
+import mz.org.csaude.mentoring.util.RondaType;
 import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
 
 public class RondaSearchVM extends BaseViewModel {
@@ -39,11 +41,16 @@ public class RondaSearchVM extends BaseViewModel {
 
     public void createNewRonda() {
         Map<String, Object> params = new HashMap<>();
+        Intent intent = getRelatedActivity().getIntent();
+        String title = (String) intent.getExtras().get("title");
+        RondaType rondaType = (RondaType) intent.getExtras().get("rondaType");
+        params.put("rondaType", rondaType);
+        params.put("title", title);
         getRelatedActivity().nextActivityFinishingCurrent(CreateRondaActivity.class, params);
     }
-    public List<Listble> getAllRondas() {
+    public List<Listble> getAllRondas(RondaType rondaType) {
         try {
-            List<Ronda> rondaList = rondaService.getAll();
+            List<Ronda> rondaList = rondaService.getAllByRondaType(rondaType);
             for (Ronda ronda : rondaList) {
                 this.rondas.add(ronda);
             }

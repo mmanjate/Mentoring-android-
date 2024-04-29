@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.view.ronda;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,8 +30,10 @@ import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityRondaBinding;
 import mz.org.csaude.mentoring.model.location.Province;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
+import mz.org.csaude.mentoring.util.RondaType;
 import mz.org.csaude.mentoring.viewmodel.ronda.RondaVM;
 
 public class CreateRondaActivity extends BaseActivity {
@@ -40,6 +43,10 @@ public class CreateRondaActivity extends BaseActivity {
     private ListableSpinnerAdapter healthFacilityAdapter;
     private RecyclerView rcvSelectedMentees;
     private TutoredAdapter tutoredAdapter;
+    private Ronda ronda;
+    private String title;
+    private mz.org.csaude.mentoring.model.rondatype.RondaType rondaType;
+    private RondaType rondaTypeOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +58,17 @@ public class CreateRondaActivity extends BaseActivity {
         setSupportActionBar(rondaBinding.toolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Rondas de Mentorias");
+        Intent intent = this.getIntent();
+        Bundle bundle = new Bundle();
+        if(intent!=null && intent.getExtras()!=null) {
+            ronda = (Ronda) intent.getExtras().get("createdRonda");
+            title = (String) intent.getExtras().get("title");
+            rondaTypeOption = (RondaType) intent.getExtras().get("rondaType");
+            bundle.putSerializable("ronda", ronda);
+            bundle.putSerializable("title", title);
+            bundle.putSerializable("rondaType", rondaTypeOption);
+            intent.putExtras(bundle);
+        }
 
         initAdapters();
         rondaBinding.prescriptionDate.setOnClickListener(new View.OnClickListener() {

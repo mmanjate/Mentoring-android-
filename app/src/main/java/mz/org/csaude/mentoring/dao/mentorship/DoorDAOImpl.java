@@ -6,9 +6,10 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.mentorship.Door;
 
-public class DoorDAOImpl extends BaseDaoImpl<Door, Integer> implements DoorDAO {
+public class DoorDAOImpl extends MentoringBaseDaoImpl<Door, Integer> implements DoorDAO {
 
     public DoorDAOImpl(Class<Door> dataClass) throws SQLException {
         super(dataClass);

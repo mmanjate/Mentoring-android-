@@ -9,9 +9,9 @@ import java.sql.SQLException;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
-import mz.org.csaude.mentoring.model.Question.Question;
-import mz.org.csaude.mentoring.model.Question.QuestionType;
-import mz.org.csaude.mentoring.model.Question.QuestionsCategory;
+import mz.org.csaude.mentoring.model.question.Question;
+import mz.org.csaude.mentoring.model.question.QuestionType;
+import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 import mz.org.csaude.mentoring.service.question.QuestionService;
 import mz.org.csaude.mentoring.service.question.QuestionServiceImpl;
 
@@ -52,16 +52,6 @@ public class QuestionVM extends BaseViewModel {
     public void setQuestion(String question) {
         this.question.setQuestion(question);
         notifyPropertyChanged(BR.code);
-    }
-
-    @Bindable
-    public QuestionType getQuestionType() {
-        return this.question.getQuestionType();
-    }
-
-    public void setQuestionType(QuestionType questionType) {
-        this.question.setQuestionType(questionType);
-        notifyPropertyChanged(BR.questionType);
     }
 
     @Bindable

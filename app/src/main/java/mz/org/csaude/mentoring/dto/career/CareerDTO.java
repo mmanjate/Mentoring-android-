@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.career.Career;
 
 /**
@@ -12,38 +13,11 @@ import mz.org.csaude.mentoring.model.career.Career;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CareerDTO {
-
-    private int id;
-
-    @JsonProperty(value = "uuid")
-    private String uuid;
-
+public class CareerDTO extends BaseEntityDTO {
     @JsonProperty(value = "position")
     private String position;
-
     @JsonProperty(value = "careerType")
     private CareerTypeDTO careerTypeDTO;
-
-    public Career getCareer() {
-        return this.getCareer();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
 
     public String getPosition() {
         return position;
@@ -59,5 +33,16 @@ public class CareerDTO {
 
     public void setCareerTypeDTO(CareerTypeDTO careerTypeDTO) {
         this.careerTypeDTO = careerTypeDTO;
+    }
+    public Career getCareer() {
+        Career career = new Career();
+        career.setId(this.getId());
+        career.setUuid(this.getUuid());
+        career.setSyncStatus(this.getSyncSatus());
+        career.setPosition(this.getPosition());
+        if(this.getCareerTypeDTO()!=null) {
+            career.setCareerType(this.getCareerTypeDTO().getCareerType());
+        }
+        return career;
     }
 }

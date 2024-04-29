@@ -18,7 +18,6 @@ import mz.org.csaude.mentoring.model.partner.Partner;
 
 public class EmployeeDTO extends BaseEntityDTO {
 
-    private String uuid;
     private String name;
 
     private String surname;
@@ -61,14 +60,6 @@ public class EmployeeDTO extends BaseEntityDTO {
         }
         return locationDTOSet;
     }
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
     public String getName() {
         return name;
     }
@@ -139,5 +130,33 @@ public class EmployeeDTO extends BaseEntityDTO {
 
     public void setLocationDTOSet(List<LocationDTO> locationDTOSet) {
         this.locationDTOSet = locationDTOSet;
+    }
+
+    public Employee getEmployee() {
+        Employee employee = new Employee();
+        employee.setId(this.getId());
+        employee.setUuid(this.getUuid());
+        employee.setSyncStatus(this.getSyncSatus());
+        employee.setName(this.getName());
+        employee.setSurname(this.getSurname());
+        employee.setNuit(this.getNuit());
+        employee.setTrainingYear(this.getTrainingYear());
+        employee.setPhoneNumber(this.getPhoneNumber());
+        employee.setEmail(this.getEmail());
+        if(this.getProfessionalCategoryDTO()!=null) {
+            employee.setProfessionalCategory(this.getProfessionalCategoryDTO().getProfessionalCategory());
+        }
+        if(this.getPartnerDTO()!=null) {
+            employee.setPartner(this.partnerDTO.getPartner());
+        }
+        if(this.getLocationDTOSet()!=null && !this.getLocationDTOSet().isEmpty()) {
+            List<Location> locations = new ArrayList<>();
+            for (LocationDTO locationDTO: this.getLocationDTOSet()) {
+                Location location = locationDTO.getLocation();
+                locations.add(location);
+            }
+            employee.setLocations(locations);
+        }
+        return employee;
     }
 }

@@ -48,6 +48,7 @@ public class Location extends BaseModel implements Listble {
        if(location.getProvinceDTO() != null) this.setProvince(new Province(location.getProvinceDTO()));
        if(location.getDistrictDTO() != null) this.setDistrict(new District(location.getDistrictDTO()));
        if(location.getHealthFacilityDTO() != null) this.setHealthFacility(new HealthFacility(location.getHealthFacilityDTO()));
+       this.setSyncStatus(location.getSyncSatus());
     }
 
     public Location(LocationDTO location, Employee employee) {

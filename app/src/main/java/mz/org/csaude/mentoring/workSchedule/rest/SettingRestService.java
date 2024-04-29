@@ -16,6 +16,7 @@ import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.setting.SettingService;
 import mz.org.csaude.mentoring.service.setting.SettingServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,13 +43,14 @@ public class SettingRestService extends BaseRestService {
                try {
                    SettingService settingService = new SettingServiceImpl(LoadMetadataServiceImpl.APP);
                    Toast.makeText(APP.getApplicationContext(), "CARREGANDO OS SETTINGS", Toast.LENGTH_SHORT).show();
-                   settingService.savedOrUpdateSettings(data);
                    List<Setting> settings = new ArrayList<>();
 
                    for(SettingDTO settingDTO : data){
-                       settings.add(new Setting(settingDTO));
+                       settingDTO.setSyncSatus(SyncSatus.SENT);
+                       settingDTO.getSetting().setSyncStatus(SyncSatus.SENT);
+                       settings.add(settingDTO.getSetting());
                    }
-
+                   settingService.savedOrUpdateSettings(data);
                    listener.doOnResponse(BaseRestService.REQUEST_SUCESS, settings);
                } catch (SQLException e) {
                    throw new RuntimeException(e);

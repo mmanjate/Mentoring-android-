@@ -16,6 +16,7 @@ import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.ronda.RondaMentor;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
+import mz.org.csaude.mentoring.util.RondaType;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.workSchedule.work.MentoringDataBaseHelper;
 
@@ -52,5 +53,17 @@ public class RondaDAOImpl extends MentoringBaseDaoImpl<Ronda, Integer> implement
     @Override
     public List<Ronda> getAllNotSynced() throws SQLException {
         return queryForEq(Ronda.COLUMN_SYNC_STATUS, SyncSatus.PENDING);
+    }
+
+    @Override
+    public List<Ronda> getAllByRondaType(RondaType rondaType, MentoringApplication mentoringApplication) throws SQLException {
+        QueryBuilder<mz.org.csaude.mentoring.model.rondatype.RondaType, Integer> rondaTypeQueryBuilder =  MentoringDataBaseHelper.getInstance(mentoringApplication.getApplicationContext()).getRondaTypeDAO().queryBuilder();
+        rondaTypeQueryBuilder.where().eq(mz.org.csaude.mentoring.model.rondatype.RondaType.COLUMN_CODE, rondaType.name());
+
+        QueryBuilder<Ronda, Integer> rondaQueryBuilder =  MentoringDataBaseHelper.getInstance(mentoringApplication.getApplicationContext()).getRondaDAO().queryBuilder();
+        rondaQueryBuilder.join(rondaTypeQueryBuilder)
+                .where().eq(Ronda.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE);
+
+        return rondaQueryBuilder.orderBy(Employee.COLUMN_ID, true).query();
     }
 }

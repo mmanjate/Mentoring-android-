@@ -11,12 +11,10 @@ public class ProvinceDTO extends BaseEntityDTO {
 
     private String uuid;
     private String designation;
-
     public ProvinceDTO(Province province) {
         super(province);
         this.setDesignation(province.getDescription());
     }
-
     public String getDesignation() {
         return designation;
     }
@@ -24,11 +22,12 @@ public class ProvinceDTO extends BaseEntityDTO {
         this.designation = designation;
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public Province getProvince() {
+        Province province = new Province();
+        province.setId(this.getId());
+        province.setUuid(this.getUuid());
+        province.setSyncStatus(this.getSyncSatus());
+        province.setDescription(this.getDesignation());
+        return province;
     }
 }

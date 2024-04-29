@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.viewmodel.mentorship;
 
 import android.app.Application;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
@@ -14,8 +15,10 @@ import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipService;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipServiceImpl;
 import mz.org.csaude.mentoring.service.session.SessionService;
@@ -60,6 +63,18 @@ public class MentorshipSearchVM extends BaseViewModel {
 
     public void createNewMentorship() {
         Map<String, Object> params = new HashMap<>();
+        Intent intent = getRelatedActivity().getIntent();
+        String title = (String) intent.getExtras().get("title");
+        RondaType rondaType = (RondaType) intent.getExtras().get("rondaType");
+        Ronda ronda = (Ronda) intent.getExtras().get("createdRonda");
+        Tutor currMentor = (Tutor) intent.getExtras().get("currMentor");
+        params.put("rondaType", rondaType);
+        params.put("title", title);
+        params.put("createdRonda", ronda);
+        params.put("currMentor", currMentor);
+        this.mentorship.setTutor(currMentor);
+        params.put("currMentor", currMentor);
+        params.put("newMentorship", this.mentorship);
         getRelatedActivity().nextActivityFinishingCurrent(CreateMentorshipActivity.class, params);
     }
 

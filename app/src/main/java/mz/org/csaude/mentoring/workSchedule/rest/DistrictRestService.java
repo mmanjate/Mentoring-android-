@@ -15,6 +15,7 @@ import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.service.location.DistrictService;
 import mz.org.csaude.mentoring.service.location.DistrictServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,15 +44,16 @@ public class DistrictRestService extends BaseRestService {
                     try {
                         DistrictService districtService = getApplication().getDistrictService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Distritos...", Toast.LENGTH_SHORT).show();
-                        districtService.savedOrUpdateDistricts(data);
-
                         List<District> districts = new ArrayList<>();
                         for (DistrictDTO districtDTO : data){
+                            districtDTO.setSyncSatus(SyncSatus.SENT);
+                            districtDTO.getDistrict().setSyncStatus(SyncSatus.SENT);
                             districts.add(new District(districtDTO));
                         }
+                        districtService.savedOrUpdateDistricts(data);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, districts);
 
-                        Toast.makeText(APP.getApplicationContext(), "District carregadas com sucesso!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(APP.getApplicationContext(), "DISTRITOS CARREGADOS COM SUCESSO!", Toast.LENGTH_SHORT).show();
 
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
@@ -62,7 +64,7 @@ public class DistrictRestService extends BaseRestService {
             }
             @Override
             public void onFailure(Call<List<DistrictDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as District. Tente mais tarde....", Toast.LENGTH_SHORT).show();
+                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as Distritos. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
 
             }

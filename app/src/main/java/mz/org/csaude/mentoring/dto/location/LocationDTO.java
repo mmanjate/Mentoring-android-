@@ -30,13 +30,6 @@ public class LocationDTO extends BaseEntityDTO {
 
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
     public EmployeeDTO getEmployeeDTO() {
         return employeeDTO;
     }
@@ -75,5 +68,25 @@ public class LocationDTO extends BaseEntityDTO {
 
     public void setLocationLevel(String locationLevel) {
         this.locationLevel = locationLevel;
+    }
+
+    public Location getLocation() {
+        Location location = new Location();
+        location.setId(this.getId());
+        location.setUuid(this.getUuid());
+        location.setSyncStatus(this.getSyncSatus());
+        if(this.getEmployeeDTO()!=null) {
+            location.setEmployee(this.employeeDTO.getEmployee());
+        }
+        if(this.getDistrictDTO()!=null) {
+            location.setDistrict(this.getDistrictDTO().getDistrict());
+        }
+        if(this.getProvinceDTO()!=null) {
+            location.setProvince(this.getProvinceDTO().getProvince());
+        }
+        if(this.getHealthFacilityDTO()!=null) {
+            location.setHealthFacility(this.getHealthFacilityDTO().getHealthFacilityObj());
+        }
+        return location;
     }
 }

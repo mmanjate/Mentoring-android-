@@ -7,6 +7,7 @@ import android.widget.Toast;
 import mz.org.csaude.mentoring.service.location.CabinetService;
 import mz.org.csaude.mentoring.service.location.CabinetServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 
@@ -44,17 +45,18 @@ public class CabinetRestService extends BaseRestService {
 
                         CabinetService cabinetService = new CabinetServiceImpl(LoadMetadataServiceImpl.APP);
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Cabinet", Toast.LENGTH_SHORT).show();
-                        cabinetService.saveOrUpdateCabinets(data);
                         List<Cabinet> cabinets = new ArrayList<>();
-
                         for (CabinetDTO cabinetDTO : data){
+                            cabinetDTO.setSyncSatus(SyncSatus.SENT);
+                            cabinetDTO.getCabinet().setSyncStatus(SyncSatus.SENT);
                             cabinets.add(new Cabinet(cabinetDTO));
                         }
+                        cabinetService.saveOrUpdateCabinets(data);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, cabinets);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "CABINETS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getApplicationContext(), "CABINETS CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 }
 
             }

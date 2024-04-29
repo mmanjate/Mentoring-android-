@@ -6,14 +6,14 @@
 
     <data>
         <variable
-            name="ronda"
+            name="mentorship"
             type="mz.org.csaude.mentoring.model.mentorship.Mentorship" />
         <variable
             name="viewModel"
             type="mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipSearchVM" />
 
         <import type="mz.org.csaude.mentoring.util.Utilities"/>
-        <import type="mz.org.csaude.mentoring.util.SyncSatus"/>
+        <import type="mz.org.csaude.mentoring.util.SessionStatus"/>
         <import type="mz.org.csaude.mentoring.util.RondaStatus"/>
         <import type="android.view.View"/>
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
@@ -30,43 +30,93 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{mentorship.form.name}"
-            android:drawableLeft="@drawable/baseline_folder_24"
             android:textSize="@dimen/dimen_12dp"
             android:gravity="center_vertical"
             android:textStyle="bold"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dimen_5dp">
+
         <TextView
-            android:id="@+id/ronda_period"
+            android:id="@+id/tutored_name"
+            android:layout_width="245dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:gravity="center_vertical"
+            android:text="@{mentorship.tutored.employee.getFullName()"
+            android:textSize="@dimen/dimen_12dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_5dp"
-            android:text="@{ronda.getRondaPeriod()}"
-            android:drawableLeft="@drawable/baseline_calendar_month_24"
-            android:textSize="@dimen/dimen_12dp"
-            android:gravity="center_vertical"
-            android:textStyle="bold"/>
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_5dp">
+
+            <ImageButton
+                android:id="@+id/edit"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="end"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:layout_marginRight="@dimen/dimen_2dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/baseline_edit_square_24"
+                android:visibility="@{mentorship.session.status.description == SessionStatus.INCOMPLETE.name() ? View.VISIBLE : View.GONE}" />
+
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/dimen_2dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/baseline_delete_forever_24"
+                android:visibility="@{mentorship.session.status.description == SessionStatus.INCOMPLETE.name() ? View.VISIBLE : View.GONE}" />
+
+            <ImageView
+                android:id="@+id/sync"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/dimen_2dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/baseline_cloud_done_24"
+                android:visibility="@{mentorship.session.status.description == SessionStatus.INCOMPLETE.name() ? View.VISIBLE : View.GONE}" />
+
+        </LinearLayout>
+    </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/ronda_heathfacility"
-                android:layout_width="0dp"
+                android:id="@+id/mentorship_heathfacility"
+                android:layout_width="15dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:layout_marginTop="@dimen/dimen_5dp"
-                android:text="@{ronda.healthFacility.description}"
-                android:drawableLeft="@drawable/baseline_local_hospital_24"
-                android:textSize="@dimen/dimen_12dp"
+                android:layout_weight="3"
                 android:gravity="center_vertical"
-                android:textStyle="bold"/>
+                android:text="@{mentorship.healthFacility.description}"
+                android:textSize="@dimen/dimen_12dp"
+                android:textStyle="bold" />
             <TextView
-                android:id="@+id/ronda_status"
+                android:id="@+id/mentorship_session_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/dimen_5dp"
-                android:text="@{ronda.getRondaExuctionStatus()}"
+                android:text="@{DateUtilities.parseDateToDDMMYYYYString(mentorship.session.startDate)}"
                 android:textSize="@dimen/dimen_12dp"
                 android:gravity="center_vertical"
                 android:textStyle="bold"/>
@@ -76,54 +126,5 @@
             android:layout_marginTop="@dimen/dimen_5dp"
             android:layout_height="1dp"
             android:background="@color/spinner_back_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/dimen_5dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-            <ImageButton
-                android:id="@+id/details"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@android:color/transparent"
-                android:layout_gravity="end"
-                android:scaleType="fitXY"
-                android:src="@drawable/baseline_open_in_new_24"
-                android:layout_marginRight="@dimen/dimen_2dp"/>
-            <ImageButton
-                android:id="@+id/edit"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@android:color/transparent"
-                android:layout_gravity="end"
-                android:layout_marginHorizontal="@dimen/dimen_20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/baseline_edit_square_24"
-                android:visibility="@{ronda.syncStatus == SyncSatus.PENDING ? View.VISIBLE : View.GONE}"
-                android:layout_marginRight="@dimen/dimen_2dp"/>
-            <ImageButton
-                android:id="@+id/delete"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@android:color/transparent"
-                android:layout_gravity="end"
-                android:scaleType="fitXY"
-                android:src="@drawable/baseline_delete_forever_24"
-                android:visibility="@{ronda.syncStatus == SyncSatus.PENDING ? View.VISIBLE : View.GONE}"
-                android:layout_marginRight="@dimen/dimen_2dp"/>
-            <ImageView
-                android:id="@+id/sync"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@android:color/transparent"
-                android:layout_gravity="end"
-                android:scaleType="fitXY"
-                android:src="@drawable/baseline_cloud_done_24"
-                android:visibility="@{ronda.syncStatus == SyncSatus.PENDING ? View.GONE : View.VISIBLE}"
-                android:layout_marginRight="@dimen/dimen_2dp"/>
-
-        </LinearLayout>
     </LinearLayout>
 </layout>

@@ -38,7 +38,7 @@ public class FormVM extends BaseViewModel {
 
     public void setCode(String code){
         this.form.setCode(code);
-        //notifyPropertyChanged();
+        notifyPropertyChanged(BR.code);
     }
 
     @Bindable
@@ -68,17 +68,7 @@ public class FormVM extends BaseViewModel {
 
     public void setProgrammaticArea(ProgrammaticArea programmaticArea) {
         this.form.setProgrammaticArea(programmaticArea);
-       // notifyPropertyChanged(BR.programmaticArea);
-    }
-
-    @Bindable
-    public FormType getFormType() {
-        return this.form.getFormType();
-    }
-
-    public void setFormType(FormType formType) {
-        this.form.setFormType(formType);
-     //   notifyPropertyChanged(BR.formType);
+       notifyPropertyChanged(BR.programmaticArea);
     }
 
     @Bindable
@@ -88,7 +78,7 @@ public class FormVM extends BaseViewModel {
 
     public void setTargetPatient(Integer integer) {
         this.form.setTargetPatient(integer);
-        //   notifyPropertyChanged(BR.formType);
+        notifyPropertyChanged(BR.targetPatient);
     }
 
     @Bindable
@@ -98,7 +88,7 @@ public class FormVM extends BaseViewModel {
 
     public void setTargetFile(Integer integer) {
         this.form.setTargetFile(integer);
-        //   notifyPropertyChanged(BR.formType);
+        notifyPropertyChanged(BR.targetFile);
     }
 
     @Bindable
@@ -108,7 +98,7 @@ public class FormVM extends BaseViewModel {
 
     public void setPartner(Partner partner) {
         this.form.setPartner(partner);
-        //   notifyPropertyChanged(BR.formType);
+        notifyPropertyChanged(BR.partner);
     }
 
     public void save() {

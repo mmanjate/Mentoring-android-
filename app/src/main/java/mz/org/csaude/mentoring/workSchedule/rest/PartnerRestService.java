@@ -12,6 +12,7 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.partner.Partner;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +41,9 @@ public class PartnerRestService extends BaseRestService {
 
                     List<Partner> partners = new ArrayList<>();
                     for (PartnerDTO partnerDTO : data) {
-                        partners.add(new Partner(partnerDTO));
+                        partnerDTO.setSyncSatus(SyncSatus.SENT);
+                        partnerDTO.getPartner().setSyncStatus(SyncSatus.SENT);
+                        partners.add(partnerDTO.getPartner());
                     }
                     getApplication().getPartnerService().saveAll(partners);
 

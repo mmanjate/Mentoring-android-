@@ -3,13 +3,22 @@ package mz.org.csaude.mentoring.service.metadata;
 import mz.org.csaude.mentoring.base.auth.LoginResponse;
 import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
+import mz.org.csaude.mentoring.dto.evaluationType.EvaluationTypeDTO;
+import mz.org.csaude.mentoring.dto.form.FormDTO;
+import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
 import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.dto.location.DistrictDTO;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
 import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
 import mz.org.csaude.mentoring.dto.location.RondaTypeDTO;
+import mz.org.csaude.mentoring.dto.mentorship.DoorDTO;
+import mz.org.csaude.mentoring.dto.mentorship.IterationTypeDTO;
+import mz.org.csaude.mentoring.dto.mentorship.TimeOfDayDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.dto.professionalcategory.ProfessionalCategoryDTO;
+import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
+import mz.org.csaude.mentoring.dto.question.QuestionDTO;
+import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
@@ -81,7 +90,6 @@ public interface SyncDataService {
     @GET("/professionalCategories/getall")
     Call<List<ProfessionalCategoryDTO>> getProfessionalCategory(@Query("offset") long offset, @Query("limit") long limit);
 
-
     @GET("/partner/getall")
     Call<List<PartnerDTO>> getPartners();
 
@@ -92,4 +100,24 @@ public interface SyncDataService {
     Call<List<TutoredDTO>> postTutoreds(@Body List<TutoredDTO> tutoredDTOS);
     @GET("/rondaTypes/getall")
     Call<List<RondaTypeDTO>> getRondaTypes();
+    @GET("/forms/getall")
+    Call<List<FormDTO>> getFormsByPartner(@Query("partnerId") Long partnerId);
+    @POST("forms/save")
+    Call<List<FormDTO>> postForms(@Body List<FormDTO> formDTOS);
+    @GET("/evaluationTypes/getAll")
+    Call<List<EvaluationTypeDTO>> getEvaluationTypes();
+    @GET("/responseTypes/getAll")
+    Call<List<ResponseTypeDTO>> getResponseTypes();
+    @GET("/questionCategories/getAll")
+    Call<List<QuestionCategoryDTO>> getQuestionCategories();
+    @GET("/utils/iterationTypes")
+    Call<List<IterationTypeDTO>> getIterationTypes();
+    @GET("/utils/doors")
+    Call<List<DoorDTO>> getDoors();
+    @GET("/utils/timesOfDay")
+    Call<List<TimeOfDayDTO>> getTimesOfDay();
+    @GET("/questions/getAll")
+    Call<List<QuestionDTO>> getAllQuestions();
+    @GET("/formQuestions/getByFormsUuids")
+    Call<List<FormQuestionDTO>> getFormsQuestionsByFormsUuids(@Query("formsUuids") List<String> formsUuids);
 }

@@ -15,6 +15,7 @@ import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaTypeService;
 import mz.org.csaude.mentoring.service.ronda.RondaTypeServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,16 +40,18 @@ public class RondaTypeRestService extends BaseRestService {
                     try {
                         RondaTypeService rondaTypeService = new RondaTypeServiceImpl(LoadMetadataServiceImpl.APP);
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Rondas.", Toast.LENGTH_SHORT).show();
-                        rondaTypeService.saveOrUpdateRondaTypes(data);
                         List<RondaType> rondaTypes = new ArrayList<>();
                         for (RondaTypeDTO rondaTypeDTO : data){
-                            rondaTypes.add(new RondaType(rondaTypeDTO));
+                            rondaTypeDTO.setSyncSatus(SyncSatus.SENT);
+                            rondaTypeDTO.getRondaType().setSyncStatus(SyncSatus.SENT);
+                            rondaTypes.add(rondaTypeDTO.getRondaType());
                         }
+                        rondaTypeService.saveOrUpdateRondaTypes(data);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, rondaTypes);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE RONDAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE RONDAS CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }

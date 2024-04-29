@@ -7,6 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.mentorship.DoorDAO;
+import mz.org.csaude.mentoring.dto.mentorship.DoorDTO;
 import mz.org.csaude.mentoring.model.mentorship.Door;
 import mz.org.csaude.mentoring.model.user.User;
 
@@ -49,5 +50,23 @@ public class DoorServiceImpl extends BaseServiceImpl<Door> implements DoorServic
     @Override
     public Door getById(int id) throws SQLException {
         return this.doorDAO.queryForId(id);
+    }
+
+    @Override
+    public void saveOrUpdateDoors(List<DoorDTO> doorDTOS) throws SQLException {
+        for (DoorDTO doorDTO: doorDTOS) {
+            this.saveOrUpdateDoor(doorDTO);
+        }
+    }
+
+    @Override
+    public Door saveOrUpdateDoor(DoorDTO doorDTO) throws SQLException {
+        Door d = this.doorDAO.getByUuid(doorDTO.getUuid());
+        Door door = doorDTO.getDoor();
+        if(d!=null) {
+           door.setId(d.getId());
+        }
+        this.doorDAO.createOrUpdate(door);
+        return door;
     }
 }

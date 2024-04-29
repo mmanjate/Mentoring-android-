@@ -7,8 +7,8 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.question.QuestionsCategoryDAO;
-import mz.org.csaude.mentoring.model.Question.QuestionsCategory;
-import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
+import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 
 public class QuestionsCategoryServiceImpl extends BaseServiceImpl<QuestionsCategory>
 implements QuestionsCategoryService{
@@ -50,5 +50,23 @@ implements QuestionsCategoryService{
     @Override
     public QuestionsCategory getById(int id) throws SQLException {
         return this.questionsCategoryDAO.queryForId(id);
+    }
+
+    @Override
+    public void saveOrUpdateQuestionCategories(List<QuestionCategoryDTO> questionCategoryDTOS) throws SQLException {
+        for (QuestionCategoryDTO questionCategoryDTO : questionCategoryDTOS) {
+           this.saveOrUpdateQuestionCategory(questionCategoryDTO);
+        }
+    }
+
+    @Override
+    public QuestionsCategory saveOrUpdateQuestionCategory(QuestionCategoryDTO questionCategoryDTO) throws SQLException {
+        QuestionsCategory qc = this.questionsCategoryDAO.getByUuid(questionCategoryDTO.getUuid());
+        QuestionsCategory questionsCategory = questionCategoryDTO.getQuestionCategory();
+        if(qc!=null) {
+            questionsCategory.setId(qc.getId());
+        }
+        this.questionsCategoryDAO.createOrUpdate(questionsCategory);
+        return questionsCategory;
     }
 }

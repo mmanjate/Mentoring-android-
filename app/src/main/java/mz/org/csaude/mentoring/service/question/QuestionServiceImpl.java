@@ -7,8 +7,8 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.question.QuestionDAO;
-import mz.org.csaude.mentoring.model.Question.Question;
-import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.dto.question.QuestionDTO;
+import mz.org.csaude.mentoring.model.question.Question;
 
 public class QuestionServiceImpl extends BaseServiceImpl<Question> implements QuestionService {
 
@@ -49,5 +49,23 @@ public class QuestionServiceImpl extends BaseServiceImpl<Question> implements Qu
     @Override
     public Question getById(int id) throws SQLException {
         return this.questionDAO.queryForId(id);
+    }
+
+    @Override
+    public void saveOrUpdateQuestions(List<QuestionDTO> questionDTOS) throws SQLException {
+        for (QuestionDTO questionDTO: questionDTOS) {
+             this.saveOrUpdateQuestion(questionDTO);
+        }
+    }
+
+    @Override
+    public Question saveOrUpdateQuestion(QuestionDTO questionDTO) throws SQLException {
+        Question q = this.questionDAO.getByUuid(questionDTO.getUuid());
+        Question question = questionDTO.getQuestionObj();
+        if(q!=null) {
+            question.setId(q.getId());
+        }
+        this.questionDAO.createOrUpdate(question);
+        return question;
     }
 }

@@ -9,7 +9,6 @@ import mz.org.csaude.mentoring.model.location.District;
 @NoArgsConstructor
 public class DistrictDTO  extends BaseEntityDTO {
 
-    private String uuid;
     private String description;
     private ProvinceDTO provinceDTO;
 
@@ -17,14 +16,6 @@ public class DistrictDTO  extends BaseEntityDTO {
         super(district);
         this.setDescription(district.getDescription());
         if (district.getProvince() != null)  this.setProvinceDTO(new ProvinceDTO(district.getProvince()));
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getDescription() {
@@ -41,5 +32,16 @@ public class DistrictDTO  extends BaseEntityDTO {
 
     public void setProvinceDTO(ProvinceDTO provinceDTO) {
         this.provinceDTO = provinceDTO;
+    }
+    public District getDistrict() {
+        District district = new District();
+        district.setId(this.getId());
+        district.setUuid(this.getUuid());
+        district.setSyncStatus(this.getSyncSatus());
+        district.setDescription(this.getDescription());
+        if(district.getProvince()!=null) {
+            district.setProvince(this.getDistrict().getProvince());
+        }
+        return district;
     }
 }

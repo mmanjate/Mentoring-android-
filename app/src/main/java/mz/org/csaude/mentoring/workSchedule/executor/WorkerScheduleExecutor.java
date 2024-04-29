@@ -19,6 +19,7 @@ import mz.org.csaude.mentoring.workSchedule.work.HealthFacilityWorker;
 import mz.org.csaude.mentoring.workSchedule.work.PartnerWorker;
 import mz.org.csaude.mentoring.workSchedule.work.ProfessionalCategoryWorker;
 import mz.org.csaude.mentoring.workSchedule.work.ProvinceWorker;
+import mz.org.csaude.mentoring.workSchedule.work.RondaTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutorWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutoredWork;
 
@@ -51,14 +52,16 @@ public class WorkerScheduleExecutor {
         }
         return instance;
     }
-    public OneTimeWorkRequest runinitialSync() {
+    public OneTimeWorkRequest runInitialSync() {
         OneTimeWorkRequest provinceOneTimeWorkRequest = new OneTimeWorkRequest.Builder(ProvinceWorker.class).addTag("ONE_TIME_CABINET_ID" + ONE_TIME_REQUEST_JOB_ID).build();
-        OneTimeWorkRequest districtOneTimeWorkRequest = new OneTimeWorkRequest.Builder(DistrictWorker.class).addTag("ONE_TIME_CAREER_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest districtOneTimeWorkRequest = new OneTimeWorkRequest.Builder(DistrictWorker.class).addTag("ONE_TIME_DISTRICT_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest categoriesOneTimeWorkRequest = new OneTimeWorkRequest.Builder(ProfessionalCategoryWorker.class).addTag("ONE_TIME_CATEGORIES_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest partnersOneTimeWorkRequest = new OneTimeWorkRequest.Builder(PartnerWorker.class).addTag("ONE_TIME_PARTNERS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest rondaTypesOneTimeWorkRequest = new OneTimeWorkRequest.Builder(RondaTypeWorker.class).addTag("ONE_TIME_RONDA_TYPES_ID" + ONE_TIME_REQUEST_JOB_ID).build();
 
         workManager.beginUniqueWork("INITIAL_APP_SETUP", ExistingWorkPolicy.KEEP, provinceOneTimeWorkRequest)
                 .then(Arrays.asList(districtOneTimeWorkRequest, partnersOneTimeWorkRequest))
+                .then(rondaTypesOneTimeWorkRequest)
                 .then(categoriesOneTimeWorkRequest).enqueue();
         return categoriesOneTimeWorkRequest;
 

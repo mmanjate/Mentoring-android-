@@ -52,6 +52,8 @@ public class TutoredRestService extends BaseRestService {
                              InvocationTargetException | NoSuchMethodException e) {
                         throw new RuntimeException(e);
                     }
+                } else {
+                    listener.doOnResponse(BaseRestService.REQUEST_NO_DATA, null);
                 }
             }
 

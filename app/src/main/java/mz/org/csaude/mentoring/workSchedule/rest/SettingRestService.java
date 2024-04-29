@@ -26,9 +26,9 @@ public class SettingRestService extends BaseRestService {
         super(application);
     }
 
-    public static void restGetSettings(long offSet, long limit, RestResponseListener<Setting> listener){
+    public static void restGetSettings(RestResponseListener<Setting> listener){
 
-        Call<List<SettingDTO>> settingsCall = syncDataService.getSettings("0807983dd3b34f109fb75756862d4a72", offSet, limit);
+        Call<List<SettingDTO>> settingsCall = syncDataService.getSettings("0807983dd3b34f109fb75756862d4a72");
 
        settingsCall.enqueue(new Callback<List<SettingDTO>>() {
            @Override

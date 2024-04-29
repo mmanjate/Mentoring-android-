@@ -31,8 +31,14 @@ import mz.org.csaude.mentoring.service.partner.PartnerService;
 import mz.org.csaude.mentoring.service.partner.PartnerServiceImpl;
 import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryService;
 import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryServiceImpl;
+import mz.org.csaude.mentoring.service.ronda.RondaMenteeService;
+import mz.org.csaude.mentoring.service.ronda.RondaMenteeServiceImpl;
+import mz.org.csaude.mentoring.service.ronda.RondaMentorService;
+import mz.org.csaude.mentoring.service.ronda.RondaMentorServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
 import mz.org.csaude.mentoring.service.ronda.RondaServiceImpl;
+import mz.org.csaude.mentoring.service.ronda.RondaTypeService;
+import mz.org.csaude.mentoring.service.ronda.RondaTypeServiceImpl;
 import mz.org.csaude.mentoring.service.session.SessionService;
 import mz.org.csaude.mentoring.service.session.SessionServiceImpl;
 import mz.org.csaude.mentoring.service.tutor.TutorService;
@@ -55,7 +61,11 @@ public class MentoringApplication  extends Application {
 
     // 10.10.12.97 http://10.0.2.2:8087  192.168.16.104
 
-    private static final String BASE_URL = "http://10.10.12.65:8087";
+    // http://10.10.12.65:8087
+
+    // http://10.10.12.97:8087
+
+    private static final String BASE_URL = "http://10.10.12.97:8087";
 
     private User authenticatedUser;
 
@@ -94,6 +104,9 @@ public class MentoringApplication  extends Application {
     private LocationService locationService;
 
     private TutoredRestService tutoredRestService;
+    private RondaMenteeService rondaMenteeService;
+    private RondaMentorService rondaMentorService;
+    private RondaTypeService rondaTypeService;
     AuthInterceptorImpl interceptor;
 
 
@@ -227,6 +240,20 @@ public class MentoringApplication  extends Application {
     public TutoredRestService getTutoredRestService() {
         if (tutoredRestService == null) this.tutoredRestService = new TutoredRestService(this);
         return tutoredRestService;
+    }
+
+    public RondaMenteeService getRondaMenteeService() {
+        if (this.rondaMenteeService == null) this.rondaMenteeService = new RondaMenteeServiceImpl(this);
+        return rondaMenteeService;
+    }
+
+    public RondaMentorService getRondaMentorService() {
+        if (this.rondaMentorService == null) this.rondaMentorService = new RondaMentorServiceImpl(this);
+        return rondaMentorService;
+    }
+    public RondaTypeService getRondaTypeService() {
+        if (this.rondaTypeService == null) this.rondaTypeService = new RondaTypeServiceImpl(this);
+        return rondaTypeService;
     }
 
     public ApplicationStep getApplicationStep() {

@@ -5,7 +5,7 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewModel" type="mz.org.csaude.mentoring.viewmodel.mentorship.MentorShipListVM" />
+            name="viewModel" type="mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipSearchVM" />
 
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
         <import type="android.view.View"/>
@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.mentorship.ListMentorshipActivity">
+        tools:context=".view.mentorship.MentorshipActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout2"

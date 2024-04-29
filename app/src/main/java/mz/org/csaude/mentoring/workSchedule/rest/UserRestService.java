@@ -5,7 +5,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collections;
 
 import mz.org.csaude.mentoring.base.auth.LoginRequest;
@@ -14,7 +13,6 @@ import mz.org.csaude.mentoring.base.auth.SessionManager;
 import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
-import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.SyncDataService;
@@ -38,8 +36,8 @@ public class UserRestService extends BaseRestService implements UserSyncService 
     }
 
 
-    public void doOnlineLogin (RestResponseListener listener) {
-        this.sessionManager = new SessionManager(application.getApplicationContext());
+    public void doOnlineLogin (RestResponseListener listener, boolean remeberMe) {
+        this.sessionManager = new SessionManager(getApplication());
 
         SyncDataService syncDataService = getRetrofit().create(SyncDataService.class);
 
@@ -55,7 +53,7 @@ public class UserRestService extends BaseRestService implements UserSyncService 
                 if (response.code() == 200) {
                     LoginResponse data = response.body();
                     try {
-                        getApplication().setAuthenticatedUser(getApplication().getUserService().savedOrUpdateUser(new User(data.getUserDTO())));
+                        getApplication().setAuthenticatedUser(getApplication().getUserService().savedOrUpdateUser(new User(data.getUserDTO())), remeberMe);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }

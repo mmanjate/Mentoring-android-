@@ -2,7 +2,7 @@ package mz.org.csaude.mentoring.adapter.recyclerview.listable;
 
 public interface Listble {
 
-    int getId();
+    Integer getId();
 
     default int getListPosition() {
         return 0;

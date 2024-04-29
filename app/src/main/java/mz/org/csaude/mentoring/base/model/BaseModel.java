@@ -21,7 +21,7 @@ public abstract class BaseModel implements Serializable {
     public static final String COLUMN_SYNC_STATUS = "sync_status";
 
     @DatabaseField(columnName = COLUMN_ID, canBeNull = false, generatedId = true, allowGeneratedIdInsert = true)
-    private int id;
+    private Integer id;
 
     @DatabaseField(columnName = COLUMN_UUID, unique = true)
     private String uuid;
@@ -45,11 +45,11 @@ public abstract class BaseModel implements Serializable {
 
     protected int listPosition;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -1,19 +1,26 @@
 package mz.org.csaude.mentoring.dto.partner;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.partner.Partner;
-@Data
-@NoArgsConstructor
+
 public class PartnerDTO extends BaseEntityDTO {
+
+    private String uuid;
     private String name;
     private String description;
+
+    public PartnerDTO() {
+    }
+
     public PartnerDTO(Partner partner) {
-        this.setUuid(partner.getUuid());
+        super(partner);
         this.name = partner.getName();
         this.description = partner.getDescription();
     }
+
     public String getName() {
         return name;
     }

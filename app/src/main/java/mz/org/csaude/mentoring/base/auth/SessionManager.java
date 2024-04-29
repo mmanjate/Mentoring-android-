@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import mz.org.csaude.mentoring.R;
+import mz.org.csaude.mentoring.base.application.MentoringApplication;
 
 public class SessionManager {
 
@@ -11,13 +12,13 @@ public class SessionManager {
 
     public final static String REFRESH_TOKEN = "user_refresh_token";
     public final static String TOKEN_EXPIRE_TIME = "token_expiration";
-    private Context context;
+    private MentoringApplication application;
 
     SharedPreferences sharedPref;
 
-    public SessionManager(Context context) {
-        this.context = context;
-        this.sharedPref = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE);
+    public SessionManager(MentoringApplication application) {
+        this.application = application;
+        this.sharedPref = application.getMentoringSharedPreferences();
     }
 
     public boolean isAccessTokenExpired() {

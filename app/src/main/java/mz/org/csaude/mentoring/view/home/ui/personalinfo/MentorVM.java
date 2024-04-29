@@ -216,9 +216,9 @@ public class MentorVM extends BaseViewModel {
         try {
             this.districts.clear();
             this.healthFacilities.clear();
-            if (province.getId() <= 0) return;
+            if (province.getId() == null) return;
             //this.districts.add(new District());
-            if (province.getId() <= 0) return;
+            if (province.getId() == null) return;
             this.districts.addAll(getApplication().getDistrictService().getByProvinceAndMentor(this.location.getProvince(), getApplication().getCurrMentor()));
             getPersonalInfoFragment().reloadDistrcitAdapter();
         } catch (SQLException e) {
@@ -234,7 +234,7 @@ public class MentorVM extends BaseViewModel {
         try {
             this.location.setDistrict((District) district);
             this.healthFacilities.clear();
-            if (district.getId() <= 0) return;
+            if (district.getId() == null) return;
             //this.healthFacilities.add(new HealthFacility());
             this.healthFacilities.addAll(getApplication().getHealthFacilityService().getHealthFacilityByDistrictAndMentor((District) district, getApplication().getCurrMentor()));
             getPersonalInfoFragment().reloadHealthFacility();

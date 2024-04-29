@@ -103,4 +103,32 @@ public class TutoredRestService extends BaseRestService {
 
     }
 
+    public void restPostTutored(Tutored tutored, RestResponseListener<Tutored> listener){
+
+
+        Call<TutoredDTO> tutoredCall = syncDataService.postTutored(new TutoredDTO(tutored));
+        tutoredCall.enqueue(new Callback<TutoredDTO>() {
+            @Override
+            public void onResponse(Call<TutoredDTO> call, Response<TutoredDTO> response) {
+                TutoredDTO data = response.body();
+                if (response.code() == 201) {
+                    try {
+                        getApplication().getTutoredService().savedOrUpdateTutored(tutored);
+
+                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Utilities.parseToList(tutored));
+                    } catch (SQLException  e) {
+                        throw new RuntimeException(e);
+                    }
+                } else listener.doOnRestErrorResponse(response.message());
+            }
+
+            @Override
+            public void onFailure(Call<TutoredDTO> call, Throwable t) {
+                Log.i("METADATA LOAD --", t.getMessage(), t);
+                listener.doOnRestErrorResponse(t.getMessage());
+            }
+        });
+
+    }
+
 }

@@ -1,6 +1,5 @@
 package mz.org.csaude.mentoring.viewmodel;
 
-import static mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor.getInstance;
 
 import android.app.Application;
 import android.util.Log;
@@ -18,19 +17,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
+import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
+import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataService;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.login.LoginActivity;
 import mz.org.csaude.mentoring.view.splash.SplashActivity;
 import mz.org.csaude.mentoring.workSchedule.executor.ExecutorThreadProvider;
 import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
 
-public class SplashVM extends BaseViewModel implements RestResponseListener {
+public class SplashVM extends BaseViewModel implements RestResponseListener, ServerStatusListener {
 
-    ListenableFuture listenableFuture;
 
     public SplashVM(@NonNull Application application) {
         super(application);
@@ -49,19 +50,33 @@ public class SplashVM extends BaseViewModel implements RestResponseListener {
 
     public void initAppConfiguration() {
         OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runInitialSync();
-
-        WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
-            if (workInfo != null) {
-                if (workInfo.getState() == WorkInfo.State.SUCCEEDED){
-                    WorkInfo.State state = workInfo.getState();
-                    goToLogin();
-                }
-            }
-        });
+        if (getApplication().isInitialSetupComplete()) {
+            //try {Thread.sleep(3000);} catch (InterruptedException e) {throw new RuntimeException(e);}
+            goToLogin();
+        } else {
+            getApplication().isServerOnline(this);
+        }
     }
 
     public void goToLogin() {
         getRelatedActivity().nextActivityFinishingCurrent(LoginActivity.class);
     }
 
+    @Override
+    public void onServerStatusChecked(boolean isOnline) {
+        if (isOnline) {
+            OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runInitialSync();
+
+            WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
+                if (workInfo != null) {
+                    if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                        WorkInfo.State state = workInfo.getState();
+                        goToLogin();
+                    }
+                }
+            });
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.server_unavailable)).show();
+        }
+    }
 }

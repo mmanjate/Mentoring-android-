@@ -40,7 +40,7 @@ public class EmployeeDTO extends BaseEntityDTO {
     }
 
     public EmployeeDTO(Employee employee) {
-        this.setUuid(employee.getUuid());
+        super(employee);
         this.setName(employee.getName());
         this.setSurname(employee.getSurname());
         this.setNuit(employee.getNuit());

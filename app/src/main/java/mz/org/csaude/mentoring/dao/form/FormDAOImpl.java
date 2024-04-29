@@ -2,7 +2,6 @@ package mz.org.csaude.mentoring.dao.form;
 
 import android.app.Application;
 
-import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.ColumnArg;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
@@ -16,6 +15,7 @@ import mz.org.csaude.mentoring.base.databasehelper.MentoringDataBaseHelper;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
+import mz.org.csaude.mentoring.util.SyncSatus;
 
 public class FormDAOImpl extends MentoringBaseDaoImpl<Form, Integer> implements FormDAO {
 
@@ -41,5 +41,15 @@ public class FormDAOImpl extends MentoringBaseDaoImpl<Form, Integer> implements 
         formQb.join(tutorPAreaQb);
 
         return formQb.query();
+    }
+
+    @Override
+    public List<Form> getAllNotSynced() throws SQLException {
+        return queryForEq(Form.COLUMN_SYNC_STATUS, SyncSatus.PENDING);
+    }
+
+    @Override
+    public List<Form> getAllSynced() throws SQLException {
+        return queryForEq(Form.COLUMN_SYNC_STATUS, SyncSatus.SENT);
     }
 }

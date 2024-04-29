@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
-import mz.org.csaude.mentoring.model.Question.Question;
+import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.service.formQuestion.FormQuestionService;

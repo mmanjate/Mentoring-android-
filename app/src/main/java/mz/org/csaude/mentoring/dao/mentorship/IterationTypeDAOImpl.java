@@ -6,9 +6,10 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.mentorship.IterationType;
 
-public class IterationTypeDAOImpl extends BaseDaoImpl<IterationType, Integer> implements IterationTypeDAO {
+public class IterationTypeDAOImpl extends MentoringBaseDaoImpl<IterationType, Integer> implements IterationTypeDAO {
 
     public IterationTypeDAOImpl(Class<IterationType> dataClass) throws SQLException {
         super(dataClass);

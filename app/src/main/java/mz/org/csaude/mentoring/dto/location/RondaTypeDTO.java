@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.Cabinet;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
 
@@ -12,8 +13,7 @@ import mz.org.csaude.mentoring.model.rondatype.RondaType;
  */
 @Data
 @NoArgsConstructor
-public class RondaTypeDTO implements Serializable {
-    private String uuid;
+public class RondaTypeDTO extends BaseEntityDTO {
     private String code;
     private String description;
 
@@ -35,14 +35,6 @@ public class RondaTypeDTO implements Serializable {
 
     public RondaType getRondaType(){
         return new RondaType(this);
-    }
-
-    public String getUuid() {
-        return this.uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getCode() {

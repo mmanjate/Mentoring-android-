@@ -2,6 +2,8 @@ package mz.org.csaude.mentoring.dto.tutored;
 
 import java.io.Serializable;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
@@ -9,12 +11,11 @@ import mz.org.csaude.mentoring.model.tutored.Tutored;
 /**
  * @author Jose Julai Ritsure
  */
+@Data
+@NoArgsConstructor
 public class TutoredDTO extends BaseEntityDTO {
 
     private EmployeeDTO employeeDTO;
-
-    public TutoredDTO() {
-    }
 
     public TutoredDTO(Tutored tutored) {
         super(tutored);

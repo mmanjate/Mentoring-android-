@@ -82,8 +82,8 @@ public class TutorServiceImpl extends BaseServiceImpl<Tutor> implements TutorSer
 
             if(!doesTutorExiste){
 
-                Tutor tutor = new Tutor(tutorDTO);
-                Employee employee = new Employee(tutorDTO.getEmployeeDTO());
+                Tutor tutor = tutorDTO.getTutor();
+                Employee employee = tutorDTO.getEmployeeDTO().getEmployee();
                 tutor.setEmployee(employee);
                 this.employeeService.saveOrUpdateEmployee(employee);
                 this.tutorDAO.createOrUpdate(tutor);

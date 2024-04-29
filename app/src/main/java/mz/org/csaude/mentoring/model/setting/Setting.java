@@ -48,6 +48,7 @@ public class Setting extends BaseModel {
 
     public Setting(SettingDTO dto) {
         this.setUuid(dto.getUuid());
+        this.setSyncStatus(dto.getSyncSatus());
         this.setDescription(dto.getDescription());
         this.setDesignation(dto.getDesignation());
         this.setValue(dto.getValue());

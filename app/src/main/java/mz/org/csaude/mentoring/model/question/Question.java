@@ -1,4 +1,4 @@
-package mz.org.csaude.mentoring.model.Question;
+package mz.org.csaude.mentoring.model.question;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -28,9 +28,6 @@ public class Question extends BaseModel {
     @DatabaseField(columnName = COLUMN_QUESTION, canBeNull = false)
     private String question;
 
-    @DatabaseField(columnName = COLUMN_QUESTION_TYPE, canBeNull = false, foreign = true, foreignAutoRefresh = true)
-    private QuestionType questionType;
-
     @DatabaseField(columnName = COLUMN_QUESTION_CATEGORY, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private QuestionsCategory questionsCategory;
 
@@ -45,10 +42,6 @@ public class Question extends BaseModel {
         return question;
     }
 
-    public QuestionType getQuestionType() {
-        return questionType;
-    }
-
     public QuestionsCategory getQuestionsCategory() {
         return questionsCategory;
     }
@@ -59,10 +52,6 @@ public class Question extends BaseModel {
 
     public void setQuestion(String question) {
         this.question = question;
-    }
-
-    public void setQuestionType(QuestionType questionType) {
-        this.questionType = questionType;
     }
 
     public void setQuestionsCategory(QuestionsCategory questionsCategory) {

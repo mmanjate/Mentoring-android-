@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.viewmodel.ronda;
 
 import android.app.Application;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
@@ -214,7 +215,9 @@ public class RondaVM extends BaseViewModel {
         try {
             ronda.setSyncStatus(SyncSatus.PENDING);
             ronda.setUuid(Utilities.getNewUUID().toString());
-            RondaType rondaType = this.rondaTypeService.getRondaTypeByCode("SESSAO_ZERO");
+            Intent intent = getRelatedActivity().getIntent();
+            mz.org.csaude.mentoring.util.RondaType rondaTypeOption = (mz.org.csaude.mentoring.util.RondaType) intent.getExtras().get("rondaType");
+            RondaType rondaType = this.rondaTypeService.getRondaTypeByCode(rondaTypeOption.name());
             ronda.setRondaType(rondaType);
             ronda.setStartDate(this.getStartDate());
             ronda.setHealthFacility(this.selectedHealthFacility);
@@ -226,15 +229,17 @@ public class RondaVM extends BaseViewModel {
                 Utilities.displayAlertDialog(getRelatedActivity(), error).show();
                 return;
             }
-            Ronda createdRonda = getApplication().getRondaService().savedOrUpdateRonda(ronda);
-            List<RondaMentee> rondaMentees = new ArrayList<>();
+            //Ronda createdRonda = getApplication().getRondaService().savedOrUpdateRonda(ronda);
+            Ronda createdRonda = ronda;
+                    List<RondaMentee> rondaMentees = new ArrayList<>();
             for (Tutored tutored : this.getSelectedMentees()) {
                 RondaMentee rondaMentee = new RondaMentee();
                 rondaMentee.setUuid(Utilities.getNewUUID().toString());
                 rondaMentee.setRonda(createdRonda);
                 rondaMentee.setTutored(tutored);
                 rondaMentee.setStartDate(this.getStartDate());
-                RondaMentee createdRondaMentee = getApplication().getRondaMenteeService().savedOrUpdateRondaMentee(rondaMentee);
+                //RondaMentee createdRondaMentee = getApplication().getRondaMenteeService().savedOrUpdateRondaMentee(rondaMentee);
+                RondaMentee createdRondaMentee = rondaMentee;
                 rondaMentees.add(createdRondaMentee);
             }
 
@@ -245,12 +250,17 @@ public class RondaVM extends BaseViewModel {
             rondaMentor.setRonda(createdRonda);
             rondaMentor.setTutor(tutor);
             rondaMentor.setStartDate(this.getStartDate());
-            RondaMentor createdRondaMentor = getApplication().getRondaMentorService().savedOrUpdateRondaMentor(rondaMentor);
+            //RondaMentor createdRondaMentor = getApplication().getRondaMentorService().savedOrUpdateRondaMentor(rondaMentor);
+            RondaMentor createdRondaMentor = rondaMentor;
             rondaMentors.add(createdRondaMentor);
             Map<String, Object> params = new HashMap<>();
             params.put("createdRonda", createdRonda);
             params.put("rondaMentees", rondaMentees);
             params.put("rondaMentor", rondaMentor);
+            params.put("rondaType", rondaType);
+            String title = (String) intent.getExtras().get("title");
+            params.put("title", title);
+            params.put("currMentor", tutor);
             getRelatedActivity().nextActivity(MentorshipActivity.class, params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -293,9 +303,5 @@ public class RondaVM extends BaseViewModel {
     private boolean validateRondaMentee(Tutored selectedRondaMentee) {
         // TODO
         return true;
-    }
-    public void createNewRonda() {
-        Map<String, Object> params = new HashMap<>();
-        getRelatedActivity().nextActivityFinishingCurrent(CreateRondaActivity.class, params);
     }
 }

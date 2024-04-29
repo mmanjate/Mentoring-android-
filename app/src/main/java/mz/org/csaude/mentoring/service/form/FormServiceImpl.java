@@ -7,6 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.form.FormDAO;
+import mz.org.csaude.mentoring.dao.formQuestion.FormQuestionDAO;
 import mz.org.csaude.mentoring.dao.programmaticArea.TutorProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
@@ -18,7 +19,7 @@ public class FormServiceImpl extends BaseServiceImpl<Form> implements FormServic
     FormDAO formDAO;
 
     TutorProgrammaticAreaDAO tutorProgrammaticAreaDAO;
-
+    FormQuestionDAO formQuestionDAO;
 
 
     public FormServiceImpl(Application application) {
@@ -66,5 +67,32 @@ public class FormServiceImpl extends BaseServiceImpl<Form> implements FormServic
     @Override
     public List<Form> getAllOfTutor(Tutor tutor) throws SQLException {
         return formDAO.getAllOfTutor(tutor, application);
+    }
+
+    @Override
+    public void savedOrUpdateForms(List<Form> forms) throws SQLException {
+        for (Form form : forms) {
+            this.savedOrUpdateForm(form);
+        }
+    }
+
+    @Override
+    public Form savedOrUpdateForm(Form form) throws SQLException {
+        Form f = this.formDAO.getByUuid(form.getUuid());
+        if(f!=null) {
+            form.setId(f.getId());
+        }
+        this.formDAO.createOrUpdate(form);
+        return null;
+    }
+
+    @Override
+    public List<Form> getAllNotSynced() throws SQLException {
+        return this.formDAO.getAllNotSynced();
+    }
+
+    @Override
+    public List<Form> getAllSynced() throws SQLException {
+        return this.formDAO.getAllSynced();
     }
 }

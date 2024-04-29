@@ -12,7 +12,8 @@ import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.model.user.UserIndividual;
 
-
+@Data
+@NoArgsConstructor
 public class UserDTO extends BaseEntityDTO {
 
     private String username;
@@ -22,10 +23,6 @@ public class UserDTO extends BaseEntityDTO {
     private String salt;
 
     private EmployeeDTO employeeDTO;
-
-    public UserDTO() {
-        super();
-    }
 
     public UserDTO(User user) {
         super(user);

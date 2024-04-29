@@ -34,6 +34,7 @@ public class Tutored extends BaseModel implements Listble {
     public Tutored(TutoredDTO tutoredDTO) {
         this.setUuid(tutoredDTO.getUuid());
         this.setEmployee(new Employee(tutoredDTO.getEmployeeDTO()));
+        this.setSyncStatus(tutoredDTO.getSyncSatus());
     }
 
     public Employee getEmployee() {

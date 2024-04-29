@@ -24,6 +24,7 @@ public class HealthFacility extends BaseModel implements Listble {
         this.setUuid(healthFacilityDTO.getUuid());
         this.setDescription(healthFacilityDTO.getHealthFacility());
         if (healthFacilityDTO.getDistrictDTO() != null) this.setDistrict( new District(healthFacilityDTO.getDistrictDTO()));
+        this.setSyncStatus(healthFacilityDTO.getSyncSatus());
     }
 
     public HealthFacility() {

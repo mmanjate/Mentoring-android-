@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
+import mz.org.csaude.mentoring.util.RondaType;
 import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
 import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
@@ -21,12 +22,14 @@ public class HomeFragmentViewModel extends BaseViewModel {
     public void goToMentoringRounds() {
         Map<String, Object> params = new HashMap<>();
         params.put("title", "Rondas de Mentorias");
+        params.put("rondaType", RondaType.MENTORIA_INTERNA);
         getRelatedActivity().nextActivity(RondaActivity.class, params);
     }
 
     public void goToBaseSessions() {
         Map<String, Object> params = new HashMap<>();
         params.put("title", "Sessões Zero");
+        params.put("rondaType", RondaType.SESSAO_ZERO);
         getRelatedActivity().nextActivity(RondaActivity.class, params);
     }
 

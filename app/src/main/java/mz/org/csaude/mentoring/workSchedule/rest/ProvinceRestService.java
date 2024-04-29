@@ -15,6 +15,7 @@ import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.service.location.ProvinceService;
 import mz.org.csaude.mentoring.service.location.ProvinceServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,12 +44,14 @@ public class ProvinceRestService extends BaseRestService {
 
                 ProvinceService provinceService = getApplication().getProvinceService();
                 Toast.makeText(APP.getApplicationContext(), "Carregando as Provincias ", Toast.LENGTH_SHORT).show();
-                provinceService.savedOrUpdateProvince(data);
 
                     List<Province> provinces = new ArrayList<>();
                     for (ProvinceDTO provinceDTO : data) {
-                        provinces.add(new Province(provinceDTO));
+                        provinceDTO.setSyncSatus(SyncSatus.SENT);
+                        provinceDTO.getProvince().setSyncStatus(SyncSatus.SENT);
+                        provinces.add(provinceDTO.getProvince());
                     }
+                    provinceService.savedOrUpdateProvince(data);
                     listener.doOnResponse(BaseRestService.REQUEST_SUCESS, provinces);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

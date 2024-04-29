@@ -45,6 +45,7 @@ public class Province extends BaseModel implements Listble {
     public Province(ProvinceDTO provinceDTO) {
         this.setDescription(provinceDTO.getDesignation());
         this.setUuid(provinceDTO.getUuid());
+        this.setSyncStatus(provinceDTO.getSyncSatus());
     }
 
 

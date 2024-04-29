@@ -2,20 +2,19 @@ package mz.org.csaude.mentoring.dto.location;
 
 import java.io.Serializable;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.Province;
 
+@Data
 @NoArgsConstructor
-public class ProvinceDTO implements Serializable {
-
-    private String uuid;
+public class ProvinceDTO extends BaseEntityDTO {
     private String designation;
-
     public ProvinceDTO(Province province) {
         this.setUuid(province.getUuid());
         this.setDesignation(province.getDescription());
     }
-
     public String getDesignation() {
         return designation;
     }
@@ -23,11 +22,12 @@ public class ProvinceDTO implements Serializable {
         this.designation = designation;
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public Province getProvince() {
+        Province province = new Province();
+        province.setId(this.getId());
+        province.setUuid(this.getUuid());
+        province.setSyncStatus(this.getSyncSatus());
+        province.setDescription(this.getDesignation());
+        return province;
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.formQuestion.FormQuestionDAO;
+import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
 import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.model.user.User;
 
@@ -49,5 +50,22 @@ public class FormQuestionServiceImpl extends BaseServiceImpl<FormQuestion> imple
     @Override
     public FormQuestion getById(int id) throws SQLException {
         return this.formQuestionDAO.queryForId(id);
+    }
+
+    @Override
+    public void saveOrUpdateFormQuestions(List<FormQuestionDTO> formQuestionDTOS) throws SQLException {
+        for (FormQuestionDTO formQuestionDTO: formQuestionDTOS) {
+            this.saveOrUpdateFormQuestion(formQuestionDTO);
+        }
+    }
+    @Override
+    public FormQuestion saveOrUpdateFormQuestion(FormQuestionDTO formQuestionDTO) throws SQLException {
+        FormQuestion fq = this.formQuestionDAO.getByUuid(formQuestionDTO.getUuid());
+        FormQuestion formQuestion = new FormQuestion();
+        if(fq!=null) {
+            formQuestion.setId(fq.getId());
+        }
+        this.formQuestionDAO.createOrUpdate(formQuestion);
+        return formQuestion;
     }
 }

@@ -1,14 +1,15 @@
 package mz.org.csaude.mentoring.dto.setting;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.setting.Setting;
 
 import java.io.Serializable;
 
 @Data
-public class SettingDTO implements Serializable {
-
-    private String uuid;
+@NoArgsConstructor
+public class SettingDTO extends BaseEntityDTO {
 
     private String designation;
 
@@ -19,9 +20,6 @@ public class SettingDTO implements Serializable {
     private String type;
 
     private Boolean enabled;
-
-    public SettingDTO() {
-    }
 
     public SettingDTO(String designation, String value, String description, String type, Boolean enabled) {
         this.setDescription(description);
@@ -51,14 +49,6 @@ public class SettingDTO implements Serializable {
 
     public Setting getSetting() {
         return new Setting(this);
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getDesignation() {

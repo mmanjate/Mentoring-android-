@@ -47,4 +47,9 @@ public class FormDAOImpl extends MentoringBaseDaoImpl<Form, Integer> implements 
     public List<Form> getAllNotSynced() throws SQLException {
         return queryForEq(Form.COLUMN_SYNC_STATUS, SyncSatus.PENDING);
     }
+
+    @Override
+    public List<Form> getAllSynced() throws SQLException {
+        return queryForEq(Form.COLUMN_SYNC_STATUS, SyncSatus.SENT);
+    }
 }

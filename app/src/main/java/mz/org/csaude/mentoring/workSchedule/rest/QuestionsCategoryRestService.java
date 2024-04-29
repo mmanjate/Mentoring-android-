@@ -19,6 +19,7 @@ import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.question.QuestionsCategoryService;
 import mz.org.csaude.mentoring.service.question.QuestionsCategoryServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,11 +44,13 @@ public class QuestionsCategoryRestService extends BaseRestService {
                     try {
                         QuestionsCategoryService questionsCategoryService = new QuestionsCategoryServiceImpl(LoadMetadataServiceImpl.APP);
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Categorias.", Toast.LENGTH_SHORT).show();
-                        questionsCategoryService.saveOrUpdateQuestionCategories(data);
                         List<QuestionsCategory> questionsCategories = new ArrayList<>();
                         for (QuestionCategoryDTO questionCategoryDTO : data){
+                            questionCategoryDTO.setSyncSatus(SyncSatus.SENT);
+                            questionCategoryDTO.getQuestionCategory().setSyncStatus(SyncSatus.SENT);
                             questionsCategories.add(questionCategoryDTO.getQuestionCategory());
                         }
+                        questionsCategoryService.saveOrUpdateQuestionCategories(data);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, questionsCategories);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);

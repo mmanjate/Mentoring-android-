@@ -15,6 +15,7 @@ import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.service.career.CareerService;
 import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,17 +41,19 @@ public class CareerRestService extends BaseRestService {
                     try {
                         CareerService careerService = new CareerServiceImpl(LoadMetadataServiceImpl.APP);
                         Toast.makeText(APP.getApplicationContext(), "Carregando as CARREIRAS...", Toast.LENGTH_SHORT).show();
-                        careerService.savedOrUpdateCareers(data);
                         List<Career> careers = new ArrayList<>();
                         for (CareerDTO careerDTO : data) {
+                            careerDTO.setSyncSatus(SyncSatus.SENT);
+                            careerDTO.getCareer().setSyncStatus(SyncSatus.SENT);
                             careers.add(new Career(careerDTO));
                         }
+                        careerService.savedOrUpdateCareers(data);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, careers);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
 
-                    Toast.makeText(APP.getApplicationContext(), "CARREIRAS carregadas com sucesso!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getApplicationContext(), "CARREIRAS CARREGADAS COM SUCESSO!", Toast.LENGTH_SHORT).show();
                 }
 
             }

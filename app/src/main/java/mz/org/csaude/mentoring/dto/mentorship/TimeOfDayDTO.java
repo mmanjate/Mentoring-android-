@@ -32,6 +32,7 @@ public class TimeOfDayDTO extends BaseEntityDTO {
         TimeOfDay timeOfDay = new TimeOfDay();
         timeOfDay.setId(this.getId());
         timeOfDay.setUuid(this.getUuid());
+        timeOfDay.setSyncStatus(this.getSyncSatus());
         timeOfDay.setCode(this.getCode());
         timeOfDay.setDescription(this.getDescription());
         return timeOfDay;

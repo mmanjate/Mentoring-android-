@@ -90,4 +90,9 @@ public class FormServiceImpl extends BaseServiceImpl<Form> implements FormServic
     public List<Form> getAllNotSynced() throws SQLException {
         return this.formDAO.getAllNotSynced();
     }
+
+    @Override
+    public List<Form> getAllSynced() throws SQLException {
+        return this.formDAO.getAllSynced();
+    }
 }

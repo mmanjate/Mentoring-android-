@@ -2,6 +2,7 @@ package mz.org.csaude.mentoring.dto.location;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.Cabinet;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-public class CabinetDTO implements Serializable {
+public class CabinetDTO extends BaseEntityDTO {
 
     private String uuid;
 
@@ -32,7 +33,12 @@ public class CabinetDTO implements Serializable {
     }
 
     public Cabinet getCabinet(){
-        return new Cabinet(this);
+        Cabinet cabinet = new Cabinet();
+        cabinet.setId(this.getId());
+        cabinet.setUuid(this.getUuid());
+        cabinet.setSyncStatus(this.getSyncSatus());
+        cabinet.setName(this.getName());
+        return cabinet;
     }
 
     public String getUuid() {

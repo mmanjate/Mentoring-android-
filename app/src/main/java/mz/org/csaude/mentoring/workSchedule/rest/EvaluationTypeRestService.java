@@ -19,6 +19,7 @@ import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeService;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,16 +44,18 @@ public class EvaluationTypeRestService extends BaseRestService {
                     try {
                         EvaluationTypeService evaluationTypeService = new EvaluationTypeServiceImpl(LoadMetadataServiceImpl.APP);
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Avaliações.", Toast.LENGTH_SHORT).show();
-                        evaluationTypeService.saveOrUpdateEvaluationTypes(data);
                         List<EvaluationType> evaluationTypes = new ArrayList<>();
                         for (EvaluationTypeDTO evaluationTypeDTO : data){
+                            evaluationTypeDTO.setSyncSatus(SyncSatus.SENT);
+                            evaluationTypeDTO.getEvaluationType().setSyncStatus(SyncSatus.SENT);
                             evaluationTypes.add(evaluationTypeDTO.getEvaluationType());
                         }
+                        evaluationTypeService.saveOrUpdateEvaluationTypes(data);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, evaluationTypes);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE AVALIAÇÕES CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE AVALIAÇÕES CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }

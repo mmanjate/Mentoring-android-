@@ -2,10 +2,13 @@ package mz.org.csaude.mentoring.dto.session;
 
 import java.util.Date;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
-
+@Data
+@NoArgsConstructor
 public class SessionDTO extends BaseEntityDTO {
     private Date startDate;
     private Date endDate;

@@ -14,4 +14,5 @@ import mz.org.csaude.mentoring.model.tutor.Tutor;
 public interface FormDAO extends MentoringBaseDao<Form, Integer> {
     List<Form> getAllOfTutor(Tutor tutor, Application application) throws SQLException;
     List<Form> getAllNotSynced() throws SQLException;
+    List<Form> getAllSynced() throws SQLException;
 }

@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.ronda.RondaMentor;
-
+@Data
+@NoArgsConstructor
 public class RondaDTO extends BaseEntityDTO {
     private String description;
     private Date startDate;

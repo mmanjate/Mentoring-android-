@@ -2,13 +2,15 @@ package mz.org.csaude.mentoring.dto.professionalcategory;
 
 import java.io.Serializable;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
 
+@Data
 @NoArgsConstructor
-public class ProfessionalCategoryDTO implements Serializable {
+public class ProfessionalCategoryDTO extends BaseEntityDTO {
 
-    private String uuid;
     private String code;
     private String description;
 
@@ -33,12 +35,14 @@ public class ProfessionalCategoryDTO implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public String getUuid() {
-        return uuid;
+    public ProfessionalCategory getProfessionalCategory() {
+        ProfessionalCategory professionalCategory = new ProfessionalCategory();
+        professionalCategory.setId(this.getId());
+        professionalCategory.setUuid(this.getUuid());
+        professionalCategory.setSyncStatus(this.getSyncSatus());
+        professionalCategory.setCode(this.getCode());
+        professionalCategory.setDescription(this.getDescription());
+        return professionalCategory;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
 }

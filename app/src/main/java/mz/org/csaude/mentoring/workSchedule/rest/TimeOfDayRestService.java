@@ -15,6 +15,7 @@ import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
 import mz.org.csaude.mentoring.service.mentorship.TimeOfDayService;
 import mz.org.csaude.mentoring.service.mentorship.TimeOfDayServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,11 +40,13 @@ public class TimeOfDayRestService extends BaseRestService {
                     try {
                         TimeOfDayService timeOfDayService = new TimeOfDayServiceImpl(LoadMetadataServiceImpl.APP);
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Período do Dia.", Toast.LENGTH_SHORT).show();
-                        timeOfDayService.saveOrUpdateTimesOfDay(data);
                         List<TimeOfDay> timeOfDays = new ArrayList<>();
                         for (TimeOfDayDTO timeOfDayDTO : data){
+                            timeOfDayDTO.setSyncSatus(SyncSatus.SENT);
+                            timeOfDayDTO.getTimeOfDay().setSyncStatus(SyncSatus.SENT);
                             timeOfDays.add(timeOfDayDTO.getTimeOfDay());
                         }
+                        timeOfDayService.saveOrUpdateTimesOfDay(data);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, timeOfDays);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);

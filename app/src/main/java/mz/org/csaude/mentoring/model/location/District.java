@@ -40,6 +40,7 @@ public class District extends BaseModel implements Listble {
         this.setUuid(districtDTO.getUuid());
         this.setDescription(districtDTO.getDescription());
         if(districtDTO.getProvinceDTO() != null) this.setProvince(new Province(districtDTO.getProvinceDTO()));
+        this.setSyncStatus(districtDTO.getSyncSatus());
     }
 
     public Province getProvince() {

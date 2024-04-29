@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.location.LocationDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.dto.professionalcategory.ProfessionalCategoryDTO;
@@ -15,9 +16,8 @@ import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.partner.Partner;
 
 
-public class EmployeeDTO implements Serializable {
+public class EmployeeDTO extends BaseEntityDTO {
 
-    private String uuid;
     private String name;
 
     private String surname;
@@ -60,14 +60,6 @@ public class EmployeeDTO implements Serializable {
         }
         return locationDTOSet;
     }
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
     public String getName() {
         return name;
     }
@@ -138,5 +130,33 @@ public class EmployeeDTO implements Serializable {
 
     public void setLocationDTOSet(List<LocationDTO> locationDTOSet) {
         this.locationDTOSet = locationDTOSet;
+    }
+
+    public Employee getEmployee() {
+        Employee employee = new Employee();
+        employee.setId(this.getId());
+        employee.setUuid(this.getUuid());
+        employee.setSyncStatus(this.getSyncSatus());
+        employee.setName(this.getName());
+        employee.setSurname(this.getSurname());
+        employee.setNuit(this.getNuit());
+        employee.setTrainingYear(this.getTrainingYear());
+        employee.setPhoneNumber(this.getPhoneNumber());
+        employee.setEmail(this.getEmail());
+        if(this.getProfessionalCategoryDTO()!=null) {
+            employee.setProfessionalCategory(this.getProfessionalCategoryDTO().getProfessionalCategory());
+        }
+        if(this.getPartnerDTO()!=null) {
+            employee.setPartner(this.partnerDTO.getPartner());
+        }
+        if(this.getLocationDTOSet()!=null && !this.getLocationDTOSet().isEmpty()) {
+            List<Location> locations = new ArrayList<>();
+            for (LocationDTO locationDTO: this.getLocationDTOSet()) {
+                Location location = locationDTO.getLocation();
+                locations.add(location);
+            }
+            employee.setLocations(locations);
+        }
+        return employee;
     }
 }

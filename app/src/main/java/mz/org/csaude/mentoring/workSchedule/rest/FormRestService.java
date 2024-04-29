@@ -2,6 +2,7 @@ package mz.org.csaude.mentoring.workSchedule.rest;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -15,6 +16,11 @@ import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeService;
+import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeServiceImpl;
+import mz.org.csaude.mentoring.service.form.FormService;
+import mz.org.csaude.mentoring.service.form.FormServiceImpl;
+import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -38,14 +44,20 @@ public class FormRestService extends BaseRestService {
                 List<FormDTO> data = response.body();
                 if (Utilities.listHasElements(data)) {
                     try {
-                        List<Form> forms = Utilities.parse(data, Form.class);
-                        for (Form form : forms) { form.setSyncStatus(SyncSatus.SENT);}
-                        getApplication().getFormService().savedOrUpdateForms(forms);
+                        FormService formService = new FormServiceImpl(LoadMetadataServiceImpl.APP);
+                        List<Form> forms = new ArrayList<>();
+                        for (FormDTO formDTO: data) {
+                            formDTO.setSyncSatus(SyncSatus.SENT);
+                            formDTO.getForm().setSyncStatus(SyncSatus.SENT);
+                            forms.add(formDTO.getForm());
+                        }
+                        Toast.makeText(APP.getApplicationContext(), "Carregando as Tabelas de Competências.", Toast.LENGTH_SHORT).show();
+                        formService.savedOrUpdateForms(forms);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, forms);
-                    } catch (SQLException | InstantiationException | IllegalAccessException |
-                             InvocationTargetException | NoSuchMethodException e) {
+                    } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
+                    Toast.makeText(APP.getApplicationContext(), "TABELAS DE COMPETÊNCIAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(BaseRestService.REQUEST_NO_DATA, null);
                 }
@@ -53,6 +65,7 @@ public class FormRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<FormDTO>> call, Throwable t) {
+                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as Tabelas de Competências. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

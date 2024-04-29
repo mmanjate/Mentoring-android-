@@ -15,6 +15,7 @@ import mz.org.csaude.mentoring.model.mentorship.IterationType;
 import mz.org.csaude.mentoring.service.mentorship.IterationTypeService;
 import mz.org.csaude.mentoring.service.mentorship.IterationTypeServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,16 +40,18 @@ public class IterationTypeRestService extends BaseRestService {
                     try {
                         IterationTypeService evaluationTypeService = new IterationTypeServiceImpl(LoadMetadataServiceImpl.APP);
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de ITERAÇÕES.", Toast.LENGTH_SHORT).show();
-                        evaluationTypeService.saveOrUpdateIterationTypes(data);
                         List<IterationType> iterationTypes = new ArrayList<>();
                         for (IterationTypeDTO iterationTypeDTO : data){
+                            iterationTypeDTO.setSyncSatus(SyncSatus.SENT);
+                            iterationTypeDTO.getIterationType().setSyncStatus(SyncSatus.SENT);
                             iterationTypes.add(iterationTypeDTO.getIterationType());
                         }
+                        evaluationTypeService.saveOrUpdateIterationTypes(data);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, iterationTypes);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE ITERAÇÕES CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE ITERAÇÕES CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }

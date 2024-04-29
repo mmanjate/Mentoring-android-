@@ -1,5 +1,7 @@
 package mz.org.csaude.mentoring.dto.form;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.evaluationType.EvaluationTypeDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
@@ -7,7 +9,8 @@ import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.model.question.Question;
-
+@Data
+@NoArgsConstructor
 public class FormQuestionDTO extends BaseEntityDTO {
     private boolean mandatory;
     private Integer sequence;
@@ -74,5 +77,24 @@ public class FormQuestionDTO extends BaseEntityDTO {
 
     public void setResponseType(ResponseTypeDTO responseType) {
         this.responseType = responseType;
+    }
+    public FormQuestion getFormQuestion() {
+        FormQuestion formQuestion = new FormQuestion();
+        formQuestion.setId(this.getId());
+        formQuestion.setUuid(this.getUuid());
+        formQuestion.setSyncStatus(this.getSyncSatus());
+        formQuestion.setMandatory(this.isMandatory());
+        formQuestion.setApplicable(this.getApplicable());
+        formQuestion.setSequence(this.getSequence());
+        if(this.getQuestion()!=null) {
+            formQuestion.setQuestion(this.getQuestion().getQuestionObj());
+        }
+        if(this.getEvaluationType()!=null) {
+            formQuestion.setEvaluationType(this.getEvaluationType().getEvaluationType());
+        }
+        if(this.getResponseType()!=null) {
+            formQuestion.setResponseType(this.getResponseType().getResponseType());
+        }
+        return formQuestion;
     }
 }

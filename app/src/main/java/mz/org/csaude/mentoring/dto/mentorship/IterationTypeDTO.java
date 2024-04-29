@@ -32,6 +32,8 @@ public class IterationTypeDTO extends BaseEntityDTO {
         IterationType iterationType = new IterationType();
         iterationType.setId(this.getId());
         iterationType.setUuid(this.getUuid());
+        iterationType.setCode(this.getCode());
+        iterationType.setSyncStatus(this.getSyncSatus());
         iterationType.setDescription(this.getDescription());
         return iterationType;
     }

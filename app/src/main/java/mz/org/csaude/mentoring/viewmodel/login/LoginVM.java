@@ -115,13 +115,20 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
                         e.printStackTrace();
                     }
                     OneTimeWorkRequest menteeRequest = WorkerScheduleExecutor.getInstance(getApplication()).menteesDownload();
-                    OneTimeWorkRequest mentorFormsRequest = WorkerScheduleExecutor.getInstance(getApplication()).mentorFormsDownload();
                     WorkerScheduleExecutor
                             .getInstance(getApplication())
                             .getWorkManager()
                             .getWorkInfoByIdLiveData(menteeRequest.getId()).observe(getRelatedActivity(), info -> {
                         if (info.getState() == WorkInfo.State.SUCCEEDED){
-                            goHome();
+                            OneTimeWorkRequest mentorFormsRequest = WorkerScheduleExecutor.getInstance(getApplication()).mentorFormsDownload();
+                            WorkerScheduleExecutor
+                                    .getInstance(getApplication())
+                                    .getWorkManager()
+                                    .getWorkInfoByIdLiveData(mentorFormsRequest.getId()).observe(getRelatedActivity(), resp -> {
+                                        if (resp.getState() == WorkInfo.State.SUCCEEDED) {
+                                            goHome();
+                                        }
+                                    });
                         }
                     });
                 }

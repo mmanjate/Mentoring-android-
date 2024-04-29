@@ -15,6 +15,7 @@ import mz.org.csaude.mentoring.model.mentorship.Door;
 import mz.org.csaude.mentoring.service.mentorship.DoorService;
 import mz.org.csaude.mentoring.service.mentorship.DoorServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,11 +40,13 @@ public class DoorRestService extends BaseRestService {
                     try {
                         DoorService doorService = new DoorServiceImpl(LoadMetadataServiceImpl.APP);
                         Toast.makeText(APP.getApplicationContext(), "Carregando as Portas.", Toast.LENGTH_SHORT).show();
-                        doorService.saveOrUpdateDoors(data);
                         List<Door> doors = new ArrayList<>();
                         for (DoorDTO doorDTO : data){
+                            doorDTO.setSyncSatus(SyncSatus.SENT);
+                            doorDTO.getDoor().setSyncStatus(SyncSatus.SENT);
                             doors.add(doorDTO.getDoor());
                         }
+                        doorService.saveOrUpdateDoors(data);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, doors);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);

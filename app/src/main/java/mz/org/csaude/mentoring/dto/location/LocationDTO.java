@@ -2,23 +2,23 @@ package mz.org.csaude.mentoring.dto.location;
 
 import java.io.Serializable;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.location.Province;
+@Data
+@NoArgsConstructor
+public class LocationDTO extends BaseEntityDTO {
 
-public class LocationDTO implements Serializable {
-
-    private String uuid;
     private EmployeeDTO employeeDTO;
     private ProvinceDTO provinceDTO;
     private DistrictDTO districtDTO;
     private HealthFacilityDTO healthFacilityDTO;
     private String locationLevel;
-
-    public LocationDTO() {
-    }
 
     public LocationDTO(Location location) {
         this.setUuid(location.getUuid());
@@ -29,13 +29,6 @@ public class LocationDTO implements Serializable {
 
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
     public EmployeeDTO getEmployeeDTO() {
         return employeeDTO;
     }
@@ -74,5 +67,25 @@ public class LocationDTO implements Serializable {
 
     public void setLocationLevel(String locationLevel) {
         this.locationLevel = locationLevel;
+    }
+
+    public Location getLocation() {
+        Location location = new Location();
+        location.setId(this.getId());
+        location.setUuid(this.getUuid());
+        location.setSyncStatus(this.getSyncSatus());
+        if(this.getEmployeeDTO()!=null) {
+            location.setEmployee(this.employeeDTO.getEmployee());
+        }
+        if(this.getDistrictDTO()!=null) {
+            location.setDistrict(this.getDistrictDTO().getDistrict());
+        }
+        if(this.getProvinceDTO()!=null) {
+            location.setProvince(this.getProvinceDTO().getProvince());
+        }
+        if(this.getHealthFacilityDTO()!=null) {
+            location.setHealthFacility(this.getHealthFacilityDTO().getHealthFacilityObj());
+        }
+        return location;
     }
 }

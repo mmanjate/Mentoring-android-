@@ -24,7 +24,6 @@ public class Form extends BaseModel {
     public static final String COLUMN_CODE = "code";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_PROGRAMMATIC_AREA= "programmatic_area_type_id";
-    public static final String COLUMN_FORM_TYPE = "form_type_id";
     public static final String COLUMN_TARGET_PATIENT = "target_patient";
     public static final String COLUMN_TARGET_FILE = "target_file";
     public static final String COLUMN_PARTNER = "partner_id";
@@ -40,9 +39,6 @@ public class Form extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_PROGRAMMATIC_AREA, canBeNull = false, foreign = true, foreignAutoRefresh = true )
     private ProgrammaticArea programmaticArea;
-
-    @DatabaseField(columnName = COLUMN_FORM_TYPE, canBeNull = false, foreign = true, foreignAutoRefresh = true )
-    private FormType formType;
 
     @DatabaseField(columnName = COLUMN_TARGET_PATIENT)
     private int targetPatient;
@@ -83,14 +79,6 @@ public class Form extends BaseModel {
 
     public void setProgrammaticArea(ProgrammaticArea programmaticArea) {
         this.programmaticArea = programmaticArea;
-    }
-
-    public FormType getFormType() {
-        return formType;
-    }
-
-    public void setFormType(FormType formType) {
-        this.formType = formType;
     }
 
     public int getTargetPatient() {

@@ -19,6 +19,7 @@ import mz.org.csaude.mentoring.service.responseType.ResponseTypeService;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaTypeService;
 import mz.org.csaude.mentoring.service.ronda.RondaTypeServiceImpl;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,16 +44,18 @@ public class ResponseTypeRestService extends BaseRestService {
                     try {
                         ResponseTypeService responseTypeService = new ResponseTypeServiceImpl(LoadMetadataServiceImpl.APP);
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Respostas.", Toast.LENGTH_SHORT).show();
-                        responseTypeService.saveOrUpdateResponseTypes(data);
                         List<ResponseType> responseTypes = new ArrayList<>();
                         for (ResponseTypeDTO responseTypeDTO : data){
+                            responseTypeDTO.setSyncSatus(SyncSatus.SENT);
+                            responseTypeDTO.getResponseType().setSyncStatus(SyncSatus.SENT);
                             responseTypes.add(responseTypeDTO.getResponseType());
                         }
+                        responseTypeService.saveOrUpdateResponseTypes(data);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, responseTypes);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE RESPOSTAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE RESPOSTAS CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }

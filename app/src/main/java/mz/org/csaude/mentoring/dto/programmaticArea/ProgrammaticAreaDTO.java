@@ -1,8 +1,11 @@
 package mz.org.csaude.mentoring.dto.programmaticArea;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
-
+@Data
+@NoArgsConstructor
 public class ProgrammaticAreaDTO extends BaseEntityDTO {
     private String code;
     private String description;
@@ -33,5 +36,16 @@ public class ProgrammaticAreaDTO extends BaseEntityDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ProgrammaticArea getProgrammaticArea() {
+        ProgrammaticArea programmaticArea = new ProgrammaticArea();
+        programmaticArea.setId(this.getId());
+        programmaticArea.setCode(this.getCode());
+        programmaticArea.setDescription(this.getDescription());
+        programmaticArea.setName(this.getName());
+        programmaticArea.setUuid(this.getUuid());
+        programmaticArea.setSyncStatus(this.getSyncSatus());
+        return programmaticArea;
     }
 }

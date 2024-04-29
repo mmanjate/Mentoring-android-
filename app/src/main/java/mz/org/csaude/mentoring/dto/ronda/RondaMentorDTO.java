@@ -2,10 +2,13 @@ package mz.org.csaude.mentoring.dto.ronda;
 
 import java.util.Date;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.model.ronda.RondaMentor;
-
+@Data
+@NoArgsConstructor
 public class RondaMentorDTO extends BaseEntityDTO {
     private Date startDate;
     private Date endDate;

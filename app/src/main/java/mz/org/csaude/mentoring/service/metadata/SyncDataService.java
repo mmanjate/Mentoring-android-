@@ -5,6 +5,7 @@ import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 import mz.org.csaude.mentoring.dto.evaluationType.EvaluationTypeDTO;
 import mz.org.csaude.mentoring.dto.form.FormDTO;
+import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
 import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.dto.location.DistrictDTO;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
@@ -16,6 +17,7 @@ import mz.org.csaude.mentoring.dto.mentorship.TimeOfDayDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.dto.professionalcategory.ProfessionalCategoryDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
+import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
@@ -106,4 +108,8 @@ public interface SyncDataService {
     Call<List<DoorDTO>> getDoors();
     @GET("/utils/timesOfDay")
     Call<List<TimeOfDayDTO>> getTimesOfDay();
+    @GET("/questions/getAll")
+    Call<List<QuestionDTO>> getAllQuestions();
+    @GET("/formQuestions/getByFormsUuids")
+    Call<List<FormQuestionDTO>> getFormsQuestionsByFormsUuids(@Query("formsUuids") List<String> formsUuids);
 }

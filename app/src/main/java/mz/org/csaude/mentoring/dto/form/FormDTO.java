@@ -1,10 +1,13 @@
 package mz.org.csaude.mentoring.dto.form;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.dto.programmaticArea.ProgrammaticAreaDTO;
 import mz.org.csaude.mentoring.model.form.Form;
-
+@Data
+@NoArgsConstructor
 public class FormDTO extends BaseEntityDTO {
     private String name;
     private String code;
@@ -77,5 +80,25 @@ public class FormDTO extends BaseEntityDTO {
 
     public void setProgrammaticArea(ProgrammaticAreaDTO programmaticArea) {
         this.programmaticArea = programmaticArea;
+    }
+
+    public Form getForm() {
+        Form form = new Form();
+        form.setId(this.getId());
+        form.setUuid(this.getUuid());
+        form.setSyncStatus(this.getSyncSatus());
+        form.setCode(this.getCode());
+        form.setDescription(this.getDescription());
+        form.setName(this.getName());
+        form.setTargetFile(this.getTargetFile());
+        form.setTargetPatient(this.getTargetPatient());
+        if(this.getPartner()!=null) {
+            form.setPartner(this.getPartner().getPartner());
+        }
+        if(this.getProgrammaticArea()!=null) {
+            form.setProgrammaticArea(this.getProgrammaticArea().getProgrammaticArea());
+        }
+
+        return form;
     }
 }

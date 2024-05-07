@@ -22,7 +22,7 @@ public class EmployeeDTO extends BaseEntityDTO {
 
     private String surname;
 
-    private int nuit;
+    private long nuit;
 
     private ProfessionalCategoryDTO professionalCategoryDTO;
 
@@ -76,11 +76,11 @@ public class EmployeeDTO extends BaseEntityDTO {
         this.surname = surname;
     }
 
-    public int getNuit() {
+    public long getNuit() {
         return nuit;
     }
 
-    public void setNuit(int nuit) {
+    public void setNuit(long nuit) {
         this.nuit = nuit;
     }
 

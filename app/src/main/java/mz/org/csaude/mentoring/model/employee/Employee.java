@@ -44,7 +44,7 @@ public class Employee extends BaseModel implements Listble {
     private String surname;
 
     @DatabaseField(columnName = COLUMN_NUIT, unique = true)
-    private int nuit;
+    private long nuit;
     @DatabaseField(columnName = COLUMN_PROFESSIONAL_CATEGORY, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private ProfessionalCategory professionalCategory;
 
@@ -125,11 +125,11 @@ public class Employee extends BaseModel implements Listble {
         this.surname = surname;
     }
 
-    public int getNuit() {
+    public long getNuit() {
         return nuit;
     }
 
-    public void setNuit(int nuit) {
+    public void setNuit(long nuit) {
         this.nuit = nuit;
     }
 

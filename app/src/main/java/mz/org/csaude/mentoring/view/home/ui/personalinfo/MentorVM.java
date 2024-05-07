@@ -301,13 +301,13 @@ public class MentorVM extends BaseViewModel {
 
     @Bindable
     public String getNuit() {
-        this.nuit = Utilities.parseIntToString(this.tutor.getEmployee().getNuit());
+        this.nuit = Utilities.parseLongToString(this.tutor.getEmployee().getNuit());
         return this.nuit;
     }
     public void setNuit(String nuit) {
         this.nuit = nuit;
 
-        if(!StringUtils.isEmpty(nuit) & StringUtils.isNumeric(nuit)) this.tutor.getEmployee().setNuit(Integer.parseInt(nuit));
+        if(!StringUtils.isEmpty(nuit) & StringUtils.isNumeric(nuit)) this.tutor.getEmployee().setNuit(Long.parseLong(nuit));
     }
 
     public void setMenteeLabor(Listble menteeLabor){

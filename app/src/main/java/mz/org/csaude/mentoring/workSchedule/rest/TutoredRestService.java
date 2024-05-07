@@ -4,6 +4,9 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +14,8 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.base.service.BaseRestService;
+import mz.org.csaude.mentoring.common.HttpStatus;
+import mz.org.csaude.mentoring.common.MentoringAPIError;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.location.Location;
@@ -119,7 +124,21 @@ public class TutoredRestService extends BaseRestService {
                     } catch (SQLException  e) {
                         throw new RuntimeException(e);
                     }
-                } else listener.doOnRestErrorResponse(response.message());
+                } else {
+                    if (response.code() == HttpStatus.BAD_REQUEST) {
+                        // Parse custom error response
+                        try {
+                            Gson gson = new Gson();
+                            MentoringAPIError error = gson.fromJson(response.errorBody().string(), MentoringAPIError.class);
+                            listener.doOnRestErrorResponse(error.getMessage());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        // Handle other error responses
+                        listener.doOnRestErrorResponse(response.message());
+                    }
+                }
             }
 
             @Override

@@ -116,12 +116,12 @@ public class TutoredVM extends BaseViewModel implements RestResponseListener<Tut
     @Bindable
     public String getNuit() {
         if (this.tutored.getEmployee().getNuit() <= 0) return null;
-        return Utilities.parseIntToString(this.tutored.getEmployee().getNuit());
+        return Utilities.parseLongToString(this.tutored.getEmployee().getNuit());
     }
     public void setNuit(String nuit) {
         if (!Utilities.stringHasValue(nuit)) return;
 
-        this.tutored.getEmployee().setNuit(Integer.parseInt(nuit));
+        this.tutored.getEmployee().setNuit(Long.parseLong(nuit));
         notifyPropertyChanged(BR.nuit);
     }
     public List<ProfessionalCategory> getAllProfessionalCategys() throws SQLException{

@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.service.metadata;
 
 import mz.org.csaude.mentoring.base.auth.LoginResponse;
+import mz.org.csaude.mentoring.common.MentoringAPIError;
 import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 import mz.org.csaude.mentoring.dto.evaluationType.EvaluationTypeDTO;
@@ -120,4 +121,7 @@ public interface SyncDataService {
     Call<List<QuestionDTO>> getAllQuestions();
     @GET("/formQuestions/getByFormsUuids")
     Call<List<FormQuestionDTO>> getFormsQuestionsByFormsUuids(@Query("formsUuids") List<String> formsUuids);
+
+    @GET("error")
+    Call<MentoringAPIError> getError();
 }

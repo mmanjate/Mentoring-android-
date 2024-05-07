@@ -50,10 +50,10 @@ public class EmployeeVM extends BaseViewModel {
         this.employee.setPhoneNumber(phoneNumber);
     }
     @Bindable
-    public int getNuit(){
+    public long getNuit(){
        return this.employee.getNuit();
     }
-    public void setNuit(int nuit){
+    public void setNuit(long nuit){
         this.employee.setNuit(nuit);
     }
 

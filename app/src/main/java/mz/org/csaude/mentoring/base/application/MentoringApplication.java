@@ -60,6 +60,7 @@ import mz.org.csaude.mentoring.workSchedule.rest.ServerStatusChecker;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.workSchedule.rest.FormRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
+import mz.org.csaude.mentoring.workSchedule.rest.TutorRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -127,6 +128,7 @@ public class MentoringApplication  extends Application {
     // Rest Services
     private PartnerRestService partnerRestService;
     private FormRestService formRestService;
+    private TutorRestService tutorRestService;
 
     @Override
     public void onCreate() {
@@ -282,6 +284,11 @@ public class MentoringApplication  extends Application {
         return formRestService;
     }
 
+    public TutorRestService getTutorRestService() {
+        if (tutorRestService == null) this.tutorRestService = new TutorRestService(this);
+        return tutorRestService;
+    }
+
     public ApplicationStep getApplicationStep() {
         return this.applicationStep;
     }
@@ -345,4 +352,6 @@ public class MentoringApplication  extends Application {
     public void initSessionManager() {
         this.sessionManager = new SessionManager(this);
     }
+
+
 }

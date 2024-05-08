@@ -45,7 +45,7 @@ public class PartnerServiceImpl extends BaseServiceImpl<Partner> implements Part
 
     @Override
     public List<Partner> getAll() throws SQLException {
-        return this.partnerDao.queryForAll();
+        return this.partnerDao.getNotMISAU();
     }
 
     @Override

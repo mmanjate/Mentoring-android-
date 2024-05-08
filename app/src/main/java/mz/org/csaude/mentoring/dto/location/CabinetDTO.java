@@ -28,6 +28,7 @@ public class CabinetDTO extends BaseEntityDTO {
     }
 
     public CabinetDTO(Cabinet cabinet) {
+        super(cabinet);
         this.setUuid(cabinet.getUuid());
         this.setName(cabinet.getName());
     }

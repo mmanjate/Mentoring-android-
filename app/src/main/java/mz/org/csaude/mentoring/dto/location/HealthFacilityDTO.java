@@ -2,12 +2,14 @@ package mz.org.csaude.mentoring.dto.location;
 
 import java.io.Serializable;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 
+@Data
 @NoArgsConstructor
-public class HealthFacilityDTO  extends BaseEntityDTO {
+public class HealthFacilityDTO extends BaseEntityDTO {
 
     private String uuid;
     private String healthFacility;

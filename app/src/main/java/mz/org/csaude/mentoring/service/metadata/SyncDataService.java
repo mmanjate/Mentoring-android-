@@ -14,12 +14,15 @@ import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
 import mz.org.csaude.mentoring.dto.location.RondaTypeDTO;
 import mz.org.csaude.mentoring.dto.mentorship.DoorDTO;
 import mz.org.csaude.mentoring.dto.mentorship.IterationTypeDTO;
+import mz.org.csaude.mentoring.dto.mentorship.MentorshipDTO;
 import mz.org.csaude.mentoring.dto.mentorship.TimeOfDayDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.dto.professionalcategory.ProfessionalCategoryDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
+import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
+import mz.org.csaude.mentoring.dto.session.SessionStatusDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
@@ -122,6 +125,17 @@ public interface SyncDataService {
     Call<List<QuestionDTO>> getAllQuestions();
     @GET("/formQuestions/getByFormsUuids")
     Call<List<FormQuestionDTO>> getFormsQuestionsByFormsUuids(@Query("formsUuids") List<String> formsUuids);
+    @GET("/rondas/getAllRondasOfMentor")
+    Call<List<RondaDTO>> getAllRondasOfMentor(@Query("mentorId") Long mentorId);
+    @POST("/rondas/save")
+    Call<List<RondaDTO>> postRondas(@Body List<RondaDTO> rondaDTOS);
+    @GET("/mentorships/getAllMentorshipSessionsOfMentor")
+    Call<List<MentorshipDTO>> getAllMentorshipSessionsOfMentor(@Query("mentorId") Long mentorId);
+    @POST("/mentorships/save")
+    Call<List<MentorshipDTO>> postMenthorships(List<MentorshipDTO> mentorshipDTOS);
+
+    @GET("/sessionStatuses/getall")
+    Call<List<SessionStatusDTO>> getSessionStatuses();
 
     @GET("error")
     Call<MentoringAPIError> getError();

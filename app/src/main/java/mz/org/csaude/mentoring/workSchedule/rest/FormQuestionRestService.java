@@ -32,7 +32,7 @@ public class FormQuestionRestService extends BaseRestService {
         super(application);
     }
 
-    public void restGetForm(RestResponseListener<FormQuestion> listener){
+    public void restGetFormQuestion(RestResponseListener<FormQuestion> listener){
         List<String> formsUuids = new ArrayList<>();
         try {
             List<Form> forms = getApplication().getFormService().getAllSynced();
@@ -51,18 +51,23 @@ public class FormQuestionRestService extends BaseRestService {
                 if (Utilities.listHasElements(data)) {
                     try {
                         FormQuestionService formQuestionService = new FormQuestionServiceImpl(LoadMetadataServiceImpl.APP);
+
                         List<FormQuestion> formQuestions = new ArrayList<>();
+
                         for (FormQuestionDTO formQuestionDTO: data) {
                             formQuestionDTO.setSyncSatus(SyncSatus.SENT);
                             formQuestionDTO.getFormQuestion().setSyncStatus(SyncSatus.SENT);
                             formQuestions.add(formQuestionDTO.getFormQuestion());
                         }
+
                         Toast.makeText(APP.getApplicationContext(), "Carregando as Competências das Tabelas.", Toast.LENGTH_SHORT).show();
                         formQuestionService.saveOrUpdateFormQuestions(data);
+
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, formQuestions);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
+
                     Toast.makeText(APP.getApplicationContext(), "COMPETÊNCIAS DAS TABELAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(BaseRestService.REQUEST_NO_DATA, null);

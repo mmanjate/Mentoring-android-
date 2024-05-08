@@ -51,4 +51,19 @@ public class RondaMentorDTO extends BaseEntityDTO {
     public void setRonda(RondaDTO ronda) {
         this.ronda = ronda;
     }
+    public RondaMentor getRondaMentor() {
+        RondaMentor rondaMentor = new RondaMentor();
+        rondaMentor.setId(this.getId());
+        rondaMentor.setUuid(this.getUuid());
+        rondaMentor.setStartDate(this.getStartDate());
+        rondaMentor.setEndDate(this.getEndDate());
+        rondaMentor.setSyncStatus(this.getSyncSatus());
+        if(this.getMentor()!=null) {
+            rondaMentor.setTutor(this.getMentor().getTutor());
+        }
+        if(this.getRonda()!=null) {
+            rondaMentor.setRonda(this.getRonda().getRonda());
+        }
+        return rondaMentor;
+    }
 }

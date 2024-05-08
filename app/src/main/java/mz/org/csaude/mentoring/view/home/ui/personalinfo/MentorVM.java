@@ -15,8 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 import mz.org.csaude.mentoring.BR;
+import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
+import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
+import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
@@ -35,7 +38,7 @@ import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.Utilities;
 
 
-public class MentorVM extends BaseViewModel {
+public class MentorVM extends BaseViewModel implements RestResponseListener<Tutor>, ServerStatusListener {
 
     private Tutor tutor;
     private TutorService tutorService;
@@ -173,13 +176,15 @@ public class MentorVM extends BaseViewModel {
             return;
         }
 
-        try {
+       /* try {
             getApplication().getEmployeeService().saveOrUpdateEmployee(tutor.getEmployee());
             this.tutorService.saveOrUpdate(tutor);
             this.getApplication().getLocationService().saveOrUpdate(location);
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
+        }*/
+
+        getApplication().isServerOnline(this);
 
     }
 
@@ -347,4 +352,29 @@ public class MentorVM extends BaseViewModel {
         }
     }
 
+    @Override
+    public void doOnRestErrorResponse(String errormsg) {
+        Utilities.displayAlertDialog(getRelatedActivity(), errormsg).show();
+    }
+
+    @Override
+    public void doOnResponse(String flag, List<Tutor> objects) {
+        try {
+            getApplication().getEmployeeService().saveOrUpdateEmployee(tutor.getEmployee());
+            this.tutorService.saveOrUpdate(tutor);
+            this.getApplication().getLocationService().saveOrUpdate(location);
+            Utilities.displayAlertDialog(getRelatedActivity(), "Dados actualizados com sucesso.").show();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onServerStatusChecked(boolean isOnline) {
+        if (isOnline) {
+            getApplication().getTutorRestService().restPatchTutor(this.tutor, this);
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.server_unavailable)).show();
+        }
+    }
 }

@@ -116,7 +116,7 @@ public class TutoredRestService extends BaseRestService {
             @Override
             public void onResponse(Call<TutoredDTO> call, Response<TutoredDTO> response) {
                 TutoredDTO data = response.body();
-                if (response.code() == 201) {
+                if (response.code() == 200) {
                     try {
                         getApplication().getTutoredService().savedOrUpdateTutored(tutored);
 

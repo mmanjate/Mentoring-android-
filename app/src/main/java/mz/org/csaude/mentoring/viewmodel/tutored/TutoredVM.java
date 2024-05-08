@@ -213,12 +213,7 @@ public class TutoredVM extends BaseViewModel implements RestResponseListener<Tut
             Utilities.displayAlertDialog(getRelatedActivity(), error).show();
             return;
         }
-
         getApplication().isServerOnline(this);
-
-        //getApplication().getEmployeeService().saveOrUpdateEmployee(tutored.getEmployee());
-        //this.tutoredService.savedOrUpdateTutored(tutored);
-        //this.getApplication().getLocationService().saveOrUpdate(location);
     }
 
     @Override

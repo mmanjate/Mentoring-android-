@@ -156,6 +156,7 @@
                             android:inputType="phone"
                             android:background="@drawable/fields_background"
                             android:hint="@string/telephone"
+                            android:maxLength="9"
                             android:text="@={viewModel.phoneNumber}"
                             style="@style/bottom_border_edit_text_style"/>
 
@@ -188,6 +189,7 @@
                             android:inputType="number"
                             android:background="@drawable/fields_background"
                             android:text="@={viewModel.nuit}"
+                            android:maxLength="9"
                             android:hint="@string/nuit"
                             style="@style/bottom_border_edit_text_style"/>
 
@@ -290,6 +292,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:maxLength="4"
                             android:text="@={viewModel.trainingYear}"
                             android:background="@drawable/fields_background"
                             style="@style/bottom_border_edit_text_style"/>

@@ -36,6 +36,8 @@ import mz.org.csaude.mentoring.service.tutor.TutorService;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.Utilities;
+import mz.org.csaude.mentoring.view.tutor.CreateTutorActivity;
+import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
 
 
 public class MentorVM extends BaseViewModel implements RestResponseListener<Tutor>, ServerStatusListener {
@@ -106,6 +108,13 @@ public class MentorVM extends BaseViewModel implements RestResponseListener<Tuto
 
     public void setSurname(String surname){
         this.tutor.getEmployee().setSurname(surname);
+    }
+    @Bindable
+    public int getNuit() {
+        return this.tutor.getEmployee().getNuit();
+    }
+    public void setNuit(int nuit) {
+        this.tutor.getEmployee().setNuit(nuit);
     }
 
     public List<ProfessionalCategory> getAllProfessionalCategys() throws SQLException {

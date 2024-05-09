@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.util.SyncSatus;
 
 /**
  * @author Jose Julai Ritsure
@@ -28,5 +29,16 @@ public class TutoredDTO extends BaseEntityDTO {
 
     public void setEmployeeDTO(EmployeeDTO employeeDTO) {
         this.employeeDTO = employeeDTO;
+    }
+
+    public Tutored getMentee() {
+        Tutored tutored = new Tutored();
+        tutored.setId(this.getId());
+        tutored.setUuid(this.getUuid());
+        tutored.setSyncStatus(this.getSyncSatus());
+        if(this.getEmployeeDTO()!=null) {
+            tutored.setEmployee(this.getEmployeeDTO().getEmployee());
+        }
+        return tutored;
     }
 }

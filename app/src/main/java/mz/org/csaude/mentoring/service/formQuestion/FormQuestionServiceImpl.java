@@ -7,15 +7,21 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.formQuestion.FormQuestionDAO;
+import mz.org.csaude.mentoring.dao.question.QuestionDAO;
+import mz.org.csaude.mentoring.dao.question.QuestionsCategoryDAO;
 import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
+import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
+import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
+import mz.org.csaude.mentoring.model.question.Question;
+import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 import mz.org.csaude.mentoring.model.user.User;
 
 public class FormQuestionServiceImpl extends BaseServiceImpl<FormQuestion> implements FormQuestionService {
 
     FormQuestionDAO formQuestionDAO;
-
-
+    QuestionDAO questionDAO;
+    QuestionsCategoryDAO questionsCategoryDAO;
     public FormQuestionServiceImpl(Application application) {
         super(application);
     }
@@ -24,6 +30,8 @@ public class FormQuestionServiceImpl extends BaseServiceImpl<FormQuestion> imple
     public void init(Application application) throws SQLException {
         super.init(application);
         this.formQuestionDAO = getDataBaseHelper().getFormQuestionDAO();
+        this.questionDAO = getDataBaseHelper().getQuestionDAO();
+        this.questionsCategoryDAO = getDataBaseHelper().getQuestionsCategoryDAO();
     }
     @Override
     public FormQuestion save(FormQuestion record) throws SQLException {
@@ -60,6 +68,22 @@ public class FormQuestionServiceImpl extends BaseServiceImpl<FormQuestion> imple
     }
     @Override
     public FormQuestion saveOrUpdateFormQuestion(FormQuestionDTO formQuestionDTO) throws SQLException {
+        QuestionCategoryDTO questionCategoryDTO = formQuestionDTO.getQuestion().getQuestionCategory();
+        QuestionsCategory qc = this.questionsCategoryDAO.getByUuid(questionCategoryDTO.getUuid());
+        QuestionsCategory questionsCategory = questionCategoryDTO.getQuestionCategory();
+        if(qc!=null) {
+            questionsCategory.setId(qc.getId());
+        }
+        this.questionsCategoryDAO.createOrUpdate(questionsCategory);
+
+        QuestionDTO questionDTO = formQuestionDTO.getQuestion();
+        Question q = this.questionDAO.getByUuid(questionDTO.getUuid());
+        Question question = questionDTO.getQuestionObj();
+        if(q!=null) {
+            question.setId(q.getId());
+        }
+        this.questionDAO.createOrUpdate(question);
+
         FormQuestion fq = this.formQuestionDAO.getByUuid(formQuestionDTO.getUuid());
         FormQuestion formQuestion = new FormQuestion();
         if(fq!=null) {

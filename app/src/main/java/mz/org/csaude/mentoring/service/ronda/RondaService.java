@@ -5,6 +5,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.service.BaseService;
+import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
@@ -18,4 +19,6 @@ public interface RondaService extends BaseService<Ronda> {
 
     int countRondas() throws SQLException;
     List<Ronda> getAllByRondaType(RondaType rondaType) throws SQLException;
+    void saveOrUpdateRondas(List<RondaDTO> rondaDTOS) throws SQLException;
+    Ronda saveOrUpdateRonda(RondaDTO rondaDTO) throws SQLException;
 }

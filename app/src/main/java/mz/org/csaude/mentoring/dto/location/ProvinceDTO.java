@@ -2,10 +2,12 @@ package mz.org.csaude.mentoring.dto.location;
 
 import java.io.Serializable;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.Province;
 
+@Data
 @NoArgsConstructor
 public class ProvinceDTO extends BaseEntityDTO {
 

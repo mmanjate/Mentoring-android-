@@ -56,8 +56,8 @@ public class FormTargetVM extends BaseViewModel {
         return this.formTarget.getTarget();
     }
 
-    public void setInteger(Integer integer) {
-        this.formTarget.setTarget(integer);
+    public void setInteger(Integer target) {
+        this.formTarget.setTarget(target);
         notifyPropertyChanged(BR.integer);
     }
 

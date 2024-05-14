@@ -4,13 +4,11 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseRestService;
-import mz.org.csaude.mentoring.dto.form.FormDTO;
 import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.form.Form;
@@ -35,12 +33,13 @@ public class FormQuestionRestService extends BaseRestService {
     public void restGetFormQuestion(RestResponseListener<FormQuestion> listener){
         List<String> formsUuids = new ArrayList<>();
         try {
-            List<Form> forms = getApplication().getFormService().getAllSynced();
+            FormService formService = new FormServiceImpl(LoadMetadataServiceImpl.APP);
+            List<Form> forms = formService.getAllSynced(getApplication());
             for (Form form: forms) {
                 formsUuids.add(form.getUuid());
             }
         } catch (SQLException e) {
-
+            Log.e("Error while loading synced forms Uuids -- ", e.getMessage(), e);
         }
         Call<List<FormQuestionDTO>> formQuestionsCall = syncDataService.getFormsQuestionsByFormsUuids(formsUuids);
 

@@ -6,13 +6,18 @@ import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 @Data
-@NoArgsConstructor
 public class QuestionDTO extends BaseEntityDTO {
     private String code;
     private String question;
     private QuestionCategoryDTO questionCategory;
+
+    public QuestionDTO() {
+        super();
+    }
     public QuestionDTO(Question question) {
         super(question);
+        this.setCode(question.getCode());
+        this.setQuestion(question.getQuestion());
         if(question.getQuestionsCategory()!=null) {
             this.setQuestionCategory(new QuestionCategoryDTO(question.getQuestionsCategory()));
         }

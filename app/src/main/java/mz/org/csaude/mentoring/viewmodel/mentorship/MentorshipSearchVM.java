@@ -73,7 +73,6 @@ public class MentorshipSearchVM extends BaseViewModel {
         params.put("createdRonda", ronda);
         params.put("currMentor", currMentor);
         this.mentorship.setTutor(currMentor);
-        params.put("currMentor", currMentor);
         params.put("newMentorship", this.mentorship);
         getRelatedActivity().nextActivityFinishingCurrent(CreateMentorshipActivity.class, params);
     }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.programmaticArea.ProgrammaticAreaDAOImpl;
+import mz.org.csaude.mentoring.model.program.Program;
 
 @Data
 @DatabaseTable(tableName = ProgrammaticArea.TABLE_NAME, daoClass = ProgrammaticAreaDAOImpl.class)
@@ -17,6 +18,8 @@ public class ProgrammaticArea extends BaseModel {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_DESCRIPTION = "description";
 
+    public static final String COLUMN_PROGRAM = "program_id";
+
     @DatabaseField(columnName = COLUMN_DESCRIPTION)
     private String description;
 
@@ -25,14 +28,17 @@ public class ProgrammaticArea extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_NAME, canBeNull = false)
     private String name;
+    @DatabaseField(columnName = COLUMN_PROGRAM, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private Program program;
 
     public ProgrammaticArea() {
     }
 
-    public ProgrammaticArea(String description, String code, String name) {
+    public ProgrammaticArea(String description, String code, String name, Program program) {
         this.description = description;
         this.code = code;
         this.name = name;
+        this.program = program;
     }
 
     public String getDescription() {
@@ -57,5 +63,13 @@ public class ProgrammaticArea extends BaseModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Program getProgram() {
+        return program;
+    }
+
+    public void setProgram(Program program) {
+        this.program = program;
     }
 }

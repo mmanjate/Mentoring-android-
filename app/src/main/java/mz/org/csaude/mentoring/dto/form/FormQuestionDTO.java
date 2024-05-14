@@ -10,7 +10,6 @@ import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.model.question.Question;
 @Data
-@NoArgsConstructor
 public class FormQuestionDTO extends BaseEntityDTO {
     private boolean mandatory;
     private Integer sequence;
@@ -18,6 +17,10 @@ public class FormQuestionDTO extends BaseEntityDTO {
     private QuestionDTO question;
     private EvaluationTypeDTO evaluationType;
     private ResponseTypeDTO responseType;
+    private FormDTO form;
+    public FormQuestionDTO() {
+        super();
+    }
     public FormQuestionDTO(FormQuestion formQuestion) {
         super(formQuestion);
         if(formQuestion.getQuestion()!=null) {
@@ -28,6 +31,9 @@ public class FormQuestionDTO extends BaseEntityDTO {
         }
         if(formQuestion.getResponseType()!=null) {
             this.setResponseType(new ResponseTypeDTO(formQuestion.getResponseType()));
+        }
+        if(formQuestion.getForm()!=null) {
+            this.setForm(new FormDTO(formQuestion.getForm()));
         }
     }
 
@@ -75,6 +81,14 @@ public class FormQuestionDTO extends BaseEntityDTO {
         return responseType;
     }
 
+    public FormDTO getForm() {
+        return form;
+    }
+
+    public void setForm(FormDTO formDTO) {
+        this.form = formDTO;
+    }
+
     public void setResponseType(ResponseTypeDTO responseType) {
         this.responseType = responseType;
     }
@@ -94,6 +108,9 @@ public class FormQuestionDTO extends BaseEntityDTO {
         }
         if(this.getResponseType()!=null) {
             formQuestion.setResponseType(this.getResponseType().getResponseType());
+        }
+        if(this.getForm()!=null) {
+            formQuestion.setForm(this.getForm().getForm());
         }
         return formQuestion;
     }

@@ -5,14 +5,12 @@ import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.partner.Partner;
 @Data
-@NoArgsConstructor
 public class PartnerDTO extends BaseEntityDTO {
-
-    private String uuid;
     private String name;
     private String description;
 
     public PartnerDTO() {
+
     }
 
     public PartnerDTO(Partner partner) {

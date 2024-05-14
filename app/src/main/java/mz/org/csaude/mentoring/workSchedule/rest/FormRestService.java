@@ -11,15 +11,21 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.form.FormDTO;
+import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
+import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.form.Form;
+import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.model.location.Location;
+import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeService;
 import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeServiceImpl;
 import mz.org.csaude.mentoring.service.form.FormService;
 import mz.org.csaude.mentoring.service.form.FormServiceImpl;
+import mz.org.csaude.mentoring.service.formQuestion.FormQuestionService;
+import mz.org.csaude.mentoring.service.formQuestion.FormQuestionServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
@@ -35,8 +41,11 @@ public class FormRestService extends BaseRestService {
     }
 
     public void restGetForm(RestResponseListener<Form> listener){
-        long partnerId = getApplication().getCurrMentor().getEmployee().getPartner().getId();
+        Employee employee = getApplication().getAuthenticatedUser().getEmployee();
+        Partner partner = employee.getPartner();
+        long partnerId = partner.getId();
         Call<List<FormDTO>> formCall = syncDataService.getFormsByPartner(partnerId);
+        FormService formService = new FormServiceImpl(LoadMetadataServiceImpl.APP);
 
         formCall.enqueue(new Callback<List<FormDTO>>() {
             @Override
@@ -44,7 +53,6 @@ public class FormRestService extends BaseRestService {
                 List<FormDTO> data = response.body();
                 if (Utilities.listHasElements(data)) {
                     try {
-                        FormService formService = new FormServiceImpl(LoadMetadataServiceImpl.APP);
                         List<Form> forms = new ArrayList<>();
                         for (FormDTO formDTO: data) {
                             formDTO.setSyncSatus(SyncSatus.SENT);
@@ -69,6 +77,7 @@ public class FormRestService extends BaseRestService {
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });
+
     }
 
 

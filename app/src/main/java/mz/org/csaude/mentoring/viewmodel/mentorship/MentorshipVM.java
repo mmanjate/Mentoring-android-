@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class MentorshipVM extends BaseViewModel {
 
     private Province selectedProvince;
 
-    private List<Form> tutorForm;
+    private List<Form> tutorForms;
 
     private FormService formService;
 
@@ -223,12 +224,13 @@ public class MentorshipVM extends BaseViewModel {
     }
 
     public List<Form> getTutorForms() {
-        return this.tutorForm;
+        return this.tutorForms;
     }
 
-    public void loadTutorForms() {
+    public void loadTutorForms(final Tutor tutor) {
         try {
-            this.tutorForm = formService.getAllOfTutor(this.mentorship.getTutor());
+            this.tutorForms = new ArrayList<>();
+            this.tutorForms.addAll(formService.getAllOfTutor(tutor));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

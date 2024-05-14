@@ -31,6 +31,7 @@ import mz.org.csaude.mentoring.dao.mentorship.MentorshipDAO;
 import mz.org.csaude.mentoring.dao.mentorship.TimeOfDayDAO;
 import mz.org.csaude.mentoring.dao.partner.PartnerDao;
 import mz.org.csaude.mentoring.dao.professionalCategoryDAO.ProfessionalCategoryDAO;
+import mz.org.csaude.mentoring.dao.program.ProgramDAO;
 import mz.org.csaude.mentoring.dao.programmaticArea.ProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.dao.programmaticArea.TutorProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionDAO;
@@ -50,6 +51,7 @@ import mz.org.csaude.mentoring.dao.tutor.TutorTutoredDao;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDao;
 import mz.org.csaude.mentoring.dao.user.UserDao;
 import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
+import mz.org.csaude.mentoring.model.program.Program;
 import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.question.QuestionType;
 import mz.org.csaude.mentoring.model.question.QuestionsCategory;
@@ -172,6 +174,7 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
     private EmployeeDAO employeeDAO;
     private EvaluationTypeDAO evaluationTypeDAO;
     private ResponseTypeDAO responseTypeDAO;
+    private ProgramDAO programDAO;
 
     private static MentoringDataBaseHelper dataBaseHelper;
 
@@ -443,6 +446,12 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return responseTypeDAO;
     }
+    public ProgramDAO getProgramDAO() throws SQLException {
+        if(programDAO == null){
+            programDAO = getDao(Program.class);
+        }
+        return programDAO;
+    }
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
@@ -466,6 +475,8 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, Answer.class);
             TableUtils.createTableIfNotExists(connectionSource, FormQuestion.class);
             TableUtils.createTableIfNotExists(connectionSource, Setting.class);
+            TableUtils.createTableIfNotExists(connectionSource, Program.class);
+            TableUtils.createTableIfNotExists(connectionSource, ProgrammaticArea.class);
             TableUtils.createTableIfNotExists(connectionSource, TutorProgrammaticArea.class);
             TableUtils.createTableIfNotExists(connectionSource, CareerType.class);
             TableUtils.createTableIfNotExists(connectionSource, FormType.class);

@@ -38,6 +38,8 @@ public class PartnerDTO extends BaseEntityDTO {
         partner.setSyncStatus(this.getSyncSatus());
         partner.setDescription(this.getDescription());
         partner.setName(this.getName());
+        partner.setCreatedAt(this.getCreatedAt());
+        partner.setUpdatedAt(this.getUpdatedAt());
         return partner;
     }
 }

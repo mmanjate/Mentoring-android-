@@ -39,6 +39,8 @@ public class EvaluationTypeDTO extends BaseEntityDTO {
         evaluationType.setSyncStatus(this.getSyncSatus());
         evaluationType.setId(this.getId());
         evaluationType.setDescription(this.getDescription());
+        evaluationType.setCreatedAt(this.getCreatedAt());
+        evaluationType.setUpdatedAt(this.getUpdatedAt());
         return evaluationType;
     }
 }

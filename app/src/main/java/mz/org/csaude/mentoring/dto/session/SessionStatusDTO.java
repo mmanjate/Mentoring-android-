@@ -36,6 +36,8 @@ public class SessionStatusDTO extends BaseEntityDTO {
         sessionStatus.setSyncStatus(this.getSyncSatus());
         sessionStatus.setCode(this.getCode());
         sessionStatus.setDescription(this.getDescription());
+        sessionStatus.setCreatedAt(this.getCreatedAt());
+        sessionStatus.setUpdatedAt(this.getUpdatedAt());
         return sessionStatus;
     }
 }

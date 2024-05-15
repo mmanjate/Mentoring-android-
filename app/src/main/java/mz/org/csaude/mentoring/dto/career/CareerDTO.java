@@ -40,6 +40,8 @@ public class CareerDTO extends BaseEntityDTO {
         career.setUuid(this.getUuid());
         career.setSyncStatus(this.getSyncSatus());
         career.setPosition(this.getPosition());
+        career.setCreatedAt(this.getCreatedAt());
+        career.setUpdatedAt(this.getUpdatedAt());
         if(this.getCareerTypeDTO()!=null) {
             career.setCareerType(this.getCareerTypeDTO().getCareerType());
         }

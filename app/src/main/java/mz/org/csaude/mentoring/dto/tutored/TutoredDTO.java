@@ -36,6 +36,8 @@ public class TutoredDTO extends BaseEntityDTO {
         tutored.setId(this.getId());
         tutored.setUuid(this.getUuid());
         tutored.setSyncStatus(this.getSyncSatus());
+        tutored.setCreatedAt(this.getCreatedAt());
+        tutored.setUpdatedAt(this.getUpdatedAt());
         if(this.getEmployeeDTO()!=null) {
             tutored.setEmployee(this.getEmployeeDTO().getEmployee());
         }

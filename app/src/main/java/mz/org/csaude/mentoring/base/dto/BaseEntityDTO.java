@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.base.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
@@ -14,6 +15,8 @@ public class BaseEntityDTO implements Serializable {
     private LifeCycleStatus lifeCycleStatus;
 
     private SyncSatus syncSatus = SyncSatus.PENDING;
+    private Date createdAt;
+    private Date updatedAt;
 
     public BaseEntityDTO() {
     }
@@ -22,6 +25,8 @@ public class BaseEntityDTO implements Serializable {
         this.setId(baseEntity.getId());
         this.setUuid(baseEntity.getUuid());
         this.setLifeCycleStatus(baseEntity.getLifeCycleStatus());
+        this.setCreatedAt(baseEntity.getCreatedAt());
+        this.setUpdatedAt(baseEntity.getUpdatedAt());
     }
 
     public Integer getId() {
@@ -54,5 +59,21 @@ public class BaseEntityDTO implements Serializable {
 
     public void setSyncSatus(SyncSatus syncSatus) {
         this.syncSatus = syncSatus;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

@@ -100,6 +100,8 @@ public class FormQuestionDTO extends BaseEntityDTO {
         formQuestion.setMandatory(this.isMandatory());
         formQuestion.setApplicable(this.getApplicable());
         formQuestion.setSequence(this.getSequence());
+        formQuestion.setCreatedAt(this.getCreatedAt());
+        formQuestion.setUpdatedAt(this.getUpdatedAt());
         if(this.getQuestion()!=null) {
             formQuestion.setQuestion(this.getQuestion().getQuestionObj());
         }

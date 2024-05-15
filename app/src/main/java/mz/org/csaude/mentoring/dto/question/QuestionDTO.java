@@ -52,6 +52,8 @@ public class QuestionDTO extends BaseEntityDTO {
         question.setSyncStatus(this.getSyncSatus());
         question.setCode(this.getCode());
         question.setQuestion(this.getQuestion());
+        question.setCreatedAt(this.getCreatedAt());
+        question.setUpdatedAt(this.getUpdatedAt());
         if(this.getQuestionCategory()!=null) {
             question.setQuestionsCategory(this.getQuestionCategory().getQuestionCategory());
         }

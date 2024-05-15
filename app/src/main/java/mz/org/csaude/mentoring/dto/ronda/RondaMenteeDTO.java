@@ -59,6 +59,8 @@ public class RondaMenteeDTO extends BaseEntityDTO {
         rondaMentee.setSyncStatus(this.getSyncSatus());
         rondaMentee.setStartDate(this.getStartDate());
         rondaMentee.setEndDate(this.getEndDate());
+        rondaMentee.setCreatedAt(this.getCreatedAt());
+        rondaMentee.setUpdatedAt(this.getUpdatedAt());
         if(this.getMentee()!=null) {
             rondaMentee.setTutored(this.getRondaMentee().getTutored());
         }

@@ -172,7 +172,8 @@ public class MentorshipDTO extends BaseEntityDTO {
         mentorship.setStartDate(this.getStartDate());
         mentorship.setEndDate(this.getEndDate());
         mentorship.setIterationNumber(this.getIterationNumber());
-
+        mentorship.setCreatedAt(this.getCreatedAt());
+        mentorship.setUpdatedAt(this.getUpdatedAt());
         if(this.getHealthFacility()!=null) {
             mentorship.setHealthFacility(this.getHealthFacility().getHealthFacilityObj());
         }

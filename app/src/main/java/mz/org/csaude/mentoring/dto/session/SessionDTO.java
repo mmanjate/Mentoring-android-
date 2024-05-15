@@ -68,6 +68,8 @@ public class SessionDTO extends BaseEntityDTO {
         session.setStartDate(this.getStartDate());
         session.setEndDate(this.getEndDate());
         session.setPerformedDate(this.getPerformedDate());
+        session.setCreatedAt(this.getCreatedAt());
+        session.setUpdatedAt(this.getUpdatedAt());
         if(this.getSessionStatus()!=null) {
             session.setStatus(this.getSessionStatus().getSessionStatus());
         }

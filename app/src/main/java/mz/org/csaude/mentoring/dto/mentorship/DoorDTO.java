@@ -35,6 +35,8 @@ public class DoorDTO extends BaseEntityDTO {
         door.setUuid(this.getUuid());
         door.setSyncStatus(this.getSyncSatus());
         door.setDescription(this.getDescription());
+        door.setCreatedAt(this.getCreatedAt());
+        door.setUpdatedAt(this.getUpdatedAt());
         return door;
     }
 }

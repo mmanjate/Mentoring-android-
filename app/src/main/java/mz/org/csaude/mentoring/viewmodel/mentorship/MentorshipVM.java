@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.viewmodel.mentorship;
 
 import android.app.Application;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
@@ -8,7 +9,9 @@ import androidx.databinding.Bindable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
@@ -21,12 +24,15 @@ import mz.org.csaude.mentoring.model.mentorship.Door;
 import mz.org.csaude.mentoring.model.mentorship.IterationType;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.service.form.FormService;
 import mz.org.csaude.mentoring.service.location.ProvinceService;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipService;
+import mz.org.csaude.mentoring.view.mentorship.CreateMentorshipActivity;
 
 public class MentorshipVM extends BaseViewModel {
 
@@ -40,6 +46,7 @@ public class MentorshipVM extends BaseViewModel {
     private List<Form> tutorForms;
 
     private FormService formService;
+    private Form selectedForm;
 
 
     public MentorshipVM(@NonNull Application application) {
@@ -237,6 +244,20 @@ public class MentorshipVM extends BaseViewModel {
     }
 
     public void nextStep() {
-
+        selectedForm = this.getTutorForms().get(0);
+        Map<String, Object> params = new HashMap<>();
+        Intent intent = getRelatedActivity().getIntent();
+        String title = (String) intent.getExtras().get("title");
+        RondaType rondaType = (RondaType) intent.getExtras().get("rondaType");
+        Ronda ronda = (Ronda) intent.getExtras().get("createdRonda");
+        Tutor currMentor = (Tutor) intent.getExtras().get("currMentor");
+        params.put("rondaType", rondaType);
+        params.put("title", title);
+        params.put("createdRonda", ronda);
+        params.put("currMentor", currMentor);
+        this.mentorship.setTutor(currMentor);
+        params.put("newMentorship", this.mentorship);
+        getRelatedActivity().nextActivityFinishingCurrent(CreateMentorshipActivity.class, params);
+        // go to mentees selection form
     }
 }

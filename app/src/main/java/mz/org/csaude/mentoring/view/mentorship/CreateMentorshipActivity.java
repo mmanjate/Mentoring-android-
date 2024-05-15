@@ -37,6 +37,7 @@ public class CreateMentorshipActivity extends BaseActivity {
     private String title;
     private RondaType rondaType;
     private Tutor currMentor;
+    private List<Form> forms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class CreateMentorshipActivity extends BaseActivity {
 
     private void initMentorShip() {
         getRelatedViewModel().loadTutorForms(this.currMentor);
-        List<Form> forms = getRelatedViewModel().getTutorForms();
+        forms = getRelatedViewModel().getTutorForms();
 
         if (Utilities.listHasElements(forms)) {
             this.formAdapter = new FormAdapter(forms);

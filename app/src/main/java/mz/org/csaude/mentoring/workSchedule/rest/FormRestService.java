@@ -47,8 +47,8 @@ public class FormRestService extends BaseRestService {
                         FormService formService = new FormServiceImpl(LoadMetadataServiceImpl.APP);
                         List<Form> forms = new ArrayList<>();
                         for (FormDTO formDTO: data) {
-                            formDTO.setSyncSatus(SyncSatus.SENT);
                             formDTO.getForm().setSyncStatus(SyncSatus.SENT);
+                            formDTO.getForm().setPartner(getApplication().getPartnerService().getMISAU());
                             forms.add(formDTO.getForm());
                         }
                         Toast.makeText(APP.getApplicationContext(), "Carregando as Tabelas de Competências.", Toast.LENGTH_SHORT).show();

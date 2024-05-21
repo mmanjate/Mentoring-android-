@@ -44,7 +44,6 @@ public class ProfessionalCategoryRestService extends BaseRestService {
                    List<ProfessionalCategory> professionalCategories = new ArrayList<>();
 
                    for (ProfessionalCategoryDTO professionalCategoryDTO : data){
-                       professionalCategoryDTO.setSyncSatus(SyncSatus.SENT);
                        professionalCategoryDTO.getProfessionalCategory().setSyncStatus(SyncSatus.SENT);
                        professionalCategories.add(professionalCategoryDTO.getProfessionalCategory());
                    }

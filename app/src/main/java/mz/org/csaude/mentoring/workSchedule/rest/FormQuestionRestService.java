@@ -53,7 +53,6 @@ public class FormQuestionRestService extends BaseRestService {
                         FormQuestionService formQuestionService = new FormQuestionServiceImpl(LoadMetadataServiceImpl.APP);
                         List<FormQuestion> formQuestions = new ArrayList<>();
                         for (FormQuestionDTO formQuestionDTO: data) {
-                            formQuestionDTO.setSyncSatus(SyncSatus.SENT);
                             formQuestionDTO.getFormQuestion().setSyncStatus(SyncSatus.SENT);
                             formQuestions.add(formQuestionDTO.getFormQuestion());
                         }

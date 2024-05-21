@@ -29,7 +29,6 @@ public class RondaType extends BaseModel {
         this.setDescription(rondaTypeDTO.getDescription());
         this.setCode(rondaTypeDTO.getCode());
         this.setUuid(rondaTypeDTO.getUuid());
-        this.setSyncStatus(rondaTypeDTO.getSyncSatus());
     }
 
     public String getDescription() {

@@ -35,9 +35,7 @@ public class PartnerDTO extends BaseEntityDTO {
     }
     public Partner getPartner() {
         Partner partner = new Partner();
-        partner.setId(this.getId());
         partner.setUuid(this.getUuid());
-        partner.setSyncStatus(this.getSyncSatus());
         partner.setDescription(this.getDescription());
         partner.setName(this.getName());
         return partner;

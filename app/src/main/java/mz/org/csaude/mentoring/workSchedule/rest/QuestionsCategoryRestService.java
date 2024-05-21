@@ -46,7 +46,6 @@ public class QuestionsCategoryRestService extends BaseRestService {
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Categorias.", Toast.LENGTH_SHORT).show();
                         List<QuestionsCategory> questionsCategories = new ArrayList<>();
                         for (QuestionCategoryDTO questionCategoryDTO : data){
-                            questionCategoryDTO.setSyncSatus(SyncSatus.SENT);
                             questionCategoryDTO.getQuestionCategory().setSyncStatus(SyncSatus.SENT);
                             questionsCategories.add(questionCategoryDTO.getQuestionCategory());
                         }

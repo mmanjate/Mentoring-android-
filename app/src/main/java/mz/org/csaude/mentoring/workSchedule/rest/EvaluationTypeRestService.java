@@ -46,7 +46,6 @@ public class EvaluationTypeRestService extends BaseRestService {
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Avaliações.", Toast.LENGTH_SHORT).show();
                         List<EvaluationType> evaluationTypes = new ArrayList<>();
                         for (EvaluationTypeDTO evaluationTypeDTO : data){
-                            evaluationTypeDTO.setSyncSatus(SyncSatus.SENT);
                             evaluationTypeDTO.getEvaluationType().setSyncStatus(SyncSatus.SENT);
                             evaluationTypes.add(evaluationTypeDTO.getEvaluationType());
                         }

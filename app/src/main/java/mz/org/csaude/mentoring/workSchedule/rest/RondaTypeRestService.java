@@ -42,7 +42,6 @@ public class RondaTypeRestService extends BaseRestService {
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Rondas.", Toast.LENGTH_SHORT).show();
                         List<RondaType> rondaTypes = new ArrayList<>();
                         for (RondaTypeDTO rondaTypeDTO : data){
-                            rondaTypeDTO.setSyncSatus(SyncSatus.SENT);
                             rondaTypeDTO.getRondaType().setSyncStatus(SyncSatus.SENT);
                             rondaTypes.add(rondaTypeDTO.getRondaType());
                         }

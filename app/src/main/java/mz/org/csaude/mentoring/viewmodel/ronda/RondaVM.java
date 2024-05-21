@@ -2,14 +2,18 @@ package mz.org.csaude.mentoring.viewmodel.ronda;
 
 import android.app.Application;
 import android.content.Intent;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
+import androidx.databinding.ObservableField;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,6 +58,8 @@ public class RondaVM extends BaseViewModel {
     private List<Tutored> menteeList;
 
     private List<Tutored> selectedMentees;
+
+    private ObservableField<String> searchText = new ObservableField<>("");
 
     public RondaVM(@NonNull Application application) {
         super(application);
@@ -192,23 +198,23 @@ public class RondaVM extends BaseViewModel {
 
     public void addSelectedMentee() {
         // validate mentee here...
-
         if (selectedMentees == null) selectedMentees = new ArrayList<>();
-        this.setSelectedMentees(menteeList);
-        //if(selectedMentee != null){
-            //if (!selectedMentees.contains(selectedMentee)) {
-                //selectedMentee.setListPosition(selectedMentees.size()+1);
-                //selectedMentee.setListType(Listble.PRESCRIPTION_DRUG_LISTING);
-                //selectedMentees.add(selectedMentee);
-                ((CreateRondaActivity) getRelatedActivity()).displaySelectedMentees();
+        if(selectedMentee != null){
+            if (!selectedMentees.contains(selectedMentee)) {
+                selectedMentee.setListPosition(selectedMentees.size()+1);
+                selectedMentee.setListType(Listble.ListTypes.SELECTION_LIST);
+                selectedMentees.add(selectedMentee);
+                getRelatedActivity().displaySelectedMentees();
                 setSelectedMentee(null);
                 notifyPropertyChanged(BR.selectedMentee);
-            /*}else {
+
+
+            }else {
                 Utilities.displayAlertDialog(getRelatedActivity(), "O Mentorando seleccionado já existe na lista!").show();
             }
         }else{
             Utilities.displayAlertDialog(getRelatedActivity(),"Campo Mentorando está vazio. Por favor, seleccione um medicamento para adicionar à lista.").show();
-        }*/
+        }
     }
 
     public void save() {
@@ -268,7 +274,11 @@ public class RondaVM extends BaseViewModel {
     }
 
     public List<Tutored> getMentees() {
-        return this.menteeList;
+        try {
+            return getApplication().getTutoredService().getAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Province> getAllProvince() throws SQLException {
@@ -304,4 +314,11 @@ public class RondaVM extends BaseViewModel {
         // TODO
         return true;
     }
+
+    public void removeFromSelected(Tutored tutored) {
+        this.selectedMentees.remove(tutored);
+        getRelatedActivity().displaySelectedMentees();
+
+    }
+
 }

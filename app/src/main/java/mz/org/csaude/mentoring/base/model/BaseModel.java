@@ -3,6 +3,7 @@ package mz.org.csaude.mentoring.base.model;
 import com.j256.ormlite.field.DatabaseField;
 import lombok.Getter;
 import lombok.Setter;
+import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -11,7 +12,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public abstract class BaseModel implements Serializable {
+public abstract class BaseModel implements Serializable, Listble {
 
     public static final String COLUMN_ID = "id";
 
@@ -26,9 +27,10 @@ public abstract class BaseModel implements Serializable {
     @DatabaseField(columnName = COLUMN_UUID, unique = true)
     private String uuid;
 
+    protected String listTyp;
+
     @DatabaseField(columnName = COLUMN_SYNC_STATUS)
     private SyncSatus syncStatus;
-
     public BaseModel() {
     }
 
@@ -65,8 +67,18 @@ public abstract class BaseModel implements Serializable {
         this.listPosition = listPosition;
     }
 
+    @Override
+    public int getDrawable() {
+        return 0;
+    }
+
     public int getListPosition() {
         return listPosition;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 
     public LifeCycleStatus getLifeCycleStatus() {
@@ -86,6 +98,21 @@ public abstract class BaseModel implements Serializable {
     }
 
     public String validade() {
+        return null;
+    }
+
+    @Override
+    public void setListType(ListTypes type) {
+        this.listTyp = String.valueOf(type);
+    }
+
+    @Override
+    public String getListType() {
+        return this.listTyp;
+    }
+
+    @Override
+    public String getCode() {
         return null;
     }
 }

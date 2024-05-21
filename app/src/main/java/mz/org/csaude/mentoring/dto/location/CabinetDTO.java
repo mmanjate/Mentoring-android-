@@ -34,9 +34,7 @@ public class CabinetDTO extends BaseEntityDTO {
 
     public Cabinet getCabinet(){
         Cabinet cabinet = new Cabinet();
-        cabinet.setId(this.getId());
         cabinet.setUuid(this.getUuid());
-        cabinet.setSyncStatus(this.getSyncSatus());
         cabinet.setName(this.getName());
         return cabinet;
     }

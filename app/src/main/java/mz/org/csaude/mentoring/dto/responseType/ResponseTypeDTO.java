@@ -30,9 +30,7 @@ public class ResponseTypeDTO extends BaseEntityDTO {
     }
     public ResponseType getResponseType() {
         ResponseType responseType = new ResponseType();
-        responseType.setId(this.getId());
         responseType.setUuid(this.getUuid());
-        responseType.setSyncStatus(this.getSyncSatus());
         responseType.setCode(this.getCode());
         responseType.setDescription(this.getDescription());
         return responseType;

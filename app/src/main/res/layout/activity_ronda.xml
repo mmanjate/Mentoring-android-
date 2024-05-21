@@ -32,7 +32,7 @@
             android:id="@+id/linearLayout4"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:padding="@dimen/dimen_15dp"
+            android:padding="@dimen/dimen_5dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -196,7 +196,7 @@
                 android:drawableRight="@drawable/baseline_person_search_24"
                 android:visibility="@{viewModel.currentStep.applicationStepDisplay ? View.GONE : View.VISIBLE}"
                 style="@style/bottom_border_edit_text_style"
-                android:text="@{viewModel.selectedMentee.employee.name}"
+                android:text="@{viewModel.selectedMentee.employee.fullName}"
                 android:padding="@dimen/dimen_4dp"
                 />
             <ImageButton
@@ -223,7 +223,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_4dp"
-                android:background="@drawable/listble_shape"
                 android:scrollbars="vertical"/>
         </LinearLayout>
             <Button

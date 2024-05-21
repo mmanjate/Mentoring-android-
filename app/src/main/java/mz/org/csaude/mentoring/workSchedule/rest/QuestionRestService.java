@@ -42,7 +42,6 @@ public class QuestionRestService extends BaseRestService {
                         Toast.makeText(APP.getApplicationContext(), "Carregando as Questões.", Toast.LENGTH_SHORT).show();
                         List<Question> questions = new ArrayList<>();
                         for (QuestionDTO questionDTO : data){
-                            questionDTO.setSyncSatus(SyncSatus.SENT);
                             questionDTO.getQuestionObj().setSyncStatus(SyncSatus.SENT);
                             questions.add(questionDTO.getQuestionObj());
                         }

@@ -49,11 +49,9 @@ public class CareerTypeDTO extends BaseEntityDTO {
     }
     public CareerType getCareerType() {
         CareerType careerType = new CareerType();
-        careerType.setId(this.getId());
         careerType.setUuid(this.getUuid());
         careerType.setCode(this.getCode());
         careerType.setDescription(this.getDescription());
-        careerType.setSyncStatus(this.getSyncSatus());
         return careerType;
     }
 }

@@ -57,7 +57,6 @@ public class TutorRestService extends BaseRestService {
 
                 List<Tutor> tutors = new ArrayList<>();
                 for (TutorDTO tutorDTO : data){
-                    tutorDTO.setSyncSatus(SyncSatus.SENT);
                     tutorDTO.getTutor().getEmployee().setSyncStatus(SyncSatus.SENT);
                     tutorDTO.getTutor().setSyncStatus(SyncSatus.SENT);
                     tutors.add(tutorDTO.getTutor());

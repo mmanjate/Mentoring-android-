@@ -42,7 +42,6 @@ public class TimeOfDayRestService extends BaseRestService {
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Período do Dia.", Toast.LENGTH_SHORT).show();
                         List<TimeOfDay> timeOfDays = new ArrayList<>();
                         for (TimeOfDayDTO timeOfDayDTO : data){
-                            timeOfDayDTO.setSyncSatus(SyncSatus.SENT);
                             timeOfDayDTO.getTimeOfDay().setSyncStatus(SyncSatus.SENT);
                             timeOfDays.add(timeOfDayDTO.getTimeOfDay());
                         }

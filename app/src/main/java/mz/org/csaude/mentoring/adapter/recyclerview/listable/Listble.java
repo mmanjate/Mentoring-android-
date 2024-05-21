@@ -2,6 +2,7 @@ package mz.org.csaude.mentoring.adapter.recyclerview.listable;
 
 public interface Listble {
 
+
     Integer getId();
 
     default int getListPosition() {
@@ -15,4 +16,15 @@ public interface Listble {
     int getDrawable();
 
     String getCode();
+
+    String getListType();
+
+    default void setListType(ListTypes type) {
+
+    }
+
+    public enum ListTypes {
+        SELECTION_LIST,
+        NORMAL
+    }
 }

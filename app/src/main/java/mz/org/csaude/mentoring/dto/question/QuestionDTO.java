@@ -42,9 +42,7 @@ public class QuestionDTO extends BaseEntityDTO {
     }
     public Question getQuestionObj() {
         Question question = new Question();
-        question.setId(this.getId());
         question.setUuid(this.getUuid());
-        question.setSyncStatus(this.getSyncSatus());
         question.setCode(this.getCode());
         question.setQuestion(this.getQuestion());
         if(this.getQuestionCategory()!=null) {

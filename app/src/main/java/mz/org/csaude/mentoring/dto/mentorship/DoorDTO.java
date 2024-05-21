@@ -30,10 +30,8 @@ public class DoorDTO extends BaseEntityDTO {
     }
     public Door getDoor() {
         Door door = new Door();
-        door.setId(this.getId());
         door.setCode(this.getCode());
         door.setUuid(this.getUuid());
-        door.setSyncStatus(this.getSyncSatus());
         door.setDescription(this.getDescription());
         return door;
     }

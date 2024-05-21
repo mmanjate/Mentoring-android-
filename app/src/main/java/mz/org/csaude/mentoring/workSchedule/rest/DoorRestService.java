@@ -42,7 +42,6 @@ public class DoorRestService extends BaseRestService {
                         Toast.makeText(APP.getApplicationContext(), "Carregando as Portas.", Toast.LENGTH_SHORT).show();
                         List<Door> doors = new ArrayList<>();
                         for (DoorDTO doorDTO : data){
-                            doorDTO.setSyncSatus(SyncSatus.SENT);
                             doorDTO.getDoor().setSyncStatus(SyncSatus.SENT);
                             doors.add(doorDTO.getDoor());
                         }

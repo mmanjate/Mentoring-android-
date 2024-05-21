@@ -42,7 +42,6 @@ public class IterationTypeRestService extends BaseRestService {
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de ITERAÇÕES.", Toast.LENGTH_SHORT).show();
                         List<IterationType> iterationTypes = new ArrayList<>();
                         for (IterationTypeDTO iterationTypeDTO : data){
-                            iterationTypeDTO.setSyncSatus(SyncSatus.SENT);
                             iterationTypeDTO.getIterationType().setSyncStatus(SyncSatus.SENT);
                             iterationTypes.add(iterationTypeDTO.getIterationType());
                         }

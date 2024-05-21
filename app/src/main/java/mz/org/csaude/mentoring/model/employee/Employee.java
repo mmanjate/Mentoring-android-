@@ -97,7 +97,6 @@ public class Employee extends BaseModel implements Listble {
         this.setLocations(retriveLocations(employeeDTO.getLocationDTOSet()));
         if(employeeDTO.getProfessionalCategoryDTO() != null) this.setProfessionalCategory(new ProfessionalCategory(employeeDTO.getProfessionalCategoryDTO()));
         if(employeeDTO.getPartnerDTO() != null) this.setPartner(new Partner(employeeDTO.getPartnerDTO()));
-        this.setSyncStatus(employeeDTO.getSyncSatus());
     }
 
     private List<Location> retriveLocations(List<LocationDTO> locationDTOSet) {

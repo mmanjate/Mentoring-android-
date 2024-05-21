@@ -112,21 +112,26 @@
                 android:src="@drawable/ic_delete" />
 
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="@dimen/dimen_0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="@{tutored.syncStatus == SyncSatus.SENT ? View.VISIBLE : View.GONE}"
-            android:padding="@dimen/dimen_5dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="0.7">
-
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility='@{tutored.listType.equals("NORMAL") ? View.GONE : View.VISIBLE}'
                 android:src="@drawable/baseline_cloud_done_24"
                 android:layout_gravity="center_vertical"/>
-
-        </LinearLayout>
+            <ImageButton
+                android:id="@+id/btn_remove_selected"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:visibility='@{!tutored.listType.equals("NORMAL") ? View.GONE : View.VISIBLE}'
+                android:layout_width="wrap_content"
+                android:background="#e9f1f7"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete" />
+        </RelativeLayout>
 
     </LinearLayout>
 </layout>

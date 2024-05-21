@@ -84,7 +84,6 @@ public class WorkerScheduleExecutor {
                 .then(iterationTypesOneTimeWorkRequest)
                 .then(timesOfDayOneTimeWorkRequest)
                 .then(doorsOneTimeWorkRequest)
-               // .then(questionsOneTimeWorkRequest)
                 .then(categoriesOneTimeWorkRequest).enqueue();
         return categoriesOneTimeWorkRequest;
 
@@ -107,8 +106,8 @@ public class WorkerScheduleExecutor {
 
     public OneTimeWorkRequest menteesDownload() {
         OneTimeWorkRequest menteesOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutoredWorker.class).addTag("ONE_TIME_MENTEES_ID" + ONE_TIME_REQUEST_JOB_ID).build();
-        OneTimeWorkRequest mentorFormsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(FormWorker.class).addTag("ONE_TIME_MENTOR_FORMS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
-        workManager.enqueue(Arrays.asList(menteesOneTimeWorkRequest,mentorFormsOneTimeWorkRequest));
+        //OneTimeWorkRequest mentorFormsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(FormWorker.class).addTag("ONE_TIME_MENTOR_FORMS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        workManager.enqueue(Arrays.asList(menteesOneTimeWorkRequest));
 
         return menteesOneTimeWorkRequest;
     }

@@ -47,7 +47,6 @@ public class ProvinceRestService extends BaseRestService {
 
                     List<Province> provinces = new ArrayList<>();
                     for (ProvinceDTO provinceDTO : data) {
-                        provinceDTO.setSyncSatus(SyncSatus.SENT);
                         provinceDTO.getProvince().setSyncStatus(SyncSatus.SENT);
                         provinces.add(provinceDTO.getProvince());
                     }

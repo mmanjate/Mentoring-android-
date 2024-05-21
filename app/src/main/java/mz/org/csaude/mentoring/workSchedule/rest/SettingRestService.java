@@ -46,7 +46,6 @@ public class SettingRestService extends BaseRestService {
                    List<Setting> settings = new ArrayList<>();
 
                    for(SettingDTO settingDTO : data){
-                       settingDTO.setSyncSatus(SyncSatus.SENT);
                        settingDTO.getSetting().setSyncStatus(SyncSatus.SENT);
                        settings.add(settingDTO.getSetting());
                    }

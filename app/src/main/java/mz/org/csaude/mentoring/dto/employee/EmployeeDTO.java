@@ -134,9 +134,7 @@ public class EmployeeDTO extends BaseEntityDTO {
 
     public Employee getEmployee() {
         Employee employee = new Employee();
-        employee.setId(this.getId());
         employee.setUuid(this.getUuid());
-        employee.setSyncStatus(this.getSyncSatus());
         employee.setName(this.getName());
         employee.setSurname(this.getSurname());
         employee.setNuit(this.getNuit());

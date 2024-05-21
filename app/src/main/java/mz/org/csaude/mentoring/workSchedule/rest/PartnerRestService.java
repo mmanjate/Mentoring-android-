@@ -41,7 +41,6 @@ public class PartnerRestService extends BaseRestService {
 
                     List<Partner> partners = new ArrayList<>();
                     for (PartnerDTO partnerDTO : data) {
-                        partnerDTO.setSyncSatus(SyncSatus.SENT);
                         partnerDTO.getPartner().setSyncStatus(SyncSatus.SENT);
                         partners.add(partnerDTO.getPartner());
                     }

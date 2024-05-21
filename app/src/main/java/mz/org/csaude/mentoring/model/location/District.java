@@ -14,7 +14,7 @@ import mz.org.csaude.mentoring.dto.location.DistrictDTO;
 @Data
 @DatabaseTable(tableName = District.TABLE_NAME, daoClass = DistrictDAOImpl.class)
 @EqualsAndHashCode(callSuper=false)
-public class District extends BaseModel implements Listble {
+public class District extends BaseModel {
 
     public static final String TABLE_NAME = "district";
 
@@ -40,7 +40,6 @@ public class District extends BaseModel implements Listble {
         this.setUuid(districtDTO.getUuid());
         this.setDescription(districtDTO.getDescription());
         if(districtDTO.getProvinceDTO() != null) this.setProvince(new Province(districtDTO.getProvinceDTO()));
-        this.setSyncStatus(districtDTO.getSyncSatus());
     }
 
     public Province getProvince() {
@@ -68,6 +67,5 @@ public class District extends BaseModel implements Listble {
     public void setDescription(String district) {
         this.district = district;
     }
-
 
 }

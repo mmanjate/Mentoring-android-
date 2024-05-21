@@ -43,7 +43,6 @@ public class CareerRestService extends BaseRestService {
                         Toast.makeText(APP.getApplicationContext(), "Carregando as CARREIRAS...", Toast.LENGTH_SHORT).show();
                         List<Career> careers = new ArrayList<>();
                         for (CareerDTO careerDTO : data) {
-                            careerDTO.setSyncSatus(SyncSatus.SENT);
                             careerDTO.getCareer().setSyncStatus(SyncSatus.SENT);
                             careers.add(new Career(careerDTO));
                         }

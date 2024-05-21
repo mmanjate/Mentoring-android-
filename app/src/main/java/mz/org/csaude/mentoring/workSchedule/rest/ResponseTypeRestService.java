@@ -46,7 +46,6 @@ public class ResponseTypeRestService extends BaseRestService {
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Respostas.", Toast.LENGTH_SHORT).show();
                         List<ResponseType> responseTypes = new ArrayList<>();
                         for (ResponseTypeDTO responseTypeDTO : data){
-                            responseTypeDTO.setSyncSatus(SyncSatus.SENT);
                             responseTypeDTO.getResponseType().setSyncStatus(SyncSatus.SENT);
                             responseTypes.add(responseTypeDTO.getResponseType());
                         }

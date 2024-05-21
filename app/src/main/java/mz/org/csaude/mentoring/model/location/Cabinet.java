@@ -28,7 +28,6 @@ public class Cabinet extends BaseModel {
     public Cabinet(CabinetDTO dto) {
         this.setUuid(dto.getUuid());
         this.setName(dto.getName());
-        this.setSyncStatus(dto.getSyncSatus());
     }
 
     public String getName() {

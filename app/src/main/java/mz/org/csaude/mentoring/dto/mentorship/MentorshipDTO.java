@@ -162,4 +162,45 @@ public class MentorshipDTO extends BaseEntityDTO {
     public void setTimeOfDay(TimeOfDayDTO timeOfDay) {
         this.timeOfDay = timeOfDay;
     }
+
+    public Mentorship getMentorship() {
+        Mentorship mentorship = new Mentorship();
+        mentorship.setId(this.getId());
+        mentorship.setUuid(this.getUuid());
+        mentorship.setSyncStatus(this.getSyncSatus());
+        mentorship.setCode(this.getCode());
+        mentorship.setStartDate(this.getStartDate());
+        mentorship.setEndDate(this.getEndDate());
+        mentorship.setIterationNumber(this.getIterationNumber());
+        mentorship.setCreatedAt(this.getCreatedAt());
+        mentorship.setUpdatedAt(this.getUpdatedAt());
+        if(this.getHealthFacility()!=null) {
+            mentorship.setHealthFacility(this.getHealthFacility().getHealthFacilityObj());
+        }
+        if(this.getMentor()!=null) {
+            mentorship.setTutor(this.getMentor().getTutor());
+        }
+        if(this.getMentee()!=null) {
+            mentorship.setTutored(this.getMentee().getMentee());
+        }
+        if(this.getSession()!=null) {
+            mentorship.setSession(this.getSession().getSession());
+        }
+        if(this.getForm()!=null) {
+            mentorship.setForm(this.getForm().getForm());
+        }
+        if(this.getCabinet()!=null) {
+            mentorship.setCabinet(this.getCabinet().getCabinet());
+        }
+        if(this.getDoor()!=null) {
+            mentorship.setDoor(this.getDoor().getDoor());
+        }
+        if(this.getIterationType()!=null) {
+            mentorship.setIterationType(this.getIterationType().getIterationType());
+        }
+        if(this.getTimeOfDay()!=null) {
+            mentorship.setTimeOfDay(this.getTimeOfDay().getTimeOfDay());
+        }
+        return mentorship;
+    }
 }

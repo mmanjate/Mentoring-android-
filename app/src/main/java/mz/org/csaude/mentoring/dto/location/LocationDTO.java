@@ -73,6 +73,8 @@ public class LocationDTO extends BaseEntityDTO {
     public Location getLocation() {
         Location location = new Location();
         location.setUuid(this.getUuid());
+        location.setCreatedAt(this.getCreatedAt());
+        location.setUpdatedAt(this.getUpdatedAt());
         if(this.getEmployeeDTO()!=null) {
             location.setEmployee(this.employeeDTO.getEmployee());
         }

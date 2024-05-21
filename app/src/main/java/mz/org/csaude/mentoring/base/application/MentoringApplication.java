@@ -59,9 +59,12 @@ import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.workSchedule.rest.ServerStatusChecker;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.workSchedule.rest.FormRestService;
+import mz.org.csaude.mentoring.workSchedule.rest.MentorshipRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutorRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
+import mz.org.csaude.mentoring.workSchedule.rest.FormQuestionRestService;
+import mz.org.csaude.mentoring.workSchedule.rest.RondaRestService;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -126,6 +129,9 @@ public class MentoringApplication  extends Application {
     private PartnerRestService partnerRestService;
     private FormRestService formRestService;
     private TutorRestService tutorRestService;
+    private FormQuestionRestService formQuestionRestService;
+    private RondaRestService rondaRestService;
+    private MentorshipRestService mentorshipRestService;
 
     @Override
     public void onCreate() {
@@ -284,6 +290,18 @@ public class MentoringApplication  extends Application {
     public TutorRestService getTutorRestService() {
         if (tutorRestService == null) this.tutorRestService = new TutorRestService(this);
         return tutorRestService;
+    }
+    public FormQuestionRestService getFormQuestionRestService() {
+        if (formQuestionRestService == null) this.formQuestionRestService = new FormQuestionRestService(this);
+        return formQuestionRestService;
+    }
+    public RondaRestService getRondaRestService() {
+        if (rondaRestService == null) this.rondaRestService = new RondaRestService(this);
+        return rondaRestService;
+    }
+    public MentorshipRestService getMentorshipRestService() {
+        if (mentorshipRestService == null) this.mentorshipRestService = new MentorshipRestService(this);
+        return mentorshipRestService;
     }
 
     public ApplicationStep getApplicationStep() {

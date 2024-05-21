@@ -52,4 +52,21 @@ public class RondaMenteeDTO extends BaseEntityDTO {
     public void setRonda(RondaDTO ronda) {
         this.ronda = ronda;
     }
+    public RondaMentee getRondaMentee() {
+        RondaMentee rondaMentee = new RondaMentee();
+        rondaMentee.setId(this.getId());
+        rondaMentee.setUuid(this.getUuid());
+        rondaMentee.setSyncStatus(this.getSyncSatus());
+        rondaMentee.setStartDate(this.getStartDate());
+        rondaMentee.setEndDate(this.getEndDate());
+        rondaMentee.setCreatedAt(this.getCreatedAt());
+        rondaMentee.setUpdatedAt(this.getUpdatedAt());
+        if(this.getMentee()!=null) {
+            rondaMentee.setTutored(this.getRondaMentee().getTutored());
+        }
+        if(this.getRonda()!=null) {
+            rondaMentee.setRonda(this.getRonda().getRonda());
+        }
+        return rondaMentee;
+    }
 }

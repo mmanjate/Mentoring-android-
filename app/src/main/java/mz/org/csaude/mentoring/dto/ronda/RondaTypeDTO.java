@@ -28,4 +28,15 @@ public class RondaTypeDTO extends BaseEntityDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+    public RondaType getRondaType() {
+        RondaType rondaType = new RondaType();
+        rondaType.setId(this.getId());
+        rondaType.setUuid(this.getUuid());
+        rondaType.setSyncStatus(this.getSyncSatus());
+        rondaType.setCode(this.getCode());
+        rondaType.setDescription(this.getDescription());
+        rondaType.setCreatedAt(this.getCreatedAt());
+        rondaType.setUpdatedAt(this.getUpdatedAt());
+        return rondaType;
+    }
 }

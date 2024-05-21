@@ -64,6 +64,8 @@ public class User extends BaseModel {
         this.salt = userDTO.getSalt();
         this.setUuid(userDTO.getUuid());
         this.setEmployee(new Employee(userDTO.getEmployeeDTO()));
+        this.setCreatedAt(userDTO.getCreatedAt());
+        this.setUpdatedAt(userDTO.getUpdatedAt());
     }
 
     public String getFullName () {

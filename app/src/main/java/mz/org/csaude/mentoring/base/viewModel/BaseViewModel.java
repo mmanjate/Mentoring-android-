@@ -11,21 +11,16 @@ import androidx.databinding.PropertyChangeRegistry;
 import androidx.lifecycle.AndroidViewModel;
 
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.fragment.GenericFragment;
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.common.ApplicationStep;
-import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
-import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.util.LoadingDialog;
 import mz.org.csaude.mentoring.util.Utilities;

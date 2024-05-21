@@ -53,6 +53,8 @@ public class Setting extends BaseModel {
         this.setValue(dto.getValue());
         this.setType(dto.getType());
         this.setEnabled(dto.getEnabled());
+        this.setCreatedAt(dto.getCreatedAt());
+        this.setUpdatedAt(dto.getUpdatedAt());
     }
 
     public String getDesignation() {

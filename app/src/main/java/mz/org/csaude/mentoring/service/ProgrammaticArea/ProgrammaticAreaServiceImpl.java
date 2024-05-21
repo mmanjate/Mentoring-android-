@@ -7,6 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.programmaticArea.ProgrammaticAreaDAO;
+import mz.org.csaude.mentoring.dto.programmaticArea.ProgrammaticAreaDTO;
 import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 import mz.org.csaude.mentoring.model.user.User;
 
@@ -49,5 +50,23 @@ public class ProgrammaticAreaServiceImpl extends BaseServiceImpl<ProgrammaticAre
     @Override
     public ProgrammaticArea getById(int id) throws SQLException {
         return this.programmaticAreaDAO.queryForId(id);
+    }
+
+    @Override
+    public void saveOrUpdateProgrammaticAreas(List<ProgrammaticAreaDTO> programmaticAreaDTOS) throws SQLException {
+        for (ProgrammaticAreaDTO programmaticAreaDTO: programmaticAreaDTOS) {
+            this.saveOrUpdateProgrammaticArea(programmaticAreaDTO);
+        }
+    }
+
+    @Override
+    public ProgrammaticArea saveOrUpdateProgrammaticArea(ProgrammaticAreaDTO programmaticAreaDTO) throws SQLException {
+        ProgrammaticArea pa = this.programmaticAreaDAO.getByUuid(programmaticAreaDTO.getUuid());
+        ProgrammaticArea programmaticArea = programmaticAreaDTO.getProgrammaticArea();
+        if(pa!=null) {
+            programmaticArea.setId(pa.getId());
+        }
+        this.programmaticAreaDAO.createOrUpdate(programmaticArea);
+        return programmaticArea;
     }
 }

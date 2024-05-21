@@ -9,11 +9,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
-import mz.org.csaude.mentoring.model.form.Form;
+import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.util.Http;
 import mz.org.csaude.mentoring.util.Utilities;
 
-public class FormQuestionWorker extends BaseWorker<Form> {
+public class FormQuestionWorker extends BaseWorker<FormQuestion> {
     private String requestType;
 
     public FormQuestionWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
@@ -23,11 +23,7 @@ public class FormQuestionWorker extends BaseWorker<Form> {
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-        if (Utilities.stringHasValue(requestType) && requestType.equalsIgnoreCase(String.valueOf(Http.POST))) {
-            getApplication().getFormRestService().restPostForm(this);
-        } else {
-            getApplication().getFormRestService().restGetForm(this);
-        }
+            getApplication().getFormQuestionRestService().restGetFormQuestion(this);
     }
 
     @Override
@@ -36,7 +32,7 @@ public class FormQuestionWorker extends BaseWorker<Form> {
     }
 
     @Override
-    protected void doAfterSearch(String flag, List<Form> recs) throws SQLException {
+    protected void doAfterSearch(String flag, List<FormQuestion> recs) throws SQLException {
         changeStatusToFinished();
         doOnFinish();
     }
@@ -47,7 +43,7 @@ public class FormQuestionWorker extends BaseWorker<Form> {
     }
 
     @Override
-    protected void doSave(List<Form> recs) {
+    protected void doSave(List<FormQuestion> recs) {
 
     }
 }

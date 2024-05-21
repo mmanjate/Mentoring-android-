@@ -14,16 +14,23 @@ import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
 import mz.org.csaude.mentoring.dto.location.RondaTypeDTO;
 import mz.org.csaude.mentoring.dto.mentorship.DoorDTO;
 import mz.org.csaude.mentoring.dto.mentorship.IterationTypeDTO;
+import mz.org.csaude.mentoring.dto.mentorship.MentorshipDTO;
 import mz.org.csaude.mentoring.dto.mentorship.TimeOfDayDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.dto.professionalcategory.ProfessionalCategoryDTO;
+import mz.org.csaude.mentoring.dto.program.ProgramDTO;
+import mz.org.csaude.mentoring.dto.programmaticArea.ProgrammaticAreaDTO;
+import mz.org.csaude.mentoring.dto.programmaticArea.TutorProgrammaticAreaDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
+import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
+import mz.org.csaude.mentoring.dto.session.SessionStatusDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
+import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -95,16 +102,16 @@ public interface SyncDataService {
     @GET("/partner/getall")
     Call<List<PartnerDTO>> getPartners();
 
-    @POST("tutored/save")
+    @POST("/tutored/save")
     Call<TutoredDTO> postTutored(@Body TutoredDTO tutoredDTO);
 
-    @POST("tutored/saveMany")
+    @POST("/tutored/saveMany")
     Call<List<TutoredDTO>> postTutoreds(@Body List<TutoredDTO> tutoredDTOS);
     @GET("/rondaTypes/getall")
     Call<List<RondaTypeDTO>> getRondaTypes();
     @GET("/forms/getall")
     Call<List<FormDTO>> getFormsByPartner(@Query("partnerId") Long partnerId);
-    @POST("forms/save")
+    @POST("/forms/save")
     Call<List<FormDTO>> postForms(@Body List<FormDTO> formDTOS);
     @GET("/evaluationTypes/getAll")
     Call<List<EvaluationTypeDTO>> getEvaluationTypes();
@@ -122,10 +129,27 @@ public interface SyncDataService {
     Call<List<QuestionDTO>> getAllQuestions();
     @GET("/formQuestions/getByFormsUuids")
     Call<List<FormQuestionDTO>> getFormsQuestionsByFormsUuids(@Query("formsUuids") List<String> formsUuids);
+    @GET("/rondas/getAllRondasOfMentor")
+    Call<List<RondaDTO>> getAllRondasOfMentor(@Query("mentorId") Long mentorId);
+    @POST("/rondas/save")
+    Call<List<RondaDTO>> postRondas(@Body List<RondaDTO> rondaDTOS);
+    @GET("/mentorships/getAllMentorshipSessionsOfMentor")
+    Call<List<MentorshipDTO>> getAllMentorshipSessionsOfMentor(@Query("mentorId") Long mentorId);
+    @POST("/mentorships/save")
+    Call<List<MentorshipDTO>> postMenthorships(List<MentorshipDTO> mentorshipDTOS);
+
+    @GET("/sessionStatuses/getall")
+    Call<List<SessionStatusDTO>> getSessionStatuses();
 
     @GET("error")
     Call<MentoringAPIError> getError();
 
     @PATCH("/mentor/update")
     Call<TutorDTO> patchTutor(@Body TutorDTO tutorDTO);
+    @GET("/programs/getAll")
+    Call<List<ProgramDTO>> getAllPrograms();
+    @GET("/programmaticareas/getAll")
+    Call<List<ProgrammaticAreaDTO>> getAllProgrammaticAreas();
+    @GET("/tutorprogrammaticareas/all")
+    Call<List<TutorProgrammaticAreaDTO>> getAllTutorProgrammaticAreas();
 }

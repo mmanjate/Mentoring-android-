@@ -23,6 +23,8 @@ public class QuestionCategoryDTO extends BaseEntityDTO {
         QuestionsCategory questionsCategory = new QuestionsCategory();
         questionsCategory.setUuid(this.getUuid());
         questionsCategory.setCategory(this.getCategory());
+        questionsCategory.setCreatedAt(this.getCreatedAt());
+        questionsCategory.setUpdatedAt(this.getUpdatedAt());
         return questionsCategory;
     }
 }

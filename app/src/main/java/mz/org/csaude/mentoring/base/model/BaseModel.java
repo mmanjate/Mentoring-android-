@@ -9,6 +9,7 @@ import mz.org.csaude.mentoring.util.LifeCycleStatus;
 import mz.org.csaude.mentoring.util.SyncSatus;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -20,6 +21,8 @@ public abstract class BaseModel implements Serializable, Listble {
 
     public static final String COLUMN_LIFE_CYCLE_STATUS = "life_cycle_status";
     public static final String COLUMN_SYNC_STATUS = "sync_status";
+    public static final String COLUMN_CREATED_AT = "created_at";
+    public static final String COLUMN_UPDATED_AT = "updated_at";
 
     @DatabaseField(columnName = COLUMN_ID, canBeNull = false, generatedId = true, allowGeneratedIdInsert = true)
     private Integer id;
@@ -31,6 +34,11 @@ public abstract class BaseModel implements Serializable, Listble {
 
     @DatabaseField(columnName = COLUMN_SYNC_STATUS)
     private SyncSatus syncStatus;
+    @DatabaseField(columnName = COLUMN_CREATED_AT, canBeNull = true)
+    private Date createdAt;
+    @DatabaseField(columnName = COLUMN_UPDATED_AT, canBeNull = true)
+    private Date updatedAt;
+
     public BaseModel() {
     }
 
@@ -95,6 +103,22 @@ public abstract class BaseModel implements Serializable, Listble {
 
     public void setSyncStatus(SyncSatus syncStatus) {
         this.syncStatus = syncStatus;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String validade() {

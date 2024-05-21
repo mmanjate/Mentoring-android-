@@ -90,6 +90,8 @@ public class FormDTO extends BaseEntityDTO {
         form.setName(this.getName());
         form.setTargetFile(this.getTargetFile());
         form.setTargetPatient(this.getTargetPatient());
+        form.setCreatedAt(this.getCreatedAt());
+        form.setUpdatedAt(this.getUpdatedAt());
         if(this.getPartner()!=null) {
             form.setPartner(this.getPartner().getPartner());
         }

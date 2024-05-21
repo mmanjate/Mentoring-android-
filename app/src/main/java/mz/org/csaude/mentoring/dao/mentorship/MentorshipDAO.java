@@ -12,5 +12,5 @@ import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 
 public interface MentorshipDAO extends MentoringBaseDao<Mentorship, Integer> {
      List<Mentorship> getMentorshipByTutor(Application application, String uuidTutor)throws SQLException;
-
+     List<Mentorship> getAllNotSynced() throws SQLException;
 }

@@ -31,6 +31,9 @@ public class CareerType extends BaseModel implements Listble {
 
     @DatabaseField(columnName = COLUMN_CODE)
     private String code;
+    public CareerType() {
+        super();
+    }
 
     public CareerType() {
     }

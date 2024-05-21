@@ -7,13 +7,21 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+
+import java.util.List;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.form.FormAdapter;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityMentorshipBinding;
+import mz.org.csaude.mentoring.model.form.Form;
+import mz.org.csaude.mentoring.model.mentorship.Mentorship;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.rondatype.RondaType;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipVM;
 
@@ -24,19 +32,37 @@ public class CreateMentorshipActivity extends BaseActivity {
     private RecyclerView formsRcv;
 
     private FormAdapter formAdapter;
+    private Mentorship mentorship;
+    private Ronda ronda;
+    private String title;
+    private RondaType rondaType;
+    private Tutor currMentor;
+    private List<Form> forms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mentorshipBinding = DataBindingUtil.setContentView(this, R.layout.activity_mentorship);
+        mentorshipBinding.setViewModel(getRelatedViewModel());
+        formsRcv = mentorshipBinding.rcvForms;
+        Intent intent = this.getIntent();
+        Bundle bundle = new Bundle();
+        if(intent!=null && intent.getExtras()!=null) {
+            mentorship = (Mentorship) intent.getExtras().get("newMentorship");
+            ronda = (Ronda) intent.getExtras().get("createdRonda");
+            title = (String) intent.getExtras().get("title");
+            rondaType = (RondaType) intent.getExtras().get("rondaType");
+            currMentor = (Tutor) intent.getExtras().get("currMentor");
+        }
         initMentorShip();
     }
 
     private void initMentorShip() {
-        getRelatedViewModel().loadTutorForms();
+        getRelatedViewModel().loadTutorForms(this.currMentor);
+        forms = getRelatedViewModel().getTutorForms();
 
-        if (Utilities.listHasElements(getRelatedViewModel().getTutorForms())) {
-            this.formAdapter = new FormAdapter(getRelatedViewModel().getTutorForms());
+        if (Utilities.listHasElements(forms)) {
+            this.formAdapter = new FormAdapter(forms);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
             formsRcv.setLayoutManager(mLayoutManager);
             formsRcv.setItemAnimator(new DefaultItemAnimator());

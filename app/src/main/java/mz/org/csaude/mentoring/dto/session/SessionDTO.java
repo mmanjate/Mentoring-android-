@@ -59,4 +59,20 @@ public class SessionDTO extends BaseEntityDTO {
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    public Session getSession() {
+        Session session = new Session();
+        session.setId(this.getId());
+        session.setUuid(this.getUuid());
+        session.setSyncStatus(this.getSyncSatus());
+        session.setStartDate(this.getStartDate());
+        session.setEndDate(this.getEndDate());
+        session.setPerformedDate(this.getPerformedDate());
+        session.setCreatedAt(this.getCreatedAt());
+        session.setUpdatedAt(this.getUpdatedAt());
+        if(this.getSessionStatus()!=null) {
+            session.setStatus(this.getSessionStatus().getSessionStatus());
+        }
+        return session;
+    }
 }

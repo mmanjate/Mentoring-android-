@@ -141,6 +141,8 @@ public class EmployeeDTO extends BaseEntityDTO {
         employee.setTrainingYear(this.getTrainingYear());
         employee.setPhoneNumber(this.getPhoneNumber());
         employee.setEmail(this.getEmail());
+        employee.setCreatedAt(this.getCreatedAt());
+        employee.setUpdatedAt(this.getUpdatedAt());
         if(this.getProfessionalCategoryDTO()!=null) {
             employee.setProfessionalCategory(this.getProfessionalCategoryDTO().getProfessionalCategory());
         }

@@ -28,6 +28,10 @@ public class Career extends BaseModel implements Listble {
     @DatabaseField(columnName = COLUMN_POSITION)
     private String position;
 
+    public Career() {
+        super();
+    }
+
     public Career(CareerDTO careerDTO) {
         this.setUuid(careerDTO.getUuid());
         this.setPosition(careerDTO.getPosition());

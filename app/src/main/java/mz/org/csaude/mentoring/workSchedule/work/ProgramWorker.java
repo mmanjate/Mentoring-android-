@@ -10,22 +10,21 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
-import mz.org.csaude.mentoring.model.question.Question;
-import mz.org.csaude.mentoring.workSchedule.rest.QuestionRestService;
-
-public class QuestionWorker extends BaseWorker<Question> {
-    private QuestionRestService questionRestService;
-    public QuestionWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+import mz.org.csaude.mentoring.model.program.Program;
+import mz.org.csaude.mentoring.workSchedule.rest.ProgramRestService;
+public class ProgramWorker extends BaseWorker<Program> {
+    private ProgramRestService programRestService;
+    public ProgramWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        this.questionRestService = new QuestionRestService((Application) getApplicationContext());
+        this.programRestService = new ProgramRestService((Application) getApplicationContext());
     }
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-        this.questionRestService.restGetQuestions(this);
+        this.programRestService.restGetPrograms(this);
     }
 
     @Override
-    protected void doAfterSearch(String flag, List<Question> recs) throws SQLException {
+    protected void doAfterSearch(String flag, List<Program> recs) throws SQLException {
         changeStatusToFinished();
         doOnFinish();
     }
@@ -41,7 +40,7 @@ public class QuestionWorker extends BaseWorker<Question> {
     }
 
     @Override
-    protected void doSave(List<Question> recs) {
+    protected void doSave(List<Program> recs) {
 
     }
 }

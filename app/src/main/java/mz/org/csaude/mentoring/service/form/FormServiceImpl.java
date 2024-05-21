@@ -7,21 +7,13 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.form.FormDAO;
-import mz.org.csaude.mentoring.dao.formQuestion.FormQuestionDAO;
 import mz.org.csaude.mentoring.dao.programmaticArea.TutorProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.model.form.Form;
-import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
-import mz.org.csaude.mentoring.model.user.User;
 
 public class FormServiceImpl extends BaseServiceImpl<Form> implements FormService{
-
     FormDAO formDAO;
-
     TutorProgrammaticAreaDAO tutorProgrammaticAreaDAO;
-    FormQuestionDAO formQuestionDAO;
-
-
     public FormServiceImpl(Application application) {
         super(application);
     }
@@ -92,7 +84,7 @@ public class FormServiceImpl extends BaseServiceImpl<Form> implements FormServic
     }
 
     @Override
-    public List<Form> getAllSynced() throws SQLException {
-        return this.formDAO.getAllSynced();
+    public List<Form> getAllSynced(Application application) throws SQLException {
+        return this.formDAO.getAllSynced(application);
     }
 }

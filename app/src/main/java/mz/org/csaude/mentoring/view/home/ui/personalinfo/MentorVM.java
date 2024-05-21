@@ -37,7 +37,6 @@ import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.Utilities;
 
-
 public class MentorVM extends BaseViewModel implements RestResponseListener<Tutor>, ServerStatusListener {
 
     private Tutor tutor;
@@ -106,6 +105,10 @@ public class MentorVM extends BaseViewModel implements RestResponseListener<Tuto
 
     public void setSurname(String surname){
         this.tutor.getEmployee().setSurname(surname);
+    }
+    @Bindable
+    public void setNuit(long nuit) {
+        this.tutor.getEmployee().setNuit(nuit);
     }
 
     public List<ProfessionalCategory> getAllProfessionalCategys() throws SQLException {
@@ -311,7 +314,6 @@ public class MentorVM extends BaseViewModel implements RestResponseListener<Tuto
     }
     public void setNuit(String nuit) {
         this.nuit = nuit;
-
         if(!StringUtils.isEmpty(nuit) & StringUtils.isNumeric(nuit)) this.tutor.getEmployee().setNuit(Long.parseLong(nuit));
     }
 

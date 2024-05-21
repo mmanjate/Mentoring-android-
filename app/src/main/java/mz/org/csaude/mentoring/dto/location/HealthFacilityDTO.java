@@ -2,12 +2,14 @@ package mz.org.csaude.mentoring.dto.location;
 
 import java.io.Serializable;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 
+@Data
 @NoArgsConstructor
-public class HealthFacilityDTO  extends BaseEntityDTO {
+public class HealthFacilityDTO extends BaseEntityDTO {
 
     private String uuid;
     private String healthFacility;
@@ -48,6 +50,8 @@ public class HealthFacilityDTO  extends BaseEntityDTO {
         HealthFacility healthFacility = new HealthFacility();
         healthFacility.setUuid(this.getUuid());
         healthFacility.setDescription(this.getHealthFacility());
+        healthFacility.setCreatedAt(this.getCreatedAt());
+        healthFacility.setUpdatedAt(this.getUpdatedAt());
         if(healthFacility.getDistrict()!=null) {
             healthFacility.setDistrict(this.getDistrictDTO().getDistrict());
         }

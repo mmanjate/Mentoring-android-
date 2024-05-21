@@ -40,6 +40,8 @@ public class DistrictDTO extends BaseEntityDTO {
         district.setUuid(this.getUuid());
         district.setSyncStatus(this.getSyncSatus());
         district.setDescription(this.getDescription());
+        district.setCreatedAt(this.getCreatedAt());
+        district.setUpdatedAt(this.getUpdatedAt());
         if(district.getProvince()!=null) {
             district.setProvince(this.getDistrict().getProvince());
         }

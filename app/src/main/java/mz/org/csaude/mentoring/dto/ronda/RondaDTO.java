@@ -106,6 +106,8 @@ public class RondaDTO extends BaseEntityDTO {
         ronda.setDescription(this.getDescription());
         ronda.setStartDate(this.getStartDate());
         ronda.setEndDate(this.getEndDate());
+        ronda.setCreatedAt(this.getCreatedAt());
+        ronda.setUpdatedAt(this.getUpdatedAt());
         if(this.getRondaType()!=null) {
             ronda.setRondaType(this.getRondaType().getRondaType());
         }

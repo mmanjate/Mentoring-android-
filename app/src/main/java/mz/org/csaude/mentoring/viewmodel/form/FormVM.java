@@ -4,10 +4,10 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
-import androidx.databinding.library.baseAdapters.BR;
 
 import java.sql.SQLException;
 
+import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.form.FormType;

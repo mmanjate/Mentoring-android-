@@ -1,5 +1,7 @@
 package mz.org.csaude.mentoring.service.form;
 
+import android.app.Application;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,5 +14,5 @@ public interface FormService extends BaseService<Form> {
     void savedOrUpdateForms(List<Form> forms) throws SQLException;
     Form savedOrUpdateForm(Form form) throws SQLException;
     List<Form> getAllNotSynced() throws SQLException;
-    List<Form> getAllSynced() throws SQLException;
+    List<Form> getAllSynced(Application application) throws SQLException;
 }

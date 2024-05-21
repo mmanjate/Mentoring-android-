@@ -35,6 +35,8 @@ public class ResponseTypeDTO extends BaseEntityDTO {
         responseType.setSyncStatus(this.getSyncSatus());
         responseType.setCode(this.getCode());
         responseType.setDescription(this.getDescription());
+        responseType.setCreatedAt(this.getCreatedAt());
+        responseType.setUpdatedAt(this.getUpdatedAt());
         return responseType;
     }
 }

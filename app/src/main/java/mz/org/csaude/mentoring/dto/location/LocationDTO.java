@@ -75,6 +75,8 @@ public class LocationDTO extends BaseEntityDTO {
         location.setId(this.getId());
         location.setUuid(this.getUuid());
         location.setSyncStatus(this.getSyncSatus());
+        location.setCreatedAt(this.getCreatedAt());
+        location.setUpdatedAt(this.getUpdatedAt());
         if(this.getEmployeeDTO()!=null) {
             location.setEmployee(this.employeeDTO.getEmployee());
         }

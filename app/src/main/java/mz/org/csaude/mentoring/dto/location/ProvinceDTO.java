@@ -30,6 +30,8 @@ public class ProvinceDTO extends BaseEntityDTO {
         province.setUuid(this.getUuid());
         province.setSyncStatus(this.getSyncSatus());
         province.setDescription(this.getDesignation());
+        province.setCreatedAt(this.getCreatedAt());
+        province.setUpdatedAt(this.getUpdatedAt());
         return province;
     }
 }

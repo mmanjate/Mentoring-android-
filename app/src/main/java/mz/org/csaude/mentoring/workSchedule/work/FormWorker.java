@@ -10,25 +10,16 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
 import mz.org.csaude.mentoring.model.form.Form;
-import mz.org.csaude.mentoring.model.tutored.Tutored;
-import mz.org.csaude.mentoring.util.Http;
-import mz.org.csaude.mentoring.util.Utilities;
 
 public class FormWorker extends BaseWorker<Form> {
-    private String requestType;
 
     public FormWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        requestType = getInputData().getString("requestType");
     }
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-        if (Utilities.stringHasValue(requestType) && requestType.equalsIgnoreCase(String.valueOf(Http.POST))) {
-            getApplication().getFormRestService().restPostForm(this);
-        } else {
             getApplication().getFormRestService().restGetForm(this);
-        }
     }
 
     @Override

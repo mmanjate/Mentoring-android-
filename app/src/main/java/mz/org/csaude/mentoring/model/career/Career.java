@@ -14,7 +14,6 @@ import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
 
 @Data
-@NoArgsConstructor
 @DatabaseTable(tableName = Career.TABLE_NAME, daoClass = CareerDAOImpl.class)
 @EqualsAndHashCode(callSuper = false)
 public class Career extends BaseModel implements Listble {
@@ -28,6 +27,10 @@ public class Career extends BaseModel implements Listble {
 
     @DatabaseField(columnName = COLUMN_POSITION)
     private String position;
+
+    public Career() {
+        super();
+    }
 
     public Career(CareerDTO careerDTO) {
         this.setUuid(careerDTO.getUuid());

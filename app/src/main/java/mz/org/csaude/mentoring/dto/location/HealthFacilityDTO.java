@@ -52,6 +52,8 @@ public class HealthFacilityDTO extends BaseEntityDTO {
         healthFacility.setUuid(this.getUuid());
         healthFacility.setSyncStatus(this.getSyncSatus());
         healthFacility.setDescription(this.getHealthFacility());
+        healthFacility.setCreatedAt(this.getCreatedAt());
+        healthFacility.setUpdatedAt(this.getUpdatedAt());
         if(healthFacility.getDistrict()!=null) {
             healthFacility.setDistrict(this.getDistrictDTO().getDistrict());
         }

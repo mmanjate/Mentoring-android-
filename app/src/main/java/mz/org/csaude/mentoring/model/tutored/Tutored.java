@@ -48,7 +48,7 @@ public class Tutored extends BaseModel implements Listble {
 
     @Override
     public String getDescription() {
-        return null;
+        return employee.getFullName();
     }
 
     @Override

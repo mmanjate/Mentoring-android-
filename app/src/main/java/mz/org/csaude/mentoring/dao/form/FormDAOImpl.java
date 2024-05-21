@@ -37,8 +37,8 @@ public class FormDAOImpl extends MentoringBaseDaoImpl<Form, Integer> implements 
         tutorPAreaQb.where().eq(TutorProgrammaticArea.COLUMN_TUTOR, tutor.getId());
 
         QueryBuilder<Form, Integer> formQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getFormDAO().queryBuilder();
-        formQb.where().eq(Form.COLUMN_PROGRAMMATIC_AREA, new ColumnArg(TutorProgrammaticArea.TABLE_NAME, TutorProgrammaticArea.COLUMN_PROGRAMMATIC_AREA));
-        formQb.join(tutorPAreaQb);
+        //formQb.where().eq(Form.COLUMN_PROGRAMMATIC_AREA, new ColumnArg(TutorProgrammaticArea.TABLE_NAME, TutorProgrammaticArea.COLUMN_PROGRAMMATIC_AREA));
+        //formQb.join(tutorPAreaQb);
 
         return formQb.query();
     }
@@ -49,7 +49,7 @@ public class FormDAOImpl extends MentoringBaseDaoImpl<Form, Integer> implements 
     }
 
     @Override
-    public List<Form> getAllSynced() throws SQLException {
+    public List<Form> getAllSynced(Application application) throws SQLException {
         return queryForEq(Form.COLUMN_SYNC_STATUS, SyncSatus.SENT);
     }
 }

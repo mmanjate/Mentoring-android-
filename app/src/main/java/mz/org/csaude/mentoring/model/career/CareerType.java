@@ -16,7 +16,6 @@ import mz.org.csaude.mentoring.dao.tutor.TutorDAOImpl;
 import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 
 @Data
-@NoArgsConstructor
 @DatabaseTable(tableName = CareerType.COLUMN_TABLE_NAME, daoClass = CareerTypeDAOImpl.class)
 @EqualsAndHashCode(callSuper=false)
 public class CareerType extends BaseModel implements Listble {
@@ -32,6 +31,9 @@ public class CareerType extends BaseModel implements Listble {
 
     @DatabaseField(columnName = COLUMN_CODE)
     private String code;
+    public CareerType() {
+        super();
+    }
 
     public CareerType(String description, String code) {
         this.description = description;

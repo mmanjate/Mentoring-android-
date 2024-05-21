@@ -85,7 +85,7 @@ public class FormQuestionServiceImpl extends BaseServiceImpl<FormQuestion> imple
         this.questionDAO.createOrUpdate(question);
 
         FormQuestion fq = this.formQuestionDAO.getByUuid(formQuestionDTO.getUuid());
-        FormQuestion formQuestion = new FormQuestion();
+        FormQuestion formQuestion = formQuestionDTO.getFormQuestion();
         if(fq!=null) {
             formQuestion.setId(fq.getId());
         }

@@ -158,7 +158,7 @@ public interface SyncDataService {
 
     @GET("/forms/getByTutorUuidd/{tutorUuid}")
     Call<List<FormDTO>> getFormsByMentor(@Path("tutorUuid") String tutorUuid);
-    @GET("/rondas/getAllOfMentor")
+    @GET("/ronda/getAllOfMentor")
     Call<List<RondaDTO>> getAllOfMentor(@Query("mentorUuid") String mentorUuid);
 
     @GET("/mentorships/getAllMentorshipSessionsOfMentorRondas")

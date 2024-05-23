@@ -12,7 +12,6 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.question.Question;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.question.QuestionService;
 import mz.org.csaude.mentoring.service.question.QuestionServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -38,7 +37,7 @@ public class QuestionRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        QuestionService questionService = new QuestionServiceImpl(LoadMetadataServiceImpl.APP);
+                        QuestionService questionService = getApplication().getQuestionService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando as Questões.", Toast.LENGTH_SHORT).show();
                         List<Question> questions = new ArrayList<>();
                         for (QuestionDTO questionDTO : data){

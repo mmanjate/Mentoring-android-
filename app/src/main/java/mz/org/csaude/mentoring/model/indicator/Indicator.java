@@ -1,21 +1,16 @@
 package mz.org.csaude.mentoring.model.indicator;
 
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.types.DateTimeType;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.dao.answer.AnswerDAOImpl;
 import mz.org.csaude.mentoring.dao.indicator.IndicatorDAOImpl;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
-import mz.org.csaude.mentoring.model.setting.Setting;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 
 @Data

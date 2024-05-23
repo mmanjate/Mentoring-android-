@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.career.CareerType;
 
-import java.io.Serializable;
-
 /**
  * @author Jose Julai Ritsure
  */

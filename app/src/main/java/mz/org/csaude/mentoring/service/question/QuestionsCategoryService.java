@@ -11,4 +11,5 @@ public interface QuestionsCategoryService extends BaseService<QuestionsCategory>
     void saveOrUpdateQuestionCategories(List<QuestionCategoryDTO> questionCategoryDTOS) throws SQLException;
     QuestionsCategory saveOrUpdateQuestionCategory(QuestionCategoryDTO questionCategoryDTO) throws SQLException;
 
+    QuestionsCategory saveOrUpdateQuestionCategory(QuestionsCategory questionCategory) throws SQLException;
 }

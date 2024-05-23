@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseRestService;
-import mz.org.csaude.mentoring.dto.location.RondaTypeDTO;
+import mz.org.csaude.mentoring.dto.ronda.RondaTypeDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaTypeService;
 import mz.org.csaude.mentoring.service.ronda.RondaTypeServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -38,7 +37,7 @@ public class RondaTypeRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        RondaTypeService rondaTypeService = new RondaTypeServiceImpl(LoadMetadataServiceImpl.APP);
+                        RondaTypeService rondaTypeService = getApplication().getRondaTypeService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Rondas.", Toast.LENGTH_SHORT).show();
                         List<RondaType> rondaTypes = new ArrayList<>();
                         for (RondaTypeDTO rondaTypeDTO : data){

@@ -3,12 +3,9 @@ package mz.org.csaude.mentoring.model.rondatype;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.Data;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.rondatype.RondaTypeDAOImpl;
-import mz.org.csaude.mentoring.dao.session.SessionDAOImpl;
-import mz.org.csaude.mentoring.dto.location.RondaTypeDTO;
-import mz.org.csaude.mentoring.model.session.Session;
+import mz.org.csaude.mentoring.dto.ronda.RondaTypeDTO;
 
 
 @DatabaseTable(tableName = RondaType.TABLE_NAME, daoClass = RondaTypeDAOImpl.class)
@@ -26,11 +23,9 @@ public class RondaType extends BaseModel {
 
     }
     public RondaType(RondaTypeDTO rondaTypeDTO) {
+        super(rondaTypeDTO);
         this.setDescription(rondaTypeDTO.getDescription());
         this.setCode(rondaTypeDTO.getCode());
-        this.setUuid(rondaTypeDTO.getUuid());
-        this.setCreatedAt(rondaTypeDTO.getCreatedAt());
-        this.setUpdatedAt(rondaTypeDTO.getUpdatedAt());
     }
 
     public String getDescription() {

@@ -1,19 +1,15 @@
 package mz.org.csaude.mentoring.view.splash;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
-import java.util.concurrent.ExecutorService;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivitySplashBinding;
 import mz.org.csaude.mentoring.viewmodel.SplashVM;
-import mz.org.csaude.mentoring.viewmodel.login.LoginVM;
 
 public class SplashActivity extends BaseActivity {
 

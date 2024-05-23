@@ -3,7 +3,6 @@ package mz.org.csaude.mentoring.model.tutored;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDaoImpl;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;

@@ -7,6 +7,7 @@ import android.widget.Toast;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
@@ -17,7 +18,6 @@ import mz.org.csaude.mentoring.service.form.FormService;
 import mz.org.csaude.mentoring.service.form.FormServiceImpl;
 import mz.org.csaude.mentoring.service.formQuestion.FormQuestionService;
 import mz.org.csaude.mentoring.service.formQuestion.FormQuestionServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -30,18 +30,22 @@ public class FormQuestionRestService extends BaseRestService {
         super(application);
     }
 
-    public void restGetFormQuestion(RestResponseListener<FormQuestion> listener){
+    public void restGetFormQuestion(RestResponseListener<FormQuestion> listener, Long limit, Long offset){
         List<String> formsUuids = new ArrayList<>();
         try {
-            FormService formService = new FormServiceImpl(LoadMetadataServiceImpl.APP);
-            List<Form> forms = formService.getAllSynced(getApplication());
-            for (Form form: forms) {
-                formsUuids.add(form.getUuid());
+            List<Form> forms = getApplication().getFormService().getAllSynced(getApplication());
+            if (Utilities.listHasElements(forms)) {
+                formsUuids = forms.stream()
+                        .map(Form::getUuid)
+                        .collect(Collectors.toList());
+            } else {
+                listener.doOnResponse(BaseRestService.REQUEST_NO_DATA, null);
+                return;
             }
         } catch (SQLException e) {
             Log.e("Error while loading synced forms Uuids -- ", e.getMessage(), e);
         }
-        Call<List<FormQuestionDTO>> formQuestionsCall = syncDataService.getFormsQuestionsByFormsUuids(formsUuids);
+        Call<List<FormQuestionDTO>> formQuestionsCall = syncDataService.getFormsQuestionsByFormsUuids(formsUuids, limit, offset);
 
         formQuestionsCall.enqueue(new Callback<List<FormQuestionDTO>>() {
             @Override
@@ -49,24 +53,24 @@ public class FormQuestionRestService extends BaseRestService {
                 List<FormQuestionDTO> data = response.body();
                 if (Utilities.listHasElements(data)) {
                     try {
-                        FormQuestionService formQuestionService = new FormQuestionServiceImpl(LoadMetadataServiceImpl.APP);
+                        FormQuestionService formQuestionService = getApplication().getFormQuestionService();
 
-                        List<FormQuestion> formQuestions = new ArrayList<>();
+                        List<FormQuestion> formQuestions = Utilities.parse(data, FormQuestion.class);
 
-                        for (FormQuestionDTO formQuestionDTO: data) {
-                            formQuestionDTO.getFormQuestion().setSyncStatus(SyncSatus.SENT);
-                            formQuestions.add(formQuestionDTO.getFormQuestion());
+                        for(FormQuestion formQuestion : formQuestions) {
+                            formQuestion.setSyncStatus(SyncSatus.SENT);
+                            formQuestion.setForm(getApplication().getFormService().getByuuid(formQuestion.getForm().getUuid()));
+                            formQuestion.setEvaluationType(getApplication().getEvaluationTypeService().getByuuid(formQuestion.getEvaluationType().getUuid()));
+                            formQuestion.setResponseType(getApplication().getResponseTypeService().getByuuid(formQuestion.getResponseType().getUuid()));
                         }
 
-                        Toast.makeText(APP.getApplicationContext(), "Carregando as Competências das Tabelas.", Toast.LENGTH_SHORT).show();
-                        formQuestionService.saveOrUpdateFormQuestions(data);
+                        formQuestionService.saveOrUpdate(formQuestions);
 
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, formQuestions);
                     } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                        Log.e("Error saving FormQuestion: " ,e.getMessage(), e);
                     }
 
-                    Toast.makeText(APP.getApplicationContext(), "COMPETÊNCIAS DAS TABELAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(BaseRestService.REQUEST_NO_DATA, null);
                 }
@@ -74,7 +78,6 @@ public class FormQuestionRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<FormQuestionDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as Competências das Tabelas. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

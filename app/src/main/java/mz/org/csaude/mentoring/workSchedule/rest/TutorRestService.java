@@ -19,9 +19,6 @@ import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
-import mz.org.csaude.mentoring.model.tutored.Tutored;
-import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.tutor.TutorService;
 import mz.org.csaude.mentoring.service.tutor.TutorServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -52,7 +49,7 @@ public class TutorRestService extends BaseRestService {
                 }
                 try {
 
-                TutorService tutorService = new TutorServiceImpl(LoadMetadataServiceImpl.APP);
+                TutorService tutorService = getApplication().getTutorService();
                 Toast.makeText(APP.getApplicationContext(), "Carregando os Tutores", Toast.LENGTH_SHORT).show();
 
                 List<Tutor> tutors = new ArrayList<>();

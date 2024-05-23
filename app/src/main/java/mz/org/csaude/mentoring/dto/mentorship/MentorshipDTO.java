@@ -5,6 +5,7 @@ import java.util.Date;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
+import mz.org.csaude.mentoring.common.Syncable;
 import mz.org.csaude.mentoring.dto.form.FormDTO;
 import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
@@ -12,9 +13,11 @@ import mz.org.csaude.mentoring.dto.session.SessionDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
+import mz.org.csaude.mentoring.util.SyncSatus;
+
 @Data
 @NoArgsConstructor
-public class MentorshipDTO extends BaseEntityDTO {
+public class MentorshipDTO extends BaseEntityDTO implements Syncable {
     private String code;
     private Integer iterationNumber;
     private Date startDate;
@@ -165,9 +168,7 @@ public class MentorshipDTO extends BaseEntityDTO {
 
     public Mentorship getMentorship() {
         Mentorship mentorship = new Mentorship();
-        mentorship.setId(this.getId());
         mentorship.setUuid(this.getUuid());
-        mentorship.setSyncStatus(this.getSyncSatus());
         mentorship.setCode(this.getCode());
         mentorship.setStartDate(this.getStartDate());
         mentorship.setEndDate(this.getEndDate());
@@ -202,5 +203,15 @@ public class MentorshipDTO extends BaseEntityDTO {
             mentorship.setTimeOfDay(this.getTimeOfDay().getTimeOfDay());
         }
         return mentorship;
+    }
+
+    @Override
+    public void setSyncSatus(SyncSatus syncSatus) {
+        this.syncSatus = syncSatus;
+    }
+
+    @Override
+    public SyncSatus getSyncSatus() {
+        return this.syncSatus;
     }
 }

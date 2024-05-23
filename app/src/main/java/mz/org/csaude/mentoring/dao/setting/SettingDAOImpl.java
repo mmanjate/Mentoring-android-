@@ -1,6 +1,5 @@
 package mz.org.csaude.mentoring.dao.setting;
 
-import android.database.sqlite.SQLiteDatabase;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
@@ -8,7 +7,6 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 import java.util.List;
 
-import lombok.Getter;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.model.setting.Setting;
 

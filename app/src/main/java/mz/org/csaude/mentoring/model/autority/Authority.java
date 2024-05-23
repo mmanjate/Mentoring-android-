@@ -1,11 +1,8 @@
 package mz.org.csaude.mentoring.model.autority;
 
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.dao.answer.AnswerTypeDAOImpl;
-import mz.org.csaude.mentoring.model.answer.AnswerType;
 
 
 public class Authority extends BaseModel {

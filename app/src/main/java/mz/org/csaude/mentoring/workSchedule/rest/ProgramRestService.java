@@ -12,7 +12,6 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.program.ProgramDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.program.Program;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.program.ProgramService;
 import mz.org.csaude.mentoring.service.program.ProgramServiceImpl;
 import mz.org.csaude.mentoring.util.Utilities;
@@ -37,7 +36,7 @@ public class ProgramRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        ProgramService programService = new ProgramServiceImpl(LoadMetadataServiceImpl.APP);
+                        ProgramService programService = getApplication().getProgramService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Programas.", Toast.LENGTH_SHORT).show();
                         List<Program> programs = new ArrayList<>();
                         for (ProgramDTO programDTO : data){

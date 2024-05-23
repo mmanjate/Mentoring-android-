@@ -16,7 +16,6 @@ import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.service.location.HealthFacilityService;
 import mz.org.csaude.mentoring.service.location.HealthFacilityServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -53,8 +52,7 @@ public class HealthFacilityRestService extends BaseRestService {
                     HealthFacilityService healthFacilityService = getApplication().getHealthFacilityService();
                     healthFacilityService.savedOrUpdatHealthFacilitys(healthFacilities);
                     listener.doOnResponse(BaseRestService.REQUEST_SUCESS, healthFacilities);
-                } catch (SQLException | InvocationTargetException | InstantiationException |
-                         NoSuchMethodException | IllegalAccessException e) {
+                } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
             }

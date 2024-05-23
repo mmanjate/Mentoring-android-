@@ -3,11 +3,13 @@ package mz.org.csaude.mentoring.model.programmaticArea;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import kotlin.jvm.Transient;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.programmaticArea.TutorProgrammaticAreaDAOImpl;
+import mz.org.csaude.mentoring.dto.programmaticArea.TutorProgrammaticAreaDTO;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 
 @Data
@@ -34,6 +36,10 @@ public class TutorProgrammaticArea extends BaseModel {
     public TutorProgrammaticArea(Tutor tutor, ProgrammaticArea programmaticArea) {
         this.tutor = tutor;
         this.programmaticArea = programmaticArea;
+    }
+
+    public TutorProgrammaticArea(TutorProgrammaticAreaDTO tutorProgrammaticAreaDTO) {
+        super(tutorProgrammaticAreaDTO);
     }
 
     public Tutor getTutor() {

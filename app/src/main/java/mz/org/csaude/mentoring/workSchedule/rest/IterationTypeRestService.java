@@ -14,7 +14,6 @@ import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.mentorship.IterationType;
 import mz.org.csaude.mentoring.service.mentorship.IterationTypeService;
 import mz.org.csaude.mentoring.service.mentorship.IterationTypeServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -38,7 +37,7 @@ public class IterationTypeRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        IterationTypeService evaluationTypeService = new IterationTypeServiceImpl(LoadMetadataServiceImpl.APP);
+                        IterationTypeService evaluationTypeService = getApplication().getIterationTypeService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de ITERAÇÕES.", Toast.LENGTH_SHORT).show();
                         List<IterationType> iterationTypes = new ArrayList<>();
                         for (IterationTypeDTO iterationTypeDTO : data){

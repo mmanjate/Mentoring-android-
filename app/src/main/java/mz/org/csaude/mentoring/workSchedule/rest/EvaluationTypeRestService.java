@@ -16,7 +16,6 @@ import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
 import mz.org.csaude.mentoring.model.responseType.ResponseType;
 import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeService;
 import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeService;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -42,7 +41,7 @@ public class EvaluationTypeRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        EvaluationTypeService evaluationTypeService = new EvaluationTypeServiceImpl(LoadMetadataServiceImpl.APP);
+                        EvaluationTypeService evaluationTypeService = getApplication().getEvaluationTypeService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Avaliações.", Toast.LENGTH_SHORT).show();
                         List<EvaluationType> evaluationTypes = new ArrayList<>();
                         for (EvaluationTypeDTO evaluationTypeDTO : data){

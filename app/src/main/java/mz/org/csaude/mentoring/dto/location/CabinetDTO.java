@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.Cabinet;
 
-import java.io.Serializable;
-
 /**
  * @author Jose Julai Ritsure
  */

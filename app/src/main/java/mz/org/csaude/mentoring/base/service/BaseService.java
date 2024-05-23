@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.model.location.District;
 
 public interface BaseService <T extends BaseModel>{
 

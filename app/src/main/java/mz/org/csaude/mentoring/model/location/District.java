@@ -5,8 +5,6 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.location.DistrictDAOImpl;
 import mz.org.csaude.mentoring.dto.location.DistrictDTO;

@@ -1,14 +1,11 @@
 package mz.org.csaude.mentoring.dto.form;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.evaluationType.EvaluationTypeDTO;
-import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
-import mz.org.csaude.mentoring.model.question.Question;
 @Data
 public class FormQuestionDTO extends BaseEntityDTO {
     private boolean mandatory;

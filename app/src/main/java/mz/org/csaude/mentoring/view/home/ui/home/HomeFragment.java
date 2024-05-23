@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import mz.org.csaude.mentoring.base.fragment.GenericFragment;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.FragmentHomeBinding;
-import mz.org.csaude.mentoring.viewmodel.home.HomeVM;
 import mz.org.csaude.mentoring.viewmodel.home.HomeFragmentViewModel;
 
 public class HomeFragment extends GenericFragment {

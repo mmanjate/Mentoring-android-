@@ -5,12 +5,14 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.formQuestion.FormQuestionDAImpl;
+import mz.org.csaude.mentoring.dto.form.FormDTO;
+import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
 import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
-import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.form.Form;
-import mz.org.csaude.mentoring.model.question.QuestionsCategory;
+import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.responseType.ResponseType;
 
 @Data
@@ -51,6 +53,17 @@ public class FormQuestion extends BaseModel {
     private Boolean applicable;
 
     public FormQuestion() {
+    }
+
+    public FormQuestion(FormQuestionDTO formQuestionDTO) {
+        super(formQuestionDTO);
+        this.setMandatory(formQuestionDTO.isMandatory());
+        this.setApplicable(formQuestionDTO.getApplicable());
+        this.setSequence(formQuestionDTO.getSequence());
+        this.setQuestion(new Question(formQuestionDTO.getQuestion()));
+        this.setEvaluationType(new EvaluationType(formQuestionDTO.getEvaluationType()));
+        this.setResponseType(new ResponseType(formQuestionDTO.getResponseType()));
+        this.setForm(new Form(formQuestionDTO.getForm()));
     }
 
     public Form getForm() {

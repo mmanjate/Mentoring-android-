@@ -1,9 +1,7 @@
 package mz.org.csaude.mentoring.base.auth;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
-import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 
 public class SessionManager {

@@ -14,7 +14,6 @@ import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.mentorship.Door;
 import mz.org.csaude.mentoring.service.mentorship.DoorService;
 import mz.org.csaude.mentoring.service.mentorship.DoorServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -38,7 +37,7 @@ public class DoorRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        DoorService doorService = new DoorServiceImpl(LoadMetadataServiceImpl.APP);
+                        DoorService doorService = getApplication().getDoorService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando as Portas.", Toast.LENGTH_SHORT).show();
                         List<Door> doors = new ArrayList<>();
                         for (DoorDTO doorDTO : data){

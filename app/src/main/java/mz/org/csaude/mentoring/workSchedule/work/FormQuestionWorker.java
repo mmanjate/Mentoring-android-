@@ -23,7 +23,7 @@ public class FormQuestionWorker extends BaseWorker<FormQuestion> {
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-            getApplication().getFormQuestionRestService().restGetFormQuestion(this);
+            getApplication().getFormQuestionRestService().restGetFormQuestion(this, limit, offset);
     }
 
     @Override
@@ -32,15 +32,10 @@ public class FormQuestionWorker extends BaseWorker<FormQuestion> {
     }
 
     @Override
-    protected void doAfterSearch(String flag, List<FormQuestion> recs) throws SQLException {
-        changeStatusToFinished();
-        doOnFinish();
-    }
-
-    @Override
     protected void doOnFinish() {
 
     }
+
 
     @Override
     protected void doSave(List<FormQuestion> recs) {

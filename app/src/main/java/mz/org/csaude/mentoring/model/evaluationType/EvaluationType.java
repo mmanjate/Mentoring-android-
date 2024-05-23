@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.evaluation.EvaluationTypeDAOImpl;
+import mz.org.csaude.mentoring.dto.evaluationType.EvaluationTypeDTO;
 
 @Data
 @DatabaseTable(tableName = EvaluationType.TABLE_NAME, daoClass = EvaluationTypeDAOImpl.class)
@@ -31,6 +32,12 @@ public class EvaluationType extends BaseModel {
     public EvaluationType(String description, String code) {
         this.description = description;
         this.code = code;
+    }
+
+    public EvaluationType(EvaluationTypeDTO evaluationType) {
+        super(evaluationType);
+        this.description = evaluationType.getDescription();
+        this.code = evaluationType.getCode();
     }
 
     public String getDescription() {

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,6 @@ import mz.org.csaude.mentoring.dto.programmaticArea.ProgrammaticAreaDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 import mz.org.csaude.mentoring.service.ProgrammaticArea.ProgrammaticAreaService;
-import mz.org.csaude.mentoring.service.ProgrammaticArea.ProgrammaticAreaServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,16 +36,12 @@ public class ProgrammaticAreaRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        ProgrammaticAreaService programmaticAreaService = new ProgrammaticAreaServiceImpl(LoadMetadataServiceImpl.APP);
-                        Toast.makeText(APP.getApplicationContext(), "Carregando as Áreas Programáticas.", Toast.LENGTH_SHORT).show();
-                        List<ProgrammaticArea> programmaticAreas = new ArrayList<>();
-                        for (ProgrammaticAreaDTO programmaticAreaDTO : data){
-                            programmaticAreas.add(programmaticAreaDTO.getProgrammaticArea());
-                        }
+                        ProgrammaticAreaService programmaticAreaService = getApplication().getProgrammaticAreaService();
+
                         programmaticAreaService.saveOrUpdateProgrammaticAreas(data);
-                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, programmaticAreas);
+                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Utilities.parse(data, ProgrammaticArea.class));
                     } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                        Log.e("ProgrammaticAreaRestService", e.getMessage());
                     }
                     Toast.makeText(APP.getApplicationContext(), "ÁREAS PROGRAMÁTICAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {

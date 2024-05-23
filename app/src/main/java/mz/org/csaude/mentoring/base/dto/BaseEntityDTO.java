@@ -14,7 +14,7 @@ public class BaseEntityDTO implements Serializable {
 
     private LifeCycleStatus lifeCycleStatus;
 
-    private SyncSatus syncSatus = SyncSatus.PENDING;
+    protected SyncSatus syncSatus;
     private Date createdAt;
     private Date updatedAt;
 

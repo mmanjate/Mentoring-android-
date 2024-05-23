@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
-import mz.org.csaude.mentoring.model.question.QuestionType;
 
 @Data
 @NoArgsConstructor

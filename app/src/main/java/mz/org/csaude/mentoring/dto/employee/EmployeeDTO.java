@@ -1,12 +1,8 @@
 package mz.org.csaude.mentoring.dto.employee;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.location.LocationDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;

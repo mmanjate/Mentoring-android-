@@ -1,21 +1,12 @@
 package mz.org.csaude.mentoring.model.user;
 
-import android.content.Context;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import org.apache.commons.lang3.StringUtils;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.model.employee.Employee;
-import mz.org.csaude.mentoring.model.tutor.Tutor;
-import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.Utilities;
 
 @DatabaseTable(tableName = "user", daoClass = UserDaoImpl.class)

@@ -16,7 +16,6 @@ import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.service.ProgrammaticArea.TutorProgrammaticAreaService;
 import mz.org.csaude.mentoring.service.ProgrammaticArea.TutorProgrammaticAreaServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +28,7 @@ public class TutorProgrammaticAreaRestService extends BaseRestService {
 
     public void restGetTutorProgrammaticAreas(RestResponseListener<TutorProgrammaticArea> listener){
 
-        Call<List<TutorProgrammaticAreaDTO>> tutorProgrammaticAreasCall = syncDataService.getAllTutorProgrammaticAreas();
+        Call<List<TutorProgrammaticAreaDTO>> tutorProgrammaticAreasCall = syncDataService.getByTutorUuidd(getApplication().getCurrMentor().getUuid());
 
         tutorProgrammaticAreasCall.enqueue(new Callback<List<TutorProgrammaticAreaDTO>>() {
             @Override
@@ -39,7 +38,7 @@ public class TutorProgrammaticAreaRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        TutorProgrammaticAreaService tutorProgrammaticAreaService = new TutorProgrammaticAreaServiceImpl(LoadMetadataServiceImpl.APP);
+                        TutorProgrammaticAreaService tutorProgrammaticAreaService = getApplication().getTutorProgrammaticAreaService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando as Áreas Programáticas do Tutor.", Toast.LENGTH_SHORT).show();
                         List<TutorProgrammaticArea> tutorProgrammaticAreas = new ArrayList<>();
                         for (TutorProgrammaticAreaDTO tutorProgrammaticAreaDTO : data){

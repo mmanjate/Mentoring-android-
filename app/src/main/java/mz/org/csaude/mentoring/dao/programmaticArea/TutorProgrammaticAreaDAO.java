@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.dao.MentoringBaseDao;
-import mz.org.csaude.mentoring.dto.programmaticArea.TutorProgrammaticAreaDTO;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 

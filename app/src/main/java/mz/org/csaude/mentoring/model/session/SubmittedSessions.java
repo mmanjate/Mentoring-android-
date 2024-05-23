@@ -2,10 +2,11 @@ package mz.org.csaude.mentoring.model.session;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import lombok.Data;
-import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 
 import java.util.Calendar;
+
+import lombok.Data;
+import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 
 @Data
 @DatabaseTable(tableName = SubmittedSessions.TABLE_NAME)

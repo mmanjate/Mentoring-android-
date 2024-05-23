@@ -69,4 +69,15 @@ implements QuestionsCategoryService{
         this.questionsCategoryDAO.createOrUpdate(questionsCategory);
         return questionsCategory;
     }
+
+    @Override
+    public QuestionsCategory saveOrUpdateQuestionCategory(QuestionsCategory questionCategory) throws SQLException {
+        this.questionsCategoryDAO.createOrUpdate(questionCategory);
+        return questionCategory;
+    }
+
+    @Override
+    public QuestionsCategory getByuuid(String uuid) throws SQLException {
+        return questionsCategoryDAO.getByUuid(uuid);
+    }
 }

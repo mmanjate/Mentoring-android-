@@ -1,7 +1,6 @@
 package mz.org.csaude.mentoring.dto.partner;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.partner.Partner;
 @Data

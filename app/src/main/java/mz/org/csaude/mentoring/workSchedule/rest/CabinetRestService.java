@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import mz.org.csaude.mentoring.service.location.CabinetService;
 import mz.org.csaude.mentoring.service.location.CabinetServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -43,7 +42,7 @@ public class CabinetRestService extends BaseRestService {
                 } else {
                     try {
 
-                        CabinetService cabinetService = new CabinetServiceImpl(LoadMetadataServiceImpl.APP);
+                        CabinetService cabinetService = new CabinetServiceImpl(BaseRestService.APP);
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Cabinet", Toast.LENGTH_SHORT).show();
                         List<Cabinet> cabinets = new ArrayList<>();
                         for (CabinetDTO cabinetDTO : data){

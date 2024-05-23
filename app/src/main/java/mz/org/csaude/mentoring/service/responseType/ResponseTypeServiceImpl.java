@@ -69,4 +69,9 @@ public class ResponseTypeServiceImpl extends BaseServiceImpl<ResponseType> imple
         this.responseTypeDAO.createOrUpdate(responseType);
         return responseType;
     }
+
+    @Override
+    public ResponseType getByuuid(String uuid) throws SQLException {
+        return responseTypeDAO.getByUuid(uuid);
+    }
 }

@@ -1,15 +1,16 @@
 package mz.org.csaude.mentoring.base.model;
 
 import com.j256.ormlite.field.DatabaseField;
+
+import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
 import mz.org.csaude.mentoring.util.SyncSatus;
-
-import java.io.Serializable;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -48,6 +49,9 @@ public abstract class BaseModel implements Serializable, Listble {
 
     public BaseModel(BaseEntityDTO baseEntityDTO) {
         this.uuid = baseEntityDTO.getUuid();
+        this.setCreatedAt(baseEntityDTO.getCreatedAt());
+        this.setUpdatedAt(baseEntityDTO.getUpdatedAt());
+        this.setLifeCycleStatus(baseEntityDTO.getLifeCycleStatus());
     }
 
     @DatabaseField(columnName = COLUMN_LIFE_CYCLE_STATUS)

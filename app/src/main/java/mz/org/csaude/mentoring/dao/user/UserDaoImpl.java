@@ -7,7 +7,6 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 
 import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.util.Utilities;
 
 
 public class UserDaoImpl extends BaseDaoImpl<User, Integer> implements UserDao {

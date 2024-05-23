@@ -6,9 +6,7 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 
 import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
-import mz.org.csaude.mentoring.dao.question.QuestionDAO;
 import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
-import mz.org.csaude.mentoring.model.question.Question;
 
 public class EvaluationTypeDAOImpl extends MentoringBaseDaoImpl<EvaluationType, Integer> implements EvaluationTypeDAO {
 

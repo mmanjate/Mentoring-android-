@@ -9,12 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseRestService;
-import mz.org.csaude.mentoring.dto.location.RondaTypeDTO;
 import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.responseType.ResponseType;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeService;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaTypeService;
@@ -42,7 +40,7 @@ public class ResponseTypeRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        ResponseTypeService responseTypeService = new ResponseTypeServiceImpl(LoadMetadataServiceImpl.APP);
+                        ResponseTypeService responseTypeService = getApplication().getResponseTypeService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Respostas.", Toast.LENGTH_SHORT).show();
                         List<ResponseType> responseTypes = new ArrayList<>();
                         for (ResponseTypeDTO responseTypeDTO : data){

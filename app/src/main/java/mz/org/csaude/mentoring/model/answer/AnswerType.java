@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.answer.AnswerTypeDAOImpl;
-import mz.org.csaude.mentoring.dao.setting.SettingDAOImpl;
-import mz.org.csaude.mentoring.model.setting.Setting;
 
 @Data
 @DatabaseTable(tableName = AnswerType.TABLE_NAME, daoClass = AnswerTypeDAOImpl.class)

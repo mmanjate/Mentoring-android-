@@ -68,6 +68,7 @@ public class TutorProgrammaticAreaServiceImpl extends BaseServiceImpl<TutorProgr
     public TutorProgrammaticArea saveOrUpdateTutorProgrammaticArea(TutorProgrammaticAreaDTO tutorProgrammaticAreaDTO) throws SQLException {
         TutorProgrammaticArea tpa = this.tutorProgrammaticAreaDAO.getByUuid(tutorProgrammaticAreaDTO.getUuid());
         TutorProgrammaticArea tutorProgrammaticArea = tutorProgrammaticAreaDTO.getTutorProgrammaticArea();
+        tutorProgrammaticArea.setProgrammaticArea(getApplication().getProgrammaticAreaService().getByuuid(tutorProgrammaticArea.getProgrammaticArea().getUuid()));
         if(tpa!=null) {
             tutorProgrammaticArea.setId(tpa.getId());
         }

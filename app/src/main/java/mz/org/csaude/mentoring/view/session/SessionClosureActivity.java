@@ -1,26 +1,19 @@
 package mz.org.csaude.mentoring.view.session;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivitySessionClosureBinding;
 import mz.org.csaude.mentoring.util.Utilities;
-import mz.org.csaude.mentoring.viewmodel.ronda.RondaVM;
 import mz.org.csaude.mentoring.viewmodel.session.SessionClosureVM;
-import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
-
-import androidx.activity.EdgeToEdge;
-import androidx.lifecycle.ViewModelProvider;
 
 public class SessionClosureActivity extends BaseActivity {
 

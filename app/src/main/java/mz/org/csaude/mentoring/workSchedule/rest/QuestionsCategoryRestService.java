@@ -14,9 +14,6 @@ import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
 import mz.org.csaude.mentoring.model.question.QuestionsCategory;
-import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeService;
-import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.question.QuestionsCategoryService;
 import mz.org.csaude.mentoring.service.question.QuestionsCategoryServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -42,7 +39,7 @@ public class QuestionsCategoryRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        QuestionsCategoryService questionsCategoryService = new QuestionsCategoryServiceImpl(LoadMetadataServiceImpl.APP);
+                        QuestionsCategoryService questionsCategoryService = getApplication().getQuestionsCategoryService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Categorias.", Toast.LENGTH_SHORT).show();
                         List<QuestionsCategory> questionsCategories = new ArrayList<>();
                         for (QuestionCategoryDTO questionCategoryDTO : data){

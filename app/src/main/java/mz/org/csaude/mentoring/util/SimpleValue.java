@@ -1,6 +1,5 @@
 package mz.org.csaude.mentoring.util;
 
-import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;

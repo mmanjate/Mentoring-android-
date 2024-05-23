@@ -15,7 +15,6 @@ import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipService;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -39,7 +38,7 @@ public class MentorshipRestService extends BaseRestService {
                 List<MentorshipDTO> data = response.body();
                 if (Utilities.listHasElements(data)) {
                     try {
-                        MentorshipService mentorshipService = new MentorshipServiceImpl(LoadMetadataServiceImpl.APP);
+                        MentorshipService mentorshipService = getApplication().getMentorshipService();
                         List<Mentorship> mentorships = new ArrayList<>();
                         for (MentorshipDTO mentorshipDTO: data) {
                             mentorshipDTO.setSyncSatus(SyncSatus.SENT);
@@ -100,7 +99,7 @@ public class MentorshipRestService extends BaseRestService {
                 }
             });
         }
-        } catch (SQLException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 

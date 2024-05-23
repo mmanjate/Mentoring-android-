@@ -1,7 +1,5 @@
 package mz.org.csaude.mentoring.dto.location;
 
-import java.io.Serializable;
-
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.location.District;

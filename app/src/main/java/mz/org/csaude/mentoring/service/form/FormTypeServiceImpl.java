@@ -8,7 +8,6 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.form.FormTypeDAO;
 import mz.org.csaude.mentoring.model.form.FormType;
-import mz.org.csaude.mentoring.model.user.User;
 
 public class FormTypeServiceImpl extends BaseServiceImpl<FormType> implements FormTypeService {
 

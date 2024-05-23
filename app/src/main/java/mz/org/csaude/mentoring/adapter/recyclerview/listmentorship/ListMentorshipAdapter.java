@@ -10,7 +10,6 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.databinding.ListMentorshipBinding;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
-import mz.org.csaude.mentoring.model.session.Session;
 
 public class ListMentorshipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 

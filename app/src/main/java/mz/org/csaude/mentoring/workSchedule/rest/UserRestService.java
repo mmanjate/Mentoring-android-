@@ -14,7 +14,6 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.metadata.SyncDataService;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
@@ -91,7 +90,7 @@ public class UserRestService extends BaseRestService implements UserSyncService 
 
                         User user1 = new User(data);
 
-                        UserService userService = new UserServiceImpl(LoadMetadataServiceImpl.APP);
+                        UserService userService = getApplication().getUserService();
                         userService.savedOrUpdateUser(user1);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Collections.singletonList(user1));
                     } catch (SQLException e) {

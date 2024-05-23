@@ -12,7 +12,6 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.professionalcategory.ProfessionalCategoryDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryService;
 import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -44,7 +43,6 @@ public class ProfessionalCategoryRestService extends BaseRestService {
                    List<ProfessionalCategory> professionalCategories = new ArrayList<>();
 
                    for (ProfessionalCategoryDTO professionalCategoryDTO : data){
-                       professionalCategoryDTO.setSyncSatus(SyncSatus.SENT);
                        professionalCategoryDTO.getProfessionalCategory().setSyncStatus(SyncSatus.SENT);
                        professionalCategories.add(professionalCategoryDTO.getProfessionalCategory());
                    }
@@ -80,7 +78,7 @@ public class ProfessionalCategoryRestService extends BaseRestService {
 
                 }
                 try {
-                    ProfessionalCategoryService professionalCategoryService = new ProfessionalCategoryServiceImpl(LoadMetadataServiceImpl.APP);
+                    ProfessionalCategoryService professionalCategoryService = getApplication().getProfessionalCategoryService();
                     Toast.makeText(APP.getApplicationContext(), "Carregando as ProfessionalCategory ", Toast.LENGTH_SHORT).show();
                     professionalCategoryService.saveOrUpdateProfessionalCategorys(data);
 

@@ -3,20 +3,14 @@ package mz.org.csaude.mentoring.model.tutored;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDaoImpl;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.model.employee.Employee;
-import mz.org.csaude.mentoring.model.user.UserIndividual;
-
 
 
 @DatabaseTable(tableName = Tutored.COLUMN_TABLE_NAME, daoClass = TutoredDaoImpl.class)
-public class Tutored extends BaseModel implements Listble {
+public class Tutored extends BaseModel {
 
     public static final String COLUMN_TABLE_NAME = "tutored";
     public static final String COLUMN_EMPLOYEE = "emplyee_id";
@@ -34,7 +28,6 @@ public class Tutored extends BaseModel implements Listble {
     public Tutored(TutoredDTO tutoredDTO) {
         this.setUuid(tutoredDTO.getUuid());
         this.setEmployee(new Employee(tutoredDTO.getEmployeeDTO()));
-        this.setSyncStatus(tutoredDTO.getSyncSatus());
     }
 
     public Employee getEmployee() {
@@ -48,7 +41,7 @@ public class Tutored extends BaseModel implements Listble {
 
     @Override
     public String getDescription() {
-        return employee.getFullName();
+        return this.employee.getFullName();
     }
 
     @Override
@@ -64,5 +57,10 @@ public class Tutored extends BaseModel implements Listble {
     @Override
     public String validade() {
         return this.employee.validade();
+    }
+
+    @Override
+    public String getListType() {
+        return listTyp;
     }
 }

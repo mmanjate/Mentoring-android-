@@ -5,11 +5,9 @@ import android.app.Application;
 import java.sql.SQLException;
 import java.util.List;
 
-import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.session.SessionDAO;
 import mz.org.csaude.mentoring.model.session.Session;
-import mz.org.csaude.mentoring.model.user.User;
 
 public class SessionServiceImpl extends BaseServiceImpl<Session> implements SessionService{
 

@@ -23,7 +23,6 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.service.metadata.LoadMetadataService;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.login.LoginActivity;
 import mz.org.csaude.mentoring.view.splash.SplashActivity;

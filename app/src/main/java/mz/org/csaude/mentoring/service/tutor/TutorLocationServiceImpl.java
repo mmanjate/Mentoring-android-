@@ -7,9 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.tutor.TutorLocationDAO;
-import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutor.TutorLocation;
-import mz.org.csaude.mentoring.model.user.User;
 
 public class TutorLocationServiceImpl extends BaseServiceImpl<TutorLocation> implements TutorLocationService {
 

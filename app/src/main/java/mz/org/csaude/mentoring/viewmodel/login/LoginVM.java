@@ -13,7 +13,6 @@ import java.util.Map;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.R;
-import mz.org.csaude.mentoring.base.auth.SessionManager;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
@@ -114,7 +113,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
                 getApplication().init();
                 goHome();
             } else {
-                OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runPostLoginSync(user);
+                OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).runPostLoginSync();
 
                 WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
                     if (workInfo != null) {
@@ -125,8 +124,8 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
                                 throw new RuntimeException(e);
                             }
 
-                            OneTimeWorkRequest menteeRequest = WorkerScheduleExecutor.getInstance(getApplication()).menteesDownload();
-                            WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(menteeRequest.getId()).observe(getRelatedActivity(), info -> {
+                            OneTimeWorkRequest downloadMentorData = WorkerScheduleExecutor.getInstance(getApplication()).downloadMentorData();
+                            WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(downloadMentorData.getId()).observe(getRelatedActivity(), info -> {
                                 if (info.getState() == WorkInfo.State.SUCCEEDED) {
                                     getApplication().setInitialSetUpComplete();
                                     goHome();
@@ -153,7 +152,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
 
     @Bindable
     public boolean isAuthenticating() {
-        return false;
+        return this.authenticating;
     }
 
     public void setAuthenticating(boolean authenticating) {

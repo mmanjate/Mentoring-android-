@@ -57,4 +57,9 @@ public class RondaMenteeServiceImpl extends BaseServiceImpl<RondaMentee> impleme
         this.rondaMenteeDAO.createOrUpdate(rondaMentee);
         return rondaMentee;
     }
+
+    @Override
+    public RondaMentee getByuuid(String uuid) throws SQLException {
+        return rondaMenteeDAO.getByUuid(uuid);
+    }
 }

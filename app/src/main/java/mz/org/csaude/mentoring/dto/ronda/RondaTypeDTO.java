@@ -30,9 +30,7 @@ public class RondaTypeDTO extends BaseEntityDTO {
     }
     public RondaType getRondaType() {
         RondaType rondaType = new RondaType();
-        rondaType.setId(this.getId());
         rondaType.setUuid(this.getUuid());
-        rondaType.setSyncStatus(this.getSyncSatus());
         rondaType.setCode(this.getCode());
         rondaType.setDescription(this.getDescription());
         rondaType.setCreatedAt(this.getCreatedAt());

@@ -7,10 +7,8 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.program.ProgramDAO;
-import mz.org.csaude.mentoring.dao.programmaticArea.ProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.dto.program.ProgramDTO;
 import mz.org.csaude.mentoring.model.program.Program;
-import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 
 public class ProgramServiceImpl extends BaseServiceImpl<Program> implements ProgramService {
 
@@ -69,5 +67,10 @@ public class ProgramServiceImpl extends BaseServiceImpl<Program> implements Prog
         }
         this.programDAO.createOrUpdate(program);
         return program;
+    }
+
+    @Override
+    public Program getByuuid(String uuid) throws SQLException {
+        return programDAO.getByUuid(uuid);
     }
 }

@@ -56,12 +56,10 @@ public class ProgrammaticAreaDTO extends BaseEntityDTO {
 
     public ProgrammaticArea getProgrammaticArea() {
         ProgrammaticArea programmaticArea = new ProgrammaticArea();
-        programmaticArea.setId(this.getId());
         programmaticArea.setCode(this.getCode());
         programmaticArea.setDescription(this.getDescription());
         programmaticArea.setName(this.getName());
         programmaticArea.setUuid(this.getUuid());
-        programmaticArea.setSyncStatus(this.getSyncSatus());
         programmaticArea.setCreatedAt(this.getCreatedAt());
         programmaticArea.setUpdatedAt(this.getUpdatedAt());
         if(this.getProgram()!=null) {

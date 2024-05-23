@@ -14,7 +14,6 @@ import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.service.location.DistrictService;
 import mz.org.csaude.mentoring.service.location.DistrictServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -46,8 +45,6 @@ public class DistrictRestService extends BaseRestService {
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Distritos...", Toast.LENGTH_SHORT).show();
                         List<District> districts = new ArrayList<>();
                         for (DistrictDTO districtDTO : data){
-                            districtDTO.setSyncSatus(SyncSatus.SENT);
-                            districtDTO.getDistrict().setSyncStatus(SyncSatus.SENT);
                             districts.add(new District(districtDTO));
                         }
                         districtService.savedOrUpdateDistricts(data);

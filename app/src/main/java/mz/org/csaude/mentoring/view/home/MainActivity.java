@@ -2,29 +2,22 @@ package mz.org.csaude.mentoring.view.home;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.navigation.NavigationView;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityMainBinding;
 import mz.org.csaude.mentoring.databinding.NavHeaderMainBinding;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataService;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
-import mz.org.csaude.mentoring.viewmodel.home.HomeVM;
 
 public class MainActivity extends BaseActivity {
 

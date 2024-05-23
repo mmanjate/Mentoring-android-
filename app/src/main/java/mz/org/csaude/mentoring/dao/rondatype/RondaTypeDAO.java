@@ -1,7 +1,5 @@
 package mz.org.csaude.mentoring.dao.rondatype;
 
-import com.j256.ormlite.dao.Dao;
-
 import java.sql.SQLException;
 
 import mz.org.csaude.mentoring.base.dao.MentoringBaseDao;

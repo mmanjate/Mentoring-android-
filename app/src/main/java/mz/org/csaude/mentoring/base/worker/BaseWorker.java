@@ -97,7 +97,10 @@ public abstract class BaseWorker<T extends BaseModel> extends Worker implements 
     }
 
     protected void doAfterSearch(String flag, List<T> recs) throws SQLException {
-        if (Utilities.listHasElements(recs) || flag.equals(BaseRestService.REQUEST_SUCESS)) {
+        if ((Utilities.listHasElements(recs) || flag.equals(BaseRestService.REQUEST_SUCESS)) && recs.size() < RECORDS_PER_SEARCH) {
+            changeStatusToFinished();
+            doOnFinish();
+        } else if (Utilities.listHasElements(recs) || flag.equals(BaseRestService.REQUEST_SUCESS)) {
             this.newRecsQty = this.newRecsQty + recs.size();
             this.offset = this.offset + RECORDS_PER_SEARCH;
             doSave(recs);

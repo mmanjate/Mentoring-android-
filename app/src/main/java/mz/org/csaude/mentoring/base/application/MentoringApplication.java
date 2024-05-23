@@ -22,10 +22,18 @@ import mz.org.csaude.mentoring.common.ApplicationStep;
 import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.user.User;
+import mz.org.csaude.mentoring.service.ProgrammaticArea.ProgrammaticAreaService;
+import mz.org.csaude.mentoring.service.ProgrammaticArea.ProgrammaticAreaServiceImpl;
+import mz.org.csaude.mentoring.service.ProgrammaticArea.TutorProgrammaticAreaService;
+import mz.org.csaude.mentoring.service.ProgrammaticArea.TutorProgrammaticAreaServiceImpl;
 import mz.org.csaude.mentoring.service.employee.EmployeeService;
 import mz.org.csaude.mentoring.service.employee.EmployeeServiceImpl;
+import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeService;
+import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeServiceImpl;
 import mz.org.csaude.mentoring.service.form.FormService;
 import mz.org.csaude.mentoring.service.form.FormServiceImpl;
+import mz.org.csaude.mentoring.service.formQuestion.FormQuestionService;
+import mz.org.csaude.mentoring.service.formQuestion.FormQuestionServiceImpl;
 import mz.org.csaude.mentoring.service.location.DistrictService;
 import mz.org.csaude.mentoring.service.location.DistrictServiceImpl;
 import mz.org.csaude.mentoring.service.location.HealthFacilityService;
@@ -34,12 +42,26 @@ import mz.org.csaude.mentoring.service.location.LocationService;
 import mz.org.csaude.mentoring.service.location.LocationServiceImpl;
 import mz.org.csaude.mentoring.service.location.ProvinceService;
 import mz.org.csaude.mentoring.service.location.ProvinceServiceImpl;
+import mz.org.csaude.mentoring.service.mentorship.DoorService;
+import mz.org.csaude.mentoring.service.mentorship.DoorServiceImpl;
+import mz.org.csaude.mentoring.service.mentorship.IterationTypeService;
+import mz.org.csaude.mentoring.service.mentorship.IterationTypeServiceImpl;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipService;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipServiceImpl;
+import mz.org.csaude.mentoring.service.mentorship.TimeOfDayService;
+import mz.org.csaude.mentoring.service.mentorship.TimeOfDayServiceImpl;
 import mz.org.csaude.mentoring.service.partner.PartnerService;
 import mz.org.csaude.mentoring.service.partner.PartnerServiceImpl;
 import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryService;
 import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategoryServiceImpl;
+import mz.org.csaude.mentoring.service.program.ProgramService;
+import mz.org.csaude.mentoring.service.program.ProgramServiceImpl;
+import mz.org.csaude.mentoring.service.question.QuestionService;
+import mz.org.csaude.mentoring.service.question.QuestionServiceImpl;
+import mz.org.csaude.mentoring.service.question.QuestionsCategoryService;
+import mz.org.csaude.mentoring.service.question.QuestionsCategoryServiceImpl;
+import mz.org.csaude.mentoring.service.responseType.ResponseTypeService;
+import mz.org.csaude.mentoring.service.responseType.ResponseTypeServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaMenteeService;
 import mz.org.csaude.mentoring.service.ronda.RondaMenteeServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaMentorService;
@@ -50,21 +72,25 @@ import mz.org.csaude.mentoring.service.ronda.RondaTypeService;
 import mz.org.csaude.mentoring.service.ronda.RondaTypeServiceImpl;
 import mz.org.csaude.mentoring.service.session.SessionService;
 import mz.org.csaude.mentoring.service.session.SessionServiceImpl;
+import mz.org.csaude.mentoring.service.session.SessionStatusService;
+import mz.org.csaude.mentoring.service.session.SessionStatusServiceImpl;
+import mz.org.csaude.mentoring.service.setting.SettingService;
+import mz.org.csaude.mentoring.service.setting.SettingServiceImpl;
 import mz.org.csaude.mentoring.service.tutor.TutorService;
 import mz.org.csaude.mentoring.service.tutor.TutorServiceImpl;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
-import mz.org.csaude.mentoring.workSchedule.rest.ServerStatusChecker;
 import mz.org.csaude.mentoring.util.Utilities;
+import mz.org.csaude.mentoring.workSchedule.rest.FormQuestionRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.FormRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.MentorshipRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
+import mz.org.csaude.mentoring.workSchedule.rest.RondaRestService;
+import mz.org.csaude.mentoring.workSchedule.rest.ServerStatusChecker;
 import mz.org.csaude.mentoring.workSchedule.rest.TutorRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
-import mz.org.csaude.mentoring.workSchedule.rest.FormQuestionRestService;
-import mz.org.csaude.mentoring.workSchedule.rest.RondaRestService;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -73,11 +99,8 @@ public class MentoringApplication  extends Application {
 
     private static MentoringApplication mInstance;
 
-    //private static final String BASE_URL = "https://mentdev.fgh.org.mz";
-
-    // 10.10.12.97 http://10.0.2.2:8087  192.168.16.104 10.10.12.65
-
-    private static final String BASE_URL = "http://10.10.12.97:8087";
+    //private static final String BASE_URL = "http://10.10.2.75:8087";
+    private static final String BASE_URL = "http://10.10.12.65:8087";
 
     private User authenticatedUser;
 
@@ -127,6 +150,30 @@ public class MentoringApplication  extends Application {
 
     private SessionManager sessionManager;
 
+    private DoorService doorService;
+
+    private EvaluationTypeService evaluationTypeService;
+
+    private FormQuestionService formQuestionService;
+
+    private QuestionService questionService;
+
+    private QuestionsCategoryService questionsCategoryService;
+
+    private ResponseTypeService responseTypeService;
+
+    private SessionStatusService sessionStatusService;
+
+    private SettingService settingService;
+
+    private TimeOfDayService timeOfDayService;
+
+    private TutorProgrammaticAreaService tutorProgrammaticAreaService;
+
+    private ProgrammaticAreaService programmaticAreaService;
+
+    private ProgramService programService;
+
 
     // Rest Services
     private PartnerRestService partnerRestService;
@@ -135,6 +182,7 @@ public class MentoringApplication  extends Application {
     private FormQuestionRestService formQuestionRestService;
     private RondaRestService rondaRestService;
     private MentorshipRestService mentorshipRestService;
+    private IterationTypeService iterationTypeService;
 
     @Override
     public void onCreate() {
@@ -306,6 +354,61 @@ public class MentoringApplication  extends Application {
         if (mentorshipRestService == null) this.mentorshipRestService = new MentorshipRestService(this);
         return mentorshipRestService;
     }
+
+    public ProgrammaticAreaService getProgrammaticAreaService() {
+        if (programmaticAreaService == null) this.programmaticAreaService = new ProgrammaticAreaServiceImpl(this);
+        return programmaticAreaService;
+    }
+
+    public ProgramService getProgramService() {
+        if (programService == null) this.programService = new ProgramServiceImpl(this);
+        return programService;
+    }
+    public DoorService getDoorService() {
+        if (doorService == null) this.doorService = new DoorServiceImpl(this);
+        return doorService;
+    }
+    public EvaluationTypeService getEvaluationTypeService() {
+        if (evaluationTypeService == null) this.evaluationTypeService = new EvaluationTypeServiceImpl(this);
+        return evaluationTypeService;
+    }
+    public FormQuestionService getFormQuestionService() {
+        if (formQuestionService == null) this.formQuestionService = new FormQuestionServiceImpl(this);
+        return formQuestionService;
+    }
+    public QuestionService getQuestionService() {
+        if (questionService == null) this.questionService = new QuestionServiceImpl(this);
+        return questionService;
+    }
+    public QuestionsCategoryService getQuestionsCategoryService() {
+        if (questionsCategoryService == null) this.questionsCategoryService = new QuestionsCategoryServiceImpl(this);
+        return questionsCategoryService;
+    }
+    public ResponseTypeService getResponseTypeService() {
+        if (responseTypeService == null) this.responseTypeService = new ResponseTypeServiceImpl(this);
+        return responseTypeService;
+    }
+    public SessionStatusService getSessionStatusService() {
+        if (sessionStatusService == null) this.sessionStatusService = new SessionStatusServiceImpl(this);
+        return sessionStatusService;
+    }
+    public SettingService getSettingService() {
+        if (settingService == null) this.settingService = new SettingServiceImpl(this);
+        return settingService;
+    }
+    public TimeOfDayService getTimeOfDayService() {
+        if (timeOfDayService == null) this.timeOfDayService = new TimeOfDayServiceImpl(this);
+        return timeOfDayService;
+    }
+    public TutorProgrammaticAreaService getTutorProgrammaticAreaService() {
+        if (tutorProgrammaticAreaService == null) this.tutorProgrammaticAreaService = new TutorProgrammaticAreaServiceImpl(this);
+        return tutorProgrammaticAreaService;
+    }
+    public IterationTypeService getIterationTypeService() {
+        if (iterationTypeService == null) this.iterationTypeService = new IterationTypeServiceImpl(this);
+        return iterationTypeService;
+    }
+
 
     public ApplicationStep getApplicationStep() {
         return this.applicationStep;

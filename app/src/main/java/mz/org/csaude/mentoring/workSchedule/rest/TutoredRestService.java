@@ -20,7 +20,6 @@ import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -53,8 +52,7 @@ public class TutoredRestService extends BaseRestService {
                         for (Tutored tutored : tutoreds) { tutored.setSyncStatus(SyncSatus.SENT);}
                         getApplication().getTutoredService().savedOrUpdateTutoreds(tutoreds);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, tutoreds);
-                    } catch (SQLException | InstantiationException | IllegalAccessException |
-                             InvocationTargetException | NoSuchMethodException e) {
+                    } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
                 } else {
@@ -102,7 +100,7 @@ public class TutoredRestService extends BaseRestService {
                 }
             });
         }
-        } catch (SQLException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
@@ -116,7 +114,7 @@ public class TutoredRestService extends BaseRestService {
             @Override
             public void onResponse(Call<TutoredDTO> call, Response<TutoredDTO> response) {
                 TutoredDTO data = response.body();
-                if (response.code() == 200) {
+                if (response.code() == 201) {
                     try {
                         getApplication().getTutoredService().savedOrUpdateTutored(tutored);
 

@@ -1,17 +1,12 @@
 package mz.org.csaude.mentoring.dto.location;
 
-import java.io.Serializable;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.location.Province;
-@Data
-@NoArgsConstructor
+
 public class LocationDTO extends BaseEntityDTO {
 
     private String uuid;
@@ -20,6 +15,9 @@ public class LocationDTO extends BaseEntityDTO {
     private DistrictDTO districtDTO;
     private HealthFacilityDTO healthFacilityDTO;
     private String locationLevel;
+
+    public LocationDTO() {
+    }
 
     public LocationDTO(Location location) {
         super(location);
@@ -72,9 +70,7 @@ public class LocationDTO extends BaseEntityDTO {
 
     public Location getLocation() {
         Location location = new Location();
-        location.setId(this.getId());
         location.setUuid(this.getUuid());
-        location.setSyncStatus(this.getSyncSatus());
         location.setCreatedAt(this.getCreatedAt());
         location.setUpdatedAt(this.getUpdatedAt());
         if(this.getEmployeeDTO()!=null) {

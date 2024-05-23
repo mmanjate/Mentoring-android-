@@ -40,7 +40,6 @@ public class TutorProgrammaticAreaDTO extends BaseEntityDTO {
 
     public TutorProgrammaticArea getTutorProgrammaticArea() {
         TutorProgrammaticArea tutorProgrammaticArea = new TutorProgrammaticArea();
-        tutorProgrammaticArea.setId(this.getId());
         tutorProgrammaticArea.setUuid(this.getUuid());
         tutorProgrammaticArea.setCreatedAt(this.getCreatedAt());
         tutorProgrammaticArea.setUpdatedAt(this.getUpdatedAt());

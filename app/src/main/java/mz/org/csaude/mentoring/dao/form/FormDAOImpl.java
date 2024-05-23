@@ -2,7 +2,6 @@ package mz.org.csaude.mentoring.dao.form;
 
 import android.app.Application;
 
-import com.j256.ormlite.stmt.ColumnArg;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;

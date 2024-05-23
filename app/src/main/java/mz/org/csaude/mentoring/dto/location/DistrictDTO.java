@@ -1,7 +1,5 @@
 package mz.org.csaude.mentoring.dto.location;
 
-import java.io.Serializable;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
@@ -36,9 +34,7 @@ public class DistrictDTO extends BaseEntityDTO {
     }
     public District getDistrict() {
         District district = new District();
-        district.setId(this.getId());
         district.setUuid(this.getUuid());
-        district.setSyncStatus(this.getSyncSatus());
         district.setDescription(this.getDescription());
         district.setCreatedAt(this.getCreatedAt());
         district.setUpdatedAt(this.getUpdatedAt());

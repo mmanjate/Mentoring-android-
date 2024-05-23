@@ -8,7 +8,6 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.partner.PartnerDao;
 import mz.org.csaude.mentoring.model.partner.Partner;
-import mz.org.csaude.mentoring.model.user.User;
 
 public class PartnerServiceImpl extends BaseServiceImpl<Partner> implements PartnerService {
 
@@ -79,5 +78,10 @@ public class PartnerServiceImpl extends BaseServiceImpl<Partner> implements Part
     @Override
     public Partner getMISAU() throws SQLException {
         return this.partnerDao.getMISAU();
+    }
+
+    @Override
+    public Partner getByuuid(String uuid) throws SQLException {
+        return partnerDao.getByUuid(uuid);
     }
 }

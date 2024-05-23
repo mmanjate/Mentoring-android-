@@ -2,6 +2,7 @@ package mz.org.csaude.mentoring.model.location;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
@@ -28,7 +29,6 @@ public class Cabinet extends BaseModel {
     public Cabinet(CabinetDTO dto) {
         this.setUuid(dto.getUuid());
         this.setName(dto.getName());
-        this.setSyncStatus(dto.getSyncSatus());
     }
 
     public String getName() {

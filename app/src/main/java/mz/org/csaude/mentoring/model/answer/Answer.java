@@ -6,10 +6,10 @@ import com.j256.ormlite.table.DatabaseTable;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.answer.AnswerDAOImpl;
-import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.indicator.Indicator;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
+import mz.org.csaude.mentoring.model.question.Question;
 
 
 @DatabaseTable(tableName = Answer.TABLE_NAME, daoClass = AnswerDAOImpl.class)

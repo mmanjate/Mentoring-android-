@@ -10,7 +10,6 @@ import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivitySessionBinding;
-import mz.org.csaude.mentoring.viewmodel.session.SessionListVM;
 import mz.org.csaude.mentoring.viewmodel.session.SessionVM;
 
 public class SessionActivity extends BaseActivity {

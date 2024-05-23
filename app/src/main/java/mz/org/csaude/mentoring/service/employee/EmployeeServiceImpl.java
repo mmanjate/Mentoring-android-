@@ -4,7 +4,6 @@ import android.app.Application;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Set;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.employee.EmployeeDAO;

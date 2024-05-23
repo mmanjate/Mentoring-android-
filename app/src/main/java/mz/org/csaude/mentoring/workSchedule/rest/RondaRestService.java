@@ -13,7 +13,6 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
 import mz.org.csaude.mentoring.service.ronda.RondaServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -29,8 +28,7 @@ public class RondaRestService extends BaseRestService {
     }
 
     public void restGetRondas(RestResponseListener<Ronda> listener){
-        long mentorId = getApplication().getCurrMentor().getId();
-        Call<List<RondaDTO>> rondasCall = syncDataService.getAllRondasOfMentor(mentorId);
+        Call<List<RondaDTO>> rondasCall = syncDataService.getAllOfMentor(getApplication().getCurrMentor().getUuid());
 
         rondasCall.enqueue(new Callback<List<RondaDTO>>() {
             @Override
@@ -38,11 +36,10 @@ public class RondaRestService extends BaseRestService {
                 List<RondaDTO> data = response.body();
                 if (Utilities.listHasElements(data)) {
                     try {
-                        RondaService rondaService = new RondaServiceImpl(LoadMetadataServiceImpl.APP);
+                        RondaService rondaService = getApplication().getRondaService();
                         List<Ronda> rondas = new ArrayList<>();
 
                         for (RondaDTO rondaDTO: data) {
-                            rondaDTO.setSyncSatus(SyncSatus.SENT);
                             Ronda ronda = rondaDTO.getRonda();
                             ronda.setSyncStatus(SyncSatus.SENT);
                             rondas.add(ronda);
@@ -100,8 +97,7 @@ public class RondaRestService extends BaseRestService {
                     }
                 });
             }
-        } catch (SQLException | InstantiationException | IllegalAccessException | NoSuchMethodException |
-                 InvocationTargetException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 

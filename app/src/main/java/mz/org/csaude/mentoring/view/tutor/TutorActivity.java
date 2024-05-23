@@ -9,9 +9,7 @@ import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityTutorBinding;
-import mz.org.csaude.mentoring.databinding.ActivityTutoredBinding;
 import mz.org.csaude.mentoring.viewmodel.tutor.TutorVM;
-import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
 
 public class TutorActivity extends BaseActivity {
     ActivityTutorBinding tutorBinding;

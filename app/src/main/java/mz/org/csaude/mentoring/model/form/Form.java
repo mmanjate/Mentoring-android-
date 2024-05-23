@@ -6,15 +6,14 @@ import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.form.FormDAOImpl;
-import mz.org.csaude.mentoring.dao.session.SessionStatusDAOImpl;
-import mz.org.csaude.mentoring.model.career.Career;
+import mz.org.csaude.mentoring.dto.form.FormDTO;
 import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 
 @Data
-@NoArgsConstructor
 @DatabaseTable(tableName = Form.TABLE_NAME, daoClass = FormDAOImpl.class)
 @EqualsAndHashCode(callSuper=false)
 public class Form extends BaseModel {
@@ -48,6 +47,20 @@ public class Form extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_PARTNER, canBeNull = false, foreign = true, foreignAutoRefresh = true )
     private Partner partner;
+
+    public Form() {
+    }
+
+    public Form(FormDTO formDTO) {
+        super(formDTO);
+        this.setCode(formDTO.getCode());
+        this.setDescription(formDTO.getDescription());
+        this.setName(formDTO.getName());
+        this.setTargetFile(formDTO.getTargetFile());
+        this.setTargetPatient(formDTO.getTargetPatient());
+        if (formDTO.getPartner() != null) this.setPartner(new Partner(formDTO.getPartner()));
+        if (formDTO.getProgrammaticArea() != null) this.setProgrammaticArea(new ProgrammaticArea(formDTO.getProgrammaticArea()));
+    }
 
     public String getName() {
         return name;

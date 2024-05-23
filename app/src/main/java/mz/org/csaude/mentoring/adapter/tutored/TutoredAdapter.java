@@ -3,18 +3,20 @@ package mz.org.csaude.mentoring.adapter.tutored;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.databinding.TutoredListItemBinding;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  * @author Jose Julai Ritsure

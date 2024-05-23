@@ -1,12 +1,8 @@
 package mz.org.csaude.mentoring.dto.employee;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.location.LocationDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
@@ -134,9 +130,7 @@ public class EmployeeDTO extends BaseEntityDTO {
 
     public Employee getEmployee() {
         Employee employee = new Employee();
-        employee.setId(this.getId());
         employee.setUuid(this.getUuid());
-        employee.setSyncStatus(this.getSyncSatus());
         employee.setName(this.getName());
         employee.setSurname(this.getSurname());
         employee.setNuit(this.getNuit());

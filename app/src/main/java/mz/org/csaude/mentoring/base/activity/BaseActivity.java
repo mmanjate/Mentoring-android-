@@ -20,7 +20,6 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.common.ApplicationStep;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.util.Utilities;
 
 /**
  * Generic class that represent all application activities

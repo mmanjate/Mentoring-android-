@@ -5,13 +5,10 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.career.CareerDAOImpl;
-import mz.org.csaude.mentoring.dao.session.SessionStatusDAOImpl;
 import mz.org.csaude.mentoring.dto.career.CareerDTO;
-import mz.org.csaude.mentoring.model.session.SessionStatus;
 
 @Data
 @DatabaseTable(tableName = Career.TABLE_NAME, daoClass = CareerDAOImpl.class)

@@ -7,7 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.rondatype.RondaTypeDAO;
-import mz.org.csaude.mentoring.dto.location.RondaTypeDTO;
+import mz.org.csaude.mentoring.dto.ronda.RondaTypeDTO;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
 
 public class RondaTypeServiceImpl extends BaseServiceImpl<RondaType> implements RondaTypeService {

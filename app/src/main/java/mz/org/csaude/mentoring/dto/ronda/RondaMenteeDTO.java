@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
-import mz.org.csaude.mentoring.model.rondatype.RondaType;
 @Data
 @NoArgsConstructor
 public class RondaMenteeDTO extends BaseEntityDTO {
@@ -54,9 +53,7 @@ public class RondaMenteeDTO extends BaseEntityDTO {
     }
     public RondaMentee getRondaMentee() {
         RondaMentee rondaMentee = new RondaMentee();
-        rondaMentee.setId(this.getId());
         rondaMentee.setUuid(this.getUuid());
-        rondaMentee.setSyncStatus(this.getSyncSatus());
         rondaMentee.setStartDate(this.getStartDate());
         rondaMentee.setEndDate(this.getEndDate());
         rondaMentee.setCreatedAt(this.getCreatedAt());

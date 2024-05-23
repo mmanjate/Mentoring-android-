@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
 }
 ext.versionMajor = 1
-ext.versionMinor = 7
+ext.versionMinor = 0
 ext.versionPatch = 0
 ext.versionClassifier = null
 ext.isSnapshot = true
@@ -36,6 +36,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "Mentoria-${variant.versionName}.apk"
+        }
     }
 }
 

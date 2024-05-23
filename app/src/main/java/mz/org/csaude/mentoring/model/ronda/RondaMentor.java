@@ -5,9 +5,9 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
-import lombok.Data;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.ronda.RondaMentorDAOImpl;
+import mz.org.csaude.mentoring.dto.ronda.RondaMentorDTO;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 
 
@@ -32,6 +32,18 @@ public class RondaMentor extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_END_DATE, canBeNull = true)
     private Date endDate;
+
+    public RondaMentor() {
+    }
+
+    public RondaMentor(RondaMentorDTO rondaMentorDTO) {
+        super(rondaMentorDTO);
+        this.setStartDate(rondaMentorDTO.getStartDate());
+        this.setEndDate(rondaMentorDTO.getEndDate());
+        this.setTutor(new Tutor(rondaMentorDTO.getMentor()));
+        this.setRonda(new Ronda());
+        this.getRonda().setUuid(rondaMentorDTO.getRonda().getUuid());
+    }
 
     public Ronda getRonda() {
         return ronda;

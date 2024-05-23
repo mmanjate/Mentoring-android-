@@ -9,7 +9,6 @@ import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.setting.SettingDAO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.model.setting.Setting;
-import mz.org.csaude.mentoring.model.user.User;
 
 public class SettingServiceImpl extends BaseServiceImpl<Setting> implements SettingService {
 

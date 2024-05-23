@@ -37,9 +37,7 @@ public class ProfessionalCategoryDTO extends BaseEntityDTO {
     }
     public ProfessionalCategory getProfessionalCategory() {
         ProfessionalCategory professionalCategory = new ProfessionalCategory();
-        professionalCategory.setId(this.getId());
         professionalCategory.setUuid(this.getUuid());
-        professionalCategory.setSyncStatus(this.getSyncSatus());
         professionalCategory.setCode(this.getCode());
         professionalCategory.setDescription(this.getDescription());
         professionalCategory.setCreatedAt(this.getCreatedAt());

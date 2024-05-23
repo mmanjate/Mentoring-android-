@@ -8,10 +8,8 @@ import androidx.lifecycle.ViewModelProvider;
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
-import mz.org.csaude.mentoring.databinding.ActivityTutoredBinding;
 import mz.org.csaude.mentoring.databinding.AnswerActivityBinding;
 import mz.org.csaude.mentoring.viewmodel.answer.AnswerVM;
-import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
 
 public class AnswerActivity extends BaseActivity {
 

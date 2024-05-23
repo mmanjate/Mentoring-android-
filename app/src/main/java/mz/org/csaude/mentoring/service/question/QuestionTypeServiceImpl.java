@@ -49,4 +49,9 @@ public class QuestionTypeServiceImpl extends BaseServiceImpl<QuestionType> imple
     public QuestionType getById(int id) throws SQLException {
         return this.questionTypeDAO.queryForId(id);
     }
+
+    @Override
+    public QuestionType getByuuid(String uuid) throws SQLException {
+        return questionTypeDAO.getByUuid(uuid);
+    }
 }

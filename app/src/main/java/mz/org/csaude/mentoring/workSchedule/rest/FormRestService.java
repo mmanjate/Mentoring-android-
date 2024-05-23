@@ -40,8 +40,11 @@ public class FormRestService extends BaseRestService {
     }
 
     public void restGetForm(RestResponseListener<Form> listener){
-        Call<List<FormDTO>> formCall = syncDataService.getFormsByMentor(getApplication().getCurrMentor().getUuid());
-        FormService formService = getApplication().getFormService();
+        Employee employee = getApplication().getAuthenticatedUser().getEmployee();
+        Partner partner = employee.getPartner();
+        long partnerId = partner.getId();
+        Call<List<FormDTO>> formCall = syncDataService.getFormsByPartner(partnerId);
+        FormService formService = new FormServiceImpl(LoadMetadataServiceImpl.APP);
 
         formCall.enqueue(new Callback<List<FormDTO>>() {
             @Override
@@ -55,6 +58,7 @@ public class FormRestService extends BaseRestService {
                             form.setPartner(getApplication().getPartnerService().getByuuid(form.getPartner().getUuid()));
                             form.setProgrammaticArea(getApplication().getProgrammaticAreaService().getByuuid(form.getProgrammaticArea().getUuid()));
                         }
+                        Toast.makeText(APP.getApplicationContext(), "Carregando as Tabelas de Competências.", Toast.LENGTH_SHORT).show();
                         formService.savedOrUpdateForms(forms);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, forms);
                     } catch (SQLException e) {
@@ -108,7 +112,7 @@ public class FormRestService extends BaseRestService {
                 }
             });
         }
-        } catch (SQLException e) {
+        } catch (SQLException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
 

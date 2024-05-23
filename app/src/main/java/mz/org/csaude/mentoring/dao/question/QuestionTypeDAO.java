@@ -6,5 +6,5 @@ import mz.org.csaude.mentoring.base.dao.MentoringBaseDao;
 import mz.org.csaude.mentoring.dao.mentorship.MentorshipDAO;
 import mz.org.csaude.mentoring.model.question.QuestionType;
 
-public interface QuestionTypeDAO extends MentoringBaseDao<QuestionType, Integer> {
+public interface QuestionTypeDAO extends Dao<QuestionType, Integer> {
 }

@@ -64,6 +64,7 @@ public class FormQuestionRestService extends BaseRestService {
                             formQuestion.setResponseType(getApplication().getResponseTypeService().getByuuid(formQuestion.getResponseType().getUuid()));
                         }
 
+                        Toast.makeText(APP.getApplicationContext(), "Carregando as Competências das Tabelas.", Toast.LENGTH_SHORT).show();
                         formQuestionService.saveOrUpdate(formQuestions);
 
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, formQuestions);
@@ -71,6 +72,7 @@ public class FormQuestionRestService extends BaseRestService {
                         Log.e("Error saving FormQuestion: " ,e.getMessage(), e);
                     }
 
+                    Toast.makeText(APP.getApplicationContext(), "COMPETÊNCIAS DAS TABELAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(BaseRestService.REQUEST_NO_DATA, null);
                 }
@@ -78,6 +80,7 @@ public class FormQuestionRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<FormQuestionDTO>> call, Throwable t) {
+                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as Competências das Tabelas. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

@@ -44,7 +44,7 @@ public class CareerType extends BaseModel implements Listble {
 
     @Override
     public int getListPosition() {
-        return Listble.super.getListPosition();
+        return 0;
     }
 
     @Override

@@ -4,28 +4,16 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.form.FormDTO;
-import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
-import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.form.Form;
-import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
-import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.partner.Partner;
-import mz.org.csaude.mentoring.model.tutored.Tutored;
-import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeService;
-import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeServiceImpl;
 import mz.org.csaude.mentoring.service.form.FormService;
-import mz.org.csaude.mentoring.service.form.FormServiceImpl;
-import mz.org.csaude.mentoring.service.formQuestion.FormQuestionService;
-import mz.org.csaude.mentoring.service.formQuestion.FormQuestionServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -44,7 +32,7 @@ public class FormRestService extends BaseRestService {
         Partner partner = employee.getPartner();
         long partnerId = partner.getId();
         Call<List<FormDTO>> formCall = syncDataService.getFormsByPartner(partnerId);
-        FormService formService = new FormServiceImpl(LoadMetadataServiceImpl.APP);
+        FormService formService = getApplication().getFormService();
 
         formCall.enqueue(new Callback<List<FormDTO>>() {
             @Override
@@ -112,7 +100,7 @@ public class FormRestService extends BaseRestService {
                 }
             });
         }
-        } catch (SQLException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 

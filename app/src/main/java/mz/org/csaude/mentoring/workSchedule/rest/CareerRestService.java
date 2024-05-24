@@ -14,7 +14,6 @@ import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.service.career.CareerService;
 import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -39,7 +38,7 @@ public class CareerRestService extends BaseRestService {
                 } else {
 
                     try {
-                        CareerService careerService = new CareerServiceImpl(LoadMetadataServiceImpl.APP);
+                        CareerService careerService = getApplication().getCareerService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando as CARREIRAS...", Toast.LENGTH_SHORT).show();
                         List<Career> careers = new ArrayList<>();
                         for (CareerDTO careerDTO : data) {

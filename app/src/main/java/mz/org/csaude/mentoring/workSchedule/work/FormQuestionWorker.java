@@ -32,12 +32,6 @@ public class FormQuestionWorker extends BaseWorker<FormQuestion> {
     }
 
     @Override
-    protected void doAfterSearch(String flag, List<FormQuestion> recs) throws SQLException {
-        changeStatusToFinished();
-        doOnFinish();
-    }
-
-    @Override
     protected void doOnFinish() {
 
     }

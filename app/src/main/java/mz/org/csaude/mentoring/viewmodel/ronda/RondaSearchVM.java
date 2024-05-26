@@ -46,7 +46,7 @@ public class RondaSearchVM extends BaseViewModel {
         RondaType rondaType = (RondaType) intent.getExtras().get("rondaType");
         params.put("rondaType", rondaType);
         params.put("title", title);
-        getRelatedActivity().nextActivityFinishingCurrent(CreateRondaActivity.class, params);
+        getRelatedActivity().nextActivity(CreateRondaActivity.class, params);
     }
     public List<Listble> getAllRondas(RondaType rondaType) {
         try {

@@ -198,23 +198,23 @@ public class RondaVM extends BaseViewModel {
 
     public void addSelectedMentee() {
         // validate mentee here...
-
         if (selectedMentees == null) selectedMentees = new ArrayList<>();
-        this.setSelectedMentees(menteeList);
-        //if(selectedMentee != null){
-            //if (!selectedMentees.contains(selectedMentee)) {
-                //selectedMentee.setListPosition(selectedMentees.size()+1);
-                //selectedMentee.setListType(Listble.PRESCRIPTION_DRUG_LISTING);
-                //selectedMentees.add(selectedMentee);
-                ((CreateRondaActivity) getRelatedActivity()).displaySelectedMentees();
+        if(selectedMentee != null){
+            if (!selectedMentees.contains(selectedMentee)) {
+                selectedMentee.setListPosition(selectedMentees.size()+1);
+                selectedMentee.setListType(Listble.ListTypes.SELECTION_LIST);
+                selectedMentees.add(selectedMentee);
+                getRelatedActivity().displaySelectedMentees();
                 setSelectedMentee(null);
                 notifyPropertyChanged(BR.selectedMentee);
-            /*}else {
+
+
+            }else {
                 Utilities.displayAlertDialog(getRelatedActivity(), "O Mentorando seleccionado já existe na lista!").show();
             }
         }else{
             Utilities.displayAlertDialog(getRelatedActivity(),"Campo Mentorando está vazio. Por favor, seleccione um medicamento para adicionar à lista.").show();
-        }*/
+        }
     }
 
     public void save() {

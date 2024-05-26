@@ -2,6 +2,7 @@ package mz.org.csaude.mentoring.view.ronda;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.databinding.DataBindingUtil;
@@ -91,6 +92,18 @@ public class RondaActivity extends BaseActivity {
 
             rondaAdapter = new RondaAdapter(rondasRecyclerView, getRelatedViewModel().getRondaList(), this);
             rondasRecyclerView.setAdapter(rondaAdapter);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Handle the back button click
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

@@ -26,8 +26,6 @@ import mz.org.csaude.mentoring.service.ProgrammaticArea.ProgrammaticAreaService;
 import mz.org.csaude.mentoring.service.ProgrammaticArea.ProgrammaticAreaServiceImpl;
 import mz.org.csaude.mentoring.service.ProgrammaticArea.TutorProgrammaticAreaService;
 import mz.org.csaude.mentoring.service.ProgrammaticArea.TutorProgrammaticAreaServiceImpl;
-import mz.org.csaude.mentoring.service.career.CareerService;
-import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
 import mz.org.csaude.mentoring.service.employee.EmployeeService;
 import mz.org.csaude.mentoring.service.employee.EmployeeServiceImpl;
 import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeService;
@@ -36,8 +34,6 @@ import mz.org.csaude.mentoring.service.form.FormService;
 import mz.org.csaude.mentoring.service.form.FormServiceImpl;
 import mz.org.csaude.mentoring.service.formQuestion.FormQuestionService;
 import mz.org.csaude.mentoring.service.formQuestion.FormQuestionServiceImpl;
-import mz.org.csaude.mentoring.service.location.CabinetService;
-import mz.org.csaude.mentoring.service.location.CabinetServiceImpl;
 import mz.org.csaude.mentoring.service.location.DistrictService;
 import mz.org.csaude.mentoring.service.location.DistrictServiceImpl;
 import mz.org.csaude.mentoring.service.location.HealthFacilityService;
@@ -87,7 +83,6 @@ import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 import mz.org.csaude.mentoring.util.Utilities;
-import mz.org.csaude.mentoring.workSchedule.rest.CabinetRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.FormQuestionRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.FormRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.MentorshipRestService;
@@ -188,8 +183,6 @@ public class MentoringApplication  extends Application {
     private RondaRestService rondaRestService;
     private MentorshipRestService mentorshipRestService;
     private IterationTypeService iterationTypeService;
-    private CabinetService cabinetService;
-    private CareerService careerService;
 
     @Override
     public void onCreate() {
@@ -414,14 +407,6 @@ public class MentoringApplication  extends Application {
     public IterationTypeService getIterationTypeService() {
         if (iterationTypeService == null) this.iterationTypeService = new IterationTypeServiceImpl(this);
         return iterationTypeService;
-    }
-    public CabinetService getCabinetService() {
-        if (cabinetService == null) this.cabinetService = new CabinetServiceImpl(this);
-        return cabinetService;
-    }
-    public CareerService getCareerService() {
-        if (careerService == null) this.careerService = new CareerServiceImpl(this);
-        return careerService;
     }
 
 

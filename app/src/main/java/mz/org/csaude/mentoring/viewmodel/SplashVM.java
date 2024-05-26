@@ -2,18 +2,31 @@ package mz.org.csaude.mentoring.viewmodel;
 
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.Operation;
 import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+
+import com.google.common.util.concurrent.ListenableFuture;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Executor;
 
 import mz.org.csaude.mentoring.R;
+import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
+import mz.org.csaude.mentoring.service.metadata.LoadMetadataService;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.login.LoginActivity;
 import mz.org.csaude.mentoring.view.splash.SplashActivity;
+import mz.org.csaude.mentoring.workSchedule.executor.ExecutorThreadProvider;
 import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
 
 public class SplashVM extends BaseViewModel implements RestResponseListener, ServerStatusListener {

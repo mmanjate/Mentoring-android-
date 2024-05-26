@@ -256,9 +256,8 @@ public class MentorshipVM extends BaseViewModel {
         params.put("createdRonda", ronda);
         params.put("currMentor", currMentor);
         this.mentorship.setTutor(currMentor);
-        this.mentorship.setForm(this.selectedForm);
         params.put("newMentorship", this.mentorship);
-        params.put("selectedForm", this.selectedForm);
         getRelatedActivity().nextActivityFinishingCurrent(CreateMentorshipActivity.class, params);
+        // go to mentees selection form
     }
 }

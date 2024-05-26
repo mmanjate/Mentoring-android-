@@ -38,7 +38,7 @@ public class MentorshipRestService extends BaseRestService {
                 List<MentorshipDTO> data = response.body();
                 if (Utilities.listHasElements(data)) {
                     try {
-                        MentorshipService mentorshipService = application.getMentorshipService();
+                        MentorshipService mentorshipService = getApplication().getMentorshipService();
                         List<Mentorship> mentorships = new ArrayList<>();
                         for (MentorshipDTO mentorshipDTO: data) {
                             mentorshipDTO.setSyncSatus(SyncSatus.SENT);

@@ -53,11 +53,6 @@ public class CreateMentorshipActivity extends BaseActivity {
             title = (String) intent.getExtras().get("title");
             rondaType = (RondaType) intent.getExtras().get("rondaType");
             currMentor = (Tutor) intent.getExtras().get("currMentor");
-            bundle.putSerializable("ronda", ronda);
-            bundle.putSerializable("title", title);
-            bundle.putSerializable("rondaType", rondaType);
-            bundle.putSerializable("currMentor", currMentor);
-            intent.putExtras(bundle);
         }
         initMentorShip();
     }

@@ -85,16 +85,6 @@
             android:name=".view.session.SessionClosureActivity"
             android:exported="true"
             android:theme="@style/Theme.Mentoring.NoActionBar" />
-
-        <activity
-            android:name=".view.form.ListFormActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
-
-        <activity
-            android:name=".view.tutored.fragment.ListTutoredActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
     </application>
 
 </manifest>

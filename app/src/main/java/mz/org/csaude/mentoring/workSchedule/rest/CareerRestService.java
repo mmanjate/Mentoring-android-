@@ -38,7 +38,7 @@ public class CareerRestService extends BaseRestService {
                 } else {
 
                     try {
-                        CareerService careerService = null;
+                        CareerService careerService = getApplication().getCareerService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando as CARREIRAS...", Toast.LENGTH_SHORT).show();
                         List<Career> careers = new ArrayList<>();
                         for (CareerDTO careerDTO : data) {

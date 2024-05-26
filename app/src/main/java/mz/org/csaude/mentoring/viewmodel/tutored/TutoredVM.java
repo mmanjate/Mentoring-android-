@@ -33,6 +33,7 @@ import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.service.career.CareerService;
@@ -429,5 +430,13 @@ public class TutoredVM extends BaseViewModel implements RestResponseListener<Tut
         } else {
             Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.server_unavailable)).show();
         }
+    }
+    public void nextStep() {
+
+    }
+
+    public List<Tutored> loadMenteesByMentor(Tutor tutor) {
+
+        return null;
     }
 }

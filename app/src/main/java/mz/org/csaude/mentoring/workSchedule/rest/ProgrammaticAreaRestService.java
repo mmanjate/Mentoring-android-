@@ -4,7 +4,6 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +36,13 @@ public class ProgrammaticAreaRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         ProgrammaticAreaService programmaticAreaService = getApplication().getProgrammaticAreaService();
-
+                        Toast.makeText(APP.getApplicationContext(), "Carregando as Áreas Programáticas.", Toast.LENGTH_SHORT).show();
+                        List<ProgrammaticArea> programmaticAreas = new ArrayList<>();
+                        for (ProgrammaticAreaDTO programmaticAreaDTO : data){
+                            programmaticAreas.add(programmaticAreaDTO.getProgrammaticArea());
+                        }
                         programmaticAreaService.saveOrUpdateProgrammaticAreas(data);
-                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Utilities.parse(data, ProgrammaticArea.class));
+                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, programmaticAreas);
                     } catch (SQLException e) {
                         Log.e("ProgrammaticAreaRestService", e.getMessage());
                     }

@@ -4,28 +4,16 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.form.FormDTO;
-import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
-import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.form.Form;
-import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
-import mz.org.csaude.mentoring.model.location.Location;
 import mz.org.csaude.mentoring.model.partner.Partner;
-import mz.org.csaude.mentoring.model.tutored.Tutored;
-import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeService;
-import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeServiceImpl;
 import mz.org.csaude.mentoring.service.form.FormService;
-import mz.org.csaude.mentoring.service.form.FormServiceImpl;
-import mz.org.csaude.mentoring.service.formQuestion.FormQuestionService;
-import mz.org.csaude.mentoring.service.formQuestion.FormQuestionServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -40,7 +28,10 @@ public class FormRestService extends BaseRestService {
     }
 
     public void restGetForm(RestResponseListener<Form> listener){
-        Call<List<FormDTO>> formCall = syncDataService.getFormsByMentor(getApplication().getCurrMentor().getUuid());
+        Employee employee = getApplication().getAuthenticatedUser().getEmployee();
+        Partner partner = employee.getPartner();
+        long partnerId = partner.getId();
+        Call<List<FormDTO>> formCall = syncDataService.getFormsByPartner(partnerId);
         FormService formService = getApplication().getFormService();
 
         formCall.enqueue(new Callback<List<FormDTO>>() {
@@ -55,6 +46,7 @@ public class FormRestService extends BaseRestService {
                             form.setPartner(getApplication().getPartnerService().getByuuid(form.getPartner().getUuid()));
                             form.setProgrammaticArea(getApplication().getProgrammaticAreaService().getByuuid(form.getProgrammaticArea().getUuid()));
                         }
+                        Toast.makeText(APP.getApplicationContext(), "Carregando as Tabelas de Competências.", Toast.LENGTH_SHORT).show();
                         formService.savedOrUpdateForms(forms);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, forms);
                     } catch (SQLException e) {

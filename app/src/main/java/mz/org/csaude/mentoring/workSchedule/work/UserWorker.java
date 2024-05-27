@@ -11,7 +11,6 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
 import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.tutor.TutorService;
 import mz.org.csaude.mentoring.service.tutor.TutorServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserService;

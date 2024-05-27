@@ -10,15 +10,14 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
-
 import android.widget.TextView;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -567,14 +566,26 @@ public class Utilities {
         return false;
     }
 
-    public static <T extends Object, S extends Object> List<S> parse(List<T> list, Class<S> classe) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public static <T extends Object, S extends Object> List<S> parse(List<T> list, Class<S> classe)  {
         if (list == null) return null;
         List<S> parsedList = new ArrayList<S>();
 
         for (T t : list){
-            parsedList.add(classe.getDeclaredConstructor(t.getClass()).newInstance(t));
+            try {
+                parsedList.add(classe.getDeclaredConstructor(t.getClass()).newInstance(t));
+            } catch (IllegalAccessException | InstantiationException | InvocationTargetException |
+                     NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
         }
         return parsedList;
     }
 
+    public static void hideKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 }

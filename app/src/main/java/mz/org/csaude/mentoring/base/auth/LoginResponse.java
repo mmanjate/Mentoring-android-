@@ -3,7 +3,6 @@ package mz.org.csaude.mentoring.base.auth;
 import com.google.gson.annotations.SerializedName;
 
 import mz.org.csaude.mentoring.dto.user.UserDTO;
-import mz.org.csaude.mentoring.model.user.User;
 
 public class LoginResponse {
 

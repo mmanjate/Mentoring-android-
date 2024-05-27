@@ -11,7 +11,6 @@ import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.dto.location.DistrictDTO;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
 import mz.org.csaude.mentoring.dto.location.ProvinceDTO;
-import mz.org.csaude.mentoring.dto.location.RondaTypeDTO;
 import mz.org.csaude.mentoring.dto.mentorship.DoorDTO;
 import mz.org.csaude.mentoring.dto.mentorship.IterationTypeDTO;
 import mz.org.csaude.mentoring.dto.mentorship.MentorshipDTO;
@@ -25,6 +24,7 @@ import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
+import mz.org.csaude.mentoring.dto.ronda.RondaTypeDTO;
 import mz.org.csaude.mentoring.dto.session.SessionStatusDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
@@ -128,9 +128,12 @@ public interface SyncDataService {
     @GET("/questions/getAll")
     Call<List<QuestionDTO>> getAllQuestions();
     @GET("/formQuestions/getByFormsUuids")
-    Call<List<FormQuestionDTO>> getFormsQuestionsByFormsUuids(@Query("formsUuids") List<String> formsUuids);
+    Call<List<FormQuestionDTO>> getFormsQuestionsByFormsUuids(@Query("formsUuids") List<String> formsUuids,
+                                                              @Query("limit") Long limit,
+                                                              @Query("offset") Long offset);
     @GET("/rondas/getAllRondasOfMentor")
     Call<List<RondaDTO>> getAllRondasOfMentor(@Query("mentorId") Long mentorId);
+
     @POST("/rondas/save")
     Call<List<RondaDTO>> postRondas(@Body List<RondaDTO> rondaDTOS);
     @GET("/mentorships/getAllMentorshipSessionsOfMentor")
@@ -150,6 +153,14 @@ public interface SyncDataService {
     Call<List<ProgramDTO>> getAllPrograms();
     @GET("/programmaticareas/getAll")
     Call<List<ProgrammaticAreaDTO>> getAllProgrammaticAreas();
-    @GET("/tutorprogrammaticareas/all")
-    Call<List<TutorProgrammaticAreaDTO>> getAllTutorProgrammaticAreas();
+    @GET("/tutorprogrammaticareas/getByTutorUuidd/{tutorUuid}")
+    Call<List<TutorProgrammaticAreaDTO>> getByTutorUuidd(@Path("tutorUuid") String tutorUuid);
+
+    @GET("/forms/getByTutorUuidd/{tutorUuid}")
+    Call<List<FormDTO>> getFormsByMentor(@Path("tutorUuid") String tutorUuid);
+    @GET("/ronda/getAllOfMentor")
+    Call<List<RondaDTO>> getAllOfMentor(@Query("mentorUuid") String mentorUuid);
+
+    @GET("/mentorships/getAllMentorshipSessionsOfMentorRondas")
+    Call<List<MentorshipDTO>> getAllMentorshipSessionsOfMentorRondas(@Query("rondaUuidList") List<String> rondaUuidList);
 }

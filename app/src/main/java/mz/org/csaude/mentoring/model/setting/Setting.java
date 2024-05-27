@@ -2,13 +2,11 @@ package mz.org.csaude.mentoring.model.setting;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.dao.setting.SettingDAO;
 import mz.org.csaude.mentoring.dao.setting.SettingDAOImpl;
-import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 
 @Data
@@ -48,7 +46,6 @@ public class Setting extends BaseModel {
 
     public Setting(SettingDTO dto) {
         this.setUuid(dto.getUuid());
-        this.setSyncStatus(dto.getSyncSatus());
         this.setDescription(dto.getDescription());
         this.setDesignation(dto.getDesignation());
         this.setValue(dto.getValue());

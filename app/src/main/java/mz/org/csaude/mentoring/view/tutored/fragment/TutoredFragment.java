@@ -1,34 +1,27 @@
 package mz.org.csaude.mentoring.view.tutored.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.PopupMenu;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.sql.SQLException;
+import java.util.List;
+
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.tutored.TutoredAdapter;
 import mz.org.csaude.mentoring.base.fragment.GenericFragment;
-import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.FragmentTutoredsBinding;
 import mz.org.csaude.mentoring.listner.dialog.IListbleDialogListener;
-import mz.org.csaude.mentoring.listner.recyclerView.ClickListener;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.Utilities;
-import mz.org.csaude.mentoring.view.tutored.CreateTutoredActivity;
 import mz.org.csaude.mentoring.viewmodel.tutored.TutoredVM;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Jose Julai Ritsure

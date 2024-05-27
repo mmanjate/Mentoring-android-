@@ -12,8 +12,6 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.setting.Setting;
-import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.setting.SettingService;
 import mz.org.csaude.mentoring.service.setting.SettingServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -27,7 +25,7 @@ public class SettingRestService extends BaseRestService {
         super(application);
     }
 
-    public static void restGetSettings(RestResponseListener<Setting> listener){
+    public void restGetSettings(RestResponseListener<Setting> listener){
 
         Call<List<SettingDTO>> settingsCall = syncDataService.getSettings("0807983dd3b34f109fb75756862d4a72");
 
@@ -41,12 +39,11 @@ public class SettingRestService extends BaseRestService {
                }
 
                try {
-                   SettingService settingService = new SettingServiceImpl(LoadMetadataServiceImpl.APP);
+                   SettingService settingService = getApplication().getSettingService();
                    Toast.makeText(APP.getApplicationContext(), "CARREGANDO OS SETTINGS", Toast.LENGTH_SHORT).show();
                    List<Setting> settings = new ArrayList<>();
 
                    for(SettingDTO settingDTO : data){
-                       settingDTO.setSyncSatus(SyncSatus.SENT);
                        settingDTO.getSetting().setSyncStatus(SyncSatus.SENT);
                        settings.add(settingDTO.getSetting());
                    }

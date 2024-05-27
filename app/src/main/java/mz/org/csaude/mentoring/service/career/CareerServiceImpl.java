@@ -13,7 +13,6 @@ import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.dto.career.CareerTypeDTO;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.career.CareerType;
-import mz.org.csaude.mentoring.model.user.User;
 
 public class CareerServiceImpl extends BaseServiceImpl<Career> implements CareerService {
 

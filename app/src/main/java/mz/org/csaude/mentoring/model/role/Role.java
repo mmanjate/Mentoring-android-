@@ -1,11 +1,6 @@
 package mz.org.csaude.mentoring.model.role;
 
-import com.j256.ormlite.table.DatabaseTable;
-
-import java.util.List;
-
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.model.autority.Authority;
 
 
 public class Role extends BaseModel {

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.session.Session;
-import mz.org.csaude.mentoring.model.session.SessionStatus;
 @Data
 @NoArgsConstructor
 public class SessionDTO extends BaseEntityDTO {
@@ -62,9 +61,7 @@ public class SessionDTO extends BaseEntityDTO {
 
     public Session getSession() {
         Session session = new Session();
-        session.setId(this.getId());
         session.setUuid(this.getUuid());
-        session.setSyncStatus(this.getSyncSatus());
         session.setStartDate(this.getStartDate());
         session.setEndDate(this.getEndDate());
         session.setPerformedDate(this.getPerformedDate());

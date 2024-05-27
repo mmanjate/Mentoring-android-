@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.dto.career;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,9 +37,7 @@ public class CareerDTO extends BaseEntityDTO {
     }
     public Career getCareer() {
         Career career = new Career();
-        career.setId(this.getId());
         career.setUuid(this.getUuid());
-        career.setSyncStatus(this.getSyncSatus());
         career.setPosition(this.getPosition());
         career.setCreatedAt(this.getCreatedAt());
         career.setUpdatedAt(this.getUpdatedAt());

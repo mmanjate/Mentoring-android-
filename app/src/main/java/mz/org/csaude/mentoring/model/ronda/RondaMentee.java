@@ -7,6 +7,7 @@ import java.util.Date;
 
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.ronda.RondaMenteeDAOImpl;
+import mz.org.csaude.mentoring.dto.ronda.RondaMenteeDTO;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
 
@@ -40,6 +41,20 @@ public class RondaMentee extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_END_DATE)
     private Date endDate;
+
+    public RondaMentee(RondaMenteeDTO rondaMenteeDTO) {
+        super(rondaMenteeDTO);
+        this.setStartDate(rondaMenteeDTO.getStartDate());
+        this.setEndDate(rondaMenteeDTO.getEndDate());
+        if(rondaMenteeDTO.getMentee()!=null) {
+            this.setTutored(new Tutored(rondaMenteeDTO.getMentee()));
+        }
+        if(rondaMenteeDTO.getRonda()!=null) {
+            this.setRonda(new Ronda());
+            this.getRonda().setUuid(rondaMenteeDTO.getRonda().getUuid());
+        }
+    }
+
 
     public static RondaMentee fastCreate(Ronda ronda, Tutored mentee) {
         return new RondaMentee(ronda, mentee, DateUtilities.getCurrentDate());

@@ -84,9 +84,7 @@ public class FormDTO extends BaseEntityDTO {
 
     public Form getForm() {
         Form form = new Form();
-        form.setId(this.getId());
         form.setUuid(this.getUuid());
-        form.setSyncStatus(this.getSyncSatus());
         form.setCode(this.getCode());
         form.setDescription(this.getDescription());
         form.setName(this.getName());

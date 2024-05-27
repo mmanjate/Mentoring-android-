@@ -66,4 +66,9 @@ public class EvaluationTypeServiceImpl extends BaseServiceImpl<EvaluationType> i
         this.evaluationTypeDAO.createOrUpdate(evaluationType);
         return evaluationType;
     }
+
+    @Override
+    public EvaluationType getByuuid(String uuid) throws SQLException {
+        return evaluationTypeDAO.getByUuid(uuid);
+    }
 }

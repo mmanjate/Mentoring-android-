@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import mz.org.csaude.mentoring.R;
-import mz.org.csaude.mentoring.adapter.recyclerview.tutored.TutoredAdapter;
 import mz.org.csaude.mentoring.databinding.FormListItemBinding;
-import mz.org.csaude.mentoring.databinding.TutoredListItemBinding;
 import mz.org.csaude.mentoring.model.form.Form;
 
 public class FormAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{

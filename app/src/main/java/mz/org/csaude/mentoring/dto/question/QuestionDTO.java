@@ -1,10 +1,8 @@
 package mz.org.csaude.mentoring.dto.question;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.question.Question;
-import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 @Data
 public class QuestionDTO extends BaseEntityDTO {
     private String code;
@@ -47,9 +45,7 @@ public class QuestionDTO extends BaseEntityDTO {
     }
     public Question getQuestionObj() {
         Question question = new Question();
-        question.setId(this.getId());
         question.setUuid(this.getUuid());
-        question.setSyncStatus(this.getSyncSatus());
         question.setCode(this.getCode());
         question.setQuestion(this.getQuestion());
         question.setCreatedAt(this.getCreatedAt());

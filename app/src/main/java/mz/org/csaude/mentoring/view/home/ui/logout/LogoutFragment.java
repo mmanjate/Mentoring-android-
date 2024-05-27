@@ -1,21 +1,16 @@
 package mz.org.csaude.mentoring.view.home.ui.logout;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import mz.org.csaude.mentoring.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+
 import mz.org.csaude.mentoring.base.fragment.GenericFragment;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
-import mz.org.csaude.mentoring.databinding.FragmentGalleryBinding;
 import mz.org.csaude.mentoring.databinding.FragmentLogoutBinding;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
 import mz.org.csaude.mentoring.util.Utilities;

@@ -92,4 +92,22 @@ public class FormQuestionServiceImpl extends BaseServiceImpl<FormQuestion> imple
         this.formQuestionDAO.createOrUpdate(formQuestion);
         return formQuestion;
     }
+
+    @Override
+    public void saveOrUpdate(List<FormQuestion> formQuestions) throws SQLException {
+        for (FormQuestion fQuestion : formQuestions) {
+
+            Question q = this.questionDAO.getByUuid(fQuestion.getQuestion().getUuid());
+            if(q!=null) {
+                fQuestion.getQuestion().setId(q.getId());
+            }
+            QuestionsCategory qc = getApplication().getQuestionsCategoryService().getByuuid(fQuestion.getQuestion().getQuestionsCategory().getUuid());
+            if (qc != null) {
+                fQuestion.getQuestion().getQuestionsCategory().setId(qc.getId());
+            }
+            getApplication().getQuestionsCategoryService().saveOrUpdateQuestionCategory(fQuestion.getQuestion().getQuestionsCategory());
+            this.questionDAO.createOrUpdate(fQuestion.getQuestion());
+            this.formQuestionDAO.createOrUpdate(fQuestion);
+        }
+    }
 }

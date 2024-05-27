@@ -1,7 +1,6 @@
 package mz.org.csaude.mentoring.base.auth;
 
 import android.content.Context;
-import android.media.session.MediaSessionManager;
 
 import java.io.IOException;
 

@@ -26,7 +26,6 @@ import mz.org.csaude.mentoring.service.form.FormService;
 import mz.org.csaude.mentoring.service.form.FormServiceImpl;
 import mz.org.csaude.mentoring.service.formQuestion.FormQuestionService;
 import mz.org.csaude.mentoring.service.formQuestion.FormQuestionServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;
@@ -53,17 +52,17 @@ public class FormRestService extends BaseRestService {
                 List<FormDTO> data = response.body();
                 if (Utilities.listHasElements(data)) {
                     try {
-                        List<Form> forms = new ArrayList<>();
-                        for (FormDTO formDTO: data) {
-                            formDTO.setSyncSatus(SyncSatus.SENT);
-                            formDTO.getForm().setSyncStatus(SyncSatus.SENT);
-                            forms.add(formDTO.getForm());
+                        List<Form> forms = Utilities.parse(data, Form.class);
+                        for (Form form : forms) {
+                            form.setSyncStatus(SyncSatus.SENT);
+                            form.setPartner(getApplication().getPartnerService().getByuuid(form.getPartner().getUuid()));
+                            form.setProgrammaticArea(getApplication().getProgrammaticAreaService().getByuuid(form.getProgrammaticArea().getUuid()));
                         }
                         Toast.makeText(APP.getApplicationContext(), "Carregando as Tabelas de Competências.", Toast.LENGTH_SHORT).show();
                         formService.savedOrUpdateForms(forms);
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, forms);
                     } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                        Log.e("METADATA LOAD --", e.getMessage(), e);
                     }
                     Toast.makeText(APP.getApplicationContext(), "TABELAS DE COMPETÊNCIAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {

@@ -10,4 +10,5 @@ import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 public interface ProgrammaticAreaService extends BaseService<ProgrammaticArea> {
     void saveOrUpdateProgrammaticAreas(List<ProgrammaticAreaDTO> programmaticAreaDTOS) throws SQLException;
     ProgrammaticArea saveOrUpdateProgrammaticArea(ProgrammaticAreaDTO programmaticAreaDTO) throws SQLException;
+
 }

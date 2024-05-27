@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="viewModel" type="mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipSearchVM" />
@@ -39,8 +38,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
 
+            <RelativeLayout
+                android:id="@+id/selection_layout"
+                android:layout_width="match_parent"
+                android:visibility="visible"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/form_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_normal"
+                android:padding="5dp"
+                android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:text="Sessões de Mentorias"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:paddingLeft="@dimen/dimen_10dp"/>
+            </LinearLayout>
+
             <ScrollView
                 android:layout_width="match_parent"
+                android:layout_below="@+id/form_title"
                 android:layout_height="match_parent">
 
                 <LinearLayout
@@ -54,6 +80,7 @@
                         android:scrollbars="vertical"/>
                 </LinearLayout>
             </ScrollView>
+            </RelativeLayout>
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

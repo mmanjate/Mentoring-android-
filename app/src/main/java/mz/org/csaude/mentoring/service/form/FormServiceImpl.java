@@ -75,7 +75,7 @@ public class FormServiceImpl extends BaseServiceImpl<Form> implements FormServic
             form.setId(f.getId());
         }
         this.formDAO.createOrUpdate(form);
-        return null;
+        return form;
     }
 
     @Override
@@ -86,5 +86,10 @@ public class FormServiceImpl extends BaseServiceImpl<Form> implements FormServic
     @Override
     public List<Form> getAllSynced(Application application) throws SQLException {
         return this.formDAO.getAllSynced(application);
+    }
+
+    @Override
+    public Form getByuuid(String uuid) throws SQLException {
+        return formDAO.getByUuid(uuid);
     }
 }

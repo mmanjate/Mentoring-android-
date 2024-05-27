@@ -5,23 +5,14 @@ import android.app.Application;
 import java.sql.SQLException;
 import java.util.List;
 
-import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.tutor.TutorDAO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
-import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.employee.Employee;
-import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
-import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.service.career.CareerService;
-import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
 import mz.org.csaude.mentoring.service.employee.EmployeeService;
 import mz.org.csaude.mentoring.service.partner.PartnerService;
-import mz.org.csaude.mentoring.service.partner.PartnerServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserService;
-import mz.org.csaude.mentoring.service.user.UserServiceImpl;
 
 public class TutorServiceImpl extends BaseServiceImpl<Tutor> implements TutorService {
 

@@ -9,7 +9,6 @@ import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.career.CareerTypeDAO;
 import mz.org.csaude.mentoring.model.career.CareerType;
-import mz.org.csaude.mentoring.model.user.User;
 
 public class CareerTypeServiceImpl extends BaseServiceImpl<CareerType> implements CareerTypeService {
 

@@ -17,7 +17,6 @@ import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.ListbleRecycleViewAdapter;
 import mz.org.csaude.mentoring.adapter.recyclerview.ronda.RondaAdapter;
-import mz.org.csaude.mentoring.adapter.recyclerview.tutored.TutoredAdapter;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityMentoringCycleListBinding;

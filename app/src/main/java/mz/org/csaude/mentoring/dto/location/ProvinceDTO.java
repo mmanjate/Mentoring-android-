@@ -1,7 +1,5 @@
 package mz.org.csaude.mentoring.dto.location;
 
-import java.io.Serializable;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
@@ -26,9 +24,7 @@ public class ProvinceDTO extends BaseEntityDTO {
 
     public Province getProvince() {
         Province province = new Province();
-        province.setId(this.getId());
         province.setUuid(this.getUuid());
-        province.setSyncStatus(this.getSyncSatus());
         province.setDescription(this.getDesignation());
         province.setCreatedAt(this.getCreatedAt());
         province.setUpdatedAt(this.getUpdatedAt());

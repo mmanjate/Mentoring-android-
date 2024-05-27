@@ -1,14 +1,14 @@
 package mz.org.csaude.mentoring.view.mentorship;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 import java.util.List;
 
@@ -53,6 +53,11 @@ public class CreateMentorshipActivity extends BaseActivity {
             title = (String) intent.getExtras().get("title");
             rondaType = (RondaType) intent.getExtras().get("rondaType");
             currMentor = (Tutor) intent.getExtras().get("currMentor");
+            bundle.putSerializable("ronda", ronda);
+            bundle.putSerializable("title", title);
+            bundle.putSerializable("rondaType", rondaType);
+            bundle.putSerializable("currMentor", currMentor);
+            intent.putExtras(bundle);
         }
         initMentorShip();
     }

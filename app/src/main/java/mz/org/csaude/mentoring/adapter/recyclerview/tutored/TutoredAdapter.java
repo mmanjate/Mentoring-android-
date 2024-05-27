@@ -1,7 +1,7 @@
 package mz.org.csaude.mentoring.adapter.recyclerview.tutored;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,11 +12,13 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.generic.AbstractRecycleViewAdapter;
+import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.databinding.TutoredListItemBinding;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.viewmodel.ronda.RondaVM;
 
 public class TutoredAdapter extends AbstractRecycleViewAdapter<Tutored> {
-    public TutoredAdapter(RecyclerView recyclerView, List<Tutored> records, Activity activity) {
+    public TutoredAdapter(RecyclerView recyclerView, List<Tutored> records, BaseActivity activity) {
         super(recyclerView, records, activity);
     }
 
@@ -31,6 +33,12 @@ public class TutoredAdapter extends AbstractRecycleViewAdapter<Tutored> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TutoredViewHolder) holder).tutoredListItemBinding.setTutored(super.records.get(position));
+        ((TutoredViewHolder) holder).tutoredListItemBinding.btnRemoveSelected.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((RondaVM) activity.getRelatedViewModel()).removeFromSelected(records.get(position));
+            }
+        });
     }
 
     public class TutoredViewHolder extends RecyclerView.ViewHolder {

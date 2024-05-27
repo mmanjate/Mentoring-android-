@@ -3,14 +3,19 @@ package mz.org.csaude.mentoring.dto.ronda;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
+import mz.org.csaude.mentoring.common.Syncable;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.ronda.RondaMentor;
+import mz.org.csaude.mentoring.util.SyncSatus;
+import mz.org.csaude.mentoring.util.Utilities;
+
 @Data
 @NoArgsConstructor
 public class RondaDTO extends BaseEntityDTO {
@@ -25,22 +30,19 @@ public class RondaDTO extends BaseEntityDTO {
         super(ronda);
         this.setRondaType(new RondaTypeDTO(ronda.getRondaType()));
         this.setHealthFacility(new HealthFacilityDTO(ronda.getHealthFacility()));
-        if(ronda.getRondaMentees()!=null && !ronda.getRondaMentees().isEmpty()) {
-            List<RondaMenteeDTO> rondaMenteeDTOS = new ArrayList<>();
-            for (RondaMentee rondaMentee : ronda.getRondaMentees()) {
-                RondaMenteeDTO rondaMenteeDTO = new RondaMenteeDTO(rondaMentee);
-                rondaMenteeDTOS.add(rondaMenteeDTO);
-            }
+        if (Utilities.listHasElements(ronda.getRondaMentees())) {
+            List<RondaMenteeDTO> rondaMenteeDTOS = ronda.getRondaMentees().stream()
+                    .map(RondaMenteeDTO::new)
+                    .collect(Collectors.toList());
             this.setRondaMentees(rondaMenteeDTOS);
         }
-        if(ronda.getRondaMentors()!=null && !ronda.getRondaMentors().isEmpty()) {
-            List<RondaMentorDTO> rondaMentorDTOS = new ArrayList<>();
-            for (RondaMentor rondaMentor : ronda.getRondaMentors()) {
-                RondaMentorDTO RondaMentorDTO = new RondaMentorDTO(rondaMentor);
-                rondaMentorDTOS.add(RondaMentorDTO);
-            }
+        if (Utilities.listHasElements(ronda.getRondaMentors())) {
+            List<RondaMentorDTO> rondaMentorDTOS = ronda.getRondaMentors().stream()
+                    .map(RondaMentorDTO::new)
+                    .collect(Collectors.toList());
             this.setRondaMentors(rondaMentorDTOS);
         }
+
     }
 
     public String getDescription() {
@@ -100,9 +102,7 @@ public class RondaDTO extends BaseEntityDTO {
     }
     public Ronda getRonda() {
         Ronda ronda = new Ronda();
-        ronda.setId(this.getId());
         ronda.setUuid(this.getUuid());
-        ronda.setSyncStatus(this.getSyncSatus());
         ronda.setDescription(this.getDescription());
         ronda.setStartDate(this.getStartDate());
         ronda.setEndDate(this.getEndDate());

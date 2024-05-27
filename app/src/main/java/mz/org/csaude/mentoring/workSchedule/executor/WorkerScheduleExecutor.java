@@ -78,6 +78,7 @@ public class WorkerScheduleExecutor {
         OneTimeWorkRequest doorsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(DoorWorker.class).addTag("ONE_TIME_DOORS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest sessionStatusOneTimeWorkRequest = new OneTimeWorkRequest.Builder(SessionStatusWorker.class).addTag("ONE_TIME_SESSION_STATUS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest programsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(ProgramWorker.class).addTag("ONE_TIME_PROGRAMS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest programmaticAreaOneTimeWorkRequest = new OneTimeWorkRequest.Builder(ProgrammaticAreaWorker.class).addTag("ONE_TIME_PROGRAMMATIC_AREA_ID" + ONE_TIME_REQUEST_JOB_ID).build();
 
         workManager.beginUniqueWork("INITIAL_APP_SETUP", ExistingWorkPolicy.KEEP, provinceOneTimeWorkRequest)
                 .then(Arrays.asList(districtOneTimeWorkRequest, partnersOneTimeWorkRequest))
@@ -99,6 +100,14 @@ public class WorkerScheduleExecutor {
                 .putString("requestType", String.valueOf(Http.POST))
                 .build();
         OneTimeWorkRequest tutorOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutorWorker.class).addTag("ONE_TIME_TUTOR_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        workManager.enqueue(tutorOneTimeWorkRequest);
+        return tutorOneTimeWorkRequest;
+    }
+
+    public OneTimeWorkRequest downloadMentorData() {
+        Data inputData = new Data.Builder().putString("requestType", String.valueOf(Http.POST)).build();
+
+        OneTimeWorkRequest menteesOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutoredWorker.class).addTag("ONE_TIME_MENTEES_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest hfOneTimeWorkRequest = new OneTimeWorkRequest.Builder(HealthFacilityWorker.class).addTag("ONE_TIME_HF_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest mentorFormsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(FormWorker.class).addTag("ONE_TIME_MENTOR_FORMS_ID" + ONE_TIME_REQUEST_JOB_ID)
                 .setInputData(inputData).build();

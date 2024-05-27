@@ -6,8 +6,8 @@ import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.dao.question.QuestionTypeDAOImpl;
 import mz.org.csaude.mentoring.dao.responseType.ResponseTypeDAOImpl;
+import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 
 @Data
 @DatabaseTable(tableName = ResponseType.TABLE_NAME, daoClass = ResponseTypeDAOImpl.class)
@@ -32,6 +32,12 @@ public class ResponseType extends BaseModel {
     public ResponseType(String description, String code) {
         this.description = description;
         this.code = code;
+    }
+
+    public ResponseType(ResponseTypeDTO responseType) {
+        super(responseType);
+        this.setCode(responseType.getCode());
+        this.setDescription(responseType.getDescription());
     }
 
     public String getDescription() {

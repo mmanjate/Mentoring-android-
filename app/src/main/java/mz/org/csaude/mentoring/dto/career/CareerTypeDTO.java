@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.career.CareerType;
 
-import java.io.Serializable;
-
 /**
  * @author Jose Julai Ritsure
  */
@@ -49,11 +47,9 @@ public class CareerTypeDTO extends BaseEntityDTO {
     }
     public CareerType getCareerType() {
         CareerType careerType = new CareerType();
-        careerType.setId(this.getId());
         careerType.setUuid(this.getUuid());
         careerType.setCode(this.getCode());
         careerType.setDescription(this.getDescription());
-        careerType.setSyncStatus(this.getSyncSatus());
         careerType.setCreatedAt(this.getCreatedAt());
         careerType.setUpdatedAt(this.getUpdatedAt());
         return careerType;

@@ -34,6 +34,7 @@ import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.RondaType;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.viewmodel.ronda.RondaVM;
 
 public class CreateRondaActivity extends BaseActivity {
@@ -54,6 +55,17 @@ public class CreateRondaActivity extends BaseActivity {
         EdgeToEdge.enable(this);
         rondaBinding = DataBindingUtil.setContentView(this, R.layout.activity_ronda);
         rondaBinding.setViewModel(getRelatedViewModel());
+
+
+        ArrayAdapter<Tutored> menteesAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getMentees());
+        rondaBinding.autCmpMentees.setThreshold(1);
+        rondaBinding.autCmpMentees.setAdapter(menteesAdapter);
+        rondaBinding.autCmpMentees.setOnFocusChangeListener((view, b) -> {
+            rondaBinding.autCmpMentees.showDropDown();
+        });
+
+
+
         rcvSelectedMentees = rondaBinding.rcvSelectedMentees;
         setSupportActionBar(rondaBinding.toolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -95,6 +107,8 @@ public class CreateRondaActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 getRelatedViewModel().setSelectedMentee((Tutored) adapterView.getItemAtPosition(pos));
+                rondaBinding.autCmpMentees.dismissDropDown();
+                Utilities.hideKeyboard(CreateRondaActivity.this);
             }
         });
 
@@ -151,7 +165,7 @@ public class CreateRondaActivity extends BaseActivity {
             rcvSelectedMentees.setItemAnimator(new DefaultItemAnimator());
             rcvSelectedMentees.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
 
-            tutoredAdapter = new TutoredAdapter(rcvSelectedMentees, getRelatedViewModel().getMentees(), this);
+            tutoredAdapter = new TutoredAdapter(rcvSelectedMentees, getRelatedViewModel().getSelectedMentees(), this);
             rcvSelectedMentees.setAdapter(tutoredAdapter);
         }
     }

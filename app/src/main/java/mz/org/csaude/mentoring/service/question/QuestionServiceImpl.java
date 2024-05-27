@@ -68,4 +68,9 @@ public class QuestionServiceImpl extends BaseServiceImpl<Question> implements Qu
         this.questionDAO.createOrUpdate(question);
         return question;
     }
+
+    @Override
+    public Question getByuuid(String uuid) throws SQLException {
+        return questionDAO.getByUuid(uuid);
+    }
 }

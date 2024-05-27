@@ -3,9 +3,6 @@ package mz.org.csaude.mentoring.model.location;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.location.ProvinceDAOImpl;
@@ -45,7 +42,6 @@ public class Province extends BaseModel implements Listble {
     public Province(ProvinceDTO provinceDTO) {
         this.setDescription(provinceDTO.getDesignation());
         this.setUuid(provinceDTO.getUuid());
-        this.setSyncStatus(provinceDTO.getSyncSatus());
     }
 
 

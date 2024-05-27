@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.setting.Setting;
 
-import java.io.Serializable;
-
 @Data
 @NoArgsConstructor
 public class SettingDTO extends BaseEntityDTO {

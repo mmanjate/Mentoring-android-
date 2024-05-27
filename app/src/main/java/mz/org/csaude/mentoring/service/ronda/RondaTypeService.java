@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseService;
-import mz.org.csaude.mentoring.dto.location.RondaTypeDTO;
+import mz.org.csaude.mentoring.dto.ronda.RondaTypeDTO;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
 
 public interface RondaTypeService extends BaseService<RondaType> {

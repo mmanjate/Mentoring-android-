@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.Cabinet;
 
-import java.io.Serializable;
-
 /**
  * @author Jose Julai Ritsure
  */
@@ -35,9 +33,7 @@ public class CabinetDTO extends BaseEntityDTO {
 
     public Cabinet getCabinet(){
         Cabinet cabinet = new Cabinet();
-        cabinet.setId(this.getId());
         cabinet.setUuid(this.getUuid());
-        cabinet.setSyncStatus(this.getSyncSatus());
         cabinet.setName(this.getName());
         cabinet.setCreatedAt(this.getCreatedAt());
         cabinet.setUpdatedAt(this.getUpdatedAt());

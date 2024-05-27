@@ -33,7 +33,7 @@ public class Partner extends BaseModel implements Listble {
         this.description = description;
     }
     public Partner(PartnerDTO partnerDTO) {
-        this.setUuid(partnerDTO.getUuid());
+        super(partnerDTO);
         this.name = partnerDTO.getName();
         this.description = partnerDTO.getDescription();
     }

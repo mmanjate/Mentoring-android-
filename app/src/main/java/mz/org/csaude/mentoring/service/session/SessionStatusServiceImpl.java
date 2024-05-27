@@ -9,7 +9,6 @@ import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.session.SessionStatusDAO;
 import mz.org.csaude.mentoring.dto.session.SessionStatusDTO;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
-import mz.org.csaude.mentoring.model.user.User;
 
 public class SessionStatusServiceImpl extends BaseServiceImpl<SessionStatus> implements SessionStatusService {
 

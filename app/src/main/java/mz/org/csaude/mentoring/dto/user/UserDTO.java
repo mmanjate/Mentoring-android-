@@ -1,16 +1,10 @@
 package mz.org.csaude.mentoring.dto.user;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
-import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.model.user.UserIndividual;
 
 @Data
 @NoArgsConstructor

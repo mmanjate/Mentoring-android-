@@ -6,14 +6,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
+import mz.org.csaude.mentoring.dao.program.ProgramDAO;
 import mz.org.csaude.mentoring.dao.programmaticArea.ProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.dto.programmaticArea.ProgrammaticAreaDTO;
+import mz.org.csaude.mentoring.model.program.Program;
 import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 import mz.org.csaude.mentoring.model.user.User;
 
 public class ProgrammaticAreaServiceImpl extends BaseServiceImpl<ProgrammaticArea> implements ProgrammaticAreaService {
 
     ProgrammaticAreaDAO programmaticAreaDAO;
+    ProgramDAO programDAO;
 
     public ProgrammaticAreaServiceImpl(Application application) {
         super(application);
@@ -23,6 +26,7 @@ public class ProgrammaticAreaServiceImpl extends BaseServiceImpl<ProgrammaticAre
     public void init(Application application) throws SQLException {
         super.init(application);
         this.programmaticAreaDAO = getDataBaseHelper().getProgrammaticAreaDAO();
+        this.programDAO = getDataBaseHelper().getProgramDAO();
     }
 
     @Override
@@ -63,10 +67,20 @@ public class ProgrammaticAreaServiceImpl extends BaseServiceImpl<ProgrammaticAre
     public ProgrammaticArea saveOrUpdateProgrammaticArea(ProgrammaticAreaDTO programmaticAreaDTO) throws SQLException {
         ProgrammaticArea pa = this.programmaticAreaDAO.getByUuid(programmaticAreaDTO.getUuid());
         ProgrammaticArea programmaticArea = programmaticAreaDTO.getProgrammaticArea();
+        Program p = programDAO.getByUuid(programmaticArea.getProgram().getUuid());
+        if (p == null) {
+            programDAO.create(programmaticArea.getProgram());
+        } else programmaticArea.setProgram(p);
+
         if(pa!=null) {
             programmaticArea.setId(pa.getId());
         }
         this.programmaticAreaDAO.createOrUpdate(programmaticArea);
         return programmaticArea;
+    }
+
+    @Override
+    public ProgrammaticArea getByuuid(String uuid) throws SQLException {
+        return programmaticAreaDAO.getByUuid(uuid);
     }
 }

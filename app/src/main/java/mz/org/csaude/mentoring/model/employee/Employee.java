@@ -1,16 +1,12 @@
 package mz.org.csaude.mentoring.model.employee;
 
-import androidx.databinding.Bindable;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
@@ -97,7 +93,6 @@ public class Employee extends BaseModel implements Listble {
         this.setLocations(retriveLocations(employeeDTO.getLocationDTOSet()));
         if(employeeDTO.getProfessionalCategoryDTO() != null) this.setProfessionalCategory(new ProfessionalCategory(employeeDTO.getProfessionalCategoryDTO()));
         if(employeeDTO.getPartnerDTO() != null) this.setPartner(new Partner(employeeDTO.getPartnerDTO()));
-        this.setSyncStatus(employeeDTO.getSyncSatus());
     }
 
     private List<Location> retriveLocations(List<LocationDTO> locationDTOSet) {

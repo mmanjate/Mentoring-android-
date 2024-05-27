@@ -1,12 +1,10 @@
 package mz.org.csaude.mentoring.dao.location;
 
-import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Set;
 
 import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.employee.Employee;

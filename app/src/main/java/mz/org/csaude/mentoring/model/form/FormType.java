@@ -7,9 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.model.BaseModel;
-import mz.org.csaude.mentoring.dao.career.CareerDAOImpl;
 import mz.org.csaude.mentoring.dao.form.FormTypeDAOImpl;
-import mz.org.csaude.mentoring.model.career.CareerType;
 
 @Data
 @NoArgsConstructor

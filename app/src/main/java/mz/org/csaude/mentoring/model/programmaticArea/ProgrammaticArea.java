@@ -2,10 +2,12 @@ package mz.org.csaude.mentoring.model.programmaticArea;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.programmaticArea.ProgrammaticAreaDAOImpl;
+import mz.org.csaude.mentoring.dto.programmaticArea.ProgrammaticAreaDTO;
 import mz.org.csaude.mentoring.model.program.Program;
 
 @Data
@@ -32,6 +34,14 @@ public class ProgrammaticArea extends BaseModel {
     private Program program;
 
     public ProgrammaticArea() {
+    }
+
+    public ProgrammaticArea(ProgrammaticAreaDTO programmaticAreaDTO) {
+        super(programmaticAreaDTO);
+        this.description = programmaticAreaDTO.getDescription();
+        this.code = programmaticAreaDTO.getCode();
+        this.name = programmaticAreaDTO.getName();
+        if (programmaticAreaDTO.getProgram() != null) this.program = new Program(programmaticAreaDTO.getProgram());
     }
 
     public ProgrammaticArea(String description, String code, String name, Program program) {

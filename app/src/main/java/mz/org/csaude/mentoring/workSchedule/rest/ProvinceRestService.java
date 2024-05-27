@@ -14,7 +14,6 @@ import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.service.location.ProvinceService;
 import mz.org.csaude.mentoring.service.location.ProvinceServiceImpl;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +46,6 @@ public class ProvinceRestService extends BaseRestService {
 
                     List<Province> provinces = new ArrayList<>();
                     for (ProvinceDTO provinceDTO : data) {
-                        provinceDTO.setSyncSatus(SyncSatus.SENT);
                         provinceDTO.getProvince().setSyncStatus(SyncSatus.SENT);
                         provinces.add(provinceDTO.getProvince());
                     }

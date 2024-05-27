@@ -1,9 +1,5 @@
 package mz.org.csaude.mentoring.util;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;

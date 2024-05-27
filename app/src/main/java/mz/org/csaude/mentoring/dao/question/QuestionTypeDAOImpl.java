@@ -6,9 +6,10 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.question.QuestionType;
 
-public class QuestionTypeDAOImpl extends BaseDaoImpl<QuestionType, Integer> implements QuestionTypeDAO {
+public class QuestionTypeDAOImpl extends MentoringBaseDaoImpl<QuestionType, Integer> implements QuestionTypeDAO {
 
     public QuestionTypeDAOImpl(Class<QuestionType> dataClass) throws SQLException {
         super(dataClass);

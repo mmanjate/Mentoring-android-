@@ -32,11 +32,9 @@ public class ProgramDTO extends BaseEntityDTO {
 
     public Program getProgram() {
         Program program = new Program();
-        program.setId(this.getId());
         program.setDescription(this.getDescription());
         program.setName(this.getName());
         program.setUuid(this.getUuid());
-        program.setSyncStatus(this.getSyncSatus());
         program.setCreatedAt(this.getCreatedAt());
         program.setUpdatedAt(this.getUpdatedAt());
         return program;

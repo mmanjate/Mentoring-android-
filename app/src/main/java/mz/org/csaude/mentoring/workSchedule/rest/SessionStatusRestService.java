@@ -12,7 +12,6 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dto.session.SessionStatusDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
-import mz.org.csaude.mentoring.service.metadata.LoadMetadataServiceImpl;
 import mz.org.csaude.mentoring.service.session.SessionStatusService;
 import mz.org.csaude.mentoring.service.session.SessionStatusServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -38,7 +37,7 @@ public class SessionStatusRestService extends BaseRestService {
 
                 if(Utilities.listHasElements(data)){
                     try {
-                        SessionStatusService sessionStatusService = new SessionStatusServiceImpl(LoadMetadataServiceImpl.APP);
+                        SessionStatusService sessionStatusService = getApplication().getSessionStatusService();
                         Toast.makeText(APP.getApplicationContext(), "Carregando os Estados de Sessões.", Toast.LENGTH_SHORT).show();
                         List<SessionStatus> sessionStatuses = new ArrayList<>();
                         for (SessionStatusDTO sessionStatusDTO : data){

@@ -1,7 +1,6 @@
 package mz.org.csaude.mentoring.dto.partner;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.partner.Partner;
 @Data
@@ -33,9 +32,7 @@ public class PartnerDTO extends BaseEntityDTO {
     }
     public Partner getPartner() {
         Partner partner = new Partner();
-        partner.setId(this.getId());
         partner.setUuid(this.getUuid());
-        partner.setSyncStatus(this.getSyncSatus());
         partner.setDescription(this.getDescription());
         partner.setName(this.getName());
         partner.setCreatedAt(this.getCreatedAt());

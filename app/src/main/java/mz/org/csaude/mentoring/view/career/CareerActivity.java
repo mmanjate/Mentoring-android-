@@ -4,12 +4,11 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.databinding.DataBindingUtil;
+
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityCareerBinding;
-import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.viewmodel.career.CareerVM;
 
 public class CareerActivity extends BaseActivity {

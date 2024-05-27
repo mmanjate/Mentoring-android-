@@ -4,8 +4,6 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
-import java.sql.SQLException;
-
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.metadata.SyncDataService;

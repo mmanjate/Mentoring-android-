@@ -1,7 +1,5 @@
 package mz.org.csaude.mentoring.dto.location;
 
-import java.io.Serializable;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
@@ -48,9 +46,7 @@ public class HealthFacilityDTO extends BaseEntityDTO {
     }
     public HealthFacility getHealthFacilityObj() {
         HealthFacility healthFacility = new HealthFacility();
-        healthFacility.setId(this.getId());
         healthFacility.setUuid(this.getUuid());
-        healthFacility.setSyncStatus(this.getSyncSatus());
         healthFacility.setDescription(this.getHealthFacility());
         healthFacility.setCreatedAt(this.getCreatedAt());
         healthFacility.setUpdatedAt(this.getUpdatedAt());

@@ -2,10 +2,13 @@ package mz.org.csaude.mentoring.model.question;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.question.QuestionDAOImpl;
+import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 
 @Data
 @DatabaseTable(tableName = Question.TABLE_NAME, daoClass = QuestionDAOImpl.class)
@@ -32,6 +35,13 @@ public class Question extends BaseModel {
     private QuestionsCategory questionsCategory;
 
     public Question() {
+    }
+
+    public Question(QuestionDTO questionDTO) {
+        super(questionDTO);
+        this.setCode(questionDTO.getCode());
+        this.setQuestion(questionDTO.getQuestion());
+        this.setQuestionsCategory(new QuestionsCategory(questionDTO.getQuestionCategory()));
     }
 
     public String getCode() {

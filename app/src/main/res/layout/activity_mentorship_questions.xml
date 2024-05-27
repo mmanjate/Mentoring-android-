@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="viewModel" type="mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipVM" />
+            name="viewModel" type="mz.org.csaude.mentoring.viewmodel.question.QuestionVM" />
         <variable name="sectorAdapter"
             type="mz.org.csaude.mentoring.adapter.spinner.listble.ListableSpinnerAdapter"/>
         <variable name="doorAdapter"
@@ -58,7 +58,7 @@
                     <RelativeLayout
                         android:id="@+id/healthfacility_selection_layout"
                         android:layout_width="match_parent"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_height="wrap_content">
 
                         <TextView

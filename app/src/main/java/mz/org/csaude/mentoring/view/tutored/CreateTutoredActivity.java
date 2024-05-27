@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.view.tutored;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
@@ -154,6 +155,18 @@ public class CreateTutoredActivity extends BaseActivity implements IDialogListen
             }else{
                 activityCreateTutoredBinding.spnNgo.setVisibility(View.GONE);
             }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Handle the back button click
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

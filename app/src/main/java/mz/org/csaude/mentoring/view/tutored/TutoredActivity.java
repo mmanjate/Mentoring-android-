@@ -62,16 +62,17 @@ public class TutoredActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_upload:
-                getRelatedViewModel().initMenteeUpload();
+            case android.R.id.home:
+                // Handle the back button click
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
+
     @Override
     public BaseViewModel initViewModel() {
         return new ViewModelProvider(this).get(TutoredVM.class);

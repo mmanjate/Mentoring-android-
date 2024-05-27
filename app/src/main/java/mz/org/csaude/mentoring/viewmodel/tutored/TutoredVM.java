@@ -219,10 +219,10 @@ public class TutoredVM extends BaseViewModel implements RestResponseListener<Tut
 
     @Override
     public void doOnResponse(String flag, List<Tutored> objects) {
-        Utilities.displayAlertDialog(getRelatedActivity(), "Mentorando gravado com sucesso.").show();
+        //Utilities.displayAlertDialog(getRelatedActivity(), "Mentorando gravado com sucesso.").show();
         Map<String, Object> params = new HashMap<>();
         params.put("createdTutored", tutored);
-        getRelatedActivity().nextActivity(TutoredActivity.class, params);
+        getRelatedActivity().nextActivityFinishingCurrent(TutoredActivity.class, params);
     }
 
     @Override

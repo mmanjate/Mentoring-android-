@@ -2,6 +2,7 @@ package mz.org.csaude.mentoring.viewmodel.ronda;
 
 import android.app.Application;
 import android.content.Intent;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
@@ -202,8 +203,7 @@ public class RondaVM extends BaseViewModel {
             ronda.setSyncStatus(SyncSatus.PENDING);
             ronda.setUuid(Utilities.getNewUUID().toString());
             Intent intent = getRelatedActivity().getIntent();
-            RondaTypeEnum rondaTypeOption = (RondaTypeEnum) intent.getExtras().get("rondaType");
-            RondaType rondaType = this.rondaTypeService.getRondaTypeByCode(rondaTypeOption.name());
+            RondaType rondaType = (RondaType) intent.getExtras().get("rondaType");
             ronda.setRondaType(rondaType);
             ronda.setStartDate(this.getStartDate());
             ronda.setHealthFacility(this.selectedHealthFacility);
@@ -301,4 +301,7 @@ public class RondaVM extends BaseViewModel {
 
     }
 
+    public void changeInitialDataViewStatus(View view){
+        getRelatedActivity().changeFormSectionVisibility(view);
+    }
 }

@@ -11,12 +11,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
+import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
 import mz.org.csaude.mentoring.model.answer.Answer;
+import mz.org.csaude.mentoring.model.answer.AnswerType;
 import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
@@ -28,12 +31,15 @@ import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
+import mz.org.csaude.mentoring.model.session.SessionStatus;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.util.DateUtilities;
+import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.mentorship.CreateMentorshipActivity;
 
-public class MentorshipVM extends BaseViewModel {
+public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     private String CURR_MENTORSHIP_STEP = "";
     public static final String CURR_MENTORSHIP_STEP_TABLE_SELECTION = "TABLE_SELECTION";
@@ -57,6 +63,8 @@ public class MentorshipVM extends BaseViewModel {
     private TreeMap<String, List<FormQuestion>> questionMap;
 
     private String currQuestionCategory;
+
+    private boolean mentorshipCompleted;
 
     public void setCurrMentorshipStep(String step) {
         this.CURR_MENTORSHIP_STEP = step;
@@ -91,11 +99,19 @@ public class MentorshipVM extends BaseViewModel {
             return;
         }
         if (!Utilities.stringHasValue(this.questionMap.higherKey(this.currQuestionCategory))) {
-            Utilities.displayAlertDialog(getRelatedActivity(), "Não existe uma categoria posterior para visualizar.").show();
+            Utilities.displayConfirmationDialog(getRelatedActivity(), "Terminou todas as Competências desta sessão, Confirma terminar a mesma?","SIM", "NÃO", this).show();
             return;
         }
         setCurrQuestionCategory(this.questionMap.higherKey(this.currQuestionCategory));
         getRelatedActivity().populateQuestionList();
+    }
+
+    public boolean isMentorshipCompleted() {
+        return mentorshipCompleted;
+    }
+
+    public void setMentorshipCompleted(boolean mentorshipCompleted) {
+        this.mentorshipCompleted = mentorshipCompleted;
     }
 
     private boolean allCurrentQuestionsResponded() {
@@ -114,16 +130,22 @@ public class MentorshipVM extends BaseViewModel {
         getRelatedActivity().populateQuestionList();
     }
 
-    public void finnalizeMentorship() {}
+    public void finnalizeMentorship() {
+        if (allQuestionsResponded()) {
+            Utilities.displayAlertDialog(getRelatedActivity(), "Tem uma ou mais Competências sem a resposta indicada.").show();
+            return;
+        }
 
-    @Bindable
-    public String getCode() {
-        return this.mentorship.getCode();
+        Utilities.displayConfirmationDialog(getRelatedActivity(), "Terminou todas as Competências desta sessão, Confirma terminar a mesma?", "SIM", "NÃO",this).show();
     }
 
-    public void setName(String code) {
-        this.mentorship.setCode(code);
-        notifyPropertyChanged(BR.code);
+    private boolean allQuestionsResponded() {
+        for (Map.Entry<String, List<FormQuestion>> entry : questionMap.entrySet()) {
+            for (FormQuestion question : entry.getValue()) {
+                if (!Utilities.stringHasValue(question.getAnswer().getValue())) return false;
+            }
+        }
+        return true;
     }
 
     @Bindable
@@ -169,32 +191,12 @@ public class MentorshipVM extends BaseViewModel {
          notifyPropertyChanged(BR.cabinet);
     }
 
-    @Bindable
-    public Integer getIterationNumber() {
-        return this.mentorship.getIterationNumber();
-    }
-
-    public void setIterationNumber(Integer iterationNumber) {
-        this.mentorship.setIterationNumber(iterationNumber);
-         notifyPropertyChanged(BR.iterationNumber);
-    }
-
     public Session getSession() {
         return session;
     }
 
     public void setSession(Session session) {
         this.session = session;
-    }
-
-    @Bindable
-    public TimeOfDay getTimeOfDay() {
-        return this.mentorship.getTimeOfDay();
-    }
-
-    public void setTimeOfDay(TimeOfDay timeOfDay) {
-        this.mentorship.setTimeOfDay(timeOfDay);
-         notifyPropertyChanged(BR.timeOfDay);
     }
 
     @Bindable
@@ -205,14 +207,6 @@ public class MentorshipVM extends BaseViewModel {
     public void setDoor(Door door) {
         this.mentorship.setDoor(door);
          notifyPropertyChanged(BR.door);
-    }
-
-    public void save() {
-        try {
-            this.getApplication().getMentorshipService().save(this.mentorship);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public List<Form> getForms() {
@@ -258,6 +252,8 @@ public class MentorshipVM extends BaseViewModel {
             setCurrMentorshipStep(CURR_MENTORSHIP_STEP_PERIOD_SELECTION);
         } else if (isPeriodSelectionStep()) {
             setCurrMentorshipStep(CURR_MENTORSHIP_STEP_QUESTION_SELECTION);
+        } else if (isQuestionSelectionStep()) {
+            finnalizeMentorship();
         }
         notifyPropertyChanged(BR.currMentorshipStep);
     }
@@ -269,8 +265,14 @@ public class MentorshipVM extends BaseViewModel {
     public void determineMentorshipType() {
         try {
             if (this.mentorship == null) this.mentorship = new Mentorship();
+            this.mentorship.setTutor(getApplication().getCurrMentor());
+            this.mentorship.setUuid(Utilities.getNewUUID().toString());
+            this.mentorship.setCreatedAt(DateUtilities.getCurrentDate());
             if (this.ronda.isRondaZero()) {
                 this.mentorship.setSession(generateZeroSession());
+                this.mentorship.setSyncStatus(SyncSatus.PENDING);
+                this.mentorship.setIterationNumber(1);
+                this.mentorship.setPerformedDate(DateUtilities.getCurrentDate());
                 this.mentorship.setEvaluationType(getApplication().getEvaluationTypeService().getByCode(EvaluationType.CONSULTA));
             } else {
                 this.mentorship.setSession(this.session);
@@ -282,9 +284,20 @@ public class MentorshipVM extends BaseViewModel {
     }
 
     private Session generateZeroSession() {
-        Session session = new Session();
-        session.setRonda(this.ronda);
-        return session;
+        try {
+            Session session = new Session();
+            session.setRonda(this.ronda);
+            session.setUuid(Utilities.getNewUUID().toString());
+            session.setCreatedAt(DateUtilities.getCurrentDate());
+            session.setSyncStatus(SyncSatus.PENDING);
+            session.setStatus(getApplication().getSessionStatusService().getByuuid("953a6a3c-a583-4b96-86ee-91bcab7d3106"));
+            session.setEndDate(this.mentorship.getEndDate());
+            session.setStartDate(this.mentorship.getStartDate());
+            session.setPerformedDate(DateUtilities.getCurrentDate());
+            return session;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean isTableSelectionStep() {
@@ -324,7 +337,7 @@ public class MentorshipVM extends BaseViewModel {
 
     public List<Tutored> getMentees() {
         try {
-            this.tutoreds= getApplication().getTutoredService().getAll();
+            this.tutoreds= getApplication().getTutoredService().getAllOfRonda(this.mentorship.getSession().getRonda());
             for (Tutored tutored :this.tutoreds) {
                 tutored.setListType(Listble.ListTypes.UNDEFINED);
             }
@@ -398,6 +411,10 @@ public class MentorshipVM extends BaseViewModel {
             if (Utilities.listHasElements(this.formQuestions)) {
                 for (FormQuestion formQuestion : formQuestions) {
                     formQuestion.setAnswer(new Answer());
+                    formQuestion.getAnswer().setQuestion(formQuestion.getQuestion());
+                    formQuestion.getAnswer().setSyncStatus(SyncSatus.PENDING);
+                    formQuestion.getAnswer().setUuid(Utilities.getNewUUID().toString());
+                    formQuestion.getAnswer().setCreatedAt(DateUtilities.getCurrentDate());
                     formQuestion.getAnswer().setMentorship(this.mentorship);
                     formQuestion.getAnswer().setForm(this.mentorship.getForm());
                     formQuestion.getAnswer().setValue("");
@@ -409,6 +426,7 @@ public class MentorshipVM extends BaseViewModel {
             throw new RuntimeException(e);
         }
     }
+
 
     private void loadQuestionMap(FormQuestion formQuestion, String category) {
         if (questionMap == null) questionMap = new TreeMap<>();
@@ -430,5 +448,37 @@ public class MentorshipVM extends BaseViewModel {
     public void setCurrQuestionCategory(String currQuestionCategory) {
         this.currQuestionCategory = currQuestionCategory;
         notifyPropertyChanged(BR.currQuestionCategory);
+    }
+
+    @Override
+    public void doOnConfirmed() {
+        doSaveMentorship();
+        showMentorshipSummary();
+    }
+
+    private void showMentorshipSummary() {
+    }
+
+    private void doSaveMentorship() {
+        try {
+            for (Map.Entry<String, List<FormQuestion>> entry : questionMap.entrySet()) {
+                for (FormQuestion question : entry.getValue()) {
+                    this.mentorship.addAnswer(question.getAnswer());
+                }
+            }
+            this.mentorship.setEndDate(DateUtilities.getCurrentDate());
+            this.mentorship.getSession().setEndDate(this.mentorship.getEndDate());
+            this.mentorship.getSession().setStartDate(this.mentorship.getStartDate());
+            getApplication().getMentorshipService().save(this.mentorship);
+            getApplication().getMentorshipService().close();
+            getRelatedActivity().finish();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void doOnDeny() {
+
     }
 }

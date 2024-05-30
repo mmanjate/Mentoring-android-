@@ -2,6 +2,7 @@ package mz.org.csaude.mentoring.view.mentorship;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.databinding.DataBindingUtil;
@@ -63,6 +64,17 @@ public class ZeroMentorshipListActivity extends BaseActivity {
 
             adapter = new ZeroMentorshipAdapter(binding.rcvMentorships, getRelatedViewModel().getSearchResults(), this);
             binding.rcvMentorships.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

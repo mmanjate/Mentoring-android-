@@ -32,6 +32,7 @@ import mz.org.csaude.mentoring.listner.recyclerView.ClickListener;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.util.DateUtilities;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
 import mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipVM;
 
@@ -120,7 +121,7 @@ public class CreateMentorshipActivity extends BaseActivity implements ClickListe
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 // Handle the time set event
-                String time = hourOfDay + ":" + minute;
+                String time = hourOfDay + ":" + Utilities.garantirXCaracterOnNumber(minute, 2);
                 viewTe.setText(time);
             }
         }, hour, minute, true);

@@ -70,4 +70,9 @@ public class SessionStatusServiceImpl extends BaseServiceImpl<SessionStatus> imp
         this.sessionStatusDAO.createOrUpdate(sessionStatus);
         return sessionStatus;
     }
+
+    @Override
+    public SessionStatus getByuuid(String uuid) throws SQLException {
+        return sessionStatusDAO.getByUuid(uuid);
+    }
 }

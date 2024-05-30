@@ -54,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_normal"
                 android:padding="3dp"
-                android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                android:layout_marginBottom="@dimen/dimen_6dp"
+                android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                 android:orientation="horizontal">
 
                 <TextView
@@ -232,7 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/button_shape"
-                android:text="@string/submit"
+                android:text="Gravar"
                 android:textAllCaps="false"
                 android:textStyle="bold"
                 android:textColor="@color/white"

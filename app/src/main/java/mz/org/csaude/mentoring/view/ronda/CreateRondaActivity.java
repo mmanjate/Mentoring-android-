@@ -30,6 +30,7 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityRondaBinding;
 import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.RondaTypeEnum;
@@ -46,7 +47,7 @@ public class CreateRondaActivity extends BaseActivity {
     private Ronda ronda;
     private String title;
     private mz.org.csaude.mentoring.model.rondatype.RondaType rondaType;
-    private RondaTypeEnum rondaTypeOption;
+    private RondaType rondaTypeOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +75,14 @@ public class CreateRondaActivity extends BaseActivity {
         if(intent!=null && intent.getExtras()!=null) {
             ronda = (Ronda) intent.getExtras().get("createdRonda");
             title = (String) intent.getExtras().get("title");
-            rondaTypeOption = (RondaTypeEnum) intent.getExtras().get("rondaType");
+            rondaTypeOption = (RondaType) intent.getExtras().get("rondaType");
             bundle.putSerializable("ronda", ronda);
             bundle.putSerializable("title", title);
             bundle.putSerializable("rondaType", rondaTypeOption);
             intent.putExtras(bundle);
         }
 
+        getSupportActionBar().setTitle(title);
         initAdapters();
         rondaBinding.rondaStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,6 +187,20 @@ public class CreateRondaActivity extends BaseActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void changeFormSectionVisibility(View view){
+
+        if(view.equals(rondaBinding.initialData)){
+            if(rondaBinding.initialDataLyt.getVisibility() == View.VISIBLE){
+                rondaBinding.btnShowCollapse.setImageResource(R.drawable.sharp_arrow_drop_up_24);
+                Utilities.collapse(rondaBinding.initialDataLyt);
+            } else {
+                Utilities.expand(rondaBinding.initialDataLyt);
+                rondaBinding.btnShowCollapse.setImageResource(R.drawable.baseline_arrow_drop_down_24);
+            }
+
         }
     }
 }

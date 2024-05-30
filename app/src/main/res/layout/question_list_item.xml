@@ -75,6 +75,7 @@
                     android:layout_width="@dimen/dimen_0dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_height="wrap_content"
+                    android:visibility='@{formQuestion.responseType.code.equals("SIM/NAO/NA") ? View.VISIBLE : View.GONE}'
                     android:onClick='@{()->formQuestion.answer.setValue("N/A")}'
                     android:checked='@{formQuestion.answer.value.equals("N/A")}'
                     android:text="N/A"

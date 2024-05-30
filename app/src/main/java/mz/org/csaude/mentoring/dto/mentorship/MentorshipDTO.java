@@ -36,9 +36,7 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
     private TimeOfDayDTO timeOfDay;
     public MentorshipDTO(Mentorship mentorship) {
         super(mentorship);
-        if(mentorship.getHealthFacility()!=null) {
-            this.setHealthFacility(new HealthFacilityDTO(mentorship.getHealthFacility()));
-        }
+
         if(mentorship.getTutor()!=null) {
             this.setMentor(new TutorDTO(mentorship.getTutor()));
         }
@@ -56,9 +54,6 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         }
         if(mentorship.getDoor()!=null) {
             this.setDoor(new DoorDTO(mentorship.getDoor()));
-        }
-        if(mentorship.getTimeOfDay()!=null) {
-            this.setTimeOfDay(new TimeOfDayDTO(mentorship.getTimeOfDay()));
         }
     }
 
@@ -169,15 +164,12 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
     public Mentorship getMentorship() {
         Mentorship mentorship = new Mentorship();
         mentorship.setUuid(this.getUuid());
-        mentorship.setCode(this.getCode());
         mentorship.setStartDate(this.getStartDate());
         mentorship.setEndDate(this.getEndDate());
         mentorship.setIterationNumber(this.getIterationNumber());
         mentorship.setCreatedAt(this.getCreatedAt());
         mentorship.setUpdatedAt(this.getUpdatedAt());
-        if(this.getHealthFacility()!=null) {
-            mentorship.setHealthFacility(this.getHealthFacility().getHealthFacilityObj());
-        }
+
         if(this.getMentor()!=null) {
             mentorship.setTutor(this.getMentor().getTutor());
         }
@@ -198,9 +190,6 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         }
         if(this.evaluationTypeDTO!=null) {
             mentorship.setEvaluationType(this.getEvaluationTypeDTO().getEvaluationType());
-        }
-        if(this.getTimeOfDay()!=null) {
-            mentorship.setTimeOfDay(this.getTimeOfDay().getTimeOfDay());
         }
         return mentorship;
     }

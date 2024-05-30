@@ -7,6 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.answer.AnswerDAO;
+import mz.org.csaude.mentoring.dao.answer.AnswerTypeDAO;
 import mz.org.csaude.mentoring.model.answer.Answer;
 
 public class AnswerServiceImpl extends BaseServiceImpl<Answer> implements AnswerService {

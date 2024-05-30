@@ -22,9 +22,9 @@ public class HomeFragmentViewModel extends BaseViewModel {
     public void goToMentoringRounds() {
         try {
             Map<String, Object> params = new HashMap<>();
-            params.put("title", "Rondas de Mentorias");
+            params.put("title", "Ronda de Mentoria");
             params.put("rondaType", getApplication().getRondaTypeService().getRondaTypeByCode(RondaTypeEnum.MENTORIA_INTERNA.toString()));
-            getRelatedActivity().nextActivityFinishingCurrent(RondaActivity.class, params);
+            getRelatedActivity().nextActivity(RondaActivity.class, params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -33,9 +33,9 @@ public class HomeFragmentViewModel extends BaseViewModel {
     public void goToBaseSessions() {
         try {
             Map<String, Object> params = new HashMap<>();
-            params.put("title", "Sessões Zero");
+            params.put("title", "Sessão Zero");
             params.put("rondaType", getApplication().getRondaTypeService().getRondaTypeByCode(RondaTypeEnum.SESSAO_ZERO.toString()));
-            getRelatedActivity().nextActivityFinishingCurrent(RondaActivity.class, params);
+            getRelatedActivity().nextActivity(RondaActivity.class, params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

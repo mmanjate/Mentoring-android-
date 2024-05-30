@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,10 @@ public class SessionListVM extends BaseViewModel {
     }
 
     public List<Listble> getRondaMentees() {
-        return Utilities.parseList(getApplication().getTutoredService().getAllOfRonda(this.currRonda), Listble.class);
+        try {
+            return Utilities.parseList(getApplication().getTutoredService().getAllOfRonda(this.currRonda), Listble.class);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

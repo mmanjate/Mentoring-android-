@@ -13,7 +13,7 @@ import mz.org.csaude.mentoring.model.ronda.Ronda;
 
 @Data
 @DatabaseTable(tableName = Session.TABLE_NAME, daoClass = SessionDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper=true)
 public class Session extends BaseModel {
 
     public static final String TABLE_NAME = "session";
@@ -26,7 +26,6 @@ public class Session extends BaseModel {
 
     public static final String COLUMN_STATUS = "session_status_id";
 
-    public static final String COLUMN_REASON = "reason";
     public static final String COLUMN_RONDA = "ronda_id";
 
     @DatabaseField(columnName = COLUMN_START_DATE, canBeNull = false)
@@ -41,21 +40,17 @@ public class Session extends BaseModel {
     @DatabaseField(columnName = COLUMN_STATUS, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private SessionStatus status;
 
-    @DatabaseField(columnName = COLUMN_REASON)
-    private String reason;
-
     @DatabaseField(columnName = COLUMN_RONDA, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Ronda ronda;
 
     public Session() {
     }
 
-    public Session(Date startDate, Date endDate, Date performedDate, SessionStatus status, String reason) {
+    public Session(Date startDate, Date endDate, Date performedDate, SessionStatus status) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.performedDate = performedDate;
         this.status = status;
-        this.reason = reason;
     }
 
     public Ronda getRonda() {
@@ -98,11 +93,4 @@ public class Session extends BaseModel {
         this.status = status;
     }
 
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
 }

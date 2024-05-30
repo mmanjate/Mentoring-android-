@@ -14,7 +14,7 @@ public interface TutoredService extends BaseService<Tutored> {
 
     Tutored savedOrUpdateTutored(Tutored tutored) throws SQLException;
 
-    List<Tutored> getAllOfRonda(Ronda currRonda);
+    List<Tutored> getAllOfRonda(Ronda currRonda) throws SQLException;
 
     List<Tutored> getAllOfHealthFacility(HealthFacility healthFacility) throws SQLException;
 

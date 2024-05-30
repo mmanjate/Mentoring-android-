@@ -51,4 +51,8 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     public T getByuuid(String uuid) throws SQLException {
         return null;
     }
+
+    public void close() {
+        getDataBaseHelper().close();
+    }
 }

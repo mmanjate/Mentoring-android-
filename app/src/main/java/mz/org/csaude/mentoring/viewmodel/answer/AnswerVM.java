@@ -61,14 +61,7 @@ public class AnswerVM extends BaseViewModel {
         this.answer.setQuestion(question);
         notifyPropertyChanged(BR.question);
     }
-    @Bindable
-    public Indicator getIndicator(){
-       return this.answer.getIndicator();
-    }
-    public void setIndicator(Indicator indicator){
-        this.answer.setIndicator(indicator);
-        notifyPropertyChanged(BR.indicator);
-    }
+
     @Bindable
     public String getValue(){
       return  this.answer.getValue();

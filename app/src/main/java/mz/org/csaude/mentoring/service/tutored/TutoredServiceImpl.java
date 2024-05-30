@@ -81,8 +81,8 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
     }
 
     @Override
-    public List<Tutored> getAllOfRonda(Ronda currRonda) {
-        return null;
+    public List<Tutored> getAllOfRonda(Ronda currRonda) throws SQLException {
+        return  this.tutoredDao.getAllOfRonda(currRonda, getApplication());
     }
 
     @Override

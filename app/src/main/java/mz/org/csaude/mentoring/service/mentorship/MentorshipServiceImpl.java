@@ -2,16 +2,22 @@ package mz.org.csaude.mentoring.service.mentorship;
 
 import android.app.Application;
 
+import com.j256.ormlite.misc.TransactionManager;
+
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
+import mz.org.csaude.mentoring.dao.answer.AnswerDAO;
 import mz.org.csaude.mentoring.dao.mentorship.MentorshipDAO;
+import mz.org.csaude.mentoring.dao.ronda.RondaDAO;
 import mz.org.csaude.mentoring.dao.session.SessionDAO;
 import mz.org.csaude.mentoring.dao.session.SessionStatusDAO;
 import mz.org.csaude.mentoring.dto.mentorship.MentorshipDTO;
 import mz.org.csaude.mentoring.dto.session.SessionDTO;
 import mz.org.csaude.mentoring.dto.session.SessionStatusDTO;
+import mz.org.csaude.mentoring.model.answer.Answer;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
@@ -24,6 +30,9 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
     SessionDAO sessionDAO;
     SessionStatusDAO sessionStatusDAO;
 
+    RondaDAO rondaDAO;
+    AnswerDAO answerDAO;
+
     public MentorshipServiceImpl(Application application) {
         super(application);
     }
@@ -35,6 +44,8 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
             this.mentorshipDAO = getDataBaseHelper().getMentorshipDAO();
             this.sessionDAO = getDataBaseHelper().getSessionDAO();
             this.sessionStatusDAO = getDataBaseHelper().getSessionStatusDAO();
+            this.answerDAO = getDataBaseHelper().getAnswerDAO();
+            this.rondaDAO = getDataBaseHelper().getRondaDAO();;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -43,7 +54,16 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
 
     @Override
     public Mentorship save(Mentorship record) throws SQLException {
-        mentorshipDAO.create(record);
+        TransactionManager.callInTransaction(getDataBaseHelper().getConnectionSource(), (Callable<Void>) () -> {
+            sessionDAO.create(record.getSession());
+            mentorshipDAO.create(record);
+            for (Answer answer : record.getAnswers()) {
+                answerDAO.create(answer);
+            }
+
+            return null;
+        });
+
         return record;
     }
 
@@ -117,6 +137,11 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
 
     @Override
     public List<Mentorship> getAllOfRonda(Ronda ronda) throws SQLException {
-        return this.mentorshipDAO.getAllOfRonda(ronda);
+        List<Mentorship> mentorships = this.mentorshipDAO.getAllOfRonda(ronda, getApplication());
+        for (Mentorship mentorship : mentorships) {
+            mentorship.getSession().setRonda(this.rondaDAO.queryForId(mentorship.getSession().getRonda().getId()));
+        }
+        return mentorships;
     }
+
 }

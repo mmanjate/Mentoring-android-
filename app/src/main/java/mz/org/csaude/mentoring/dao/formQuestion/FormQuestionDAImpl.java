@@ -45,7 +45,7 @@ public class FormQuestionDAImpl extends MentoringBaseDaoImpl<FormQuestion, Integ
         // Create the subquery for EvaluationType
         evaluationTypeQb.selectColumns(EvaluationType.COLUMN_ID)
                 .where()
-                .eq(EvaluationType.COLUMN_CODE, evaluationType);
+                .eq(EvaluationType.COLUMN_CODE, evaluationType).or().eq(EvaluationType.COLUMN_CODE, "Ambos");
 
         // Build the WHERE clause for FormQuestion
         Where<FormQuestion, Integer> where = queryBuilder.where();

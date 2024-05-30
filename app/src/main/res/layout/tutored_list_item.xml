@@ -39,97 +39,77 @@
             android:layout_height="match_parent"
             android:layout_weight="0.1"
             android:orientation="horizontal"/>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="3.2">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@{tutored.employee.fullName}"
-            android:textSize="14dp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/professionalCategoryId"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/dimen_6dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@{tutored.employee.professionalCategory.description}" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_marginTop="@dimen/dimen_6dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:layout_height="match_parent"
-                android:text="@{tutored.employee.phoneNumber}"
-                android:drawablePadding="@dimen/dimen_5dp"
-                bind:drawableLeftCompat="@drawable/baseline_call_24" />
-
-            <TextView
-                android:layout_marginTop="@dimen/dimen_6dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:layout_height="match_parent"
-                android:text='@{Utilities.concatStrings("NUIT", Utilities.parseLongToString(tutored.employee.nuit), ": ")}'/>
-        </LinearLayout>
-
-    </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="@{tutored.syncStatus == SyncSatus.PENDING ? View.VISIBLE : View.GONE}"
-            android:padding="@dimen/dimen_5dp"
-            android:layout_weight="0.7">
+            android:layout_weight="3.2">
 
-            <ImageButton
-                android:id="@+id/btn_edit"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.edit(tutored)}"
-                android:background="#e9f1f7"
-                android:src="@drawable/ic_edit" />
+                android:layout_gravity="center_vertical"
+                android:text="@{tutored.employee.fullName}"
+                android:textSize="14dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/professionalCategoryId"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dimen_6dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@{tutored.employee.professionalCategory.description}" />
 
-            <ImageButton
-                android:id="@+id/btn_remove"
-                android:layout_marginTop="@dimen/dimen_10dp"
-                android:layout_width="wrap_content"
-                android:background="#e9f1f7"
-                android:onClick="@{() -> viewModel.delete(tutored)}"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_delete" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginTop="@dimen/dimen_6dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:text="@{tutored.employee.phoneNumber}"
+                    android:drawablePadding="@dimen/dimen_5dp"
+                    bind:drawableLeftCompat="@drawable/baseline_call_24" />
+
+                <TextView
+                    android:layout_marginTop="@dimen/dimen_6dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:text='@{Utilities.concatStrings("NUIT", Utilities.parseLongToString(tutored.employee.nuit), ": ")}'/>
+            </LinearLayout>
 
         </LinearLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_weight="0.7">
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_5dp"
+            android:layout_weight="0.5">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility='@{tutored.listType.equals("NORMAL") ? View.GONE : View.VISIBLE}'
-                android:src="@drawable/baseline_cloud_done_24"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility='@{tutored.selected ? View.VISIBLE : View.GONE}'
+                android:src="@drawable/ic_done"
                 android:layout_gravity="center_vertical"/>
             <ImageButton
                 android:id="@+id/btn_remove_selected"
-                android:layout_marginTop="@dimen/dimen_10dp"
-                android:visibility='@{!tutored.listType.equals("NORMAL") ? View.GONE : View.VISIBLE}'
-                android:layout_width="wrap_content"
+                android:visibility='@{tutored.listType.equals("SELECTION_LIST") ? View.VISIBLE : View.GONE}'
+                android:layout_width="match_parent"
                 android:background="#e9f1f7"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_delete" />
-        </RelativeLayout>
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility='@{tutored.listType.equals("NORMAL") ? View.VISIBLE : View.GONE}'
+                android:src="@drawable/baseline_cloud_done_24"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
     </LinearLayout>
 </layout>

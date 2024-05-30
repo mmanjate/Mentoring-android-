@@ -2,11 +2,18 @@ package mz.org.csaude.mentoring.view.mentorship;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import mz.org.csaude.mentoring.R;
+import mz.org.csaude.mentoring.adapter.recyclerview.mentorship.MentorshipAdapter;
+import mz.org.csaude.mentoring.adapter.recyclerview.ronda.RondaAdapter;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityListMentorshipBinding;
@@ -22,14 +29,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class MentorshipActivity extends BaseActivity {
-
     private ActivityListMentorshipBinding binding;
-    private Ronda ronda;
-    private String title;
-    private RondaType rondaType;
-    private Tutor currMentor;
-    private List<RondaMentee> selectedMentees;
-    private RondaMentor rondaMentor;
+    private MentorshipAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,21 +40,9 @@ public class MentorshipActivity extends BaseActivity {
         binding.setViewModel(getRelatedViewModel());
 
         Intent intent = this.getIntent();
-        Bundle bundle = new Bundle();
         if(intent!=null && intent.getExtras()!=null) {
-            ronda = (Ronda) intent.getExtras().get("createdRonda");
-            title = (String) intent.getExtras().get("title");
-            rondaType = (RondaType) intent.getExtras().get("rondaType");
-            currMentor = (Tutor) intent.getExtras().get("currMentor");
-            selectedMentees = (List<RondaMentee>) intent.getExtras().getSerializable("rondaMentees");
-            rondaMentor = (RondaMentor) intent.getExtras().get("rondaMentor");
-            bundle.putSerializable("ronda", ronda);
-            bundle.putSerializable("title", title);
-            bundle.putSerializable("rondaType", rondaType);
-            bundle.putSerializable("currMentor", currMentor);
-            bundle.putSerializable("rondaMentees", (Serializable) selectedMentees);
-            bundle.putSerializable("rondaMentor", rondaMentor);
-            intent.putExtras(bundle);
+            getRelatedViewModel().setRonda((Ronda) intent.getExtras().get("ronda"));
+            getRelatedViewModel().initSearch();
         }
     }
 
@@ -65,5 +54,31 @@ public class MentorshipActivity extends BaseActivity {
     @Override
     public MentorshipSearchVM getRelatedViewModel() {
         return (MentorshipSearchVM) super.getRelatedViewModel();
+    }
+
+
+    public void populateRecyclerView(){
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }else {
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            binding.rcvMentorships.setLayoutManager(mLayoutManager);
+            binding.rcvMentorships.setItemAnimator(new DefaultItemAnimator());
+            binding.rcvMentorships.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
+
+            adapter = new MentorshipAdapter(binding.rcvMentorships, getRelatedViewModel().getSearchResults(), this);
+            binding.rcvMentorships.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -34,6 +34,8 @@ import mz.org.csaude.mentoring.service.form.FormService;
 import mz.org.csaude.mentoring.service.form.FormServiceImpl;
 import mz.org.csaude.mentoring.service.formQuestion.FormQuestionService;
 import mz.org.csaude.mentoring.service.formQuestion.FormQuestionServiceImpl;
+import mz.org.csaude.mentoring.service.location.CabinetService;
+import mz.org.csaude.mentoring.service.location.CabinetServiceImpl;
 import mz.org.csaude.mentoring.service.location.DistrictService;
 import mz.org.csaude.mentoring.service.location.DistrictServiceImpl;
 import mz.org.csaude.mentoring.service.location.HealthFacilityService;
@@ -174,6 +176,8 @@ public class MentoringApplication  extends Application {
 
     private ProgramService programService;
 
+    private CabinetService cabinetService;
+
 
     // Rest Services
     private PartnerRestService partnerRestService;
@@ -278,6 +282,11 @@ public class MentoringApplication  extends Application {
     public MentorshipService getMentorshipService() {
         if (this.mentorshipService == null) this.mentorshipService = new MentorshipServiceImpl(this);
         return mentorshipService;
+    }
+
+    public CabinetService getCabinetService() {
+        if (this.cabinetService == null) this.cabinetService = new CabinetServiceImpl(this);
+        return cabinetService;
     }
 
     public FormService getFormService() {

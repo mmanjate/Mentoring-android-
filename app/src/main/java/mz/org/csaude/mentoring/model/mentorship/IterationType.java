@@ -19,6 +19,7 @@ public class IterationType extends BaseModel {
 
     public static final String COLUMN_CODE = "code";
 
+
     @DatabaseField(columnName = COLUMN_DESCRIPTION)
     private String description;
 

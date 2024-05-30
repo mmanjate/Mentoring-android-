@@ -1,11 +1,13 @@
 package mz.org.csaude.mentoring.dto.responseType;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.responseType.ResponseType;
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class ResponseTypeDTO extends BaseEntityDTO {
     private String code;
     private String description;

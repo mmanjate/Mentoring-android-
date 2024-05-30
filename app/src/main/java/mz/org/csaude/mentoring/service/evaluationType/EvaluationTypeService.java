@@ -12,4 +12,7 @@ import mz.org.csaude.mentoring.model.professionalCategory.ProfessionalCategory;
 public interface EvaluationTypeService extends BaseService<EvaluationType> {
     void saveOrUpdateEvaluationTypes(List<EvaluationTypeDTO> evaluationTypeDTOS) throws SQLException;
     EvaluationType saveOrUpdateEvaluationType(EvaluationTypeDTO evaluationType) throws SQLException;
+
+    EvaluationType getByCode(String consulta) throws SQLException;
+
 }

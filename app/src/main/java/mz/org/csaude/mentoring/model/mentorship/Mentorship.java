@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.mentorship.MentorshipDAOImpl;
+import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.location.Cabinet;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
@@ -82,7 +83,7 @@ public class Mentorship extends BaseModel {
     private Cabinet cabinet;
 
     @DatabaseField(columnName = COLUMN_ITERATION_TYPE, canBeNull = false, foreign = true, foreignAutoRefresh = true)
-    private IterationType iterationType;
+    private EvaluationType evaluationType;
 
     @DatabaseField(columnName = COLUMN_ITERATION_NUMBER, canBeNull = false)
     private Integer iterationNumber;
@@ -94,23 +95,6 @@ public class Mentorship extends BaseModel {
     private Door door;
 
     public Mentorship() {
-    }
-
-    public Mentorship(String code, Date startDate, Date endDate, Date performedDate, Tutor tutor, Tutored tutored, Form form, HealthFacility healthFacility, Session session, Cabinet cabinet, IterationType iterationType, Integer iterationNumber, TimeOfDay timeOfDay, Door door) {
-        this.code = code;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.performedDate = performedDate;
-        this.tutor = tutor;
-        this.tutored = tutored;
-        this.form = form;
-        this.healthFacility = healthFacility;
-        this.session = session;
-        this.cabinet = cabinet;
-        this.iterationType = iterationType;
-        this.iterationNumber = iterationNumber;
-        this.timeOfDay = timeOfDay;
-        this.door = door;
     }
 
     public String getCode() {
@@ -193,12 +177,13 @@ public class Mentorship extends BaseModel {
         this.cabinet = cabinet;
     }
 
-    public IterationType getIterationType() {
-        return iterationType;
+
+    public EvaluationType getEvaluationType() {
+        return evaluationType;
     }
 
-    public void setIterationType(IterationType iterationType) {
-        this.iterationType = iterationType;
+    public void setEvaluationType(EvaluationType evaluationType) {
+        this.evaluationType = evaluationType;
     }
 
     public Integer getIterationNumber() {

@@ -13,6 +13,7 @@ import mz.org.csaude.mentoring.dto.mentorship.MentorshipDTO;
 import mz.org.csaude.mentoring.dto.session.SessionDTO;
 import mz.org.csaude.mentoring.dto.session.SessionStatusDTO;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
 
@@ -112,5 +113,10 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
     @Override
     public List<Mentorship> getAllNotSynced() throws SQLException {
         return this.mentorshipDAO.getAllNotSynced();
+    }
+
+    @Override
+    public List<Mentorship> getAllOfRonda(Ronda ronda) throws SQLException {
+        return this.mentorshipDAO.getAllOfRonda(ronda);
     }
 }

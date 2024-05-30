@@ -14,6 +14,7 @@ import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.base.databasehelper.MentoringDataBaseHelper;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.util.SyncSatus;
 
@@ -47,5 +48,10 @@ public class MentorshipDAOImpl extends MentoringBaseDaoImpl<Mentorship, Integer>
     @Override
     public List<Mentorship> getAllNotSynced() throws SQLException {
         return queryForEq(Form.COLUMN_SYNC_STATUS, SyncSatus.PENDING);
+    }
+
+    @Override
+    public List<Mentorship> getAllOfRonda(Ronda ronda) {
+        return null;
     }
 }

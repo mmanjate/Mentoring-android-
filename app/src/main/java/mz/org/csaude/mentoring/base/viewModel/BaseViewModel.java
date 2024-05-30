@@ -21,6 +21,7 @@ import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.fragment.GenericFragment;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.common.ApplicationStep;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.util.LoadingDialog;
 import mz.org.csaude.mentoring.util.Utilities;
@@ -183,6 +184,10 @@ public abstract class BaseViewModel extends AndroidViewModel implements Observab
 
     public User getCurrentUser() {
         return getApplication().getAuthenticatedUser();
+    }
+
+    public Tutor getCurrentTutor() {
+        return getApplication().getCurrMentor();
     }
 
     public GenericFragment getRelatedFragment() {

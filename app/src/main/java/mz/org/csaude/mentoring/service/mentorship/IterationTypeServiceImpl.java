@@ -71,4 +71,9 @@ public class IterationTypeServiceImpl extends BaseServiceImpl<IterationType> imp
         this.iterationTypeDAO.createOrUpdate(iterationType);
         return iterationType;
     }
+
+    @Override
+    public IterationType getByCode(String code) throws SQLException {
+        return iterationTypeDAO.getByCode(code);
+    }
 }

@@ -32,7 +32,7 @@ import mz.org.csaude.mentoring.model.location.Province;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
-import mz.org.csaude.mentoring.util.RondaType;
+import mz.org.csaude.mentoring.util.RondaTypeEnum;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.viewmodel.ronda.RondaVM;
 
@@ -46,7 +46,7 @@ public class CreateRondaActivity extends BaseActivity {
     private Ronda ronda;
     private String title;
     private mz.org.csaude.mentoring.model.rondatype.RondaType rondaType;
-    private RondaType rondaTypeOption;
+    private RondaTypeEnum rondaTypeOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class CreateRondaActivity extends BaseActivity {
         if(intent!=null && intent.getExtras()!=null) {
             ronda = (Ronda) intent.getExtras().get("createdRonda");
             title = (String) intent.getExtras().get("title");
-            rondaTypeOption = (RondaType) intent.getExtras().get("rondaType");
+            rondaTypeOption = (RondaTypeEnum) intent.getExtras().get("rondaType");
             bundle.putSerializable("ronda", ronda);
             bundle.putSerializable("title", title);
             bundle.putSerializable("rondaType", rondaTypeOption);
@@ -82,7 +82,7 @@ public class CreateRondaActivity extends BaseActivity {
         }
 
         initAdapters();
-        rondaBinding.prescriptionDate.setOnClickListener(new View.OnClickListener() {
+        rondaBinding.rondaStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int mYear, mMonth, mDay;

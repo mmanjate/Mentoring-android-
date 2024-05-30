@@ -2,8 +2,6 @@ package mz.org.csaude.mentoring.viewmodel.ronda;
 
 import android.app.Application;
 import android.content.Intent;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
@@ -13,15 +11,12 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import mz.org.csaude.mentoring.BR;
-import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.location.District;
@@ -35,13 +30,12 @@ import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
 import mz.org.csaude.mentoring.service.ronda.RondaTypeService;
+import mz.org.csaude.mentoring.util.DateUtilities;
+import mz.org.csaude.mentoring.util.RondaTypeEnum;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
-import mz.org.csaude.mentoring.view.mentorship.MentorshipActivity;
 import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
 import mz.org.csaude.mentoring.view.ronda.RondaActivity;
-import mz.org.csaude.mentoring.view.tutored.CreateTutoredActivity;
-import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
 
 public class RondaVM extends BaseViewModel {
     private RondaService rondaService;
@@ -100,16 +94,12 @@ public class RondaVM extends BaseViewModel {
     public void setHealthFacility(Listble selectedHealthFacility) {
         this.selectedHealthFacility = (HealthFacility) selectedHealthFacility;
         try {
-            if(this.menteeList!=null) {
-                this.menteeList.clear();
-            }
-            else {
-                this.menteeList = new ArrayList<>();
-            }
+            if(this.menteeList == null) this.menteeList = new ArrayList<>();
+            this.menteeList.clear();
+
             if(!StringUtils.isEmpty(this.selectedHealthFacility.getUuid())) {
                 this.ronda.setHealthFacility(this.selectedHealthFacility);
-                List<Tutored> tutoredList = getApplication().getTutoredService().getAllOfHealthFacility(this.selectedHealthFacility);
-                setMenteeList(tutoredList);
+                setMenteeList(getApplication().getTutoredService().getAllOfHealthFacility(this.selectedHealthFacility));
             }
             getRelatedActivity().reloadMenteesAdapter();
             notifyPropertyChanged(BR.healthFacility);
@@ -120,6 +110,9 @@ public class RondaVM extends BaseViewModel {
 
     public void setMenteeList(List<Tutored> menteeList) {
         this.menteeList = menteeList;
+        for (Tutored tutored : this.menteeList) {
+            tutored.setListType(Listble.ListTypes.SELECTION_LIST);
+        }
     }
 
     public void addMentee(Listble mentee) {
@@ -138,25 +131,18 @@ public class RondaVM extends BaseViewModel {
 
     public void setSelectedProvince(Listble selectedProvince) {
         this.selectedProvince = (Province) selectedProvince;
+        if (selectedProvince.getId() == null) return;
+
+        if (this.districts == null) this.districts = new ArrayList<>();
+        if (this.healthFacilities == null) this.healthFacilities = new ArrayList<>();
         try {
-            if(this.districts!=null) {
-                this.districts.clear();
-            }
-            else {
-                this.districts = new ArrayList<>();
-            }
-            if(this.healthFacilities!=null) {
-                this.healthFacilities.clear();
-            }
-            else {
-                this.healthFacilities = new ArrayList<>();
-            }
-            districts.add(new District());
-            if(!StringUtils.isEmpty(this.selectedProvince.getUuid())) {
-                districts.addAll(getApplication().getDistrictService().getByProvince(this.selectedProvince));
-            }
+            this.districts.clear();
+            this.healthFacilities.clear();
+            if (selectedProvince.getId() == null) return;
+            this.districts.add(new District());
+            if (selectedProvince.getId() == null) return;
+            this.districts.addAll(getApplication().getDistrictService().getByProvinceAndMentor(this.selectedProvince, getApplication().getCurrMentor()));
             getRelatedActivity().reloadDistrictAdapter();
-            notifyPropertyChanged(BR.selectedProvince);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -168,20 +154,14 @@ public class RondaVM extends BaseViewModel {
     }
 
     public void setSelectedDistrict(Listble selectedDistrict) {
-        this.selectedDistrict = (District) selectedDistrict;
         try {
-            if(this.healthFacilities!=null) {
-                this.healthFacilities.clear();
-            }
-            else {
-                this.healthFacilities = new ArrayList<>();
-            }
-        this.healthFacilities.add(new HealthFacility());
-            if(!StringUtils.isEmpty(this.selectedDistrict.getUuid())) {
-                this.healthFacilities.addAll(getApplication().getHealthFacilityService().getHealthFacilityByDistrict(this.selectedDistrict));
-            }
-        getRelatedActivity().reloadHealthFacility();
-        notifyPropertyChanged(BR.selectedDistrict);
+            this.selectedDistrict = (District) selectedDistrict;
+            this.healthFacilities.clear();
+            if (selectedDistrict.getId() == null) return;
+            this.healthFacilities.add(new HealthFacility());
+            this.healthFacilities.addAll(getApplication().getHealthFacilityService().getHealthFacilityByDistrictAndMentor(this.selectedDistrict, getApplication().getCurrMentor()));
+            getRelatedActivity().reloadHealthFacility();
+            notifyPropertyChanged(BR.selectedDistrict);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -222,7 +202,7 @@ public class RondaVM extends BaseViewModel {
             ronda.setSyncStatus(SyncSatus.PENDING);
             ronda.setUuid(Utilities.getNewUUID().toString());
             Intent intent = getRelatedActivity().getIntent();
-            mz.org.csaude.mentoring.util.RondaType rondaTypeOption = (mz.org.csaude.mentoring.util.RondaType) intent.getExtras().get("rondaType");
+            RondaTypeEnum rondaTypeOption = (RondaTypeEnum) intent.getExtras().get("rondaType");
             RondaType rondaType = this.rondaTypeService.getRondaTypeByCode(rondaTypeOption.name());
             ronda.setRondaType(rondaType);
             ronda.setStartDate(this.getStartDate());
@@ -235,17 +215,19 @@ public class RondaVM extends BaseViewModel {
                 Utilities.displayAlertDialog(getRelatedActivity(), error).show();
                 return;
             }
-            //Ronda createdRonda = getApplication().getRondaService().savedOrUpdateRonda(ronda);
-            Ronda createdRonda = ronda;
-                    List<RondaMentee> rondaMentees = new ArrayList<>();
+            Ronda createdRonda = getApplication().getRondaService().savedOrUpdateRonda(ronda);
+
+            List<RondaMentee> rondaMentees = new ArrayList<>();
             for (Tutored tutored : this.getSelectedMentees()) {
                 RondaMentee rondaMentee = new RondaMentee();
                 rondaMentee.setUuid(Utilities.getNewUUID().toString());
                 rondaMentee.setRonda(createdRonda);
+                rondaMentee.setSyncStatus(SyncSatus.PENDING);
+                rondaMentee.setCreatedAt(DateUtilities.getCurrentDate());
                 rondaMentee.setTutored(tutored);
                 rondaMentee.setStartDate(this.getStartDate());
-                //RondaMentee createdRondaMentee = getApplication().getRondaMenteeService().savedOrUpdateRondaMentee(rondaMentee);
-                RondaMentee createdRondaMentee = rondaMentee;
+                RondaMentee createdRondaMentee = getApplication().getRondaMenteeService().savedOrUpdateRondaMentee(rondaMentee);
+
                 rondaMentees.add(createdRondaMentee);
             }
 
@@ -254,20 +236,18 @@ public class RondaVM extends BaseViewModel {
             RondaMentor rondaMentor = new RondaMentor();
             rondaMentor.setUuid(Utilities.getNewUUID().toString());
             rondaMentor.setRonda(createdRonda);
+            rondaMentor.setSyncStatus(SyncSatus.PENDING);
+            rondaMentor.setCreatedAt(DateUtilities.getCurrentDate());
             rondaMentor.setTutor(tutor);
             rondaMentor.setStartDate(this.getStartDate());
-            //RondaMentor createdRondaMentor = getApplication().getRondaMentorService().savedOrUpdateRondaMentor(rondaMentor);
-            RondaMentor createdRondaMentor = rondaMentor;
+            RondaMentor createdRondaMentor = getApplication().getRondaMentorService().savedOrUpdateRondaMentor(rondaMentor);
+
             rondaMentors.add(createdRondaMentor);
             Map<String, Object> params = new HashMap<>();
-            params.put("createdRonda", createdRonda);
-            params.put("rondaMentees", rondaMentees);
-            params.put("rondaMentor", rondaMentor);
             params.put("rondaType", rondaType);
             String title = (String) intent.getExtras().get("title");
             params.put("title", title);
-            params.put("currMentor", tutor);
-            getRelatedActivity().nextActivity(MentorshipActivity.class, params);
+            getRelatedActivity().nextActivityFinishingCurrent(RondaActivity.class, params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

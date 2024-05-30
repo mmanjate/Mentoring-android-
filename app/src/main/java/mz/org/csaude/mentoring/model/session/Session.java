@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.session.SessionDAOImpl;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 
 @Data
 @DatabaseTable(tableName = Session.TABLE_NAME, daoClass = SessionDAOImpl.class)
@@ -26,6 +27,7 @@ public class Session extends BaseModel {
     public static final String COLUMN_STATUS = "session_status_id";
 
     public static final String COLUMN_REASON = "reason";
+    public static final String COLUMN_RONDA = "ronda_id";
 
     @DatabaseField(columnName = COLUMN_START_DATE, canBeNull = false)
     private Date startDate;
@@ -42,6 +44,9 @@ public class Session extends BaseModel {
     @DatabaseField(columnName = COLUMN_REASON)
     private String reason;
 
+    @DatabaseField(columnName = COLUMN_RONDA, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private Ronda ronda;
+
     public Session() {
     }
 
@@ -51,6 +56,14 @@ public class Session extends BaseModel {
         this.performedDate = performedDate;
         this.status = status;
         this.reason = reason;
+    }
+
+    public Ronda getRonda() {
+        return ronda;
+    }
+
+    public void setRonda(Ronda ronda) {
+        this.ronda = ronda;
     }
 
     public Date getStartDate() {

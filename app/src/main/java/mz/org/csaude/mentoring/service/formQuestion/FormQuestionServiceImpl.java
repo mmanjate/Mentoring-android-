@@ -12,6 +12,7 @@ import mz.org.csaude.mentoring.dao.question.QuestionsCategoryDAO;
 import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionDTO;
+import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.question.QuestionsCategory;
@@ -109,5 +110,10 @@ public class FormQuestionServiceImpl extends BaseServiceImpl<FormQuestion> imple
             this.questionDAO.createOrUpdate(fQuestion.getQuestion());
             this.formQuestionDAO.createOrUpdate(fQuestion);
         }
+    }
+
+    @Override
+    public List<FormQuestion> getAllOfForm(Form form, String evaluationTipe) throws SQLException {
+        return formQuestionDAO.getAllOfForm(form, evaluationTipe, getApplication());
     }
 }

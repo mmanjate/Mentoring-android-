@@ -8,6 +8,7 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.dto.mentorship.MentorshipDTO;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 
 public interface MentorshipService extends BaseService<Mentorship> {
     public List<Mentorship> getMentorshipByTutor(String uuidTutor) throws SQLException;
@@ -15,4 +16,6 @@ public interface MentorshipService extends BaseService<Mentorship> {
     Mentorship saveOrUpdateMentorship(MentorshipDTO mentorshipDTO) throws SQLException;
 
     List<Mentorship> getAllNotSynced() throws SQLException;
+
+    List<Mentorship> getAllOfRonda(Ronda ronda) throws SQLException;
 }

@@ -3,9 +3,11 @@ package mz.org.csaude.mentoring.dto.mentorship;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.common.Syncable;
+import mz.org.csaude.mentoring.dto.evaluationType.EvaluationTypeDTO;
 import mz.org.csaude.mentoring.dto.form.FormDTO;
 import mz.org.csaude.mentoring.dto.location.CabinetDTO;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
@@ -17,6 +19,7 @@ import mz.org.csaude.mentoring.util.SyncSatus;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class MentorshipDTO extends BaseEntityDTO implements Syncable {
     private String code;
     private Integer iterationNumber;
@@ -29,13 +32,11 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
     private FormDTO form;
     private CabinetDTO cabinet;
     private DoorDTO door;
-    private IterationTypeDTO iterationType;
+    private EvaluationTypeDTO evaluationTypeDTO;
     private TimeOfDayDTO timeOfDay;
     public MentorshipDTO(Mentorship mentorship) {
         super(mentorship);
-        if(mentorship.getHealthFacility()!=null) {
-            this.setHealthFacility(new HealthFacilityDTO(mentorship.getHealthFacility()));
-        }
+
         if(mentorship.getTutor()!=null) {
             this.setMentor(new TutorDTO(mentorship.getTutor()));
         }
@@ -53,12 +54,6 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         }
         if(mentorship.getDoor()!=null) {
             this.setDoor(new DoorDTO(mentorship.getDoor()));
-        }
-        if(mentorship.getIterationType()!=null) {
-            this.setIterationType(new IterationTypeDTO(mentorship.getIterationType()));
-        }
-        if(mentorship.getTimeOfDay()!=null) {
-            this.setTimeOfDay(new TimeOfDayDTO(mentorship.getTimeOfDay()));
         }
     }
 
@@ -150,12 +145,12 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         this.door = door;
     }
 
-    public IterationTypeDTO getIterationType() {
-        return iterationType;
+    public EvaluationTypeDTO getEvaluationTypeDTO() {
+        return evaluationTypeDTO;
     }
 
-    public void setIterationType(IterationTypeDTO iterationType) {
-        this.iterationType = iterationType;
+    public void setEvaluationTypeDTO(EvaluationTypeDTO evaluationTypeDTO) {
+        this.evaluationTypeDTO = evaluationTypeDTO;
     }
 
     public TimeOfDayDTO getTimeOfDay() {
@@ -169,15 +164,12 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
     public Mentorship getMentorship() {
         Mentorship mentorship = new Mentorship();
         mentorship.setUuid(this.getUuid());
-        mentorship.setCode(this.getCode());
         mentorship.setStartDate(this.getStartDate());
         mentorship.setEndDate(this.getEndDate());
         mentorship.setIterationNumber(this.getIterationNumber());
         mentorship.setCreatedAt(this.getCreatedAt());
         mentorship.setUpdatedAt(this.getUpdatedAt());
-        if(this.getHealthFacility()!=null) {
-            mentorship.setHealthFacility(this.getHealthFacility().getHealthFacilityObj());
-        }
+
         if(this.getMentor()!=null) {
             mentorship.setTutor(this.getMentor().getTutor());
         }
@@ -196,11 +188,8 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         if(this.getDoor()!=null) {
             mentorship.setDoor(this.getDoor().getDoor());
         }
-        if(this.getIterationType()!=null) {
-            mentorship.setIterationType(this.getIterationType().getIterationType());
-        }
-        if(this.getTimeOfDay()!=null) {
-            mentorship.setTimeOfDay(this.getTimeOfDay().getTimeOfDay());
+        if(this.evaluationTypeDTO!=null) {
+            mentorship.setEvaluationType(this.getEvaluationTypeDTO().getEvaluationType());
         }
         return mentorship;
     }

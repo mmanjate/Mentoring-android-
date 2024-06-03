@@ -38,4 +38,9 @@ public class Cabinet extends BaseModel {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String getDescription() {
+        return name;
+    }
 }

@@ -74,7 +74,7 @@ public class ListFormActivity extends BaseActivity {
         forms = getRelatedViewModel().getTutorForms();
 
         if (Utilities.listHasElements(forms)) {
-            this.formAdapter = new FormAdapter(forms);
+            this.formAdapter = new FormAdapter(formsRcv, forms, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
             formsRcv.setLayoutManager(mLayoutManager);
             formsRcv.setItemAnimator(new DefaultItemAnimator());

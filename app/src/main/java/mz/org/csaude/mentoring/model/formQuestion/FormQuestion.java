@@ -10,6 +10,7 @@ import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.formQuestion.FormQuestionDAImpl;
 import mz.org.csaude.mentoring.dto.form.FormDTO;
 import mz.org.csaude.mentoring.dto.form.FormQuestionDTO;
+import mz.org.csaude.mentoring.model.answer.Answer;
 import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.question.Question;
@@ -45,6 +46,8 @@ public class FormQuestion extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_MANDATORY)
     private boolean mandatory;
+
+    private Answer answer;
 
     @DatabaseField(columnName = COLUMN_SEQUENCE)
     private Integer sequence;
@@ -120,5 +123,13 @@ public class FormQuestion extends BaseModel {
 
     public void setApplicable(Boolean applicable) {
         this.applicable = applicable;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 }

@@ -4,12 +4,12 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
-import mz.org.csaude.mentoring.util.RondaType;
-import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
+import mz.org.csaude.mentoring.util.RondaTypeEnum;
 import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
 
@@ -20,17 +20,25 @@ public class HomeFragmentViewModel extends BaseViewModel {
     }
 
     public void goToMentoringRounds() {
-        Map<String, Object> params = new HashMap<>();
-        params.put("title", "Rondas de Mentorias");
-        params.put("rondaType", RondaType.MENTORIA_INTERNA);
-        getRelatedActivity().nextActivity(RondaActivity.class, params);
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("title", "Ronda de Mentoria");
+            params.put("rondaType", getApplication().getRondaTypeService().getRondaTypeByCode(RondaTypeEnum.MENTORIA_INTERNA.toString()));
+            getRelatedActivity().nextActivity(RondaActivity.class, params);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void goToBaseSessions() {
-        Map<String, Object> params = new HashMap<>();
-        params.put("title", "Sessões Zero");
-        params.put("rondaType", RondaType.SESSAO_ZERO);
-        getRelatedActivity().nextActivity(RondaActivity.class, params);
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("title", "Sessão Zero");
+            params.put("rondaType", getApplication().getRondaTypeService().getRondaTypeByCode(RondaTypeEnum.SESSAO_ZERO.toString()));
+            getRelatedActivity().nextActivity(RondaActivity.class, params);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void goToMentees() {

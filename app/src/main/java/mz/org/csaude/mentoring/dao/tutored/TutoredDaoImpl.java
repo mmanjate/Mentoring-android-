@@ -5,6 +5,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
@@ -12,6 +13,8 @@ import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.employee.Employee;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.location.Location;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -54,5 +57,18 @@ public class TutoredDaoImpl extends MentoringBaseDaoImpl<Tutored, Integer> imple
     @Override
     public List<Tutored> getAllNotSynced() throws SQLException {
         return queryForEq(Tutored.COLUMN_SYNC_STATUS, SyncSatus.PENDING);
+    }
+
+    @Override
+    public List<Tutored> getAllOfRonda(Ronda currRonda, MentoringApplication application) throws SQLException {
+        List<Tutored> tutoredList = new ArrayList<>();
+            QueryBuilder<RondaMentee, Integer> rondaMenteeQb = MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getRondaMenteeDAO().queryBuilder();
+            rondaMenteeQb.where().eq(RondaMentee.COLUMN_RONDA, currRonda.getId());
+
+            List<RondaMentee> rondaMentees = rondaMenteeQb.query();
+            for (RondaMentee rondaMentee : rondaMentees) {
+                tutoredList.add(this.queryForId(rondaMentee.getTutored().getId()));
+            }
+        return tutoredList;
     }
 }

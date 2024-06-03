@@ -3,11 +3,13 @@ package mz.org.csaude.mentoring.dto.session;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.session.Session;
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class SessionDTO extends BaseEntityDTO {
     private Date startDate;
     private Date endDate;

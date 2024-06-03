@@ -40,6 +40,7 @@ public abstract class BaseModel implements Serializable, Listble {
     @DatabaseField(columnName = COLUMN_UPDATED_AT, canBeNull = true)
     private Date updatedAt;
 
+    protected boolean selected;
     public BaseModel() {
     }
 
@@ -142,5 +143,15 @@ public abstract class BaseModel implements Serializable, Listble {
     @Override
     public String getCode() {
         return null;
+    }
+
+    @Override
+    public void setItemSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return selected;
     }
 }

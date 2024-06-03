@@ -25,15 +25,21 @@ public abstract class AbstractRecycleViewAdapter<T extends BaseModel> extends Re
     protected int visibleThreshold = 5;
     protected int lastVisibleItem, totalItemCount;
 
-    public AbstractRecycleViewAdapter(RecyclerView recyclerView, List<T> records, Activity activity) {
-        this.records = records;
-        this.activity = (BaseActivity) activity;
+    protected int selectedPosition = RecyclerView.NO_POSITION;
 
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+    public AbstractRecycleViewAdapter(RecyclerView recyclerView, List<T> records, BaseActivity activity) {
+        this.records = records;
+        this.activity = activity;
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                if (layoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
+
                     totalItemCount = linearLayoutManager.getItemCount();
                     lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
                     if (!isLoading && linearLayoutManager.findLastCompletelyVisibleItemPosition() == records.size() - 1) {
@@ -43,6 +49,7 @@ public abstract class AbstractRecycleViewAdapter<T extends BaseModel> extends Re
                         isLoading = true;
                     }
                 }
+            }
         });
     }
 

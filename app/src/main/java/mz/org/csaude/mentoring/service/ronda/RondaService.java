@@ -8,8 +8,8 @@ import mz.org.csaude.mentoring.base.service.BaseService;
 import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
-import mz.org.csaude.mentoring.util.RondaType;
 
 public interface RondaService extends BaseService<Ronda> {
     Ronda savedOrUpdateRonda(Ronda ronda) throws SQLException;

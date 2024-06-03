@@ -10,4 +10,7 @@ import mz.org.csaude.mentoring.model.mentorship.IterationType;
 public interface IterationTypeService extends BaseService<IterationType> {
     void saveOrUpdateIterationTypes(List<IterationTypeDTO> iterationTypeDTOS) throws SQLException;
     IterationType saveOrUpdateIterationType(IterationTypeDTO iterationTypeDTO) throws SQLException;
+
+    IterationType getByCode(String code) throws SQLException;
+
 }

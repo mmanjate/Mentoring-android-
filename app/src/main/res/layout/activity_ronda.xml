@@ -16,7 +16,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ronda.CreateRondaActivity">
+        tools:context=".view.ronda.RondaActivity">
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout2"
             android:layout_width="match_parent"
@@ -54,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_normal"
                 android:padding="3dp"
-                android:onClick="@{(view) -> viewModel.openCollapse(view)}"
+                android:layout_marginBottom="@dimen/dimen_6dp"
+                android:onClick="@{(view) -> viewModel.changeInitialDataViewStatus(view)}"
                 android:orientation="horizontal">
 
                 <TextView
@@ -91,9 +92,10 @@
                     style="@style/input_labels"
                     />
                 <EditText
-                    android:id="@+id/prescription_date"
+                    android:id="@+id/ronda_start_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
                     android:drawableLeft="@drawable/ic_calendar"
                     android:text="@{DateUtilities.formatToDDMMYYYY(viewModel.startDate)}"
                     android:enabled="@{!viewModel.currentStep.applicationStepDisplay}"
@@ -231,7 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/button_shape"
-                android:text="@string/submit"
+                android:text="Gravar"
                 android:textAllCaps="false"
                 android:textStyle="bold"
                 android:textColor="@color/white"

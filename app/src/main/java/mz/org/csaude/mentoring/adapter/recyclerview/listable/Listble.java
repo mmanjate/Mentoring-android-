@@ -12,6 +12,9 @@ public interface Listble {
     String getDescription();
 
     void setListPosition(int listPosition);
+    void setItemSelected(boolean selected);
+
+    boolean isSelected();
 
     int getDrawable();
 
@@ -25,6 +28,7 @@ public interface Listble {
 
     public enum ListTypes {
         SELECTION_LIST,
-        NORMAL
+        NORMAL,
+        UNDEFINED
     }
 }

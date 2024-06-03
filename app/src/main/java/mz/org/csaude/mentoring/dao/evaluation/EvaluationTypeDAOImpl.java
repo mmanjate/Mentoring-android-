@@ -22,4 +22,9 @@ public class EvaluationTypeDAOImpl extends MentoringBaseDaoImpl<EvaluationType, 
     public EvaluationTypeDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<EvaluationType> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
+
+    @Override
+    public EvaluationType getByCode(String code) throws SQLException {
+        return queryBuilder().where().eq(EvaluationType.COLUMN_CODE, code).queryForFirst();
+    }
 }

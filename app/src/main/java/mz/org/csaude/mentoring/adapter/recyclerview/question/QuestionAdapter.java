@@ -12,38 +12,41 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.generic.AbstractRecycleViewAdapter;
+import mz.org.csaude.mentoring.base.activity.BaseActivity;
+import mz.org.csaude.mentoring.databinding.QuestionListItemBinding;
 import mz.org.csaude.mentoring.databinding.RondaListItemBinding;
+import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 
-public class QuestionAdapter extends AbstractRecycleViewAdapter<Ronda> {
+public class QuestionAdapter extends AbstractRecycleViewAdapter<FormQuestion> {
 
-    public QuestionAdapter(RecyclerView recyclerView, List<Ronda> records, Activity activity) {
+    public QuestionAdapter(RecyclerView recyclerView, List<FormQuestion> records, BaseActivity activity) {
         super(recyclerView, records, activity);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RondaListItemBinding rondaListItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.ronda_list_item, parent, false);
-        return new QuestionAdapter.RondaViewHolder(rondaListItemBinding);
+        QuestionListItemBinding questionListItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.question_list_item, parent, false);
+        return new QuestionAdapter.FormQuestionViewHolder(questionListItemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((QuestionAdapter.RondaViewHolder) holder).rondaListItemBinding.setRonda(super.records.get(position));
+        ((FormQuestionViewHolder) holder).questionListItemBinding.setFormQuestion(super.records.get(position));
     }
     @Override
     public int getItemCount() {
         return records.size();
     }
 
-    public class RondaViewHolder extends RecyclerView.ViewHolder {
+    public class FormQuestionViewHolder extends RecyclerView.ViewHolder {
 
-        private RondaListItemBinding rondaListItemBinding;
+        private QuestionListItemBinding questionListItemBinding;
 
-        public RondaViewHolder(@NonNull RondaListItemBinding rondaListItemBinding) {
-            super(rondaListItemBinding.getRoot());
-            this.rondaListItemBinding = rondaListItemBinding;
+        public FormQuestionViewHolder(@NonNull QuestionListItemBinding questionListItemBinding) {
+            super(questionListItemBinding.getRoot());
+            this.questionListItemBinding = questionListItemBinding;
         }
     }
 }

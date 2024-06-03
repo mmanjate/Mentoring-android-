@@ -42,8 +42,7 @@ public class CabinetRestService extends BaseRestService {
                 } else {
                     try {
 
-                        CabinetService cabinetService = new CabinetServiceImpl(BaseRestService.APP);
-                        Toast.makeText(APP.getApplicationContext(), "Carregando os Cabinet", Toast.LENGTH_SHORT).show();
+                        CabinetService cabinetService = getApplication().getCabinetService();
                         List<Cabinet> cabinets = new ArrayList<>();
                         for (CabinetDTO cabinetDTO : data){
                             cabinetDTO.getCabinet().setSyncStatus(SyncSatus.SENT);

@@ -68,6 +68,11 @@ public class EvaluationTypeServiceImpl extends BaseServiceImpl<EvaluationType> i
     }
 
     @Override
+    public EvaluationType getByCode(String code) throws SQLException {
+        return evaluationTypeDAO.getByCode(code);
+    }
+
+    @Override
     public EvaluationType getByuuid(String uuid) throws SQLException {
         return evaluationTypeDAO.getByUuid(uuid);
     }

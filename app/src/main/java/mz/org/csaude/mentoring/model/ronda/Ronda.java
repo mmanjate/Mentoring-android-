@@ -17,6 +17,7 @@ import mz.org.csaude.mentoring.dto.ronda.RondaMenteeDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaMentorDTO;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
+import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.RondaStatus;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -44,6 +45,8 @@ public class Ronda extends BaseModel implements Listble {
     private HealthFacility healthFacility;
     @DatabaseField(columnName = COLUMN_RONDA_TYPE, canBeNull = false, foreign = true, foreignAutoRefresh = true )
     private RondaType rondaType;
+
+    private List<Session> sessions;
     private List<RondaMentee> rondaMentees;
     private List<RondaMentor> rondaMentors;
     public Ronda () {
@@ -137,5 +140,17 @@ public class Ronda extends BaseModel implements Listble {
     public String getRondaExuctionStatus() {
         String status = this.getSyncStatus().equals(SyncSatus.PENDING) ? RondaStatus.ON_GOING.toString() : RondaStatus.FINISHED.toString();
         return status;
+    }
+
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
+    }
+
+    public boolean isRondaZero() {
+        return this.rondaType.getCode().equals("SESSAO_ZERO");
     }
 }

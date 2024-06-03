@@ -6,6 +6,7 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.dao.MentoringBaseDao;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 
 public interface TutoredDao extends MentoringBaseDao<Tutored, Integer> {
@@ -16,4 +17,5 @@ public interface TutoredDao extends MentoringBaseDao<Tutored, Integer> {
 
     List<Tutored> getAllNotSynced() throws SQLException;
 
+    List<Tutored> getAllOfRonda(Ronda currRonda, MentoringApplication application) throws SQLException;
 }

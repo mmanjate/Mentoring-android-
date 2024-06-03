@@ -3,12 +3,14 @@ package mz.org.csaude.mentoring.dto.ronda;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class RondaMenteeDTO extends BaseEntityDTO {
     private Date startDate;
     private Date endDate;

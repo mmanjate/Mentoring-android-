@@ -1,10 +1,12 @@
 package mz.org.csaude.mentoring.dto.programmaticArea;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class TutorProgrammaticAreaDTO extends BaseEntityDTO {
     private TutorDTO tutorDTO;
     private ProgrammaticAreaDTO programmaticAreaDTO;

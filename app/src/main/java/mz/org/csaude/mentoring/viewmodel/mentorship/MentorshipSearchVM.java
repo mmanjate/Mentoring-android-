@@ -6,13 +6,17 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
+import mz.org.csaude.mentoring.base.activity.BaseActivity;
+import mz.org.csaude.mentoring.base.searchparams.AbstractSearchParams;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
+import mz.org.csaude.mentoring.base.viewModel.SearchVM;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
@@ -27,20 +31,38 @@ import mz.org.csaude.mentoring.service.mentorship.MentorshipServiceImpl;
 import mz.org.csaude.mentoring.service.session.SessionService;
 import mz.org.csaude.mentoring.service.session.SessionServiceImpl;
 import mz.org.csaude.mentoring.view.form.ListFormActivity;
+import mz.org.csaude.mentoring.view.mentorship.MentorshipActivity;
 
-public class MentorshipSearchVM extends BaseViewModel {
+public class MentorshipSearchVM extends SearchVM<Mentorship> {
+
     private MentorshipService mentorshipService;
     private SessionService sessionService;
     private Mentorship mentorship;
     private Session session;
     private List<Listble> mentorships;
     private List<Listble> sessions;
+
+    private Ronda ronda;
+
     public MentorshipSearchVM(@NonNull Application application) {
         super(application);
         this.mentorshipService = new MentorshipServiceImpl(application);
         this.sessionService = new SessionServiceImpl(application);
         this.mentorships = new ArrayList<>();
         this.sessions = new ArrayList<>();
+    }
+
+    @Override
+    protected void doOnNoRecordFound() {
+
+    }
+
+    public Ronda getRonda() {
+        return ronda;
+    }
+
+    public void setRonda(Ronda ronda) {
+        this.ronda = ronda;
     }
 
     public String getMentorshipTitle() {
@@ -85,4 +107,23 @@ public class MentorshipSearchVM extends BaseViewModel {
     }
 
 
+    @Override
+    public List<Mentorship> doSearch(long offset, long limit) throws SQLException {
+        return getApplication().getMentorshipService().getAllOfRonda(this.ronda);
+    }
+
+    @Override
+    public MentorshipActivity getRelatedActivity() {
+        return (MentorshipActivity) super.getRelatedActivity();
+    }
+
+    @Override
+    public void displaySearchResults() {
+        getRelatedActivity().populateRecyclerView();
+    }
+
+    @Override
+    public AbstractSearchParams<Mentorship> initSearchParams() {
+        return null;
+    }
 }

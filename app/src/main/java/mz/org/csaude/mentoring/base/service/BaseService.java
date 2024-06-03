@@ -18,4 +18,6 @@ public interface BaseService <T extends BaseModel>{
     T getById(int id)  throws SQLException;
 
     T getByuuid(String uuid) throws SQLException;
+
+    public void close();
 }

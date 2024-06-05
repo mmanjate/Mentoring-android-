@@ -100,7 +100,7 @@ public class RondaVM extends BaseViewModel {
 
             if(!StringUtils.isEmpty(this.selectedHealthFacility.getUuid())) {
                 this.ronda.setHealthFacility(this.selectedHealthFacility);
-                setMenteeList(getApplication().getTutoredService().getAllOfHealthFacility(this.selectedHealthFacility));
+                setMenteeList(getApplication().getTutoredService().getAllForMentoringRound(this.selectedHealthFacility));
             }
             getRelatedActivity().reloadMenteesAdapter();
             notifyPropertyChanged(BR.healthFacility);

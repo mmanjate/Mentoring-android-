@@ -35,12 +35,18 @@ public class ZeroMentorshipListActivity extends BaseActivity {
 
         Intent intent = this.getIntent();
         getRelatedViewModel().setRonda((Ronda) intent.getExtras().get("ronda"));
-        getRelatedViewModel().initSearch();
+        //getRelatedViewModel().initSearch();
 
         setSupportActionBar(binding.toolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Sessão Zero");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getRelatedViewModel().initSearch();
     }
 
     @Override

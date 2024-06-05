@@ -18,4 +18,8 @@ public interface TutoredDao extends MentoringBaseDao<Tutored, Integer> {
     List<Tutored> getAllNotSynced() throws SQLException;
 
     List<Tutored> getAllOfRonda(Ronda currRonda, MentoringApplication application) throws SQLException;
+
+    public List<Tutored> getAllOfRondaForZeroEvaluation(Ronda currRonda, MentoringApplication application) throws SQLException;
+
+    public List<Tutored> getAllForMentoringRound(HealthFacility healthFacility, MentoringApplication application) throws SQLException;
 }

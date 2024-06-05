@@ -9,15 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
-import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.ronda.RondaDAOImpl;
 import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
-import mz.org.csaude.mentoring.dto.ronda.RondaMenteeDTO;
-import mz.org.csaude.mentoring.dto.ronda.RondaMentorDTO;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.session.Session;
+import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.RondaStatus;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -138,8 +136,7 @@ public class Ronda extends BaseModel implements Listble {
     }
 
     public String getRondaExuctionStatus() {
-        String status = this.getSyncStatus().equals(SyncSatus.PENDING) ? RondaStatus.ON_GOING.toString() : RondaStatus.FINISHED.toString();
-        return status;
+        return this.isRondaCompleted() ? RondaStatus.ON_GOING.toString() : RondaStatus.FINISHED.toString();
     }
 
     public List<Session> getSessions() {
@@ -152,5 +149,39 @@ public class Ronda extends BaseModel implements Listble {
 
     public boolean isRondaZero() {
         return this.rondaType.getCode().equals("SESSAO_ZERO");
+    }
+
+    public void addSession(Session session) {
+        if(this.sessions == null) this.sessions = new ArrayList<>();
+        this.sessions.add(session);
+    }
+    public void removeSession(Session session) {
+        if(this.sessions == null) return;
+        this.sessions.remove(session);
+    }
+    public void tryToCloseRonda() {
+        boolean allSessionsClosed = true;
+        for (RondaMentee rondaMentee : rondaMentees) {
+            if (!hasSessionClosed(rondaMentee.getTutored())) {
+                allSessionsClosed = false;
+                break;
+            }
+        }
+        if (allSessionsClosed) {
+            this.setEndDate(DateUtilities.getCurrentDate());
+        }
+    }
+
+    public boolean isRondaCompleted() {
+        return this.getEndDate() != null;
+    }
+
+    private boolean hasSessionClosed(Tutored tutored) {
+        for (Session session : sessions) {
+            if (session.getTutored().equals(tutored) && session.isCompleted()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

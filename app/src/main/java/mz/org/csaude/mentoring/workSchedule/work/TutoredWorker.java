@@ -14,21 +14,22 @@ import mz.org.csaude.mentoring.util.Http;
 import mz.org.csaude.mentoring.util.Utilities;
 
 public class TutoredWorker extends BaseWorker<Tutored> {
-    private String requestType;
+
 
     public TutoredWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        requestType = getInputData().getString("requestType");
     }
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-        if (Utilities.stringHasValue(requestType) && requestType.equalsIgnoreCase(String.valueOf(Http.POST))) {
+        if (isPOSTRequest()) {
             getApplication().getTutoredRestService().restPostTutored(this);
         } else {
-            getApplication().getTutoredRestService().restGetTutored(this);
+            getApplication().getTutoredRestService().restGetTutored(this, offset, limit);
         }
     }
+
+
 
     @Override
     protected void doOnStart() {
@@ -37,8 +38,10 @@ public class TutoredWorker extends BaseWorker<Tutored> {
 
     @Override
     protected void doAfterSearch(String flag, List<Tutored> recs) throws SQLException {
-        changeStatusToFinished();
-        doOnFinish();
+        if (isPOSTRequest()) {
+            changeStatusToFinished();
+            doOnFinish();
+        } else super.doAfterSearch(flag, recs);
     }
 
     @Override

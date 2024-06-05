@@ -14,6 +14,7 @@ import mz.org.csaude.mentoring.dao.mentorship.MentorshipDAO;
 import mz.org.csaude.mentoring.dao.ronda.RondaDAO;
 import mz.org.csaude.mentoring.dao.session.SessionDAO;
 import mz.org.csaude.mentoring.dao.session.SessionStatusDAO;
+import mz.org.csaude.mentoring.dao.tutored.TutoredDao;
 import mz.org.csaude.mentoring.dto.mentorship.MentorshipDTO;
 import mz.org.csaude.mentoring.dto.session.SessionDTO;
 import mz.org.csaude.mentoring.dto.session.SessionStatusDTO;
@@ -30,6 +31,8 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
     SessionDAO sessionDAO;
     SessionStatusDAO sessionStatusDAO;
 
+    TutoredDao tutoredDao;
+
     RondaDAO rondaDAO;
     AnswerDAO answerDAO;
 
@@ -45,7 +48,8 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
             this.sessionDAO = getDataBaseHelper().getSessionDAO();
             this.sessionStatusDAO = getDataBaseHelper().getSessionStatusDAO();
             this.answerDAO = getDataBaseHelper().getAnswerDAO();
-            this.rondaDAO = getDataBaseHelper().getRondaDAO();;
+            this.rondaDAO = getDataBaseHelper().getRondaDAO();
+            this.tutoredDao = getDataBaseHelper().getTutoredDao();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -55,6 +59,12 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
     @Override
     public Mentorship save(Mentorship record) throws SQLException {
         TransactionManager.callInTransaction(getDataBaseHelper().getConnectionSource(), (Callable<Void>) () -> {
+            if (record.getSession().getRonda().isRondaZero()) {
+                tutoredDao.update(record.getTutored());
+            }
+            if(record.getSession().getRonda().isRondaCompleted()) {
+                rondaDAO.update(record.getSession().getRonda());
+            }
             sessionDAO.create(record.getSession());
             mentorshipDAO.create(record);
             for (Answer answer : record.getAnswers()) {

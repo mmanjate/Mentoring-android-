@@ -17,6 +17,8 @@ public class TutoredDTO extends BaseEntityDTO {
 
     private EmployeeDTO employeeDTO;
 
+    private boolean zeroEvaluationDone;
+
     public TutoredDTO(Tutored tutored) {
         super(tutored);
         this.setEmployeeDTO(new EmployeeDTO(tutored.getEmployee()));
@@ -28,6 +30,14 @@ public class TutoredDTO extends BaseEntityDTO {
 
     public void setEmployeeDTO(EmployeeDTO employeeDTO) {
         this.employeeDTO = employeeDTO;
+    }
+
+    public boolean isZeroEvaluationDone() {
+        return zeroEvaluationDone;
+    }
+
+    public void setZeroEvaluationDone(boolean zeroEvaluationDone) {
+        this.zeroEvaluationDone = zeroEvaluationDone;
     }
 
     public Tutored getMentee() {

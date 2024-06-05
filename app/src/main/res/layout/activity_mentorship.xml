@@ -42,10 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -112,19 +109,23 @@
                             android:gravity="center"
                             android:textSize="15sp" />
 
-                        <LinearLayout
+                        <ScrollView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:layout_below="@+id/tutored_title"
-                            android:layout_margin="@dimen/dimen_5dp"
-                            android:orientation="vertical">
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rcv_tutored"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_4dp"/>
+                                android:layout_margin="@dimen/dimen_5dp"
+                                android:orientation="vertical">
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rcv_tutored"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_4dp"/>
 
-                        </LinearLayout>
+                            </LinearLayout>
+                        </ScrollView>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -168,72 +169,27 @@
                                 android:layout_height="wrap_content"
                                 android:focusableInTouchMode="false"
                                 android:drawableLeft="@drawable/ic_calendar"
+                                android:drawablePadding="@dimen/dimen_5dp"
                                 android:text="@{DateUtilities.formatToDDMMYYYY(viewModel.startDate)}"
                                 android:enabled="@{!viewModel.currentStep.applicationStepDisplay}"
                                 style="@style/bottom_border_edit_text_style"/>
 
-                            <LinearLayout
+                            <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/dimen_4dp"
-                                android:layout_marginTop="@dimen/dimen_5dp"
-                                android:orientation="horizontal">
+                                android:text="@string/start"
+                                style="@style/input_labels"
+                                />
+                            <EditText
+                                android:id="@+id/session_start_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusableInTouchMode="false"
+                                android:drawablePadding="@dimen/dimen_5dp"
+                                android:drawableLeft="@drawable/ic_time"
+                                android:text="@{viewModel.startTime}"
+                                style="@style/bottom_border_edit_text_style"/>
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="2"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/start"
-                                        android:layout_weight="1.1"
-                                        style="@style/input_labels"
-                                        />
-                                    <EditText
-                                        android:id="@+id/session_start_time"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="2"
-                                        style="@style/bottom_border_edit_text_style"/>
-
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:src="@drawable/ic_timelapse_24"
-                                        />
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="2"
-                                    android:layout_marginStart="@dimen/dimen_4dp"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/end_time"
-                                        android:layout_weight="1.4"
-                                        style="@style/input_labels"
-                                        />
-                                    <EditText
-                                        android:id="@+id/session_end_time"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="2"
-                                        style="@style/bottom_border_edit_text_style"/>
-                                </LinearLayout>
-                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -322,70 +278,39 @@
                             android:layout_marginTop="10dp"
                             android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:gravity="right"
-                                android:textSize="10dp"
-                                android:paddingEnd="@dimen/dimen_5dp"
-                                android:layout_gravity="center_vertical"
-                                android:text="Anterior"/>
 
-                            <ImageButton
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/baseline_arrow_back_ios_24"
-                                android:layout_marginRight="2dp"
-                                android:background="@drawable/button_shape"
-                                android:onClick="@{()-> viewModel.previousCategory()}"
-                                android:layout_weight="1"/>
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="7"
-                                android:gravity="center"
-                                android:textSize="12dp"
-                                android:layout_gravity="center_vertical"
-                                android:textStyle="bold"
-                                android:text="@{viewModel.currQuestionCategory}"/>
-
-                            <ImageButton
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/button_shape"
-                                android:src="@drawable/baseline_arrow_forward_ios_24"
-                                android:layout_marginLeft="2dp"
-                                android:onClick="@{()-> viewModel.nextCategory()}"
-                                android:layout_weight="1"/>
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:textSize="10dp"
-                                android:paddingStart="@dimen/dimen_5dp"
-                                android:layout_gravity="center_vertical"
-                                android:text="Próximo"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/navigation"
-                            android:orientation="vertical">
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rcv_questions"
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spn_curr_category"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_6dp"/>
+                                android:layout_marginTop="@dimen/dimen_4dp"
+                                android:paddingHorizontal="@dimen/dimen_4dp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/bottom_spinner_style"
+                                bind:selectedOpt="@={viewModel.currQuestionCategory}"
+                                />
+
+
                         </LinearLayout>
 
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_below="@+id/navigation"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rcv_questions"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_6dp"/>
+                            </LinearLayout>
+                        </ScrollView>
                     </RelativeLayout>
                 </LinearLayout>
-            </ScrollView>
 
 
 

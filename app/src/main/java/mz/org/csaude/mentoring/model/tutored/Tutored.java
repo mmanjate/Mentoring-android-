@@ -14,10 +14,13 @@ public class Tutored extends BaseModel {
 
     public static final String COLUMN_TABLE_NAME = "tutored";
     public static final String COLUMN_EMPLOYEE = "emplyee_id";
+    public static final String COLUMN_ZERO_EVALUATION_STATUS = "zero_evatuation_status";
 
     @DatabaseField(columnName = COLUMN_EMPLOYEE, foreign = true, foreignAutoRefresh = true )
     private Employee employee;
 
+    @DatabaseField(columnName = COLUMN_ZERO_EVALUATION_STATUS)
+    private boolean zeroEvaluationDone;
     public Tutored() {
     }
 
@@ -28,6 +31,7 @@ public class Tutored extends BaseModel {
     public Tutored(TutoredDTO tutoredDTO) {
         this.setUuid(tutoredDTO.getUuid());
         this.setEmployee(new Employee(tutoredDTO.getEmployeeDTO()));
+        this.setZeroEvaluationDone(tutoredDTO.isZeroEvaluationDone());
     }
 
     public Employee getEmployee() {
@@ -42,6 +46,14 @@ public class Tutored extends BaseModel {
     @Override
     public String getDescription() {
         return this.employee.getFullName();
+    }
+
+    public boolean isZeroEvaluationDone() {
+        return zeroEvaluationDone;
+    }
+
+    public void setZeroEvaluationDone(boolean zeroEvaluationDone) {
+        this.zeroEvaluationDone = zeroEvaluationDone;
     }
 
     @Override

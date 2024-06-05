@@ -18,6 +18,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
+import mz.org.csaude.mentoring.util.Utilities;
 
 public class ListableSpinnerAdapter extends ArrayAdapter {
 
@@ -50,11 +51,16 @@ public class ListableSpinnerAdapter extends ArrayAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.simple_auto_complete_item, parent, false);
         }
+        Listble listble = dataList.get(position);
+
         TextView label = convertView.findViewById(R.id.label);
         ImageView icon = convertView.findViewById(R.id.item_icon);
+        TextView info = convertView.findViewById(R.id.extra_info);
 
-        label.setText(((Listble)dataList.get(position)).getDescription());
-        icon.setImageResource(((Listble)dataList.get(position)).getDrawable());
+        if (!Utilities.stringHasValue(listble.getExtraInfo())) info.setVisibility(View.GONE);
+        info.setText(listble.getExtraInfo());
+        label.setText(listble.getDescription());
+        icon.setImageResource(listble.getDrawable());
         return convertView;
     }
 
@@ -65,13 +71,17 @@ public class ListableSpinnerAdapter extends ArrayAdapter {
             convertView = inflater.inflate(R.layout.simple_auto_complete_item,parent, false);
         }
 
+        Listble listble = dataList.get(position);
+
         TextView label = convertView.findViewById(R.id.label);
         ImageView icon = convertView.findViewById(R.id.item_icon);
+        TextView info = convertView.findViewById(R.id.extra_info);
 
         //icon.setImageResource(R.drawable.ic_menu_camera);
 
-
-        label.setText(((Listble)dataList.get(position)).getDescription());
+        if (!Utilities.stringHasValue(listble.getExtraInfo())) info.setVisibility(View.GONE);
+        info.setText(listble.getExtraInfo());
+        label.setText(listble.getDescription());
         return convertView;
     }
 

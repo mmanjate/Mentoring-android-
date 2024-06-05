@@ -22,4 +22,16 @@
         android:text="Mentorando"
         android:textStyle="bold"
         />
+    <TextView
+        android:id="@+id/extra_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:padding="@dimen/dimen_4dp"
+        android:textAlignment="textEnd"
+        style="@style/spinner_label"
+        android:text="info"
+        android:textColor="@color/background_layout"
+        android:textStyle="bold"
+        />
 </LinearLayout>

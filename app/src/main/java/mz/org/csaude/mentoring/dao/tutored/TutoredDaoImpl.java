@@ -71,4 +71,31 @@ public class TutoredDaoImpl extends MentoringBaseDaoImpl<Tutored, Integer> imple
             }
         return tutoredList;
     }
+
+    @Override
+    public List<Tutored> getAllOfRondaForZeroEvaluation(Ronda currRonda, MentoringApplication application) throws SQLException {
+        List<Tutored> tutoredList = new ArrayList<>();
+        QueryBuilder<RondaMentee, Integer> rondaMenteeQb = MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getRondaMenteeDAO().queryBuilder();
+        rondaMenteeQb.where().eq(RondaMentee.COLUMN_RONDA, currRonda.getId());
+
+        List<RondaMentee> rondaMentees = rondaMenteeQb.query();
+        for (RondaMentee rondaMentee : rondaMentees) {
+            if (!rondaMentee.getTutored().isZeroEvaluationDone()) tutoredList.add(this.queryForId(rondaMentee.getTutored().getId()));
+        }
+        return tutoredList;
+    }
+
+    @Override
+    public List<Tutored> getAllForMentoringRound(HealthFacility healthFacility, MentoringApplication application) throws SQLException {
+        QueryBuilder<Location, Integer> locationQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getLocationDAO().queryBuilder();
+        locationQb.where().eq(Location.COLUMN_HEALTH_FACILITY, healthFacility.getId()).and().eq(Location.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE);
+
+        QueryBuilder<Employee, Integer> employeeQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getEmployeeDAO().queryBuilder();
+        employeeQb.join(locationQb);
+
+        QueryBuilder<Tutored, Integer> tutoredQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getTutoredDao().queryBuilder();
+        tutoredQb.join(employeeQb).where().eq(Tutored.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE).and().eq(Tutored.COLUMN_ZERO_EVALUATION_STATUS, true);
+
+        return tutoredQb.orderBy(Employee.COLUMN_ID, true).query();
+    }
 }

@@ -8,6 +8,7 @@ import androidx.databinding.ObservableField;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +30,15 @@ import mz.org.csaude.mentoring.model.mentorship.Door;
 import mz.org.csaude.mentoring.model.mentorship.IterationType;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.mentorship.TimeOfDay;
+import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
+import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.mentorship.CreateMentorshipActivity;
@@ -60,9 +64,11 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     private List<FormQuestion> formQuestions;
 
-    private TreeMap<String, List<FormQuestion>> questionMap;
+    private TreeMap<SimpleValue, List<FormQuestion>> questionMap;
 
-    private String currQuestionCategory;
+    private Listble currQuestionCategory;
+
+    private List<Listble> categories;
 
     private boolean mentorshipCompleted;
 
@@ -86,23 +92,23 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     public boolean isThereNextKey() {
         if (this.questionMap == null) return false;
-        return Utilities.stringHasValue(this.questionMap.higherKey(this.currQuestionCategory));
+        return this.questionMap.higherKey((SimpleValue) this.currQuestionCategory) != null;
     }
 
     public boolean isTherePreviousKey() {
         if (this.questionMap == null) return false;
-        return Utilities.stringHasValue(this.questionMap.lowerKey(this.currQuestionCategory));
+        return this.questionMap.lowerKey((SimpleValue) this.currQuestionCategory) != null;
     }
     public void nextCategory() {
-        if (!allCurrentQuestionsResponded()) {
+        /*if (!allCurrentQuestionsResponded()) {
             Utilities.displayAlertDialog(getRelatedActivity(), "Tem uma ou mais Competências sem a resposta indicada.").show();
             return;
         }
-        if (!Utilities.stringHasValue(this.questionMap.higherKey(this.currQuestionCategory))) {
+        if (!Utilities.stringHasValue(this.questionMap.higherKey(this.currQuestionCategory.getDescription()))) {
             Utilities.displayConfirmationDialog(getRelatedActivity(), "Terminou todas as Competências desta sessão, Confirma terminar a mesma?","SIM", "NÃO", this).show();
             return;
-        }
-        setCurrQuestionCategory(this.questionMap.higherKey(this.currQuestionCategory));
+        }*/
+        setCurrQuestionCategory(this.questionMap.higherKey((SimpleValue) this.currQuestionCategory));
         getRelatedActivity().populateQuestionList();
     }
 
@@ -122,16 +128,16 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     }
 
     public void previousCategory() {
-        if (!Utilities.stringHasValue(this.questionMap.lowerKey(this.currQuestionCategory))) {
+        if (this.questionMap.lowerKey((SimpleValue) this.currQuestionCategory) == null) {
             Utilities.displayAlertDialog(getRelatedActivity(), "Não existe uma categoria anterior para visualizar.").show();
             return;
         }
-        setCurrQuestionCategory(this.questionMap.lowerKey(this.currQuestionCategory));
+        setCurrQuestionCategory(this.questionMap.lowerKey((SimpleValue) this.currQuestionCategory));
         getRelatedActivity().populateQuestionList();
     }
 
     public void finnalizeMentorship() {
-        if (allQuestionsResponded()) {
+        if (!allQuestionsResponded()) {
             Utilities.displayAlertDialog(getRelatedActivity(), "Tem uma ou mais Competências sem a resposta indicada.").show();
             return;
         }
@@ -140,7 +146,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     }
 
     private boolean allQuestionsResponded() {
-        for (Map.Entry<String, List<FormQuestion>> entry : questionMap.entrySet()) {
+        for (Map.Entry<SimpleValue, List<FormQuestion>> entry : questionMap.entrySet()) {
             for (FormQuestion question : entry.getValue()) {
                 if (!Utilities.stringHasValue(question.getAnswer().getValue())) return false;
             }
@@ -232,8 +238,14 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             setCurrMentorshipStep(CURR_MENTORSHIP_STEP_PERIOD_SELECTION);
         } else if (isPeriodSelectionStep()) {
             loadQuestion();
+            for (Listble listble : categories) {
+                ((SimpleValue) listble).setExtraInfo("0/"+questionMap.get(listble).size());
+            }
+            getRelatedActivity().loadCategoryAdapter();
             getRelatedActivity().populateQuestionList();
             setCurrMentorshipStep(CURR_MENTORSHIP_STEP_QUESTION_SELECTION);
+        } else if (isQuestionSelectionStep()) {
+            finnalizeMentorship();
         }
         notifyPropertyChanged(BR.currMentorshipStep);
     }
@@ -265,6 +277,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     public void determineMentorshipType() {
         try {
             if (this.mentorship == null) this.mentorship = new Mentorship();
+            this.mentorship.setStartDate(DateUtilities.getCurrentDate());
             this.mentorship.setTutor(getApplication().getCurrMentor());
             this.mentorship.setUuid(Utilities.getNewUUID().toString());
             this.mentorship.setCreatedAt(DateUtilities.getCurrentDate());
@@ -294,6 +307,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             session.setEndDate(this.mentorship.getEndDate());
             session.setStartDate(this.mentorship.getStartDate());
             session.setPerformedDate(DateUtilities.getCurrentDate());
+            session.addMentorship(this.mentorship);
             return session;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -337,7 +351,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     public List<Tutored> getMentees() {
         try {
-            this.tutoreds= getApplication().getTutoredService().getAllOfRonda(this.mentorship.getSession().getRonda());
+            this.tutoreds= getApplication().getTutoredService().getAllOfRondaForZeroEvaluation(this.mentorship.getSession().getRonda());
             for (Tutored tutored :this.tutoreds) {
                 tutored.setListType(Listble.ListTypes.UNDEFINED);
             }
@@ -418,7 +432,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
                     formQuestion.getAnswer().setMentorship(this.mentorship);
                     formQuestion.getAnswer().setForm(this.mentorship.getForm());
                     formQuestion.getAnswer().setValue("");
-                    loadQuestionMap(formQuestion,formQuestion.getQuestion().getQuestionsCategory().getCategory());
+                    loadQuestionMap(formQuestion,formQuestion.getQuestion().getQuestionsCategory());
                 }
                 setCurrQuestionCategory(this.questionMap.firstKey());
             }
@@ -428,25 +442,44 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     }
 
 
-    private void loadQuestionMap(FormQuestion formQuestion, String category) {
-        if (questionMap == null) questionMap = new TreeMap<>();
-        if (!questionMap.containsKey(category)) {
-            questionMap.put(category, new ArrayList<>());
+    private void loadQuestionMap(FormQuestion formQuestion, QuestionsCategory category) {
+        if (questionMap == null) {
+            questionMap = new TreeMap<>((o1, o2) -> {
+                if (o1.getId() != null && o2.getId() != null) {
+                    return o1.getId().compareTo(o2.getId());
+                } else if (o1.getDescription() != null && o2.getDescription() != null) {
+                    return o1.getDescription().compareTo(o2.getDescription());
+                }
+                return 0;
+            });
         }
-        questionMap.get(category).add(formQuestion);
+        SimpleValue cat = SimpleValue.fastCreate(category.getId(), category.getDescription(), "0/0");
+        if (!questionMap.containsKey(cat)) {
+            questionMap.put(cat, new ArrayList<>());
+            addToCategoryList(cat);
+        }
+        questionMap.get(cat).add(formQuestion);
     }
 
-    public TreeMap<String, List<FormQuestion>> getQuestionMap() {
+    private void addToCategoryList(SimpleValue cat) {
+        if (categories == null) categories = new ArrayList<>();
+        categories.add(cat);
+    }
+
+    public TreeMap<SimpleValue, List<FormQuestion>> getQuestionMap() {
         return questionMap;
     }
 
     @Bindable
-    public String getCurrQuestionCategory() {
+    public Listble getCurrQuestionCategory() {
         return currQuestionCategory;
     }
 
-    public void setCurrQuestionCategory(String currQuestionCategory) {
+    public void setCurrQuestionCategory(Listble currQuestionCategory) {
+        if (currQuestionCategory == null) return;
+
         this.currQuestionCategory = currQuestionCategory;
+        getRelatedActivity().populateQuestionList();
         notifyPropertyChanged(BR.currQuestionCategory);
     }
 
@@ -461,7 +494,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     private void doSaveMentorship() {
         try {
-            for (Map.Entry<String, List<FormQuestion>> entry : questionMap.entrySet()) {
+            for (Map.Entry<SimpleValue, List<FormQuestion>> entry : questionMap.entrySet()) {
                 for (FormQuestion question : entry.getValue()) {
                     this.mentorship.addAnswer(question.getAnswer());
                 }
@@ -469,16 +502,50 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             this.mentorship.setEndDate(DateUtilities.getCurrentDate());
             this.mentorship.getSession().setEndDate(this.mentorship.getEndDate());
             this.mentorship.getSession().setStartDate(this.mentorship.getStartDate());
+            if (ronda.isRondaZero()) {
+                this.mentorship.getTutored().setZeroEvaluationDone(true);
+            }
+
+            this.ronda.addSession(this.mentorship.getSession());
+            this.ronda.tryToCloseRonda();
             getApplication().getMentorshipService().save(this.mentorship);
-            getApplication().getMentorshipService().close();
             getRelatedActivity().finish();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public List<Listble> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Listble> categories) {
+        this.categories = categories;
+    }
+
     @Override
     public void doOnDeny() {
 
+    }
+
+    public void setQuestionAnswer(FormQuestion formQuestion, String answerValue) {
+        formQuestion.getAnswer().setValue(answerValue);
+        int i=0;
+        List<FormQuestion> formQuestionList= questionMap.get(this.currQuestionCategory);
+
+        for (FormQuestion fq : formQuestionList) {
+            if (Utilities.stringHasValue(fq.getAnswer().getValue()) && fq.getAnswer().getValue().length() > 1) i++;
+        }
+        for (Listble listble : categories) {
+            if (listble.equals(this.currQuestionCategory)) {
+                ((SimpleValue) listble).setExtraInfo(i + "/" + formQuestionList.size());
+            }
+        }
+        ((SimpleValue) currQuestionCategory).setExtraInfo(i + "/" + formQuestionList.size());
+        getRelatedActivity().reloadCategoryAdapter();
+    }
+
+    public String getStartTime() {
+        return DateUtilities.formatToHHMI(DateUtilities.getCurrentDate());
     }
 }

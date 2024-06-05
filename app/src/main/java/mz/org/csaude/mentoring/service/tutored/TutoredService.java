@@ -16,8 +16,12 @@ public interface TutoredService extends BaseService<Tutored> {
 
     List<Tutored> getAllOfRonda(Ronda currRonda) throws SQLException;
 
+    List<Tutored> getAllOfRondaForZeroEvaluation(Ronda currRonda) throws SQLException;
+
     List<Tutored> getAllOfHealthFacility(HealthFacility healthFacility) throws SQLException;
 
     List<Tutored> getAllNotSynced() throws SQLException;
+
+    public List<Tutored> getAllForMentoringRound(HealthFacility healthFacility) throws SQLException;
 
 }

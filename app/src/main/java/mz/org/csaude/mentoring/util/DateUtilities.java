@@ -358,6 +358,14 @@ public class DateUtilities {
         return Utilities.garantirXCaracterOnNumber(getHours(date), 2) + ":" + Utilities.garantirXCaracterOnNumber(getMinutes(date), 2) + ":" + Utilities.garantirXCaracterOnNumber(getSeconds(date), 2);
     }
 
+    public static String formatToHHMI(Date date){
+        if (date == null){
+            return "";
+        }
+
+        return Utilities.garantirXCaracterOnNumber(getHours(date), 2) + ":" + Utilities.garantirXCaracterOnNumber(getMinutes(date), 2);
+    }
+
 
     /**
      * Retorna o numero de dias entre as datas.

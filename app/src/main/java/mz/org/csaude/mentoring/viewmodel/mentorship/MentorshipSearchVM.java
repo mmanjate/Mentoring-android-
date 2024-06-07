@@ -30,7 +30,10 @@ import mz.org.csaude.mentoring.service.mentorship.MentorshipService;
 import mz.org.csaude.mentoring.service.mentorship.MentorshipServiceImpl;
 import mz.org.csaude.mentoring.service.session.SessionService;
 import mz.org.csaude.mentoring.service.session.SessionServiceImpl;
+import mz.org.csaude.mentoring.util.DateUtilities;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.form.ListFormActivity;
+import mz.org.csaude.mentoring.view.mentorship.CreateMentorshipActivity;
 import mz.org.csaude.mentoring.view.mentorship.MentorshipActivity;
 
 public class MentorshipSearchVM extends SearchVM<Mentorship> {
@@ -66,19 +69,10 @@ public class MentorshipSearchVM extends SearchVM<Mentorship> {
     }
 
     public String getMentorshipTitle() {
-        return "Sessão 2-Lista de Avaliações Valter Luis";
+        return "Sessão de " + DateUtilities.formatToDDMMYYYY(this.session.getStartDate()) + ", Lista de Avaliações de: " + this.session.getTutored().getEmployee().getFullName();
     }
     @Override
     public void preInit() {
-        if (getCurrentStep().isApplicationStepEdit()) {
-            this.mentorship = (Mentorship) this.selectedListble;
-            this.session = (Session) this.selectedListble;
-         } else {
-            this.mentorship = new Mentorship();
-            this.session = new Session();
-        }
-        this.mentorships = new ArrayList<>();
-        this.sessions = new ArrayList<>();
     }
 
     @Bindable
@@ -88,28 +82,19 @@ public class MentorshipSearchVM extends SearchVM<Mentorship> {
 
     public void createNewMentorship() {
         Map<String, Object> params = new HashMap<>();
-        Intent intent = getRelatedActivity().getIntent();
-        String title = (String) intent.getExtras().get("title");
-        RondaType rondaType = (RondaType) intent.getExtras().get("rondaType");
-        Ronda ronda = (Ronda) intent.getExtras().get("createdRonda");
-        Tutor currMentor = (Tutor) intent.getExtras().get("currMentor");
-        List<RondaMentee> selectedMentees = (List<RondaMentee>) intent.getExtras().getSerializable("rondaMentees");
-        RondaMentor rondaMentor = (RondaMentor) intent.getExtras().get("rondaMentor");
-        params.put("rondaType", rondaType);
-        params.put("title", title);
-        params.put("createdRonda", ronda);
-        params.put("currMentor", currMentor);
-        params.put("rondaMentees", selectedMentees);
-        params.put("rondaMentor", rondaMentor);
-        this.mentorship.setTutor(currMentor);
-        params.put("newMentorship", this.mentorship);
-        getRelatedActivity().nextActivityFinishingCurrent(ListFormActivity.class, params);
+        params.put("session", session);
+        params.put("CURR_MENTORSHIP_STEP", MentorshipVM.CURR_MENTORSHIP_STEP_PERIOD_SELECTION);
+        getRelatedActivity().nextActivity(CreateMentorshipActivity.class, params);
     }
 
 
     @Override
     public List<Mentorship> doSearch(long offset, long limit) throws SQLException {
-        return getApplication().getMentorshipService().getAllOfRonda(this.ronda);
+        if (this.ronda.isRondaZero()) {
+            return getApplication().getMentorshipService().getAllOfRonda(this.ronda);
+        } else {
+            return getApplication().getMentorshipService().getAllOfSession(this.session);
+        }
     }
 
     @Override
@@ -125,5 +110,9 @@ public class MentorshipSearchVM extends SearchVM<Mentorship> {
     @Override
     public AbstractSearchParams<Mentorship> initSearchParams() {
         return null;
+    }
+
+    public void setSession(Session s) {
+        this.session = s;
     }
 }

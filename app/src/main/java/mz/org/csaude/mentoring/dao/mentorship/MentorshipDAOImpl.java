@@ -79,4 +79,9 @@ public class MentorshipDAOImpl extends MentoringBaseDaoImpl<Mentorship, Integer>
         }
         return mentorshipList;
     }
+
+    @Override
+    public List<Mentorship> getAllOfSession(Session session) throws SQLException {
+        return queryForEq(Mentorship.COLUMN_SESSION, session.getId());
+    }
 }

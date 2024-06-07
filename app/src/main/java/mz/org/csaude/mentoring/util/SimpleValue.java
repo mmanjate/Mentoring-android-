@@ -10,7 +10,7 @@ import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 
 
-public class SimpleValue extends BaseModel implements Listble {
+public class SimpleValue extends BaseModel implements Listble, Comparable<SimpleValue> {
 
     private Integer id;
 
@@ -20,8 +20,15 @@ public class SimpleValue extends BaseModel implements Listble {
 
     private String qty;
 
+    private String extraInfo;
+
     public SimpleValue(String description) {
         this.description = description;
+    }
+
+    public SimpleValue(String description, String extraInfo) {
+        this.description = description;
+        this.extraInfo = extraInfo;
     }
 
     public SimpleValue() {
@@ -34,6 +41,21 @@ public class SimpleValue extends BaseModel implements Listble {
 
     public SimpleValue(Integer id) {
         this.id = id;
+    }
+
+    public SimpleValue(Integer id, String description, String extraInfo) {
+        this.id = id;
+        this.description = description;
+        this.extraInfo = extraInfo;
+    }
+
+    @Override
+    public String getExtraInfo() {
+        return extraInfo;
+    }
+
+    public void setExtraInfo(String extraInfo) {
+        this.extraInfo = extraInfo;
     }
 
     public Integer getId() {
@@ -66,6 +88,10 @@ public class SimpleValue extends BaseModel implements Listble {
 
     public static SimpleValue fastCreate(Integer id, String description){
         return new SimpleValue(id, description);
+    }
+
+    public static SimpleValue fastCreate(Integer id, String description, String extraInfo){
+        return new SimpleValue(id, description, extraInfo);
     }
 
     public static SimpleValue fastCreate(Integer id){
@@ -117,4 +143,13 @@ public class SimpleValue extends BaseModel implements Listble {
     }
 
 
+    @Override
+    public int compareTo(SimpleValue other) {
+        if (this.id != null && other.id != null) {
+            return this.id.compareTo(other.id);
+        } else if (this.description != null && other.description != null) {
+            return this.description.compareTo(other.description);
+        }
+        return 0; // or appropriate default behavior
+    }
 }

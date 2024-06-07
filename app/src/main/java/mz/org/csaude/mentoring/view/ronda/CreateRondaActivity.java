@@ -57,30 +57,18 @@ public class CreateRondaActivity extends BaseActivity {
         rondaBinding.setViewModel(getRelatedViewModel());
 
 
-        ArrayAdapter<Tutored> menteesAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getMentees());
-        rondaBinding.autCmpMentees.setThreshold(1);
-        rondaBinding.autCmpMentees.setAdapter(menteesAdapter);
-        rondaBinding.autCmpMentees.setOnFocusChangeListener((view, b) -> {
-            rondaBinding.autCmpMentees.showDropDown();
-        });
-
-
 
         rcvSelectedMentees = rondaBinding.rcvSelectedMentees;
         setSupportActionBar(rondaBinding.toolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = this.getIntent();
-        Bundle bundle = new Bundle();
         if(intent!=null && intent.getExtras()!=null) {
-            ronda = (Ronda) intent.getExtras().get("createdRonda");
             title = (String) intent.getExtras().get("title");
             rondaTypeOption = (RondaType) intent.getExtras().get("rondaType");
-            bundle.putSerializable("ronda", ronda);
-            bundle.putSerializable("title", title);
-            bundle.putSerializable("rondaType", rondaTypeOption);
-            intent.putExtras(bundle);
         }
+
+        getRelatedViewModel().getRonda().setRondaType(rondaTypeOption);
 
         getSupportActionBar().setTitle(title);
         initAdapters();
@@ -128,10 +116,12 @@ public class CreateRondaActivity extends BaseActivity {
     }
 
     public void reloadMenteesAdapter() {
-        List<Tutored> tutoredList = getRelatedViewModel().getMentees();
-        ArrayAdapter<Tutored> drugArrayAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, tutoredList);
+         ArrayAdapter<Tutored> menteesAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getrondaMenteeList());
         rondaBinding.autCmpMentees.setThreshold(1);
-        rondaBinding.autCmpMentees.setAdapter(drugArrayAdapter);
+        rondaBinding.autCmpMentees.setAdapter(menteesAdapter);
+        rondaBinding.autCmpMentees.setOnFocusChangeListener((view, b) -> {
+            rondaBinding.autCmpMentees.showDropDown();
+        });
     }
 
     public void reloadDistrictAdapter() {

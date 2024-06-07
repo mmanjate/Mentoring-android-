@@ -21,6 +21,7 @@ import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.ronda.RondaMentor;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
+import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipSearchVM;
@@ -41,7 +42,14 @@ public class MentorshipActivity extends BaseActivity {
 
         Intent intent = this.getIntent();
         if(intent!=null && intent.getExtras()!=null) {
-            getRelatedViewModel().setRonda((Ronda) intent.getExtras().get("ronda"));
+            Session s = null;
+            Ronda r = (Ronda) intent.getExtras().get("ronda");
+            if (r == null) {
+                s = (Session) intent.getExtras().get("session");
+                r = s.getRonda();
+            }
+            getRelatedViewModel().setRonda(r);
+            getRelatedViewModel().setSession(s);
             getRelatedViewModel().initSearch();
         }
     }

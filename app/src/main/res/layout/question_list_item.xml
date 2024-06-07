@@ -53,7 +53,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="wrap_content"
-                    android:onClick='@{()->formQuestion.answer.setValue("SIM")}'
+                    android:onClick='@{()->viewModel.setQuestionAnswer(formQuestion, "SIM")}'
                     android:checked='@{formQuestion.answer.value.equals("SIM")}'
                     android:text="SIM"
                     android:tag="SIM"/>
@@ -64,7 +64,7 @@
                     android:layout_width="@dimen/dimen_0dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_height="wrap_content"
-                    android:onClick='@{()->formQuestion.answer.setValue("NAO")}'
+                    android:onClick='@{()->viewModel.setQuestionAnswer(formQuestion, "NAO")}'
                     android:checked='@{formQuestion.answer.value.equals("NAO")}'
                     android:text="NÃO"
                     android:tag="NAO"/>
@@ -76,7 +76,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_height="wrap_content"
                     android:visibility='@{formQuestion.responseType.code.equals("SIM/NAO/NA") ? View.VISIBLE : View.GONE}'
-                    android:onClick='@{()->formQuestion.answer.setValue("N/A")}'
+                    android:onClick='@{()->viewModel.setQuestionAnswer(formQuestion, "N/A")}'
                     android:checked='@{formQuestion.answer.value.equals("N/A")}'
                     android:text="N/A"
                     android:tag="N/A"/>

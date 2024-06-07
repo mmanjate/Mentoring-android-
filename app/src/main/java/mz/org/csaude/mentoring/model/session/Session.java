@@ -3,13 +3,18 @@ package mz.org.csaude.mentoring.model.session;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.session.SessionDAOImpl;
+import mz.org.csaude.mentoring.model.form.Form;
+import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.tutored.Tutored;
 
 @Data
 @DatabaseTable(tableName = Session.TABLE_NAME, daoClass = SessionDAOImpl.class)
@@ -28,10 +33,14 @@ public class Session extends BaseModel {
 
     public static final String COLUMN_RONDA = "ronda_id";
 
+    public static final String COLUMN_MENTEE = "mentee_id";
+
+    public static final String COLUMN_FORM = "form_id";
+
     @DatabaseField(columnName = COLUMN_START_DATE, canBeNull = false)
     private Date startDate;
 
-    @DatabaseField(columnName = COLUMN_END_DATE, canBeNull = false)
+    @DatabaseField(columnName = COLUMN_END_DATE, canBeNull = true)
     private Date endDate;
 
     @DatabaseField(columnName = COLUMN_PERFORMED_DATE)
@@ -42,6 +51,13 @@ public class Session extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_RONDA, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Ronda ronda;
+
+    @DatabaseField(columnName = COLUMN_MENTEE, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private Tutored tutored;
+
+    @DatabaseField(columnName = COLUMN_FORM, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private Form form;
+    private List<Mentorship> mentorships;
 
     public Session() {
     }
@@ -93,4 +109,33 @@ public class Session extends BaseModel {
         this.status = status;
     }
 
+    public List<Mentorship> getMentorships() {
+        return mentorships;
+    }
+    public void addMentorship(Mentorship mentorship) {
+        if (mentorships == null) {
+            mentorships = new ArrayList<>();
+        }
+        mentorships.add(mentorship);
+    }
+
+    public Tutored getTutored() {
+        return tutored;
+    }
+
+    public void setTutored(Tutored tutored) {
+        this.tutored = tutored;
+    }
+
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
+    }
+
+    public boolean isCompleted() {
+        return this.status.isCompleted();
+    }
 }

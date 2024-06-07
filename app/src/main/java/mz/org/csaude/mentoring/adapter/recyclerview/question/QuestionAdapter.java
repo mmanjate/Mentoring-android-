@@ -17,6 +17,7 @@ import mz.org.csaude.mentoring.databinding.QuestionListItemBinding;
 import mz.org.csaude.mentoring.databinding.RondaListItemBinding;
 import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipVM;
 
 public class QuestionAdapter extends AbstractRecycleViewAdapter<FormQuestion> {
 
@@ -34,6 +35,7 @@ public class QuestionAdapter extends AbstractRecycleViewAdapter<FormQuestion> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((FormQuestionViewHolder) holder).questionListItemBinding.setFormQuestion(super.records.get(position));
+        ((FormQuestionViewHolder) holder).questionListItemBinding.setViewModel((MentorshipVM) getActivity().getRelatedViewModel());
     }
     @Override
     public int getItemCount() {

@@ -35,12 +35,18 @@ public class ZeroMentorshipListActivity extends BaseActivity {
 
         Intent intent = this.getIntent();
         getRelatedViewModel().setRonda((Ronda) intent.getExtras().get("ronda"));
-        getRelatedViewModel().initSearch();
+        //getRelatedViewModel().initSearch();
 
         setSupportActionBar(binding.toolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Sessão Zero");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getRelatedViewModel().initSearch();
     }
 
     @Override
@@ -54,17 +60,13 @@ public class ZeroMentorshipListActivity extends BaseActivity {
     }
 
     public void populateRecyclerView(){
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }else {
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-            binding.rcvMentorships.setLayoutManager(mLayoutManager);
-            binding.rcvMentorships.setItemAnimator(new DefaultItemAnimator());
-            binding.rcvMentorships.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        binding.rcvMentorships.setLayoutManager(mLayoutManager);
+        binding.rcvMentorships.setItemAnimator(new DefaultItemAnimator());
+        binding.rcvMentorships.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
 
-            adapter = new ZeroMentorshipAdapter(binding.rcvMentorships, getRelatedViewModel().getSearchResults(), this);
-            binding.rcvMentorships.setAdapter(adapter);
-        }
+        adapter = new ZeroMentorshipAdapter(binding.rcvMentorships, getRelatedViewModel().getSearchResults(), this);
+        binding.rcvMentorships.setAdapter(adapter);
     }
 
     @Override

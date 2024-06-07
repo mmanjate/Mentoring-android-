@@ -41,4 +41,9 @@ public class QuestionsCategory extends BaseModel {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    @Override
+    public String getDescription() {
+        return this.category;
+    }
 }

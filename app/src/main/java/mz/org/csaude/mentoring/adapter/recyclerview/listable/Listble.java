@@ -26,6 +26,8 @@ public interface Listble {
 
     }
 
+    String getExtraInfo();
+
     public enum ListTypes {
         SELECTION_LIST,
         NORMAL,

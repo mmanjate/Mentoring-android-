@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.viewmodel.ronda;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -18,6 +19,7 @@ import mz.org.csaude.mentoring.view.mentorship.ZeroMentorshipListActivity;
 import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
 import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 import mz.org.csaude.mentoring.view.session.SessionActivity;
+import mz.org.csaude.mentoring.view.session.SessionListActivity;
 
 public class RondaSearchVM extends SearchVM<Ronda> {
     private RondaType rondaType;
@@ -81,18 +83,16 @@ public class RondaSearchVM extends SearchVM<Ronda> {
     }
 
     public void goToMentoriships(Ronda ronda) {
+        getApplication().getApplicationStep().changeToList();
+        Map<String, Object> params = new HashMap<>();
+        params.put("ronda", ronda);
 
         if (ronda.isRondaZero()) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("ronda", ronda);
-            getApplication().getApplicationStep().changeToList();
-
+            Log.d("goToMentoriships", "Navigating to ZeroMentorshipListActivity with params: " + params);
             getRelatedActivity().nextActivity(ZeroMentorshipListActivity.class, params);
-        }else {
-            Map<String, Object> params = new HashMap<>();
-            params.put("ronda", ronda);
-            params.put("title", title);
-            getRelatedActivity().nextActivity(SessionActivity.class, params);
+        } else {
+            Log.d("goToMentoriships", "Navigating to SessionListActivity with params: " + params);
+            getRelatedActivity().nextActivity(SessionListActivity.class, params);
         }
     }
 }

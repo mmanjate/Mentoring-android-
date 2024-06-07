@@ -49,6 +49,7 @@ public class CreateMentorshipActivity extends BaseActivity implements ClickListe
     private ListableSpinnerAdapter sectorAdapter;
 
     private ListableSpinnerAdapter doorAdapter;
+    private ListableSpinnerAdapter categorieAdapter;
 
     private QuestionAdapter questionAdapter;
 
@@ -63,7 +64,10 @@ public class CreateMentorshipActivity extends BaseActivity implements ClickListe
             getRelatedViewModel().setRonda((Ronda) intent.getExtras().get("ronda"));
             getRelatedViewModel().setCurrMentorshipStep((String) intent.getExtras().get("CURR_MENTORSHIP_STEP"));
             getRelatedViewModel().determineMentorshipType();
-            populateFormList();
+            if (getRelatedViewModel().getRonda() == null) getRelatedViewModel().setRonda(getRelatedViewModel().getSession().getRonda());
+            if (getRelatedViewModel().getRonda().isRondaZero()) {
+                populateFormList();
+            }
         }
 
         setSupportActionBar(mentorshipBinding.toolbar.toolbar);
@@ -93,22 +97,18 @@ public class CreateMentorshipActivity extends BaseActivity implements ClickListe
             datePickerDialog.show();
         });
 
-        mentorshipBinding.sessionStartTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    showTimePickerDialog(mentorshipBinding.sessionStartTime);
-                }
-            }
+        mentorshipBinding.sessionStartTime.setOnClickListener(view -> {
+            showTimePickerDialog(mentorshipBinding.sessionStartTime);
         });
-        mentorshipBinding.sessionEndTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        /*mentorshipBinding.sessionEndTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     showTimePickerDialog(mentorshipBinding.sessionEndTime);
                 }
             }
-        });
+        });*/
     }
 
     private void showTimePickerDialog(EditText viewTe) {
@@ -184,9 +184,29 @@ public class CreateMentorshipActivity extends BaseActivity implements ClickListe
         mentorshipBinding.spnDoor.setAdapter(doorAdapter);
     }
 
+    public void loadCategoryAdapter() {
+        categorieAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getCategories());
+        mentorshipBinding.spnCurrCategory.setAdapter(categorieAdapter);
+    }
+
+    public void reloadCategoryAdapter() {
+
+        if (categorieAdapter != null) {
+            categorieAdapter.notifyDataSetChanged();
+        } else {
+            categorieAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getCategories());
+            mentorshipBinding.spnCurrCategory.setAdapter(categorieAdapter);
+        }
+    }
+
+
     public void loadSectorAdapter() {
-        sectorAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getSectors());
-        mentorshipBinding.spnSector.setAdapter(sectorAdapter);
+        if (sectorAdapter != null) {
+            sectorAdapter.notifyDataSetChanged();
+        } else {
+            sectorAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, getRelatedViewModel().getSectors());
+            mentorshipBinding.spnSector.setAdapter(sectorAdapter);
+        }
     }
 
     public void populateQuestionList() {

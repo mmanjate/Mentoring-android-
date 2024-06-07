@@ -63,5 +63,6 @@
     <string name="save">Gravar</string>
     <string name="print">Imprimir</string>
     <string name="server_unavailable">Não foi possivel estabelecer a ligação com o servidor, por favor verifique a sua ligação a Internet ou contacte o administrador.</string>
+    <string name="sess_es_de_mentoria">Sessões de Mentoria</string>
 </resources>
 

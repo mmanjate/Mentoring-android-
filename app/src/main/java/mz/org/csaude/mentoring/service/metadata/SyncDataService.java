@@ -68,7 +68,7 @@ public interface SyncDataService {
     Call<List<CareerDTO>> getCareers(@Query("offset") long offset, @Query("limit") long limit);
 
     @GET("/tutored/getTutoreds")
-    Call<List<TutoredDTO>> getTutoreds(@Query("uuids") List<String> uuids);
+    Call<List<TutoredDTO>> getTutoreds(@Query("uuids") List<String> uuids, @Query("offset") long offset, @Query("limit") long limit);
     @POST("/login")
     Call<LoginResponse> login(@Body RequestBody body);
 

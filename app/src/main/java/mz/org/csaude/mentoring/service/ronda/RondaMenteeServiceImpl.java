@@ -7,6 +7,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.ronda.RondaMenteeDAO;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 
 public class RondaMenteeServiceImpl extends BaseServiceImpl<RondaMentee> implements RondaMenteeService {
@@ -56,6 +57,11 @@ public class RondaMenteeServiceImpl extends BaseServiceImpl<RondaMentee> impleme
         }
         this.rondaMenteeDAO.createOrUpdate(rondaMentee);
         return rondaMentee;
+    }
+
+    @Override
+    public List<RondaMentee> getAllOfRonda(Ronda ronda) throws SQLException {
+        return rondaMenteeDAO.getAllOfRonda(ronda);
     }
 
     @Override

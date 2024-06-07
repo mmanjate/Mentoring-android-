@@ -42,10 +42,6 @@ public class RondaAdapter extends AbstractRecycleViewAdapter<Ronda> {
             }
         });
     }
-    @Override
-    public int getItemCount() {
-        return records.size();
-    }
 
     public class RondaViewHolder extends RecyclerView.ViewHolder {
 

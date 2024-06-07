@@ -154,4 +154,13 @@ public abstract class BaseModel implements Serializable, Listble {
     public boolean isSelected() {
         return selected;
     }
+
+    @Override
+    public String getExtraInfo() {
+        return null;
+    }
+
+    public boolean isPending() {
+        return this.syncStatus.equals(SyncSatus.PENDING);
+    }
 }

@@ -10,4 +10,6 @@ import mz.org.csaude.mentoring.model.session.SessionStatus;
 public interface SessionStatusService extends BaseService<SessionStatus> {
     void saveOrUpdateSessionStatuses(List<SessionStatusDTO> sessionStatusDTOS) throws SQLException;
     SessionStatus saveOrUpdateSessionStatus(SessionStatusDTO sessionStatusDTO) throws SQLException;
+
+    SessionStatus getByCode(String code) throws SQLException;
 }

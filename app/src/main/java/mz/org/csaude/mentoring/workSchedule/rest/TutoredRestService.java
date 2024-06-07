@@ -35,12 +35,12 @@ public class TutoredRestService extends BaseRestService {
         super(application);
     }
 
-    public void restGetTutored(RestResponseListener<Tutored> listener){
+    public void restGetTutored(RestResponseListener<Tutored> listener, Long offset, Long limit){
         List<String> uuids = new ArrayList<>();
         for (Location location : getApplication().getCurrMentor().getEmployee().getLocations()) {
             uuids.add(location.getHealthFacility().getUuid());
         }
-        Call<List<TutoredDTO>> tutoredCall = syncDataService.getTutoreds(uuids);
+        Call<List<TutoredDTO>> tutoredCall = syncDataService.getTutoreds(uuids, offset, limit);
 
         tutoredCall.enqueue(new Callback<List<TutoredDTO>>() {
             @Override

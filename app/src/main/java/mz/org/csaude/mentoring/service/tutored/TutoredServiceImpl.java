@@ -86,9 +86,15 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
     }
 
     @Override
+    public List<Tutored> getAllOfRondaForZeroEvaluation(Ronda currRonda) throws SQLException {
+        return  this.tutoredDao.getAllOfRondaForZeroEvaluation(currRonda, getApplication());
+    }
+
+    @Override
     public List<Tutored> getAllOfHealthFacility(HealthFacility healthFacility) throws SQLException {
         return this.tutoredDao.getAllOfHealthFacility(healthFacility, getApplication());
     }
+
 
     @Override
     public List<Tutored> getAllNotSynced() throws SQLException {
@@ -97,6 +103,16 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
             tutored.getEmployee().setLocations(getApplication().getLocationService().getAllOfEmploee(tutored.getEmployee()));
         }
         return tutoreds;
+    }
+
+    @Override
+    public List<Tutored> getAllForMentoringRound(HealthFacility healthFacility, boolean zeroEvaluation) throws SQLException {
+        return this.tutoredDao.getAllForMentoringRound(healthFacility, zeroEvaluation, getApplication());
+    }
+
+    @Override
+    public List<Tutored> getAllOfRondaForNewRonda(HealthFacility healthFacility) throws SQLException {
+        return this.tutoredDao.getAllOfHealthFacilityForNewRonda(healthFacility, getApplication());
     }
 
 

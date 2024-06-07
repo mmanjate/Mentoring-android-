@@ -13,6 +13,9 @@ import mz.org.csaude.mentoring.dao.session.SessionStatusDAOImpl;
 @EqualsAndHashCode(callSuper=false)
 public class SessionStatus extends BaseModel {
 
+    public static final String COMPLETE = "COMPLETE";
+    public static final String INCOMPLETE = "INCOMPLETE";
+
     public static final String TABLE_NAME = "session_status";
 
     public static final String COLUMN_DESCRIPTION = "description";
@@ -47,5 +50,9 @@ public class SessionStatus extends BaseModel {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public boolean isCompleted() {
+        return this.code.equals(COMPLETE);
     }
 }

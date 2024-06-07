@@ -19,6 +19,7 @@ import mz.org.csaude.mentoring.base.searchparams.AbstractSearchParams;
 import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.base.viewModel.SearchPaginator;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
+import mz.org.csaude.mentoring.util.Http;
 import mz.org.csaude.mentoring.util.Utilities;
 
 public abstract class BaseWorker<T extends BaseModel> extends Worker implements SearchPaginator<T>, RestResponseListener<T> {
@@ -37,12 +38,16 @@ public abstract class BaseWorker<T extends BaseModel> extends Worker implements 
 
     protected Context context;
 
+    protected String requestType;
+
     public BaseWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         setWorkStatus(WORK_STATUS_STARTING);
 
         this.context = context;
         this.notificationId = ThreadLocalRandom.current().nextInt();
+
+        requestType = getInputData().getString("requestType");
     }
 
     protected MentoringApplication getApplication() {
@@ -178,5 +183,9 @@ public abstract class BaseWorker<T extends BaseModel> extends Worker implements 
 
     public void setWorkStatus(String workStatus) {
         this.workStatus = workStatus;
+    }
+
+    protected boolean isPOSTRequest() {
+        return Utilities.stringHasValue(requestType) && requestType.equalsIgnoreCase(String.valueOf(Http.POST));
     }
 }

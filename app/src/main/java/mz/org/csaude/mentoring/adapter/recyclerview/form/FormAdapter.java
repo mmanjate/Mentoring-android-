@@ -15,6 +15,7 @@ import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.databinding.FormListItemBinding;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.view.mentorship.CreateMentorshipActivity;
+import mz.org.csaude.mentoring.view.session.SessionActivity;
 
 public class FormAdapter extends AbstractRecycleViewAdapter<Form> {
 
@@ -50,7 +51,11 @@ public class FormAdapter extends AbstractRecycleViewAdapter<Form> {
 
             formListItemBinding.getRoot().setOnClickListener(v -> {
                 if (activity != null) {
-                    ((CreateMentorshipActivity) activity).onLongItemClick(v, getAdapterPosition());
+                    if (activity instanceof CreateMentorshipActivity) {
+                        ((CreateMentorshipActivity) activity).onLongItemClick(v, getAdapterPosition());
+                    } else if (activity instanceof SessionActivity) {
+                        ((SessionActivity) activity).onLongItemClick(v, getAdapterPosition());
+                    }
                 }
                 notifyItemChanged(getAdapterPosition());
                 selectedPosition = getAdapterPosition();

@@ -28,22 +28,22 @@
         <activity
             android:name=".view.mentorship.ZeroMentorshipListActivity"
             android:exported="false"
-            android:theme="@style/Theme.Mentoring.NoActionBar"/>
+            />
         <activity
             android:name=".view.session.SessionListActivity"
             android:exported="false" />
         <activity
             android:name=".view.ronda.CreateRondaActivity"
             android:exported="false"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
         <activity
             android:name=".view.ronda.RondaActivity"
             android:exported="false"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
         <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.Mentoring.NoActionBar">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,23 +53,23 @@
         <activity
             android:name=".view.login.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
         <activity
             android:name=".view.mentorship.MentorshipActivity"
             android:exported="false"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
         <activity
             android:name=".view.mentorship.CreateMentorshipActivity"
             android:exported="false"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
         <activity
             android:name=".view.tutored.CreateTutoredActivity"
             android:exported="false"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
         <activity
             android:name=".view.tutored.TutoredActivity"
             android:exported="false"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
         <activity
             android:name=".view.career.CareerActivity"
             android:exported="false" />
@@ -77,23 +77,23 @@
             android:name=".view.home.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
         <activity
             android:name=".view.session.SessionActivity"
             android:exported="true"
-            android:label="@string/title_activity_main" />
+             />
         <activity
             android:name=".view.session.SessionClosureActivity"
             android:exported="true"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
         <activity
             android:name=".view.form.ListFormActivity"
             android:exported="true"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
         <activity
             android:name=".view.tutored.fragment.ListTutoredActivity"
             android:exported="true"
-            android:theme="@style/Theme.Mentoring.NoActionBar" />
+             />
     </application>
 
 </manifest>

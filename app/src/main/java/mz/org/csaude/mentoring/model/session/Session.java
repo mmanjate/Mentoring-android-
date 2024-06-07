@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.session.SessionDAOImpl;
+import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
@@ -34,10 +35,12 @@ public class Session extends BaseModel {
 
     public static final String COLUMN_MENTEE = "mentee_id";
 
+    public static final String COLUMN_FORM = "form_id";
+
     @DatabaseField(columnName = COLUMN_START_DATE, canBeNull = false)
     private Date startDate;
 
-    @DatabaseField(columnName = COLUMN_END_DATE, canBeNull = false)
+    @DatabaseField(columnName = COLUMN_END_DATE, canBeNull = true)
     private Date endDate;
 
     @DatabaseField(columnName = COLUMN_PERFORMED_DATE)
@@ -52,6 +55,8 @@ public class Session extends BaseModel {
     @DatabaseField(columnName = COLUMN_MENTEE, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Tutored tutored;
 
+    @DatabaseField(columnName = COLUMN_FORM, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private Form form;
     private List<Mentorship> mentorships;
 
     public Session() {
@@ -120,6 +125,14 @@ public class Session extends BaseModel {
 
     public void setTutored(Tutored tutored) {
         this.tutored = tutored;
+    }
+
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
     }
 
     public boolean isCompleted() {

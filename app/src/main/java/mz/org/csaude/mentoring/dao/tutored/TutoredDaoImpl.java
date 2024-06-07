@@ -55,6 +55,20 @@ public class TutoredDaoImpl extends MentoringBaseDaoImpl<Tutored, Integer> imple
     }
 
     @Override
+    public List<Tutored> getAllOfHealthFacilityForNewRonda(HealthFacility healthFacility, MentoringApplication application) throws SQLException {
+        QueryBuilder<Location, Integer> locationQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getLocationDAO().queryBuilder();
+        locationQb.where().eq(Location.COLUMN_HEALTH_FACILITY, healthFacility.getId()).and().eq(Location.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE);
+
+        QueryBuilder<Employee, Integer> employeeQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getEmployeeDAO().queryBuilder();
+        employeeQb.join(locationQb);
+
+        QueryBuilder<Tutored, Integer> tutoredQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getTutoredDao().queryBuilder();
+        tutoredQb.join(employeeQb).where().eq(Tutored.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE).and().eq(Tutored.COLUMN_ZERO_EVALUATION_STATUS, true);
+
+        return tutoredQb.orderBy(Employee.COLUMN_ID, true).query();
+    }
+
+    @Override
     public List<Tutored> getAllNotSynced() throws SQLException {
         return queryForEq(Tutored.COLUMN_SYNC_STATUS, SyncSatus.PENDING);
     }
@@ -86,7 +100,7 @@ public class TutoredDaoImpl extends MentoringBaseDaoImpl<Tutored, Integer> imple
     }
 
     @Override
-    public List<Tutored> getAllForMentoringRound(HealthFacility healthFacility, MentoringApplication application) throws SQLException {
+    public List<Tutored> getAllForMentoringRound(HealthFacility healthFacility, boolean zeroEvaluation, MentoringApplication application) throws SQLException {
         QueryBuilder<Location, Integer> locationQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getLocationDAO().queryBuilder();
         locationQb.where().eq(Location.COLUMN_HEALTH_FACILITY, healthFacility.getId()).and().eq(Location.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE);
 
@@ -94,7 +108,7 @@ public class TutoredDaoImpl extends MentoringBaseDaoImpl<Tutored, Integer> imple
         employeeQb.join(locationQb);
 
         QueryBuilder<Tutored, Integer> tutoredQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getTutoredDao().queryBuilder();
-        tutoredQb.join(employeeQb).where().eq(Tutored.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE).and().eq(Tutored.COLUMN_ZERO_EVALUATION_STATUS, true);
+        tutoredQb.join(employeeQb).where().eq(Tutored.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE).and().eq(Tutored.COLUMN_ZERO_EVALUATION_STATUS, zeroEvaluation);
 
         return tutoredQb.orderBy(Employee.COLUMN_ID, true).query();
     }

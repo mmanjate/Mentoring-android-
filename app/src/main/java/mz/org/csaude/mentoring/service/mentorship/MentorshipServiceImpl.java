@@ -154,4 +154,9 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
         return mentorships;
     }
 
+    @Override
+    public List<Mentorship> getAllOfSession(Session session) throws SQLException {
+        return mentorshipDAO.getAllOfSession(session);
+    }
+
 }

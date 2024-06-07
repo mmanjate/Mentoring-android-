@@ -7,8 +7,12 @@
     <data>
         <variable
             name="viewModel" type="mz.org.csaude.mentoring.viewmodel.mentorship.MentorshipVM" />
+        <variable
+            name="mentorship"
+            type="mz.org.csaude.mentoring.model.mentorship.Mentorship" />
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
         <import type="android.view.View"/>
+        <import type="mz.org.csaude.mentoring.model.evaluationType.EvaluationType"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -245,10 +249,11 @@
                                     android:checkedButton="@+id/rdLocal">
 
                                     <RadioButton
-                                        android:id="@+id/rdLocal"
+                                        android:id="@+id/rd_consulta"
                                         android:layout_weight="2"
                                         android:layout_width="@dimen/dimen_0dp"
                                         android:layout_height="wrap_content"
+                                        android:onClick='@{()->viewModel.setEvaluationType(EvaluationType.CONSULTA)}'
                                         android:text="Consulta" />
 
                                     <RadioButton
@@ -256,6 +261,7 @@
                                         android:layout_weight="2"
                                         android:layout_width="@dimen/dimen_0dp"
                                         android:layout_height="wrap_content"
+                                        android:onClick='@{()->viewModel.setEvaluationType(EvaluationType.FICHA)}'
                                         android:text="Ficha" />
                                 </RadioGroup>
                             </LinearLayout>

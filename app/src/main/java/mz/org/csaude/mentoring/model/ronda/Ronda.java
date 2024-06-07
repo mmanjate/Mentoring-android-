@@ -136,7 +136,7 @@ public class Ronda extends BaseModel implements Listble {
     }
 
     public String getRondaExuctionStatus() {
-        return this.isRondaCompleted() ? RondaStatus.ON_GOING.toString() : RondaStatus.FINISHED.toString();
+        return !this.isRondaCompleted() ? RondaStatus.ON_GOING.toString() : RondaStatus.FINISHED.toString();
     }
 
     public List<Session> getSessions() {

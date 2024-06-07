@@ -64,7 +64,10 @@ public class CreateMentorshipActivity extends BaseActivity implements ClickListe
             getRelatedViewModel().setRonda((Ronda) intent.getExtras().get("ronda"));
             getRelatedViewModel().setCurrMentorshipStep((String) intent.getExtras().get("CURR_MENTORSHIP_STEP"));
             getRelatedViewModel().determineMentorshipType();
-            populateFormList();
+            if (getRelatedViewModel().getRonda() == null) getRelatedViewModel().setRonda(getRelatedViewModel().getSession().getRonda());
+            if (getRelatedViewModel().getRonda().isRondaZero()) {
+                populateFormList();
+            }
         }
 
         setSupportActionBar(mentorshipBinding.toolbar.toolbar);

@@ -21,5 +21,6 @@ public interface TutoredDao extends MentoringBaseDao<Tutored, Integer> {
 
     public List<Tutored> getAllOfRondaForZeroEvaluation(Ronda currRonda, MentoringApplication application) throws SQLException;
 
-    public List<Tutored> getAllForMentoringRound(HealthFacility healthFacility, MentoringApplication application) throws SQLException;
+    public List<Tutored> getAllOfHealthFacilityForNewRonda(HealthFacility healthFacility, MentoringApplication application) throws SQLException;
+    public List<Tutored> getAllForMentoringRound(HealthFacility healthFacility, boolean zeroEvaluation, MentoringApplication application) throws SQLException;
 }

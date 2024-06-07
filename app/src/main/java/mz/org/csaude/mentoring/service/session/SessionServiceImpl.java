@@ -7,7 +7,9 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.session.SessionDAO;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
+import mz.org.csaude.mentoring.model.tutored.Tutored;
 
 public class SessionServiceImpl extends BaseServiceImpl<Session> implements SessionService{
 
@@ -49,5 +51,10 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
     @Override
     public Session getById(int id) throws SQLException {
         return this.sessionDAO.queryForId(id);
+    }
+
+    @Override
+    public List<Session> getAllOfRondaAndMentee(Ronda currRonda, Tutored selectedMentee, long offset, long limit) {
+        return this.sessionDAO.queryForAllOfRondaAndMentee(currRonda, selectedMentee, getApplication());
     }
 }

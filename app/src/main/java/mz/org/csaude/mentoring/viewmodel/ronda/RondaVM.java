@@ -39,8 +39,6 @@ import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
 import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 
 public class RondaVM extends BaseViewModel {
-    private RondaService rondaService;
-    private RondaTypeService rondaTypeService;
     private Ronda ronda;
     private Province selectedProvince;
     private District selectedDistrict;
@@ -59,8 +57,6 @@ public class RondaVM extends BaseViewModel {
     public RondaVM(@NonNull Application application) {
         super(application);
         this.ronda = new Ronda();
-        rondaService = getApplication().getRondaService();
-        rondaTypeService = getApplication().getRondaTypeService();
     }
 
     @Override
@@ -75,6 +71,10 @@ public class RondaVM extends BaseViewModel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Ronda getRonda() {
+        return ronda;
     }
 
     @Bindable
@@ -93,6 +93,7 @@ public class RondaVM extends BaseViewModel {
     }
 
     public void setHealthFacility(Listble selectedHealthFacility) {
+        if (StringUtils.isEmpty(((HealthFacility)selectedHealthFacility).getUuid())) return;
         this.selectedHealthFacility = (HealthFacility) selectedHealthFacility;
         try {
             if(this.menteeList == null) this.menteeList = new ArrayList<>();
@@ -100,7 +101,7 @@ public class RondaVM extends BaseViewModel {
 
             if(!StringUtils.isEmpty(this.selectedHealthFacility.getUuid())) {
                 this.ronda.setHealthFacility(this.selectedHealthFacility);
-                setMenteeList(getApplication().getTutoredService().getAllForMentoringRound(this.selectedHealthFacility));
+                setMenteeList(getApplication().getTutoredService().getAllForMentoringRound(this.selectedHealthFacility, !this.ronda.isRondaZero()));
             }
             getRelatedActivity().reloadMenteesAdapter();
             notifyPropertyChanged(BR.healthFacility);
@@ -114,6 +115,10 @@ public class RondaVM extends BaseViewModel {
         for (Tutored tutored : this.menteeList) {
             tutored.setListType(Listble.ListTypes.SELECTION_LIST);
         }
+    }
+
+    public List<Tutored> getrondaMenteeList() {
+        return menteeList;
     }
 
     public void addMentee(Listble mentee) {
@@ -255,7 +260,7 @@ public class RondaVM extends BaseViewModel {
 
     public List<Tutored> getMentees() {
         try {
-            return getApplication().getTutoredService().getAll();
+            return getApplication().getTutoredService().getAllOfRondaForNewRonda(selectedHealthFacility);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -159,4 +159,8 @@ public abstract class BaseModel implements Serializable, Listble {
     public String getExtraInfo() {
         return null;
     }
+
+    public boolean isPending() {
+        return this.syncStatus.equals(SyncSatus.PENDING);
+    }
 }

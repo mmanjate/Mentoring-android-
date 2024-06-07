@@ -106,8 +106,13 @@ public class TutoredServiceImpl extends BaseServiceImpl<Tutored> implements Tuto
     }
 
     @Override
-    public List<Tutored> getAllForMentoringRound(HealthFacility healthFacility) throws SQLException {
-        return this.tutoredDao.getAllForMentoringRound(healthFacility, getApplication());
+    public List<Tutored> getAllForMentoringRound(HealthFacility healthFacility, boolean zeroEvaluation) throws SQLException {
+        return this.tutoredDao.getAllForMentoringRound(healthFacility, zeroEvaluation, getApplication());
+    }
+
+    @Override
+    public List<Tutored> getAllOfRondaForNewRonda(HealthFacility healthFacility) throws SQLException {
+        return this.tutoredDao.getAllOfHealthFacilityForNewRonda(healthFacility, getApplication());
     }
 
 

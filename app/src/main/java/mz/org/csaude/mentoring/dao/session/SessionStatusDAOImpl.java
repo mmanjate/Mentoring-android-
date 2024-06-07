@@ -21,4 +21,9 @@ public class SessionStatusDAOImpl extends MentoringBaseDaoImpl<SessionStatus, In
     public SessionStatusDAOImpl(ConnectionSource connectionSource, DatabaseTableConfig<SessionStatus> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
+
+    @Override
+    public SessionStatus getByCode(String code) throws SQLException {
+        return queryBuilder().where().eq(SessionStatus.COLUMN_CODE, code).queryForFirst();
+    }
 }

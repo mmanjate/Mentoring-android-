@@ -21,6 +21,7 @@ public class EvaluationType extends BaseModel {
     public static final String COLUMN_CODE = "code";
 
     public static final String CONSULTA = "Consulta";
+    public static final String FICHA = "Ficha";
 
     @DatabaseField(columnName = COLUMN_DESCRIPTION)
     private String description;

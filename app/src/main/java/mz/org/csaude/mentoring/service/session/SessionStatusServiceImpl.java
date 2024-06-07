@@ -72,6 +72,11 @@ public class SessionStatusServiceImpl extends BaseServiceImpl<SessionStatus> imp
     }
 
     @Override
+    public SessionStatus getByCode(String code) throws SQLException {
+        return sessionStatusDAO.getByCode(code);
+    }
+
+    @Override
     public SessionStatus getByuuid(String uuid) throws SQLException {
         return sessionStatusDAO.getByUuid(uuid);
     }

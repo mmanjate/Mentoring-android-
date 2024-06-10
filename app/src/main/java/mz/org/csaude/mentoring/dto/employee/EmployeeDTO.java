@@ -43,7 +43,9 @@ public class EmployeeDTO extends BaseEntityDTO {
         this.setEmail(employee.getEmail());
         this.setPhoneNumber(employee.getPhoneNumber());
         this.setTrainingYear(employee.getTrainingYear());
-        this.setLocationDTOSet(setLocations(employee.getLocations()));
+        if(employee.getLocations()!=null) {
+            this.setLocationDTOSet(setLocations(employee.getLocations()));
+        }
         if(employee.getProfessionalCategory() != null) this.setProfessionalCategoryDTO(new ProfessionalCategoryDTO(employee.getProfessionalCategory()));
        if(employee.getPartner() != null) this.setPartnerDTO(new PartnerDTO((Partner) employee.getPartner()));
     }

@@ -18,8 +18,12 @@ import java.util.List;
 import java.util.Map;
 
 import mz.org.csaude.mentoring.BR;
+import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
+import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
+import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
+import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.location.Province;
@@ -32,13 +36,16 @@ import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
 import mz.org.csaude.mentoring.service.ronda.RondaTypeService;
 import mz.org.csaude.mentoring.util.DateUtilities;
+import mz.org.csaude.mentoring.util.LifeCycleStatus;
 import mz.org.csaude.mentoring.util.RondaTypeEnum;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
 import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 
-public class RondaVM extends BaseViewModel {
+public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda>, ServerStatusListener {
+    private RondaService rondaService;
+    private RondaTypeService rondaTypeService;
     private Ronda ronda;
     private Province selectedProvince;
     private District selectedDistrict;
@@ -57,6 +64,8 @@ public class RondaVM extends BaseViewModel {
     public RondaVM(@NonNull Application application) {
         super(application);
         this.ronda = new Ronda();
+        rondaService = getApplication().getRondaService();
+        rondaTypeService = getApplication().getRondaTypeService();
     }
 
     @Override
@@ -204,6 +213,9 @@ public class RondaVM extends BaseViewModel {
     }
 
     public void save() {
+        this.doSave();
+    }
+    private void doSave(){
         try {
             ronda.setSyncStatus(SyncSatus.PENDING);
             ronda.setUuid(Utilities.getNewUUID().toString());
@@ -215,44 +227,36 @@ public class RondaVM extends BaseViewModel {
             int count = getApplication().getRondaService().countRondas();
             count++;
             ronda.setDescription(rondaType.getDescription()+" "+count);
-            String error = this.ronda.validade();
-            if (Utilities.stringHasValue(error)) {
-                Utilities.displayAlertDialog(getRelatedActivity(), error).show();
-                return;
-            }
-            Ronda createdRonda = getApplication().getRondaService().savedOrUpdateRonda(ronda);
-
             List<RondaMentee> rondaMentees = new ArrayList<>();
             for (Tutored tutored : this.getSelectedMentees()) {
                 RondaMentee rondaMentee = new RondaMentee();
                 rondaMentee.setUuid(Utilities.getNewUUID().toString());
-                rondaMentee.setRonda(createdRonda);
                 rondaMentee.setSyncStatus(SyncSatus.PENDING);
                 rondaMentee.setCreatedAt(DateUtilities.getCurrentDate());
                 rondaMentee.setTutored(tutored);
                 rondaMentee.setStartDate(this.getStartDate());
-                RondaMentee createdRondaMentee = getApplication().getRondaMenteeService().savedOrUpdateRondaMentee(rondaMentee);
-
-                rondaMentees.add(createdRondaMentee);
+                rondaMentees.add(rondaMentee);
             }
 
             List<RondaMentor> rondaMentors = new ArrayList<>();
             Tutor tutor = this.getApplication().getCurrMentor();
             RondaMentor rondaMentor = new RondaMentor();
             rondaMentor.setUuid(Utilities.getNewUUID().toString());
-            rondaMentor.setRonda(createdRonda);
             rondaMentor.setSyncStatus(SyncSatus.PENDING);
             rondaMentor.setCreatedAt(DateUtilities.getCurrentDate());
             rondaMentor.setTutor(tutor);
             rondaMentor.setStartDate(this.getStartDate());
-            RondaMentor createdRondaMentor = getApplication().getRondaMentorService().savedOrUpdateRondaMentor(rondaMentor);
-
-            rondaMentors.add(createdRondaMentor);
-            Map<String, Object> params = new HashMap<>();
-            params.put("rondaType", rondaType);
-            String title = (String) intent.getExtras().get("title");
-            params.put("title", title);
-            getRelatedActivity().nextActivityFinishingCurrent(RondaActivity.class, params);
+            rondaMentors.add(rondaMentor);
+            this.ronda.setRondaMentees(rondaMentees);
+            this.ronda.setRondaMentors(rondaMentors);
+            this.ronda.setCreatedAt(DateUtilities.getCurrentDate());
+            this.ronda.setLifeCycleStatus(LifeCycleStatus.ACTIVE);
+            String error = this.ronda.validade();
+            if (Utilities.stringHasValue(error)) {
+                Utilities.displayAlertDialog(getRelatedActivity(), error).show();
+                return;
+            }
+            getApplication().isServerOnline(this);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -308,5 +312,18 @@ public class RondaVM extends BaseViewModel {
 
     public void changeInitialDataViewStatus(View view){
         getRelatedActivity().changeFormSectionVisibility(view);
+    }
+
+    @Override
+    public void onServerStatusChecked(boolean isOnline) {
+        if (isOnline) {
+            getApplication().getRondaRestService().restPostRonda(this.ronda, this);
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(mz.org.csaude.mentoring.R.string.server_unavailable)).show();
+        }
+    }
+    @Override
+    public void doOnRestErrorResponse(String errorMsg) {
+        Utilities.displayAlertDialog(getRelatedActivity(), errorMsg).show();
     }
 }

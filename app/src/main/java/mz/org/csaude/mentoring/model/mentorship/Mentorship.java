@@ -22,7 +22,7 @@ import mz.org.csaude.mentoring.model.tutored.Tutored;
 
 @Data
 @DatabaseTable(tableName = Mentorship.TABLE_NAME, daoClass = MentorshipDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper=true)
 public class Mentorship extends BaseModel {
 
     public static final String TABLE_NAME = "mentorship";
@@ -189,4 +189,19 @@ public class Mentorship extends BaseModel {
         this.door = door;
     }
 
+    @Override
+    public String toString() {
+        return "Mentorship{" +
+                "startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", performedDate=" + performedDate +
+                ", tutor=" + tutor +
+                ", tutored=" + tutored +
+                ", form=" + form +
+                ", cabinet=" + cabinet +
+                ", evaluationType=" + evaluationType +
+                ", iterationNumber=" + iterationNumber +
+                ", door=" + door +
+                '}';
+    }
 }

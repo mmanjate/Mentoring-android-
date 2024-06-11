@@ -50,8 +50,13 @@ public class MentorshipActivity extends BaseActivity {
             }
             getRelatedViewModel().setRonda(r);
             getRelatedViewModel().setSession(s);
-            getRelatedViewModel().initSearch();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getRelatedViewModel().initSearch();
     }
 
     @Override

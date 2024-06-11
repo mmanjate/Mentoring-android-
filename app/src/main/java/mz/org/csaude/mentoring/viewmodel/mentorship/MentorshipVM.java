@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.viewmodel.mentorship;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
@@ -281,6 +282,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     public void setEvaluationType(String evaluationType) {
         try {
             this.mentorship.setEvaluationType(getApplication().getEvaluationTypeService().getByCode(evaluationType));
+            if (!determineIterationNumber()) this.mentorship.setEvaluationType(null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -518,18 +520,53 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             this.mentorship.getSession().setStartDate(this.mentorship.getStartDate());
             if (ronda.isRondaZero()) {
                 this.mentorship.getTutored().setZeroEvaluationDone(true);
+                this.mentorship.getSession().setTutored(this.mentorship.getTutored());
+            } else {
+                this.mentorship.setTutored(this.session.getTutored());
             }
-            this.mentorship.getSession().setTutored(this.mentorship.getTutored());
+
             this.mentorship.getSession().setForm(this.mentorship.getForm());
 
             this.ronda.addSession(this.mentorship.getSession());
             ronda.setRondaMentees(getApplication().getRondaMenteeService().getAllOfRonda(this.ronda));
             this.ronda.tryToCloseRonda();
             getApplication().getMentorshipService().save(this.mentorship);
+            Log.i("Saved Mentorship", this.mentorship.toString());
             getRelatedActivity().finish();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean determineIterationNumber() throws SQLException {
+            List<Mentorship> completedMentorships = getApplication().getMentorshipService().getAllOfSession(this.mentorship.getSession());
+            List<Mentorship> similarMentorships = new ArrayList<>();
+            int maxIteration = 0;
+            for (Mentorship mentorship : completedMentorships) {
+                if (mentorship.getEvaluationType().getCode().equals(this.mentorship.getEvaluationType().getCode())) {
+                    similarMentorships.add(mentorship);
+                }
+            }
+            if (Utilities.listHasElements(similarMentorships)) {
+                for (Mentorship mentorship : similarMentorships) {
+                    if (mentorship.getIterationNumber() > maxIteration) {
+                        maxIteration = mentorship.getIterationNumber();
+                    }
+                }
+            }
+            this.mentorship.setIterationNumber(maxIteration + 1);
+            if (this.mentorship.getEvaluationType().getCode().equals(EvaluationType.CONSULTA)){
+                if (this.mentorship.getForm().getTargetPatient() < this.mentorship.getIterationNumber()) {
+                    Utilities.displayAlertDialog(getRelatedActivity(), "Não pode criar mais avaliações de observação de consulta nesta sessão, o maximo permitido é " + this.mentorship.getForm().getTargetPatient()).show();
+                    return false;
+                }
+            } else if (this.mentorship.getEvaluationType().getCode().equals(EvaluationType.FICHA)) {
+                if (this.mentorship.getForm().getTargetFile() < this.mentorship.getIterationNumber()) {
+                    Utilities.displayAlertDialog(getRelatedActivity(), "Não pode criar mais avaliações de ficha nesta sessão, o maximo permitido é " + this.mentorship.getForm().getTargetFile()).show();
+                    return false;
+                }
+            }
+            return true;
     }
 
     public List<Listble> getCategories() {

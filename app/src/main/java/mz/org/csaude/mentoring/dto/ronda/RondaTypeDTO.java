@@ -11,6 +11,8 @@ public class RondaTypeDTO extends BaseEntityDTO {
     private String description;
     public RondaTypeDTO(RondaType rondaType) {
         super(rondaType);
+        this.setCode(rondaType.getCode());
+        this.setDescription(rondaType.getDescription());
     }
 
     public String getCode() {

@@ -163,4 +163,7 @@ public interface SyncDataService {
 
     @GET("/mentorships/getAllMentorshipSessionsOfMentorRondas")
     Call<List<MentorshipDTO>> getAllMentorshipSessionsOfMentorRondas(@Query("rondaUuidList") List<String> rondaUuidList);
+
+    @POST("/ronda/save")
+    Call<RondaDTO> postRonda(@Body RondaDTO rondaDTO);
 }

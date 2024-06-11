@@ -33,7 +33,7 @@ public abstract class BaseModel implements Serializable, Listble {
 
     protected String listTyp;
 
-    @DatabaseField(columnName = COLUMN_SYNC_STATUS)
+    @DatabaseField(columnName = COLUMN_SYNC_STATUS, canBeNull = true)
     private SyncSatus syncStatus;
     @DatabaseField(columnName = COLUMN_CREATED_AT, canBeNull = true)
     private Date createdAt;

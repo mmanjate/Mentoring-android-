@@ -40,7 +40,7 @@ public class Session extends BaseModel {
     @DatabaseField(columnName = COLUMN_START_DATE, canBeNull = false)
     private Date startDate;
 
-    @DatabaseField(columnName = COLUMN_END_DATE, canBeNull = true)
+    @DatabaseField(columnName = COLUMN_END_DATE, canBeNull = false)
     private Date endDate;
 
     @DatabaseField(columnName = COLUMN_PERFORMED_DATE)

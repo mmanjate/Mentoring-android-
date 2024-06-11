@@ -3,30 +3,41 @@ package mz.org.csaude.mentoring.service.ronda;
 import android.app.Application;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
+import mz.org.csaude.mentoring.dao.location.DistrictDAO;
 import mz.org.csaude.mentoring.dao.location.HealthFacilityDAO;
 import mz.org.csaude.mentoring.dao.ronda.RondaDAO;
 import mz.org.csaude.mentoring.dao.ronda.RondaMenteeDAO;
 import mz.org.csaude.mentoring.dao.ronda.RondaMentorDAO;
+import mz.org.csaude.mentoring.dao.rondatype.RondaTypeDAO;
+import mz.org.csaude.mentoring.dao.tutor.TutorDAO;
+import mz.org.csaude.mentoring.dao.tutored.TutoredDao;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaMenteeDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaMentorDTO;
+import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.ronda.RondaMentor;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
+import mz.org.csaude.mentoring.model.tutored.Tutored;
 
 public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaService {
     RondaDAO rondaDAO;
     HealthFacilityDAO healthFacilityDAO;
     RondaMentorDAO rondaMentorDAO;
     RondaMenteeDAO rondaMenteeDAO;
+    DistrictDAO districtDAO;
+    RondaTypeDAO rondaTypeDAO;
+    TutorDAO tutorDAO;
+    TutoredDao tutoredDao;
 
     public RondaServiceImpl(Application application) {
         super(application);
@@ -39,6 +50,10 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
         this.healthFacilityDAO = getDataBaseHelper().getHealthFacilityDAO();
         this.rondaMenteeDAO = getDataBaseHelper().getRondaMenteeDAO();
         this.rondaMentorDAO = getDataBaseHelper().getRondaMentorDAO();
+        this.districtDAO = getDataBaseHelper().getDistrictDAO();
+        this.rondaTypeDAO = getDataBaseHelper().getRondaTypeDAO();
+        this.tutorDAO = getDataBaseHelper().getTutorDAO();
+        this.tutoredDao = getDataBaseHelper().getTutoredDao();
     }
 
     @Override
@@ -91,42 +106,66 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
         if(hf!=null) {
             healthFacility.setId(hf.getId());
         }
+        District district = districtDAO.getByUuid(healthFacilityDTO.getDistrictDTO().getUuid());
+        if(district!=null) {
+            healthFacility.setDistrict(district);
+        }
         this.healthFacilityDAO.createOrUpdate(healthFacility);
-
-        saveRondaMentors(rondaDTO.getRondaMentors());
-
-        saveRondaMentees(rondaDTO.getRondaMentees());
 
         Ronda r = this.rondaDAO.getByUuid(rondaDTO.getUuid());
         Ronda ronda = rondaDTO.getRonda();
         if(r!=null) {
             ronda.setId(r.getId());
         }
+        ronda.setHealthFacility(healthFacility);
+        RondaType rondaType = this.rondaTypeDAO.getByUuid(rondaDTO.getRondaType().getUuid());
+        if(rondaType!=null) {
+            ronda.setRondaType(rondaType);
+        }
         this.rondaDAO.createOrUpdate(ronda);
+
+        saveRondaMentors(rondaDTO.getRondaMentors(), ronda);
+
+        saveRondaMentees(rondaDTO.getRondaMentees(), ronda);
+
         return ronda;
     }
 
-    private void saveRondaMentors(List<RondaMentorDTO> rondaMentorDTOS) throws SQLException {
+    private void saveRondaMentors(List<RondaMentorDTO> rondaMentorDTOS, Ronda ronda) throws SQLException {
+        List<RondaMentor> rondaMentors = new ArrayList<>();
         for (RondaMentorDTO rondaMentorDTO: rondaMentorDTOS) {
             RondaMentor rm = this.rondaMentorDAO.getByUuid(rondaMentorDTO.getUuid());
             RondaMentor rondaMentor = rondaMentorDTO.getRondaMentor();
             if(rm!=null) {
                 rondaMentor.setId(rm.getId());
             }
+            rondaMentor.setRonda(ronda);
+            Tutor mentor = this.tutorDAO.getByUuid(rondaMentorDTO.getMentor().getUuid());
+            if(mentor!=null) {
+                rondaMentor.setTutor(mentor);
+            }
             this.rondaMentorDAO.createOrUpdate(rondaMentor);
+            rondaMentors.add(rondaMentor);
         }
-
+        ronda.setRondaMentors(rondaMentors);
     }
-    private void saveRondaMentees(List<RondaMenteeDTO> rondaMenteeDTOS) throws SQLException {
+    private void saveRondaMentees(List<RondaMenteeDTO> rondaMenteeDTOS, Ronda ronda) throws SQLException {
+        List<RondaMentee> rondaMentees = new ArrayList<>();
         for (RondaMenteeDTO rondaMenteeDTO: rondaMenteeDTOS) {
             RondaMentee rm = this.rondaMenteeDAO.getByUuid(rondaMenteeDTO.getUuid());
             RondaMentee rondaMentee = rondaMenteeDTO.getRondaMentee();
             if(rm!=null) {
                 rondaMentee.setId(rm.getId());
             }
+            rondaMentee.setRonda(ronda);
+            Tutored mentee = this.tutoredDao.getByUuid(rondaMenteeDTO.getMentee().getUuid());
+            if(mentee!=null) {
+                rondaMentee.setTutored(mentee);
+            }
             this.rondaMenteeDAO.createOrUpdate(rondaMentee);
+            rondaMentees.add(rondaMentee);
         }
-
+            ronda.setRondaMentees(rondaMentees);
     }
 
     @Override

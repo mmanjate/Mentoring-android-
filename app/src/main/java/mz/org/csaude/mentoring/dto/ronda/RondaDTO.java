@@ -1,5 +1,7 @@
 package mz.org.csaude.mentoring.dto.ronda;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,14 +26,24 @@ public class RondaDTO extends BaseEntityDTO {
     private String description;
     private Date startDate;
     private Date endDate;
+    @JsonProperty(value = "rondaTypeDTO")
     private RondaTypeDTO rondaType;
     private HealthFacilityDTO healthFacility;
     private List<RondaMenteeDTO> rondaMentees;
     private List<RondaMentorDTO> rondaMentors;
     public RondaDTO(Ronda ronda) {
         super(ronda);
-        this.setRondaType(new RondaTypeDTO(ronda.getRondaType()));
-        this.setHealthFacility(new HealthFacilityDTO(ronda.getHealthFacility()));
+        this.setDescription(ronda.getDescription());
+        this.setStartDate(ronda.getStartDate());
+        if(ronda.getEndDate()!=null) {
+            this.setEndDate(ronda.getEndDate());
+        }
+        if(ronda.getRondaType()!=null) {
+            this.setRondaType(new RondaTypeDTO(ronda.getRondaType()));
+        }
+        if(ronda.getHealthFacility()!=null) {
+            this.setHealthFacility(new HealthFacilityDTO(ronda.getHealthFacility()));
+        }
         if (Utilities.listHasElements(ronda.getRondaMentees())) {
             List<RondaMenteeDTO> rondaMenteeDTOS = ronda.getRondaMentees().stream()
                     .map(RondaMenteeDTO::new)
@@ -110,6 +122,9 @@ public class RondaDTO extends BaseEntityDTO {
         ronda.setEndDate(this.getEndDate());
         ronda.setCreatedAt(this.getCreatedAt());
         ronda.setUpdatedAt(this.getUpdatedAt());
+        if(this.getLifeCycleStatus()!=null) {
+            ronda.setLifeCycleStatus(this.getLifeCycleStatus());
+        }
         if(this.getRondaType()!=null) {
             ronda.setRondaType(this.getRondaType().getRondaType());
         }

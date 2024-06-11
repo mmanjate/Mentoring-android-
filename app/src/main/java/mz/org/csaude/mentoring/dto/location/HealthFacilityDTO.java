@@ -52,7 +52,10 @@ public class HealthFacilityDTO extends BaseEntityDTO {
         healthFacility.setDescription(this.getHealthFacility());
         healthFacility.setCreatedAt(this.getCreatedAt());
         healthFacility.setUpdatedAt(this.getUpdatedAt());
-        if(healthFacility.getDistrict()!=null) {
+        if(this.getLifeCycleStatus()!=null) {
+            healthFacility.setLifeCycleStatus(this.getLifeCycleStatus());
+        }
+        if(this.getDistrictDTO()!=null) {
             healthFacility.setDistrict(this.getDistrictDTO().getDistrict());
         }
         return healthFacility;

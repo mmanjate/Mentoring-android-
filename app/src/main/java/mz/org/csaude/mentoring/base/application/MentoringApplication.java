@@ -62,6 +62,8 @@ import mz.org.csaude.mentoring.service.question.QuestionService;
 import mz.org.csaude.mentoring.service.question.QuestionServiceImpl;
 import mz.org.csaude.mentoring.service.question.QuestionsCategoryService;
 import mz.org.csaude.mentoring.service.question.QuestionsCategoryServiceImpl;
+import mz.org.csaude.mentoring.service.resource.ResourceService;
+import mz.org.csaude.mentoring.service.resource.ResourceServiceImpl;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeService;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaMenteeService;
@@ -89,6 +91,7 @@ import mz.org.csaude.mentoring.workSchedule.rest.FormQuestionRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.FormRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.MentorshipRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
+import mz.org.csaude.mentoring.workSchedule.rest.ResourceRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.RondaRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.ServerStatusChecker;
 import mz.org.csaude.mentoring.workSchedule.rest.TutorRestService;
@@ -103,7 +106,7 @@ public class MentoringApplication  extends Application {
 
     //private static final String BASE_URL = "http://10.10.2.75:8087";
     //private static final String BASE_URL = "http://10.10.12.65:8087";
-    private static final String BASE_URL = "http://10.10.12.97:8087";
+    private static final String BASE_URL = "http://192.168.78.232:8087";
 
     private User authenticatedUser;
 
@@ -179,6 +182,8 @@ public class MentoringApplication  extends Application {
 
     private CabinetService cabinetService;
 
+    private ResourceService resourceService;
+
 
     // Rest Services
     private PartnerRestService partnerRestService;
@@ -188,6 +193,8 @@ public class MentoringApplication  extends Application {
     private RondaRestService rondaRestService;
     private MentorshipRestService mentorshipRestService;
     private IterationTypeService iterationTypeService;
+
+    private ResourceRestService resourceRestService;
 
     @Override
     public void onCreate() {
@@ -365,6 +372,11 @@ public class MentoringApplication  extends Application {
         return mentorshipRestService;
     }
 
+    public ResourceRestService getResourceRestService(){
+        if(resourceRestService == null) this.resourceRestService = new ResourceRestService(this);
+        return resourceRestService;
+    }
+
     public ProgrammaticAreaService getProgrammaticAreaService() {
         if (programmaticAreaService == null) this.programmaticAreaService = new ProgrammaticAreaServiceImpl(this);
         return programmaticAreaService;
@@ -419,6 +431,11 @@ public class MentoringApplication  extends Application {
         return iterationTypeService;
     }
 
+    public ResourceService getResourceService(){
+
+        if (resourceService == null) this.resourceService = new ResourceServiceImpl(this);
+        return resourceService;
+    }
 
     public ApplicationStep getApplicationStep() {
         return this.applicationStep;

@@ -48,6 +48,7 @@ public class Mentorship extends BaseModel {
     public static final String COLUMN_ITERATION_NUMBER = "iteration_number";
 
     public static final String COLUMN_DOOR = "door_id";
+    public static final String COLUMN_HEALTH_FACILITY = "health_facility_id";
 
     @DatabaseField(columnName = COLUMN_START_DATE, canBeNull = false)
     private Date startDate;
@@ -81,6 +82,8 @@ public class Mentorship extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_DOOR, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Door door;
+    @DatabaseField(columnName = COLUMN_HEALTH_FACILITY, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private HealthFacility healthFacility;
 
     private List<Answer> answers;
 
@@ -151,15 +154,6 @@ public class Mentorship extends BaseModel {
         this.cabinet = cabinet;
     }
 
-
-    public EvaluationType getEvaluationType() {
-        return evaluationType;
-    }
-
-    public void setEvaluationType(EvaluationType evaluationType) {
-        this.evaluationType = evaluationType;
-    }
-
     public Integer getIterationNumber() {
         return iterationNumber;
     }
@@ -189,4 +183,19 @@ public class Mentorship extends BaseModel {
         this.door = door;
     }
 
+    public HealthFacility getHealthFacility() {
+        return healthFacility;
+    }
+
+    public void setHealthFacility(HealthFacility healthFacility) {
+        this.healthFacility = healthFacility;
+    }
+
+    public EvaluationType getEvaluationType() {
+        return evaluationType;
+    }
+
+    public void setEvaluationType(EvaluationType evaluationType) {
+        this.evaluationType = evaluationType;
+    }
 }

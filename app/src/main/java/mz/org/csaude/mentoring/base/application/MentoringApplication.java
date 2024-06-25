@@ -3,6 +3,8 @@ package mz.org.csaude.mentoring.base.application;
 import static mz.org.csaude.mentoring.util.Constants.INITIAL_SETUP_STATUS;
 import static mz.org.csaude.mentoring.util.Constants.INITIAL_SETUP_STATUS_COMPLETE;
 import static mz.org.csaude.mentoring.util.Constants.LOGGED_USER;
+import static mz.org.csaude.mentoring.util.Constants.METADATA_SYNC_TIME;
+import static mz.org.csaude.mentoring.util.Constants.SESSION_SYNC_TIME;
 
 import android.app.Application;
 import android.content.Context;
@@ -103,7 +105,8 @@ public class MentoringApplication  extends Application {
 
     //private static final String BASE_URL = "http://10.10.2.75:8087";
     //private static final String BASE_URL = "http://10.10.12.65:8087";
-    private static final String BASE_URL = "http://10.10.12.97:8087";
+    //private static final String BASE_URL = "http://10.10.12.97:8087";
+    private static final String BASE_URL = "http://192.168.16.104:8087";
 
     private User authenticatedUser;
 
@@ -478,6 +481,12 @@ public class MentoringApplication  extends Application {
     private void removeUserName() {
         SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
         editor.remove(LOGGED_USER);
+        editor.apply();
+    }
+    private void saveDefaultSyncSettings() {
+        SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
+        editor.putInt(SESSION_SYNC_TIME, 2);
+        editor.putInt(METADATA_SYNC_TIME, 2);
         editor.apply();
     }
     public void initSessionManager() {

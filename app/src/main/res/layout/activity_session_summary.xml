@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".view.session.SessionSummaryActivity">
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_back_arrow" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/session_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="Fecho da Sessão"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#000000" />
+
+    <!-- Resumo da Sessão Button -->
+    <Button
+        android:id="@+id/resumo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/session_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button"
+        android:text="Resumo da Sessão"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:textAllCaps="false" />
+
+    <!-- Sinais vitais -->
+    <RelativeLayout
+        android:id="@+id/sinais_vitais_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/resumo_button"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        android:background="@drawable/rounded_background">
+
+        <TextView
+            android:id="@+id/sinais_vitais_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sinais vitais"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sim_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sinais_vitais_title"
+            android:layout_marginTop="8dp"
+            android:text="15 - SIM"
+            android:textColor="#00FF00"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/nao_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sim_count"
+            android:layout_marginTop="4dp"
+            android:text="2 - NÃO"
+            android:textColor="#FF0000"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:id="@+id/progress_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                android:rotation="-90"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="86" />
+
+            <TextView
+                android:id="@+id/progress_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="88.23%"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!-- Imprimir Button -->
+    <Button
+        android:id="@+id/imprimir_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sinais_vitais_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button"
+        android:text="Imprimir"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:textAllCaps="false" />
+
+</RelativeLayout>

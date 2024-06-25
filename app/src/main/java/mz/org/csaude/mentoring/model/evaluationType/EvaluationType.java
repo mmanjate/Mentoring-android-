@@ -58,4 +58,11 @@ public class EvaluationType extends BaseModel {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public boolean isPatientEvaluation() {
+        return this.code.equals(EvaluationType.CONSULTA);
+    }
+    public boolean isFichaEvaluation() {
+        return this.code.equals(EvaluationType.FICHA);
+    }
 }

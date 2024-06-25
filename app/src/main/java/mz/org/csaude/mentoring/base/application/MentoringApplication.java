@@ -102,8 +102,8 @@ public class MentoringApplication  extends Application {
     private static MentoringApplication mInstance;
 
     //private static final String BASE_URL = "http://10.10.2.75:8087";
-    //private static final String BASE_URL = "http://10.10.12.65:8087";
-    private static final String BASE_URL = "http://10.10.12.97:8087";
+    private static final String BASE_URL = "http://10.10.12.65:8087";
+    //private static final String BASE_URL = "http://10.10.12.97:8087";
 
     private User authenticatedUser;
 

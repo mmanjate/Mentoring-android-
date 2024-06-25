@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="sessionSummary"
+            type="mz.org.csaude.mentoring.model.session.SessionSummary" />
+
+        <import type="mz.org.csaude.mentoring.util.Utilities"/>
+        <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
+        <import type="android.view.View"/>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/sinais_vitais_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/resumo_button"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        android:background="@drawable/ronda_item_back">
+
+        <TextView
+            android:id="@+id/sinais_vitais_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sinais vitais"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sim_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sinais_vitais_title"
+            android:layout_marginTop="8dp"
+            android:text="15 - SIM"
+            android:textColor="#00FF00"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/nao_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sim_count"
+            android:layout_marginTop="4dp"
+            android:text="2 - NÃO"
+            android:textColor="#FF0000"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:id="@+id/progress_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                android:rotation="-90"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="86" />
+
+            <TextView
+                android:id="@+id/progress_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="88.23%"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

@@ -43,6 +43,7 @@ import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.mentorship.CreateMentorshipActivity;
+import mz.org.csaude.mentoring.view.session.SessionClosureActivity;
 
 public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
@@ -302,6 +303,9 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
                 this.mentorship.setEvaluationType(getApplication().getEvaluationTypeService().getByCode(EvaluationType.CONSULTA));
             } else {
                 this.mentorship.setSession(this.session);
+                this.session.getRonda().addSession(this.mentorship.getSession());
+                this.session.getRonda().addSession(getApplication().getSessionService().getAllOfRonda(this.session.getRonda()));
+
                 this.mentorship.setForm(this.session.getForm());
             }
 
@@ -516,26 +520,48 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
                 }
             }
             this.mentorship.setEndDate(DateUtilities.getCurrentDate());
-            this.mentorship.getSession().setEndDate(this.mentorship.getEndDate());
-            this.mentorship.getSession().setStartDate(this.mentorship.getStartDate());
             if (ronda.isRondaZero()) {
                 this.mentorship.getTutored().setZeroEvaluationDone(true);
                 this.mentorship.getSession().setTutored(this.mentorship.getTutored());
+                this.mentorship.getSession().setEndDate(this.mentorship.getEndDate());
+                this.mentorship.getSession().setStartDate(this.mentorship.getStartDate());
             } else {
                 this.mentorship.setTutored(this.session.getTutored());
             }
 
             this.mentorship.getSession().setForm(this.mentorship.getForm());
+            if (isMentoringMentorship()) {
+                this.mentorship.getSession().addMentorship(this.mentorship);
+                List<Mentorship> completedMentorships = getApplication().getMentorshipService().getAllOfSession(this.mentorship.getSession());
+                this.mentorship.getSession().addMentorships(completedMentorships);
+            }
+            if (this.mentorship.getSession().canBeClosed(this.mentorship.getForm())) {
+                this.mentorship.getSession().setStatus(getApplication().getSessionStatusService().getByCode(SessionStatus.COMPLETE));
+                this.mentorship.getSession().setEndDate(DateUtilities.getCurrentDate());
+            }
 
             this.ronda.addSession(this.mentorship.getSession());
             ronda.setRondaMentees(getApplication().getRondaMenteeService().getAllOfRonda(this.ronda));
             this.ronda.tryToCloseRonda();
             getApplication().getMentorshipService().save(this.mentorship);
             Log.i("Saved Mentorship", this.mentorship.toString());
-            getRelatedActivity().finish();
+            if (isMentoringMentorship()) {
+                if (this.mentorship.getSession().isCompleted()) {
+                    initSessionClosure(this.mentorship.getSession());
+                } else getRelatedActivity().finish();
+            } else {
+                getRelatedActivity().finish();
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void initSessionClosure(Session session) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("session", session);
+        getRelatedActivity().nextActivityFinishingCurrent(SessionClosureActivity.class, params);
     }
 
     private boolean determineIterationNumber() throws SQLException {

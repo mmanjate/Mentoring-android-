@@ -71,17 +71,13 @@ public class MentorshipActivity extends BaseActivity {
 
 
     public void populateRecyclerView(){
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }else {
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-            binding.rcvMentorships.setLayoutManager(mLayoutManager);
-            binding.rcvMentorships.setItemAnimator(new DefaultItemAnimator());
-            binding.rcvMentorships.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        binding.rcvMentorships.setLayoutManager(mLayoutManager);
+        binding.rcvMentorships.setItemAnimator(new DefaultItemAnimator());
+        binding.rcvMentorships.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
 
-            adapter = new MentorshipAdapter(binding.rcvMentorships, getRelatedViewModel().getSearchResults(), this);
-            binding.rcvMentorships.setAdapter(adapter);
-        }
+        adapter = new MentorshipAdapter(binding.rcvMentorships, getRelatedViewModel().getSearchResults(), this);
+        binding.rcvMentorships.setAdapter(adapter);
     }
 
     @Override

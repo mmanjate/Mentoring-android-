@@ -1,9 +1,11 @@
 package mz.org.csaude.mentoring.base.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -160,7 +162,21 @@ public abstract class BaseModel implements Serializable, Listble {
         return null;
     }
 
+    @JsonIgnore
     public boolean isPending() {
         return this.syncStatus.equals(SyncSatus.PENDING);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseModel baseModel = (BaseModel) o;
+        return Objects.equals(id, baseModel.id) && Objects.equals(uuid, baseModel.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, uuid);
     }
 }

@@ -31,9 +31,48 @@ public class SessionClosureVM extends BaseViewModel {
 
     }
 
+    @Bindable
+    public String getSessionStrongPoints() {
+        return session.getStrongPoints();
+    }
+
+    public void setSessionStrongPoints(String strongPoints) {
+        session.setStrongPoints(strongPoints);
+        notifyPropertyChanged(BR.sessionStrongPoints);
+    }
+
+    @Bindable
+    public String getPointsToImprove() {
+        return session.getPointsToImprove();
+    }
+
+    public void setPointsToImprove(String strongPoints) {
+        session.setPointsToImprove(strongPoints);
+        notifyPropertyChanged(BR.pointsToImprove);
+    }
+
+    public void setObsevations(String strongPoints) {
+        session.setObsevations(strongPoints);
+        notifyPropertyChanged(BR.obsevations);
+    }
+
+    @Bindable
+    public String getObsevations() {
+        return session.getObsevations();
+    }
     @Override
     public SessionClosureActivity getRelatedActivity() {
         return (SessionClosureActivity) super.getRelatedActivity();
+    }
+
+    @Bindable
+    public String getWorkPlan() {
+        return session.getWorkPlan();
+    }
+
+    public void setWorkPlan(String strongPoints) {
+        session.setWorkPlan(strongPoints);
+        notifyPropertyChanged(BR.workPlan);
     }
 
     @Bindable
@@ -58,6 +97,7 @@ public class SessionClosureVM extends BaseViewModel {
 
 
     public void nextStep() {
+        go to summary
 
     }
 
@@ -68,5 +108,9 @@ public class SessionClosureVM extends BaseViewModel {
 
     public void saveAndContinue(){
         //
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 }

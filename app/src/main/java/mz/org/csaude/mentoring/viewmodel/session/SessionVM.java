@@ -49,6 +49,7 @@ public class SessionVM extends BaseViewModel {
 
     }
 
+    @Bindable
     public Date getStartDate() {
         return this.session.getStartDate();
     }
@@ -71,6 +72,14 @@ public class SessionVM extends BaseViewModel {
         session.setForm(form);
     }
 
+    public Session getSession() {
+        return session;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.session.setStartDate(startDate);
+        notifyPropertyChanged(BR.startDate);
+    }
     public void save() {
         try {
             getApplication().getSessionService().save(this.session);

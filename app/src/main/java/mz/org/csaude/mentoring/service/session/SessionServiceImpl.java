@@ -57,4 +57,9 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
     public List<Session> getAllOfRondaAndMentee(Ronda currRonda, Tutored selectedMentee, long offset, long limit) {
         return this.sessionDAO.queryForAllOfRondaAndMentee(currRonda, selectedMentee, getApplication());
     }
+
+    @Override
+    public List<Session> getAllOfRonda(Ronda ronda) throws SQLException {
+        return this.sessionDAO.queryForAllOfRonda(ronda);
+    }
 }

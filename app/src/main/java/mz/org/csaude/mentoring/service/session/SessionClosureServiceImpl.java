@@ -25,7 +25,7 @@ public class SessionClosureServiceImpl extends BaseServiceImpl<Session> implemen
 
     @Override
     public Session save(Session record) throws SQLException {
-        this.sessionDAO.create(record);
+        this.sessionDAO.update(record);
         return record;
     }
 

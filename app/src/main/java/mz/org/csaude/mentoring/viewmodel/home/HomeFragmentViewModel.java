@@ -10,6 +10,7 @@ import java.util.Map;
 
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.util.RondaTypeEnum;
+import mz.org.csaude.mentoring.view.resource.ResourceActivity;
 import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 import mz.org.csaude.mentoring.view.tutored.TutoredActivity;
 
@@ -46,7 +47,7 @@ public class HomeFragmentViewModel extends BaseViewModel {
     }
 
     public void goToLearningResources() {
-
+        getRelatedActivity().nextActivity(ResourceActivity.class);
     }
     @Override
     public void preInit() {

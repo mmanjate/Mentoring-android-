@@ -32,11 +32,14 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
     private FormDTO form;
     private CabinetDTO cabinet;
     private DoorDTO door;
-    private EvaluationTypeDTO evaluationTypeDTO;
-    private TimeOfDayDTO timeOfDay;
+    private IterationTypeDTO iterationType;
     public MentorshipDTO(Mentorship mentorship) {
         super(mentorship);
-
+        this.setCode(mentorship.getCode());
+        this.setIterationNumber(mentorship.getIterationNumber());
+        if(mentorship.getHealthFacility()!=null) {
+            this.setHealthFacility(new HealthFacilityDTO(mentorship.getHealthFacility()));
+        }
         if(mentorship.getTutor()!=null) {
             this.setMentor(new TutorDTO(mentorship.getTutor()));
         }
@@ -54,6 +57,9 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         }
         if(mentorship.getDoor()!=null) {
             this.setDoor(new DoorDTO(mentorship.getDoor()));
+        }
+        if(mentorship.getIterationType()!=null) {
+            this.setIterationType(new IterationTypeDTO(mentorship.getIterationType()));
         }
     }
 
@@ -145,20 +151,11 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         this.door = door;
     }
 
-    public EvaluationTypeDTO getEvaluationTypeDTO() {
-        return evaluationTypeDTO;
+    public IterationTypeDTO getIterationType() {
+        return iterationType;
     }
-
-    public void setEvaluationTypeDTO(EvaluationTypeDTO evaluationTypeDTO) {
-        this.evaluationTypeDTO = evaluationTypeDTO;
-    }
-
-    public TimeOfDayDTO getTimeOfDay() {
-        return timeOfDay;
-    }
-
-    public void setTimeOfDay(TimeOfDayDTO timeOfDay) {
-        this.timeOfDay = timeOfDay;
+    public void setIterationType(IterationTypeDTO iterationType) {
+        this.iterationType = iterationType;
     }
 
     public Mentorship getMentorship() {
@@ -187,9 +184,6 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         }
         if(this.getDoor()!=null) {
             mentorship.setDoor(this.getDoor().getDoor());
-        }
-        if(this.evaluationTypeDTO!=null) {
-            mentorship.setEvaluationType(this.getEvaluationTypeDTO().getEvaluationType());
         }
         return mentorship;
     }

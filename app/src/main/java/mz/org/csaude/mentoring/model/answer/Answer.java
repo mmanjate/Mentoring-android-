@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.answer.AnswerDAOImpl;
 import mz.org.csaude.mentoring.model.form.Form;
+import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.model.indicator.Indicator;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.question.Question;
@@ -24,6 +25,8 @@ public class Answer extends BaseModel {
 
     public static final String COLUMN_QUESTION = "question_id";
 
+    public static final String COLUMN_FORM_QUESTION = "form_question_id";
+
     public static final String COLUMN_VALUE = "value";
 
     @DatabaseField(columnName = COLUMN_FORM, canBeNull = false, foreign = true, foreignAutoRefresh = true)
@@ -31,6 +34,8 @@ public class Answer extends BaseModel {
 
     @DatabaseField(columnName = COLUMN_MENTORSHIP, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Mentorship mentorship;
+    @DatabaseField(columnName = COLUMN_FORM_QUESTION, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private FormQuestion formQuestion;
 
     @DatabaseField(columnName = COLUMN_QUESTION, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Question question;
@@ -66,6 +71,14 @@ public class Answer extends BaseModel {
 
     public void setMentorship(Mentorship mentorship) {
         this.mentorship = mentorship;
+    }
+
+    public FormQuestion getFormQuestion() {
+        return formQuestion;
+    }
+
+    public void setFormQuestion(FormQuestion formQuestion) {
+        this.formQuestion = formQuestion;
     }
 
     public void setQuestion(Question question) {

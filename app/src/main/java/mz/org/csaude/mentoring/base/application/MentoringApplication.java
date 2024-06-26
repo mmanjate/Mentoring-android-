@@ -3,6 +3,8 @@ package mz.org.csaude.mentoring.base.application;
 import static mz.org.csaude.mentoring.util.Constants.INITIAL_SETUP_STATUS;
 import static mz.org.csaude.mentoring.util.Constants.INITIAL_SETUP_STATUS_COMPLETE;
 import static mz.org.csaude.mentoring.util.Constants.LOGGED_USER;
+import static mz.org.csaude.mentoring.util.Constants.METADATA_SYNC_TIME;
+import static mz.org.csaude.mentoring.util.Constants.SESSION_SYNC_TIME;
 
 import android.app.Application;
 import android.content.Context;
@@ -62,6 +64,8 @@ import mz.org.csaude.mentoring.service.question.QuestionService;
 import mz.org.csaude.mentoring.service.question.QuestionServiceImpl;
 import mz.org.csaude.mentoring.service.question.QuestionsCategoryService;
 import mz.org.csaude.mentoring.service.question.QuestionsCategoryServiceImpl;
+import mz.org.csaude.mentoring.service.resource.ResourceService;
+import mz.org.csaude.mentoring.service.resource.ResourceServiceImpl;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeService;
 import mz.org.csaude.mentoring.service.responseType.ResponseTypeServiceImpl;
 import mz.org.csaude.mentoring.service.ronda.RondaMenteeService;
@@ -89,6 +93,7 @@ import mz.org.csaude.mentoring.workSchedule.rest.FormQuestionRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.FormRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.MentorshipRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
+import mz.org.csaude.mentoring.workSchedule.rest.ResourceRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.RondaRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.ServerStatusChecker;
 import mz.org.csaude.mentoring.workSchedule.rest.TutorRestService;
@@ -179,6 +184,8 @@ public class MentoringApplication  extends Application {
 
     private CabinetService cabinetService;
 
+    private ResourceService resourceService;
+
 
     // Rest Services
     private PartnerRestService partnerRestService;
@@ -188,6 +195,8 @@ public class MentoringApplication  extends Application {
     private RondaRestService rondaRestService;
     private MentorshipRestService mentorshipRestService;
     private IterationTypeService iterationTypeService;
+
+    private ResourceRestService resourceRestService;
 
     @Override
     public void onCreate() {
@@ -365,6 +374,11 @@ public class MentoringApplication  extends Application {
         return mentorshipRestService;
     }
 
+    public ResourceRestService getResourceRestService(){
+        if(resourceRestService == null) this.resourceRestService = new ResourceRestService(this);
+        return resourceRestService;
+    }
+
     public ProgrammaticAreaService getProgrammaticAreaService() {
         if (programmaticAreaService == null) this.programmaticAreaService = new ProgrammaticAreaServiceImpl(this);
         return programmaticAreaService;
@@ -419,6 +433,11 @@ public class MentoringApplication  extends Application {
         return iterationTypeService;
     }
 
+    public ResourceService getResourceService(){
+
+        if (resourceService == null) this.resourceService = new ResourceServiceImpl(this);
+        return resourceService;
+    }
 
     public ApplicationStep getApplicationStep() {
         return this.applicationStep;
@@ -478,6 +497,12 @@ public class MentoringApplication  extends Application {
     private void removeUserName() {
         SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
         editor.remove(LOGGED_USER);
+        editor.apply();
+    }
+    private void saveDefaultSyncSettings() {
+        SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
+        editor.putInt(SESSION_SYNC_TIME, 2);
+        editor.putInt(METADATA_SYNC_TIME, 2);
         editor.apply();
     }
     public void initSessionManager() {

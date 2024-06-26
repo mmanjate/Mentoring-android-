@@ -3,6 +3,7 @@ package mz.org.csaude.mentoring.view.session;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
@@ -58,6 +59,17 @@ public class SessionClosureActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Handle the back button click
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     public BaseViewModel initViewModel() {
         return new ViewModelProvider(this).get(SessionClosureVM.class);

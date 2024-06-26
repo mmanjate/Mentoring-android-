@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="viewModel" type="mz.org.csaude.mentoring.viewmodel.session.SessionListVM" />
+            name="viewModel" type="mz.org.csaude.mentoring.viewmodel.session.SessionResourcesVM" />
 
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
         <import type="android.view.View"/>
@@ -40,11 +40,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
 
+            <LinearLayout
+                android:id="@+id/identification_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_normal"
+                android:padding="3dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Materiais de EA Recomendados"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:paddingLeft="@dimen/dimen_10dp"/>
+
+            </LinearLayout>
             <!-- Recommend Consultation Checkbox -->
             <CheckBox
                 android:id="@+id/recommendConsultation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checked="@{viewModel.recommendResources}"
+                android:onClick="@{() -> viewModel.changeRecommendResourcesStatus()}"
                 android:text="Recomendar Consulta aos Materiais de EA"
                 android:padding="8dp" />
 
@@ -61,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Pesquisar"
+                    android:text="@={viewModel.searchText}"
                     android:padding="8dp"
                     android:background="@drawable/search_background" />
 
@@ -69,6 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_search"
+                    android:onClick="@{()->viewModel.initSearch()}"
                     android:background="?attr/selectableItemBackground"
                     android:padding="8dp" />
             </LinearLayout>

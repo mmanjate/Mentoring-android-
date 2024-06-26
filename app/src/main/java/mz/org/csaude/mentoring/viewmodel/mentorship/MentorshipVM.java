@@ -535,7 +535,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
                 List<Mentorship> completedMentorships = getApplication().getMentorshipService().getAllOfSession(this.mentorship.getSession());
                 this.mentorship.getSession().addMentorships(completedMentorships);
             }
-            if (this.mentorship.getSession().canBeClosed(this.mentorship.getForm())) {
+            if (this.mentorship.getSession().canBeClosed()) {
                 this.mentorship.getSession().setStatus(getApplication().getSessionStatusService().getByCode(SessionStatus.COMPLETE));
                 this.mentorship.getSession().setEndDate(DateUtilities.getCurrentDate());
             }
@@ -561,7 +561,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     private void initSessionClosure(Session session) {
         Map<String, Object> params = new HashMap<>();
         params.put("session", session);
-        getRelatedActivity().nextActivityFinishingCurrent(SessionClosureActivity.class, params);
+        getRelatedActivity().nextActivity(SessionClosureActivity.class, params);
     }
 
     private boolean determineIterationNumber() throws SQLException {

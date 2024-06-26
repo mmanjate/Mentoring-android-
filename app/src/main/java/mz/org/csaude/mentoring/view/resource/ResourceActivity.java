@@ -88,7 +88,7 @@ public class ResourceActivity extends BaseActivity {
         this.resourceList = this.getRelatedViewModel().getAllResource();
         convertStringtoJson();
         String resourceString = this.resourceList.get(0).getResource();
-        resourceAdapter = new ResourceAdapter(rcvResources, this,  this.nodeList);
+        resourceAdapter = new ResourceAdapter(rcvResources,  this.nodeList, this);
         rcvResources.setAdapter(resourceAdapter);
     }
 

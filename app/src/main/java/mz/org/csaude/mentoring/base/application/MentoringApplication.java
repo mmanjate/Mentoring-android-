@@ -28,6 +28,8 @@ import mz.org.csaude.mentoring.service.ProgrammaticArea.ProgrammaticAreaService;
 import mz.org.csaude.mentoring.service.ProgrammaticArea.ProgrammaticAreaServiceImpl;
 import mz.org.csaude.mentoring.service.ProgrammaticArea.TutorProgrammaticAreaService;
 import mz.org.csaude.mentoring.service.ProgrammaticArea.TutorProgrammaticAreaServiceImpl;
+import mz.org.csaude.mentoring.service.answer.AnswerService;
+import mz.org.csaude.mentoring.service.answer.AnswerServiceImpl;
 import mz.org.csaude.mentoring.service.employee.EmployeeService;
 import mz.org.csaude.mentoring.service.employee.EmployeeServiceImpl;
 import mz.org.csaude.mentoring.service.evaluationType.EvaluationTypeService;
@@ -197,6 +199,7 @@ public class MentoringApplication  extends Application {
     private IterationTypeService iterationTypeService;
 
     private ResourceRestService resourceRestService;
+    private AnswerService answerService;
 
     @Override
     public void onCreate() {
@@ -499,7 +502,7 @@ public class MentoringApplication  extends Application {
         editor.remove(LOGGED_USER);
         editor.apply();
     }
-    private void saveDefaultSyncSettings() {
+    public void saveDefaultSyncSettings() {
         SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
         editor.putInt(SESSION_SYNC_TIME, 2);
         editor.putInt(METADATA_SYNC_TIME, 2);
@@ -510,4 +513,8 @@ public class MentoringApplication  extends Application {
     }
 
 
+    public AnswerService getAnswerService() {
+        if (answerService == null) this.answerService = new AnswerServiceImpl(this);
+        return answerService;
+    }
 }

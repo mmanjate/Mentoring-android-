@@ -288,4 +288,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
         this.positionRemoved = positionRemoved;
     }
 
+    public void displaySearchResults(){
+
+    }
+
 }

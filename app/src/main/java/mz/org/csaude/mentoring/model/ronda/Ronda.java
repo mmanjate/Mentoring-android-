@@ -16,6 +16,7 @@ import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.session.Session;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.RondaStatus;
@@ -225,5 +226,15 @@ public class Ronda extends BaseModel implements Listble {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), startDate, healthFacility, rondaType);
+    }
+
+    public Tutor getActiveMentor() {
+        if(this.getRondaMentors() == null) return null;
+        for (RondaMentor rondaMentor : rondaMentors) {
+            if (rondaMentor.isActive()) {
+                return rondaMentor.getTutor();
+            }
+        }
+        return null;
     }
 }

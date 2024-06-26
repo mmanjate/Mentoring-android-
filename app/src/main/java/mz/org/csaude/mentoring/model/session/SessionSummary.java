@@ -17,6 +17,9 @@ public class SessionSummary extends BaseModel {
         this.progressPercentage = progressPercentage;
     }
 
+    public SessionSummary() {
+    }
+
     // Getters and Setters
     public String getTitle() {
         return title;
@@ -42,12 +45,17 @@ public class SessionSummary extends BaseModel {
         this.naoCount = naoCount;
     }
 
-    public double getProgressPercentage() {
-        return progressPercentage;
+    public Integer getProgressPercentage() {
+        if (simCount + naoCount == 0) {
+            return 0; // To handle division by zero
+        }
+        double progress = (double) simCount / (simCount + naoCount) * 100;
+        return (int) progress;
     }
 
-    public void setProgressPercentage(double progressPercentage) {
-        this.progressPercentage = progressPercentage;
+
+    public void setProgressPercentage(String progressPercentage) {
+
     }
 
     // toString method for debugging

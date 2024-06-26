@@ -1,11 +1,15 @@
 package mz.org.csaude.mentoring.viewmodel.session;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.app.Application;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,9 +104,15 @@ public class SessionClosureVM extends BaseViewModel {
 
 
     public void nextStep() {
-        Map<String, Object> params = new HashMap<>();
-        params.put("session", session);
-        getRelatedActivity().nextActivity(SessionEAResourceActivity.class, params);
+        try {
+            getApplication().getSessionService().update(session);
+            session.getRonda().setRondaMentors(getApplication().getRondaMentorService().getRondaMentors(session.getRonda()));
+            Map<String, Object> params = new HashMap<>();
+            params.put("session", session);
+            getRelatedActivity().nextActivity(SessionEAResourceActivity.class, params);
+        } catch (SQLException e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     public void changeInitialDataViewStatus(View view){

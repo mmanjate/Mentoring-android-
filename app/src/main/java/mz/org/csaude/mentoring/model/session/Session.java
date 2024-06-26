@@ -140,6 +140,10 @@ public class Session extends BaseModel {
         mentorships.add(mentorship);
     }
 
+    public void setMentorships(List<Mentorship> mentorships) {
+        this.mentorships = mentorships;
+    }
+
     public Tutored getTutored() {
         return tutored;
     }
@@ -160,7 +164,7 @@ public class Session extends BaseModel {
         return this.status.isCompleted();
     }
 
-    public boolean canBeClosed(Form form) {
+    public boolean canBeClosed() {
         int completedPatient = 0;
         int completedFile = 0;
         for (Mentorship mentorship : mentorships) {

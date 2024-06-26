@@ -7,8 +7,12 @@ import java.util.Date;
 
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.session.SessionRecommendedResourceDAOImpl;
+import mz.org.csaude.mentoring.model.resourceea.Node;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.util.DateUtilities;
+import mz.org.csaude.mentoring.util.SyncSatus;
+import mz.org.csaude.mentoring.util.Utilities;
 
 @DatabaseTable(tableName = SessionRecommendedResource.TABLE_NAME, daoClass = SessionRecommendedResourceDAOImpl.class)
 public class SessionRecommendedResource extends BaseModel {
@@ -38,6 +42,18 @@ public class SessionRecommendedResource extends BaseModel {
 
     // Default constructor is needed by ORMLite
     public SessionRecommendedResource() {
+    }
+
+    public SessionRecommendedResource(Session session, Node node) {
+        this.tutor = session.getRonda().getActiveMentor();
+        this.tutored = session.getTutored();
+        this.session = session;
+        this.resourceLink = node.getName();
+        this.resourceName = node.getName();
+        this.dateRecommended = DateUtilities.getCurrentDate();
+        this.setSyncStatus(SyncSatus.PENDING);
+        this.setCreatedAt(DateUtilities.getCurrentDate());
+        this.setUuid(Utilities.getNewUUID().toString());
     }
 
     // Getters and Setters

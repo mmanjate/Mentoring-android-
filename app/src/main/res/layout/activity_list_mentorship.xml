@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <include layout="@layout/app_toolbar" />
+            <include android:id="@+id/toolbar" layout="@layout/app_toolbar" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout

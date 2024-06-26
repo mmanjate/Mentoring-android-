@@ -51,6 +51,11 @@ public class MentorshipActivity extends BaseActivity {
             getRelatedViewModel().setRonda(r);
             getRelatedViewModel().setSession(s);
         }
+
+        setSupportActionBar(binding.toolbar.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Avaliações");
     }
 
     @Override

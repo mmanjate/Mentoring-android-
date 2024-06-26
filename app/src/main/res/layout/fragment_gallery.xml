@@ -60,7 +60,7 @@
                 android:focusableInTouchMode="false"
                 android:inputType="number"
                 android:maxLength="2"
-                android:text="@{viewModel.sessionSyncTime}"
+                android:text="@{String.valueOf(viewModel.sessionSyncTime)}"
                 android:onClick="@{()->viewModel.saveSessionSyncTime()}"
                 style="@style/bottom_border_edit_text_style"/>
             <TextView
@@ -76,7 +76,7 @@
                 android:focusableInTouchMode="false"
                 android:inputType="number"
                 android:maxLength="2"
-                android:text="@{viewModel.metadataSyncTime}"
+                android:text="@{String.valueOf(viewModel.metadataSyncTime)}"
                 android:onClick="@{()->viewModel.saveMetadataSyncTime()}"
                 style="@style/bottom_border_edit_text_style"/>
 

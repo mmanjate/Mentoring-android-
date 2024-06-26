@@ -37,9 +37,6 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         super(mentorship);
         this.setCode(mentorship.getCode());
         this.setIterationNumber(mentorship.getIterationNumber());
-        if(mentorship.getHealthFacility()!=null) {
-            this.setHealthFacility(new HealthFacilityDTO(mentorship.getHealthFacility()));
-        }
         if(mentorship.getTutor()!=null) {
             this.setMentor(new TutorDTO(mentorship.getTutor()));
         }

@@ -26,6 +26,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.session.SessionEAResourceActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.session.SessionSummaryActivity"
             android:exported="false" />
         <activity

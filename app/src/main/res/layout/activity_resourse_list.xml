@@ -34,10 +34,6 @@
             android:textSize="16sp"
             android:paddingLeft="8dp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_expand_more" />
     </LinearLayout>
 
     <!-- Recommend Consultation Checkbox -->
@@ -239,7 +235,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ATS & Prevenção"
+                        android:text="ATS e Prevenção"
                         android:textStyle="bold" />
 
                     <TextView

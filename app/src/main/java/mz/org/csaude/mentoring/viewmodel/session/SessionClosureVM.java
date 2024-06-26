@@ -7,12 +7,15 @@ import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.service.session.SessionClosureService;
 import mz.org.csaude.mentoring.view.session.SessionClosureActivity;
+import mz.org.csaude.mentoring.view.session.SessionEAResourceActivity;
 
 public class SessionClosureVM extends BaseViewModel {
     private Session session;
@@ -97,8 +100,9 @@ public class SessionClosureVM extends BaseViewModel {
 
 
     public void nextStep() {
-        go to summary
-
+        Map<String, Object> params = new HashMap<>();
+        params.put("session", session);
+        getRelatedActivity().nextActivity(SessionEAResourceActivity.class, params);
     }
 
     public void changeInitialDataViewStatus(View view){

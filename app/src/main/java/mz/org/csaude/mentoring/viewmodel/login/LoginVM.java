@@ -90,6 +90,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
 
         if (logedUser != null) {
             getApplication().setAuthenticatedUser(logedUser, remeberMe);
+            getApplication().saveDefaultSyncSettings();
             goHome();
         } else {
             Utilities.displayAlertDialog(getRelatedActivity(), "Utilizador ou senha inválida").show();

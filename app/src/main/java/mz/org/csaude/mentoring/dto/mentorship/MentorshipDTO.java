@@ -32,7 +32,7 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
     private FormDTO form;
     private CabinetDTO cabinet;
     private DoorDTO door;
-    private IterationTypeDTO iterationType;
+    private EvaluationTypeDTO evaluationType;
     public MentorshipDTO(Mentorship mentorship) {
         super(mentorship);
         this.setCode(mentorship.getCode());
@@ -58,8 +58,8 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         if(mentorship.getDoor()!=null) {
             this.setDoor(new DoorDTO(mentorship.getDoor()));
         }
-        if(mentorship.getIterationType()!=null) {
-            this.setIterationType(new IterationTypeDTO(mentorship.getIterationType()));
+        if(mentorship.getEvaluationType()!=null) {
+            this.setEvaluationType(new EvaluationTypeDTO(mentorship.getEvaluationType()));
         }
     }
 
@@ -151,11 +151,11 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         this.door = door;
     }
 
-    public IterationTypeDTO getIterationType() {
-        return iterationType;
+    public EvaluationTypeDTO getEvaluationType() {
+        return evaluationType;
     }
-    public void setIterationType(IterationTypeDTO iterationType) {
-        this.iterationType = iterationType;
+    public void setEvaluationType(EvaluationTypeDTO evaluationType) {
+        this.evaluationType = evaluationType;
     }
 
     public Mentorship getMentorship() {

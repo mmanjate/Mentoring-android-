@@ -1,5 +1,8 @@
 package mz.org.csaude.mentoring.viewmodel.setting;
 
+import static mz.org.csaude.mentoring.util.Constants.METADATA_SYNC_TIME;
+import static mz.org.csaude.mentoring.util.Constants.SESSION_SYNC_TIME;
+
 import android.app.Application;
 import android.content.SharedPreferences;
 
@@ -38,8 +41,8 @@ public class SettingVM extends BaseViewModel {
 
     @Override
     public void preInit() {
-        this.sessionSyncTime = 1;
-        this.metadataSyncTime = 1;
+        this.sessionSyncTime = this.sharedPreferences.getInt(SESSION_SYNC_TIME, 2);
+        this.metadataSyncTime = this.sharedPreferences.getInt(METADATA_SYNC_TIME, 2);
     }
     @Bindable
     public String getDescription() {
@@ -88,12 +91,12 @@ public class SettingVM extends BaseViewModel {
 
     public void saveSessionSyncTime() {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putInt("session_sync_time_key", this.sessionSyncTime);
+        editor.putInt(SESSION_SYNC_TIME, this.sessionSyncTime);
         editor.commit();
     }
     public void saveMetadataSyncTime() {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putInt("metadata_sync_time_key", this.metadataSyncTime);
+        editor.putInt(METADATA_SYNC_TIME, this.metadataSyncTime);
         editor.commit();
     }
 }

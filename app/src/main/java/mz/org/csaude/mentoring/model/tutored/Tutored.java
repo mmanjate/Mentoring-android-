@@ -3,6 +3,8 @@ package mz.org.csaude.mentoring.model.tutored;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Objects;
+
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.tutored.TutoredDaoImpl;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
@@ -74,5 +76,27 @@ public class Tutored extends BaseModel {
     @Override
     public String getListType() {
         return listTyp;
+    }
+
+    @Override
+    public String toString() {
+        return "Tutored{" +
+                "employee=" + employee +
+                ", zeroEvaluationDone=" + zeroEvaluationDone +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tutored)) return false;
+        if (!super.equals(o)) return false;
+        Tutored tutored = (Tutored) o;
+        return Objects.equals(employee, tutored.employee);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), employee);
     }
 }

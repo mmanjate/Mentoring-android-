@@ -44,9 +44,7 @@ public class CreateRondaActivity extends BaseActivity {
     private ListableSpinnerAdapter healthFacilityAdapter;
     private RecyclerView rcvSelectedMentees;
     private TutoredAdapter tutoredAdapter;
-    private Ronda ronda;
     private String title;
-    private mz.org.csaude.mentoring.model.rondatype.RondaType rondaType;
     private RondaType rondaTypeOption;
 
     @Override

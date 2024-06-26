@@ -1,46 +1,79 @@
 package mz.org.csaude.mentoring.view.session;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+
+import java.util.Calendar;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivitySessionClosureBinding;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.session.Session;
+import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.Utilities;
+import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
 import mz.org.csaude.mentoring.viewmodel.session.SessionClosureVM;
 
 public class SessionClosureActivity extends BaseActivity {
 
-    private @NonNull ActivitySessionClosureBinding binding;
 
-
-    @Override
-    public BaseViewModel initViewModel() {
-        return new ViewModelProvider(this).get(SessionClosureVM.class);
-    }
+    private ActivitySessionClosureBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_session_closure_summary);
-        binding = ActivitySessionClosureBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        binding.pontosFortesLyt.setVisibility(View.GONE);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_session_closure);
+        binding.setViewModel(getRelatedViewModel());
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Intent intent = this.getIntent();
+        getRelatedViewModel().setSession((Session) intent.getExtras().get("session"));
 
+        setSupportActionBar(binding.toolbar.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(R.string.fecho_da_sess_o);
 
-//        Bar
+        binding.sessionEndDate.setOnClickListener(view -> {
+            int mYear, mMonth, mDay;
+
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(SessionClosureActivity.this, (view1, year, monthOfYear, dayOfMonth) -> getRelatedViewModel().setEndtDate(DateUtilities.createDate(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year, DateUtilities.DATE_FORMAT)), mYear, mMonth, mDay);
+            datePickerDialog.show();
+        });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Handle the back button click
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public BaseViewModel initViewModel() {
+        return new ViewModelProvider(this).get(SessionClosureVM.class);
+    }
 
     @Override
     public SessionClosureVM getRelatedViewModel() {

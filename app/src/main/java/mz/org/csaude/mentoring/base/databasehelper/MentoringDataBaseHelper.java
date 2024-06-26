@@ -44,6 +44,7 @@ import mz.org.csaude.mentoring.dao.ronda.RondaMenteeDAO;
 import mz.org.csaude.mentoring.dao.ronda.RondaMentorDAO;
 import mz.org.csaude.mentoring.dao.rondatype.RondaTypeDAO;
 import mz.org.csaude.mentoring.dao.session.SessionDAO;
+import mz.org.csaude.mentoring.dao.session.SessionRecommendedResourceDAO;
 import mz.org.csaude.mentoring.dao.session.SessionStatusDAO;
 import mz.org.csaude.mentoring.dao.setting.SettingDAO;
 import mz.org.csaude.mentoring.dao.tutor.TutorDAO;
@@ -85,6 +86,7 @@ import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.ronda.RondaMentor;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.session.Session;
+import mz.org.csaude.mentoring.model.session.SessionRecommendedResource;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
 import mz.org.csaude.mentoring.model.setting.PartnerSetting;
 import mz.org.csaude.mentoring.model.setting.Setting;
@@ -179,6 +181,7 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
     private ProgramDAO programDAO;
 
     private ResourceDAO resourceDAO;
+    private SessionRecommendedResourceDAO sessionRecommendedResourceDAO;
 
     private static MentoringDataBaseHelper dataBaseHelper;
 
@@ -463,6 +466,14 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return resourceDAO;
     }
+
+    public SessionRecommendedResourceDAO getSessionRecommendedResourceDAO() throws SQLException {
+        if(sessionRecommendedResourceDAO == null){
+            sessionRecommendedResourceDAO = getDao(SessionRecommendedResource.class);
+        }
+        return sessionRecommendedResourceDAO;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
 
@@ -509,6 +520,7 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, EvaluationType.class);
             TableUtils.createTableIfNotExists(connectionSource, ResponseType.class);
             TableUtils.createTableIfNotExists(connectionSource, Resource.class);
+            TableUtils.createTableIfNotExists(connectionSource, SessionRecommendedResource.class);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -519,4 +531,6 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
             //onCreate(database, connectionSource);
     }
+
+
 }

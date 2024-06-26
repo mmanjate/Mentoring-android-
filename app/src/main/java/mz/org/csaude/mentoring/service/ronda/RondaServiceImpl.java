@@ -2,9 +2,12 @@ package mz.org.csaude.mentoring.service.ronda;
 
 import android.app.Application;
 
+import com.j256.ormlite.misc.TransactionManager;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
@@ -58,11 +61,21 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
 
     @Override
     public Ronda savedOrUpdateRonda(Ronda ronda) throws SQLException {
-        Ronda r = this.rondaDAO.getByUuid(ronda.getUuid());
-        if(r!=null) {
-            ronda.setId(r.getId());
-        }
-        this.rondaDAO.createOrUpdate(ronda);
+        TransactionManager.callInTransaction(getDataBaseHelper().getConnectionSource(), (Callable<Void>) () -> {
+            Ronda r = this.rondaDAO.getByUuid(ronda.getUuid());
+            if(r!=null) {
+                ronda.setId(r.getId());
+            }
+            this.rondaDAO.createOrUpdate(ronda);
+
+            for (RondaMentor rondaMentor: ronda.getRondaMentors()) {
+                this.rondaMentorDAO.createOrUpdate(rondaMentor);
+            }
+            for (RondaMentee rondaMentee: ronda.getRondaMentees()) {
+                this.rondaMenteeDAO.createOrUpdate(rondaMentee);
+            }
+            return null;
+        });
         return ronda;
     }
 

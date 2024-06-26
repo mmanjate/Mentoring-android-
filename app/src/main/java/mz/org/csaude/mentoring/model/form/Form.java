@@ -3,6 +3,8 @@ package mz.org.csaude.mentoring.model.form;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Objects;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -116,5 +118,19 @@ public class Form extends BaseModel {
 
     public void setPartner(Partner partner) {
         this.partner = partner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Form)) return false;
+        if (!super.equals(o)) return false;
+        Form form = (Form) o;
+        return Objects.equals(code, form.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), code);
     }
 }

@@ -85,6 +85,7 @@
                             android:id="@+id/start_date"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:focusableInTouchMode="false"
                             android:drawableLeft="@drawable/ic_calendar"
                             android:text="@{DateUtilities.formatToDDMMYYYY(viewModel.startDate)}"
                             android:enabled="@{!viewModel.currentStep.applicationStepDisplay}"

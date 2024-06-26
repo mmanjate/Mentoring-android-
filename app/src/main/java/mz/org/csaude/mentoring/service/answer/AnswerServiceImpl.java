@@ -9,6 +9,7 @@ import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
 import mz.org.csaude.mentoring.dao.answer.AnswerDAO;
 import mz.org.csaude.mentoring.dao.answer.AnswerTypeDAO;
 import mz.org.csaude.mentoring.model.answer.Answer;
+import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 
 public class AnswerServiceImpl extends BaseServiceImpl<Answer> implements AnswerService {
 
@@ -49,5 +50,10 @@ public class AnswerServiceImpl extends BaseServiceImpl<Answer> implements Answer
     @Override
     public Answer getById(int id) throws SQLException {
         return this.answerDAO.queryForId(id);
+    }
+
+    @Override
+    public List<Answer> getAllOfMentorship(Mentorship mentorship) throws SQLException {
+        return this.answerDAO.queryForMentorship(mentorship);
     }
 }

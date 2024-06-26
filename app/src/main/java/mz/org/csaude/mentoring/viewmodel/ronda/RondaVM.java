@@ -220,13 +220,13 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
             ronda.setSyncStatus(SyncSatus.PENDING);
             ronda.setUuid(Utilities.getNewUUID().toString());
             Intent intent = getRelatedActivity().getIntent();
-            RondaType rondaType = (RondaType) intent.getExtras().get("rondaType");
-            ronda.setRondaType(rondaType);
+            /*RondaType rondaType = (RondaType) intent.getExtras().get("rondaType");
+            ronda.setRondaType(rondaType);*/
             ronda.setStartDate(this.getStartDate());
             ronda.setHealthFacility(this.selectedHealthFacility);
             int count = getApplication().getRondaService().countRondas();
             count++;
-            ronda.setDescription(rondaType.getDescription()+" "+count);
+            ronda.setDescription(ronda.getRondaType().getDescription()+" "+count);
             List<RondaMentee> rondaMentees = new ArrayList<>();
             for (Tutored tutored : this.getSelectedMentees()) {
                 RondaMentee rondaMentee = new RondaMentee();
@@ -325,5 +325,10 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
     @Override
     public void doOnRestErrorResponse(String errorMsg) {
         Utilities.displayAlertDialog(getRelatedActivity(), errorMsg).show();
+    }
+
+    @Override
+    public void doOnResponse(String flag, List<Ronda> objects) {
+        getRelatedActivity().nextActivityFinishingCurrent(RondaActivity.class);
     }
 }

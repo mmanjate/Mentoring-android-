@@ -24,6 +24,7 @@ import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.mentorship.MentorshipActivity;
 import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 import mz.org.csaude.mentoring.view.session.SessionActivity;
+import mz.org.csaude.mentoring.view.session.SessionClosureActivity;
 import mz.org.csaude.mentoring.view.session.SessionListActivity;
 
 public class SessionListVM extends SearchVM<Session> {
@@ -128,5 +129,11 @@ public class SessionListVM extends SearchVM<Session> {
         Map<String, Object> params = new HashMap<>();
         params.put("session", session);
         getRelatedActivity().nextActivity(SessionActivity.class, params);
+    }
+
+    public void closeSession(Session session) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("session", session);
+        getRelatedActivity().nextActivityFinishingCurrent(SessionClosureActivity.class, params);
     }
 }

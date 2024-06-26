@@ -34,6 +34,7 @@ import mz.org.csaude.mentoring.workSchedule.work.ProfessionalCategoryWorker;
 import mz.org.csaude.mentoring.workSchedule.work.ProgramWorker;
 import mz.org.csaude.mentoring.workSchedule.work.ProgrammaticAreaWorker;
 import mz.org.csaude.mentoring.workSchedule.work.ProvinceWorker;
+import mz.org.csaude.mentoring.workSchedule.work.Resourceworker;
 import mz.org.csaude.mentoring.workSchedule.work.ResponseTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaWorker;
@@ -114,6 +115,7 @@ public class WorkerScheduleExecutor {
         OneTimeWorkRequest mentorFormsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(FormWorker.class).addTag("ONE_TIME_MENTOR_FORMS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest mentorFormsQuestionsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(FormQuestionWorker.class).addTag("ONE_TIME_MENTOR_FORMS_QUESTIONS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest mentorRondasOneTimeWorkRequest = new OneTimeWorkRequest.Builder(RondaWorker.class).addTag("ONE_TIME_MENTOR_RONDAS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest resourceTimeWorkRequest = new OneTimeWorkRequest.Builder(Resourceworker.class).addTag("ONE_RESOURCE_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         //OneTimeWorkRequest mentorMentorshipsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(MentorshipWorker.class).addTag("ONE_TIME_MENTOR_MENTORSHIPS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         //OneTimeWorkRequest tutorProgrammaticAreaOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutorProgrammaticAreaWorker.class).addTag("ONE_TIME_TUTOR_PROGRAMMATIC_AREA_ID" + ONE_TIME_REQUEST_JOB_ID).build();
 
@@ -122,6 +124,7 @@ public class WorkerScheduleExecutor {
                 .then(Arrays.asList(menteesOneTimeWorkRequest, mentorFormsOneTimeWorkRequest))
                 .then(mentorFormsQuestionsOneTimeWorkRequest)
                 .then(mentorRondasOneTimeWorkRequest)
+                .then(resourceTimeWorkRequest)
                 //.then(mentorMentorshipsOneTimeWorkRequest)
                 .enqueue();
         return mentorRondasOneTimeWorkRequest;

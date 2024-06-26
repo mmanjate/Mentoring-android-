@@ -37,6 +37,7 @@ import mz.org.csaude.mentoring.dao.programmaticArea.TutorProgrammaticAreaDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionTypeDAO;
 import mz.org.csaude.mentoring.dao.question.QuestionsCategoryDAO;
+import mz.org.csaude.mentoring.dao.resource.ResourceDAO;
 import mz.org.csaude.mentoring.dao.responseType.ResponseTypeDAO;
 import mz.org.csaude.mentoring.dao.ronda.RondaDAO;
 import mz.org.csaude.mentoring.dao.ronda.RondaMenteeDAO;
@@ -77,6 +78,7 @@ import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.question.QuestionType;
 import mz.org.csaude.mentoring.model.question.QuestionsCategory;
+import mz.org.csaude.mentoring.model.resourceea.Resource;
 import mz.org.csaude.mentoring.model.responseType.ResponseType;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
@@ -175,6 +177,8 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
     private EvaluationTypeDAO evaluationTypeDAO;
     private ResponseTypeDAO responseTypeDAO;
     private ProgramDAO programDAO;
+
+    private ResourceDAO resourceDAO;
 
     private static MentoringDataBaseHelper dataBaseHelper;
 
@@ -452,7 +456,13 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return programDAO;
     }
+    public ResourceDAO getResourceDAO() throws SQLException{
 
+        if(resourceDAO == null){
+            resourceDAO = getDao(Resource.class);
+        }
+        return resourceDAO;
+    }
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
 
@@ -498,6 +508,7 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, Location.class);
             TableUtils.createTableIfNotExists(connectionSource, EvaluationType.class);
             TableUtils.createTableIfNotExists(connectionSource, ResponseType.class);
+            TableUtils.createTableIfNotExists(connectionSource, Resource.class);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

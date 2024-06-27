@@ -64,6 +64,7 @@
     <string name="print">Imprimir</string>
     <string name="server_unavailable">Não foi possivel estabelecer a ligação com o servidor, por favor verifique a sua ligação a Internet ou contacte o administrador.</string>
     <string name="sess_es_de_mentoria">Sessões de Mentoria</string>
+    <string name="fecho_da_sess_o">Fecho da Sessão</string>
     <string name="sync_now">Sincronizar Agora</string>
     <string name="session_sync_time_key">session_sync_time_key</string>
     <string name="metadata_sync_time_key">metadata_sync_time_key</string>

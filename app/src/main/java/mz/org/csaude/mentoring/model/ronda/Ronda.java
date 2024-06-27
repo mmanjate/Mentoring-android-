@@ -6,6 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
@@ -15,6 +16,7 @@ import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.session.Session;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.RondaStatus;
@@ -155,7 +157,15 @@ public class Ronda extends BaseModel implements Listble {
 
     public void addSession(Session session) {
         if(this.sessions == null) this.sessions = new ArrayList<>();
-        this.sessions.add(session);
+        if (!this.sessions.contains(session)){
+            this.sessions.add(session);
+        }
+    }
+
+    public void addSession(List<Session> sessions) {
+        for (Session session : sessions) {
+            this.addSession(session);
+        }
     }
     public void removeSession(Session session) {
         if(this.sessions == null) return;
@@ -163,15 +173,32 @@ public class Ronda extends BaseModel implements Listble {
     }
     public void tryToCloseRonda() {
         boolean allSessionsClosed = true;
+
         for (RondaMentee rondaMentee : rondaMentees) {
-            if (!hasSessionClosed(rondaMentee.getTutored())) {
+            if (!allMenteeSessionsClosed(rondaMentee.getTutored())) {
                 allSessionsClosed = false;
                 break;
             }
         }
+
         if (allSessionsClosed) {
             this.setEndDate(DateUtilities.getCurrentDate());
         }
+    }
+
+    private boolean allMenteeSessionsClosed(Tutored tutored) {
+        if (!menteeHasFourSessions(tutored)) return false;
+
+        for (Session session : sessions) {
+            if (session.getTutored().equals(tutored) && !session.isCompleted()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean menteeHasFourSessions(Tutored tutored) {
+        return this.sessions.stream().filter(session -> session.getTutored().equals(tutored)).count() == 4;
     }
 
     public boolean isRondaCompleted() {
@@ -185,5 +212,29 @@ public class Ronda extends BaseModel implements Listble {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Ronda ronda = (Ronda) o;
+        return Objects.equals(startDate, ronda.startDate) && Objects.equals(healthFacility, ronda.healthFacility) && Objects.equals(rondaType, ronda.rondaType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), startDate, healthFacility, rondaType);
+    }
+
+    public Tutor getActiveMentor() {
+        if(this.getRondaMentors() == null) return null;
+        for (RondaMentor rondaMentor : rondaMentors) {
+            if (rondaMentor.isActive()) {
+                return rondaMentor.getTutor();
+            }
+        }
+        return null;
     }
 }

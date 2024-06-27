@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
@@ -212,5 +213,34 @@ public class Employee extends BaseModel implements Listble {
         if (this.locations == null) this.locations = new ArrayList<>();
         location.setEmployee(this);
         this.locations.add(location);
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", nuit=" + nuit +
+                ", professionalCategory=" + professionalCategory +
+                ", trainingYear=" + trainingYear +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", partner=" + partner +
+                ", locations=" + locations +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        if (!super.equals(o)) return false;
+        Employee employee = (Employee) o;
+        return nuit == employee.nuit && Objects.equals(phoneNumber, employee.phoneNumber) && Objects.equals(email, employee.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), nuit, phoneNumber, email);
     }
 }

@@ -5,6 +5,8 @@ import static mz.org.csaude.mentoring.model.tutor.Tutor.COLUMN_TABLE_NAME;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Objects;
+
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.tutor.TutorDAOImpl;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
@@ -37,5 +39,26 @@ public class Tutor extends BaseModel {
   @Override
   public String validade() {
     return this.employee.validade();
+  }
+
+  @Override
+  public String toString() {
+    return "Tutor{" +
+            "employee=" + employee +
+            '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Tutor)) return false;
+    if (!super.equals(o)) return false;
+    Tutor tutor = (Tutor) o;
+    return Objects.equals(employee, tutor.employee);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), employee);
   }
 }

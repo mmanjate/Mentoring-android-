@@ -22,6 +22,7 @@ import mz.org.csaude.mentoring.dto.programmaticArea.ProgrammaticAreaDTO;
 import mz.org.csaude.mentoring.dto.programmaticArea.TutorProgrammaticAreaDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionCategoryDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionDTO;
+import mz.org.csaude.mentoring.dto.resource.ResourceDTO;
 import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaTypeDTO;
@@ -166,4 +167,7 @@ public interface SyncDataService {
 
     @POST("/ronda/save")
     Call<RondaDTO> postRonda(@Body RondaDTO rondaDTO);
+
+    @GET("/resources/getAll")
+    Call<List<ResourceDTO>> getAllResource();
 }

@@ -39,9 +39,11 @@
                 android:text="Mentoria"/>
             <ProgressBar
                 android:layout_width="150dp"
+                style="?android:attr/progressBarStyleLarge"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/dimen_10dp"
+                android:indeterminateTint="#FF0000"
                 android:layout_gravity="center|bottom"/>
             <TextView
                 android:layout_width="match_parent"

@@ -50,8 +50,8 @@ public class SessionDAOImpl extends MentoringBaseDaoImpl<Session, Integer> imple
     }
 
     @Override
-    public List<Session> queryForAllOfRonda(Ronda currRonda) {
-        return null;
+    public List<Session> queryForAllOfRonda(Ronda currRonda) throws SQLException {
+        return this.queryBuilder().where().eq(Session.COLUMN_RONDA, currRonda.getId()).query();
     }
 
     @Override

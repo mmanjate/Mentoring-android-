@@ -65,7 +65,12 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
             if(record.getSession().getRonda().isRondaCompleted()) {
                 rondaDAO.update(record.getSession().getRonda());
             }
-            sessionDAO.create(record.getSession());
+            if (record.getSession().getRonda().isRondaZero()) {
+                sessionDAO.create(record.getSession());
+            } else if (record.getSession().isCompleted()) {
+                sessionDAO.update(record.getSession());
+            }
+
             mentorshipDAO.create(record);
             for (Answer answer : record.getAnswers()) {
                 answerDAO.create(answer);
@@ -156,7 +161,11 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
 
     @Override
     public List<Mentorship> getAllOfSession(Session session) throws SQLException {
-        return mentorshipDAO.getAllOfSession(session);
+        List<Mentorship> mentorships = mentorshipDAO.getAllOfSession(session);
+        for (Mentorship mentorship : mentorships) {
+            mentorship.getSession().setRonda(this.rondaDAO.queryForId(mentorship.getSession().getRonda().getId()));
+        }
+        return mentorships;
     }
 
 }

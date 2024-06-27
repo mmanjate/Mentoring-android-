@@ -69,7 +69,7 @@ public class MentorshipSearchVM extends SearchVM<Mentorship> {
     }
 
     public String getMentorshipTitle() {
-        return "Sessão de " + DateUtilities.formatToDDMMYYYY(this.session.getStartDate()) + ", Lista de Avaliações de: " + this.session.getTutored().getEmployee().getFullName();
+        return "Sessão: " + DateUtilities.formatToDDMMYYYY(this.session.getStartDate(), "/") + ", Avaliações de: " + this.session.getTutored().getEmployee().getFullName();
     }
     @Override
     public void preInit() {

@@ -1,10 +1,12 @@
 package mz.org.csaude.mentoring.view.session;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +16,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Calendar;
+
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.form.FormAdapter;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
@@ -22,6 +26,8 @@ import mz.org.csaude.mentoring.databinding.ActivitySessionBinding;
 import mz.org.csaude.mentoring.listner.recyclerView.ClickListener;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.util.DateUtilities;
+import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
 import mz.org.csaude.mentoring.viewmodel.session.SessionVM;
 
 public class SessionActivity extends BaseActivity implements ClickListener.OnItemClickListener {
@@ -46,6 +52,21 @@ public class SessionActivity extends BaseActivity implements ClickListener.OnIte
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(R.string.sess_es_de_mentoria);
 
+        sessionBinding.startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int mYear, mMonth, mDay;
+
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(SessionActivity.this, (view1, year, monthOfYear, dayOfMonth) ->
+                        getRelatedViewModel().setStartDate(DateUtilities.createDate(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year, DateUtilities.DATE_FORMAT)), mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
         populateFormList();
 
     }

@@ -76,4 +76,8 @@ public class RondaMentor extends BaseModel {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public boolean isActive() {
+        return getEndDate() == null;
+    }
 }

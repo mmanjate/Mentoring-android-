@@ -6,6 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +23,7 @@ import mz.org.csaude.mentoring.model.tutored.Tutored;
 
 @Data
 @DatabaseTable(tableName = Mentorship.TABLE_NAME, daoClass = MentorshipDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper=true)
 public class Mentorship extends BaseModel {
 
     public static final String TABLE_NAME = "mentorship";
@@ -151,6 +152,15 @@ public class Mentorship extends BaseModel {
         this.cabinet = cabinet;
     }
 
+
+    public EvaluationType getEvaluationType() {
+        return evaluationType;
+    }
+
+    public void setEvaluationType(EvaluationType evaluationType) {
+        this.evaluationType = evaluationType;
+    }
+
     public Integer getIterationNumber() {
         return iterationNumber;
     }
@@ -180,11 +190,48 @@ public class Mentorship extends BaseModel {
         this.door = door;
     }
 
-    public EvaluationType getEvaluationType() {
-        return evaluationType;
+    public String getEvaluationTypeDestription(){
+        return "Avaliação de " + evaluationType.getDescription();
+    }
+    @Override
+    public String toString() {
+        return "Mentorship{" +
+                "startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", performedDate=" + performedDate +
+                ", tutor=" + tutor +
+                ", tutored=" + tutored +
+                ", form=" + form +
+                ", cabinet=" + cabinet +
+                ", evaluationType=" + evaluationType +
+                ", iterationNumber=" + iterationNumber +
+                ", door=" + door +
+                '}';
     }
 
-    public void setEvaluationType(EvaluationType evaluationType) {
-        this.evaluationType = evaluationType;
+    public boolean isCompleted() {
+        return this.endDate != null;
+    }
+
+    public boolean isPatientEvaluation() {
+        return this.evaluationType.isPatientEvaluation();
+    }
+
+    public boolean isFileEvaluation() {
+        return this.evaluationType.isFichaEvaluation();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Mentorship)) return false;
+        if (!super.equals(o)) return false;
+        Mentorship that = (Mentorship) o;
+        return Objects.equals(tutor, that.tutor) && Objects.equals(tutored, that.tutored) && Objects.equals(form, that.form) && Objects.equals(session, that.session) && Objects.equals(evaluationType, that.evaluationType) && Objects.equals(iterationNumber, that.iterationNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), tutor, tutored, form, session, evaluationType, iterationNumber);
     }
 }

@@ -2,8 +2,10 @@ package mz.org.csaude.mentoring.view.resource;
 
 
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,8 +13,13 @@ import android.os.Environment;
 import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +37,7 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityResourceBinding;
 import mz.org.csaude.mentoring.model.resourceea.Node;
 import mz.org.csaude.mentoring.model.resourceea.Resource;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.viewmodel.resource.ResourceVM;
 
 public class ResourceActivity extends BaseActivity {
@@ -41,21 +49,20 @@ public class ResourceActivity extends BaseActivity {
     private ResourceAdapter resourceAdapter;
     List<Resource> resourceList = new ArrayList<>();
     List<Node> nodeList = new ArrayList<>();
+
+    private static final int REQUEST_WRITE_STORAGE = 112;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         activityResourceBinding = DataBindingUtil.setContentView(this , R.layout.activity_resource);
         activityResourceBinding.setViewModel(this.getRelatedViewModel());
-        Intent intent = this.getIntent();
+
+
 
         this.rcvResources = activityResourceBinding.rcvResources;
-
-        if(intent!=null && intent.getExtras()!=null) {
-            //setUpToolbar();
-        }
         setUpToolbar();
-        initAdapter();
     }
 
     private void setUpToolbar() {
@@ -63,7 +70,7 @@ public class ResourceActivity extends BaseActivity {
         setSupportActionBar(activityResourceBinding.toolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Resources EA");
+        getSupportActionBar().setTitle("Recursos de EA");
         getRelatedViewModel().setViewListEditButton(false);
         getRelatedViewModel().setViewListRemoveButton(false);
 
@@ -79,49 +86,18 @@ public class ResourceActivity extends BaseActivity {
         return (ResourceVM) super.getRelatedViewModel();
     }
 
-    public void initAdapter() {
-
+    @Override
+    public void displaySearchResults() {
+        super.displaySearchResults();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rcvResources.setLayoutManager(mLayoutManager);
-        //rcvResources.setItemAnimator(new DefaultItemAnimator());
-        //rcvResources.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
-        this.resourceList = this.getRelatedViewModel().getAllResource();
-        convertStringtoJson();
-        String resourceString = this.resourceList.get(0).getResource();
-        resourceAdapter = new ResourceAdapter(rcvResources,  this.nodeList, this);
+        rcvResources.setItemAnimator(new DefaultItemAnimator());
+        rcvResources.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
+
+        resourceAdapter = new ResourceAdapter(rcvResources, getRelatedViewModel().getNodeList(), this);
         rcvResources.setAdapter(resourceAdapter);
     }
 
-    private void convertStringtoJson(){
-        List<Node> nodeArrayList = new ArrayList<>();
-
-        String resourceString = this.resourceList.get(0).getResource();
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            nodeArrayList = Arrays.asList(mapper.readValue(resourceString, Node[].class));
-
-            for(Node nodeProgram : nodeArrayList) {
-                if (nodeProgram.getChildren() != null) {
-                    for (Node nodeCateg : nodeProgram.getChildren()) {
-                        if (nodeCateg.getChildren() != null) {
-                            for (Node nodeSubCategory : nodeCateg.getChildren()) {
-                                if (nodeSubCategory.getChildren() != null) {
-                                    for (Node nodeResource : nodeSubCategory.getChildren()) {
-                                        nodeResource.setProgram(nodeSubCategory.getChildren().get(nodeSubCategory.getChildren().size() - 1).getProgram());
-                                        nodeResource.setSubCategory(nodeSubCategory.getChildren().get(nodeSubCategory.getChildren().size() - 1).getSubCategory());
-                                        this.nodeList.add(nodeResource);
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -133,5 +109,21 @@ public class ResourceActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_WRITE_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getRelatedViewModel().downloadResource();
+        } else {
+            Utilities.displayAlertDialog(this, getString(R.string.permission_error)).show();
+        }
+    }
 
+    public void downloadResource(Node node) {
+        getRelatedViewModel().setSelectNode(node);
+        boolean hasPermission = (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+        if (!hasPermission) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
+        } else getRelatedViewModel().downloadResource();
+    }
 }

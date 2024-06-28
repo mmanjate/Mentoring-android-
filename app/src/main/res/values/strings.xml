@@ -68,5 +68,9 @@
     <string name="sync_now">Sincronizar Agora</string>
     <string name="session_sync_time_key">session_sync_time_key</string>
     <string name="metadata_sync_time_key">metadata_sync_time_key</string>
+    <string name="no_record_found">Nenhum registo encontrado.</string>
+    <string name="download_success">Download do recurso terminado com sucesso.</string>
+    <string name="download_failed">Não foi possivel baixaro recurso desejado por ocorrencia de um erro inesperado.</string>
+    <string name="permission_error">Não foi possível baixar o recurso por falta de permissão para armazenamento local.</string>
 </resources>
 

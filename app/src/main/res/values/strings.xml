@@ -72,5 +72,9 @@
     <string name="download_success">Download do recurso terminado com sucesso.</string>
     <string name="download_failed">Não foi possivel baixaro recurso desejado por ocorrencia de um erro inesperado.</string>
     <string name="permission_error">Não foi possível baixar o recurso por falta de permissão para armazenamento local.</string>
+    <string name="max_mentees_reached">O número máximo de mentorandos é 8</string>
+    <string name="start_date_required">A data de início da ronda é obrigatória.</string>
+    <string name="health_facility_required">A unidade sanitária é obrigatória</string>
+    <string name="mentees_required">Deve seleccionar mentorandos para compora aronda.</string>
 </resources>
 

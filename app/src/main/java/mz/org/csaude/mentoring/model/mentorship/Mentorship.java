@@ -36,12 +36,15 @@ public class Mentorship extends BaseModel {
 
     public static final String COLUMN_TUTOR = "tutor_id";
 
+    public static final String COLUMN_DEMOSTRATION_DETAILS = "demonstration_details";
+
     public static final String COLUMN_TUTORED = "tutored_id";
 
     public static final String COLUMN_FORM = "form_id";
 
     public static final String COLUMN_SESSION = "session_id";
 
+    public static final String COLUMN_DEMOSTRATION = "demonstration";
     public static final String COLUMN_CABINET = "cabinet_id";
 
     public static final String COLUMN_ITERATION_TYPE = "iteration_type_id";
@@ -83,6 +86,11 @@ public class Mentorship extends BaseModel {
     @DatabaseField(columnName = COLUMN_DOOR, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Door door;
 
+    @DatabaseField(columnName = COLUMN_DEMOSTRATION)
+    private boolean demonstration;
+
+    @DatabaseField(columnName = COLUMN_DEMOSTRATION_DETAILS)
+    private String demonstrationDetails;
     private List<Answer> answers;
 
     public Mentorship() {
@@ -233,5 +241,21 @@ public class Mentorship extends BaseModel {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), tutor, tutored, form, session, evaluationType, iterationNumber);
+    }
+
+    public boolean isDemonstration() {
+        return demonstration;
+    }
+
+    public void setDemonstration(boolean demonstration) {
+        this.demonstration = demonstration;
+    }
+
+    public String getDemonstrationDetails() {
+        return demonstrationDetails;
+    }
+
+    public void setDemonstrationDetails(String demonstrationDetails) {
+        this.demonstrationDetails = demonstrationDetails;
     }
 }

@@ -33,9 +33,6 @@ public class SessionListVM extends SearchVM<Session> {
 
     private Tutored selectedMentee;
 
-    private List<Session> sessionList;
-
-    private List<Tutored> mentees;
 
 
 
@@ -76,10 +73,14 @@ public class SessionListVM extends SearchVM<Session> {
     }
 
     public void createSession() {
-        Map<String, Object> params = new HashMap<>();
-        params.put("ronda", this.currRonda);
-        params.put("mentee", this.selectedMentee);
-        getRelatedActivity().nextActivity(SessionActivity.class, params);
+        if (this.searchResults.size() < 4) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("ronda", this.currRonda);
+            params.put("mentee", this.selectedMentee);
+            getRelatedActivity().nextActivity(SessionActivity.class, params);
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível criar mais de 4 sessões para o mentorando(a) "+this.selectedMentee.getEmployee().getFullName()).show();
+        }
     }
 
     public List<Listble> getRondaMentees() {

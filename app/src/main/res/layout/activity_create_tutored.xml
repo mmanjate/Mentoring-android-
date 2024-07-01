@@ -293,6 +293,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
                             android:maxLength="4"
+                            android:inputType="number"
                             android:text="@={viewModel.trainingYear}"
                             android:background="@drawable/fields_background"
                             style="@style/bottom_border_edit_text_style"/>

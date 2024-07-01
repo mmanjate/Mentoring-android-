@@ -1,9 +1,14 @@
 package mz.org.csaude.mentoring.workSchedule.rest;
 
 import android.app.Application;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +19,7 @@ import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.resourceea.Resource;
 import mz.org.csaude.mentoring.service.resource.ResourceService;
 import mz.org.csaude.mentoring.util.Utilities;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,4 +70,70 @@ public class ResourceRestService extends BaseRestService {
        });
 
    }
+
+    public void downloadFile(String fileName, RestResponseListener<Resource> listener) {
+        Call<ResponseBody> call = syncDataService.downloadFile(fileName);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    boolean writtenToDisk = writeResponseBodyToDisk(response.body(), fileName);
+                    if (writtenToDisk) {
+                        listener.doOnRestSucessResponse(BaseRestService.REQUEST_SUCESS);
+                    } else {
+                        listener.doOnRestErrorResponse(BaseRestService.REQUEST_ERROR);
+                    }
+                } else {
+                    listener.doOnRestErrorResponse(BaseRestService.REQUEST_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Download Error", t.getMessage());
+            }
+        });
+    }
+
+    private boolean writeResponseBodyToDisk(ResponseBody body, String fileName) {
+        try {
+            File futureStudioIconFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + fileName);
+
+            InputStream inputStream = null;
+            FileOutputStream outputStream = null;
+
+            try {
+                byte[] fileReader = new byte[4096];
+
+                inputStream = body.byteStream();
+                outputStream = new FileOutputStream(futureStudioIconFile);
+
+                while (true) {
+                    int read = inputStream.read(fileReader);
+
+                    if (read == -1) {
+                        break;
+                    }
+
+                    outputStream.write(fileReader, 0, read);
+                }
+
+                outputStream.flush();
+                return true;
+            } catch (IOException e) {
+                return false;
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+        } catch (IOException e) {
+            return false;
+        }
+    }
 }

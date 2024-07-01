@@ -33,6 +33,7 @@ import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -170,4 +171,7 @@ public interface SyncDataService {
 
     @GET("/resources/getAll")
     Call<List<ResourceDTO>> getAllResource();
+
+    @GET("/resources/load")
+    Call<ResponseBody> downloadFile(@Query("fileName") String fileName);
 }

@@ -132,8 +132,15 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
 
     public void addMentee(Listble mentee) {
         if (this.ronda.getRondaMentees() == null) this.ronda.setRondaMentees(new ArrayList<>());
-        this.ronda.getRondaMentees().add(RondaMentee.fastCreate(this.ronda, (Tutored) mentee));
+        if (!this.ronda.isRondaZero() && this.ronda.getRondaMentees().size() < 8) {
+            this.ronda.getRondaMentees().add(RondaMentee.fastCreate(this.ronda, (Tutored) mentee));
+        } else if (this.ronda.isRondaZero()) {
+            this.ronda.getRondaMentees().add(RondaMentee.fastCreate(this.ronda, (Tutored) mentee));
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.max_mentees_reached)).show();
+        }
     }
+
 
     @Bindable
     public Listble getSelectedProvince() {

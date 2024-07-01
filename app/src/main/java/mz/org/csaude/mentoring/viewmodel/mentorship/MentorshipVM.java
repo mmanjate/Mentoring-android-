@@ -102,14 +102,6 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
         return this.questionMap.lowerKey((SimpleValue) this.currQuestionCategory) != null;
     }
     public void nextCategory() {
-        /*if (!allCurrentQuestionsResponded()) {
-            Utilities.displayAlertDialog(getRelatedActivity(), "Tem uma ou mais Competências sem a resposta indicada.").show();
-            return;
-        }
-        if (!Utilities.stringHasValue(this.questionMap.higherKey(this.currQuestionCategory.getDescription()))) {
-            Utilities.displayConfirmationDialog(getRelatedActivity(), "Terminou todas as Competências desta sessão, Confirma terminar a mesma?","SIM", "NÃO", this).show();
-            return;
-        }*/
         setCurrQuestionCategory(this.questionMap.higherKey((SimpleValue) this.currQuestionCategory));
         getRelatedActivity().populateQuestionList();
     }
@@ -527,6 +519,11 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
                 this.mentorship.getSession().setStartDate(this.mentorship.getStartDate());
             } else {
                 this.mentorship.setTutored(this.session.getTutored());
+            }
+
+            if (this.mentorship.getStartDate().before(this.mentorship.getSession().getStartDate())) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "A data de início não pode ser anterior a data de início da sessão.").show();
+                return;
             }
 
             this.mentorship.getSession().setForm(this.mentorship.getForm());

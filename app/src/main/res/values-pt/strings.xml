@@ -73,5 +73,6 @@
     <string name="download_success">Download do recurso terminado com sucesso.</string>
     <string name="download_failed">Não foi possivel baixaro recurso desejado por ocorrencia de um erro inesperado.</string>
     <string name="permission_error">Não foi possível baixar o recurso por falta de permissão para armazenamento local.</string>
+    <string name="max_mentees_reached">O número máximo de mentorandos é 8</string>
 </resources>
 

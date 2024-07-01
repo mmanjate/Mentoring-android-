@@ -18,6 +18,7 @@ import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.service.session.SessionClosureService;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.session.SessionClosureActivity;
 import mz.org.csaude.mentoring.view.session.SessionEAResourceActivity;
 
@@ -25,9 +26,6 @@ public class SessionClosureVM extends BaseViewModel {
     private Session session;
 
     private boolean initialDataVisible;
-
-    private Date endDate;
-    private SessionClosureService sessionClosureService;
 
     public SessionClosureVM(@NonNull Application application) {
         super(application);
@@ -105,6 +103,10 @@ public class SessionClosureVM extends BaseViewModel {
 
     public void nextStep() {
         try {
+            if (session.getEndDate().before(session.getStartDate())) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "A data de fim da sessão não pode ser menor que a data de início").show();
+                return;
+            }
             getApplication().getSessionService().update(session);
             session.getRonda().setRondaMentors(getApplication().getRondaMentorService().getRondaMentors(session.getRonda()));
             Map<String, Object> params = new HashMap<>();

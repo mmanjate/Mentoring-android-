@@ -87,6 +87,10 @@ public class SessionVM extends BaseViewModel {
                 Utilities.displayAlertDialog(getRelatedActivity(), "A data de início da sessão não pode ser anterior a data de início da ronda").show();
                 return;
             }
+            if (this.session.getForm() == null) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Por favor, selecione uma tabela de competências").show();
+                return;
+            }
             getApplication().getSessionService().save(this.session);
             getRelatedActivity().finish();
         } catch (SQLException e) {

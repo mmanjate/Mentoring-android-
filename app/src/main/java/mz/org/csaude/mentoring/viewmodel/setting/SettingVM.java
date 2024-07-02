@@ -17,6 +17,7 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.setting.Setting;
 import mz.org.csaude.mentoring.service.setting.SettingService;
 import mz.org.csaude.mentoring.service.setting.SettingServiceImpl;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
 
 public class SettingVM extends BaseViewModel {
@@ -95,19 +96,23 @@ public class SettingVM extends BaseViewModel {
         editor.commit();
     }
 
-    public int getSessionSyncTime() {
-        return this.getApplication().getMentoringSharedPreferences().getInt(SESSION_SYNC_TIME, 2);
+    @Bindable
+    public String getSessionSyncTime() {
+        return Utilities.parseIntToString(this.getApplication().getMentoringSharedPreferences().getInt(SESSION_SYNC_TIME, 2));
     }
 
-    public void setSessionSyncTime(int sessionSyncTime) {
-        this.sessionSyncTime = sessionSyncTime;
+    public void setSessionSyncTime(String sessionSyncTime) {
+        this.sessionSyncTime = Integer.parseInt(sessionSyncTime);
+        this.notifyPropertyChanged(BR.sessionSyncTime);
     }
 
-    public int getMetadataSyncTime() {
-        return this.getApplication().getMentoringSharedPreferences().getInt(METADATA_SYNC_TIME, 2);
+    @Bindable
+    public String getMetadataSyncTime() {
+        return Utilities.parseIntToString(this.getApplication().getMentoringSharedPreferences().getInt(METADATA_SYNC_TIME, 2));
     }
 
-    public void setMetadataSyncTime(int metadataSyncTime) {
-        this.metadataSyncTime = metadataSyncTime;
+    public void setMetadataSyncTime(String metadataSyncTime) {
+        this.metadataSyncTime = Integer.parseInt(metadataSyncTime);
+        this.notifyPropertyChanged(BR.metadataSyncTime);
     }
 }

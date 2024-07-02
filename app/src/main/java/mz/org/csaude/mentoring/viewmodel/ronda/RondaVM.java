@@ -132,8 +132,15 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
 
     public void addMentee(Listble mentee) {
         if (this.ronda.getRondaMentees() == null) this.ronda.setRondaMentees(new ArrayList<>());
-        this.ronda.getRondaMentees().add(RondaMentee.fastCreate(this.ronda, (Tutored) mentee));
+        if (!this.ronda.isRondaZero() && this.ronda.getRondaMentees().size() < 8) {
+            this.ronda.getRondaMentees().add(RondaMentee.fastCreate(this.ronda, (Tutored) mentee));
+        } else if (this.ronda.isRondaZero()) {
+            this.ronda.getRondaMentees().add(RondaMentee.fastCreate(this.ronda, (Tutored) mentee));
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.max_mentees_reached)).show();
+        }
     }
+
 
     @Bindable
     public Listble getSelectedProvince() {
@@ -217,6 +224,8 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
     }
     private void doSave(){
         try {
+            if (!isValid()) return;
+
             ronda.setSyncStatus(SyncSatus.PENDING);
             ronda.setUuid(Utilities.getNewUUID().toString());
             Intent intent = getRelatedActivity().getIntent();
@@ -260,6 +269,23 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean isValid() {
+        if (this.ronda.getStartDate() == null) {
+            Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.start_date_required)).show();
+            return false;
+        }
+        if (this.ronda.getHealthFacility() == null) {
+            Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.health_facility_required)).show();
+            return false;
+        }
+        if (!Utilities.listHasElements(this.ronda.getRondaMentees())) {
+            Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.mentees_required)).show();
+            return false;
+        }
+
+        return true;
     }
 
     public List<Tutored> getMentees() {

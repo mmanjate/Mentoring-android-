@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.viewmodel.session;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
@@ -82,11 +83,18 @@ public class SessionVM extends BaseViewModel {
     }
     public void save() {
         try {
+            if (this.session.getStartDate().before(this.session.getRonda().getStartDate())) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "A data de início da sessão não pode ser anterior a data de início da ronda").show();
+                return;
+            }
+            if (this.session.getForm() == null) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Por favor, selecione uma tabela de competências").show();
+                return;
+            }
             getApplication().getSessionService().save(this.session);
             getRelatedActivity().finish();
         } catch (SQLException e) {
-            e.printStackTrace();
-            //Mostrar mensagem de erro
+            Log.e("SessionVM", "save: " + e.getMessage());
         }
     }
 

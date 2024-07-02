@@ -37,8 +37,8 @@ public class Session extends BaseModel {
     public static final String COLUMN_MENTEE = "mentee_id";
 
     public static final String COLUMN_FORM = "form_id";
-    public static final String COLUMN_DEMOSTRATION = "demonstration";
-    public static final String COLUMN_DEMOSTRATION_DETAILS = "demonstration_details";
+
+
     public static final String COLUMN_STRONG_POINTS = "strong_points";
     public static final String COLUMN_WEAK_POINTS = "points_to_improve";
     public static final String COLUMN_WORK_PLAN = "work_plan";
@@ -66,11 +66,7 @@ public class Session extends BaseModel {
     private Form form;
     private List<Mentorship> mentorships;
 
-    @DatabaseField(columnName = COLUMN_DEMOSTRATION)
-    private boolean demonstration;
 
-    @DatabaseField(columnName = COLUMN_DEMOSTRATION_DETAILS)
-    private String demonstrationDetails;
     @DatabaseField(columnName = COLUMN_STRONG_POINTS)
     private String strongPoints;
     @DatabaseField(columnName = COLUMN_WEAK_POINTS)
@@ -165,18 +161,27 @@ public class Session extends BaseModel {
     }
 
     public boolean canBeClosed() {
+        if (mentorships == null) {
+            // Handle the null case, possibly return false or handle as per your requirement
+            return false;
+        }
+
         int completedPatient = 0;
         int completedFile = 0;
+
         for (Mentorship mentorship : mentorships) {
-            if (mentorship.isPatientEvaluation() && mentorship.isCompleted()) {
-                completedPatient++;
-            } else if (mentorship.isFileEvaluation() && mentorship.isCompleted()) {
-                completedFile++;
+            if (mentorship.isCompleted()) {
+                if (mentorship.isPatientEvaluation()) {
+                    completedPatient++;
+                } else if (mentorship.isFileEvaluation()) {
+                    completedFile++;
+                }
             }
         }
 
         return completedPatient == form.getTargetPatient() && completedFile == form.getTargetFile();
     }
+
 
     public void addMentorships(List<Mentorship> completedMentorships) {
         for (Mentorship mentorship : completedMentorships) {
@@ -186,21 +191,7 @@ public class Session extends BaseModel {
         }
     }
 
-    public boolean isDemonstration() {
-        return demonstration;
-    }
 
-    public void setDemonstration(boolean demonstration) {
-        this.demonstration = demonstration;
-    }
-
-    public String getDemonstrationDetails() {
-        return demonstrationDetails;
-    }
-
-    public void setDemonstrationDetails(String demonstrationDetails) {
-        this.demonstrationDetails = demonstrationDetails;
-    }
 
     public String getStrongPoints() {
         return strongPoints;

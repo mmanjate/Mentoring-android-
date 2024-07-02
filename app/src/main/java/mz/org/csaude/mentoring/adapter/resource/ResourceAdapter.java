@@ -18,6 +18,7 @@ import mz.org.csaude.mentoring.databinding.ResourceListemItemBinding;
 import mz.org.csaude.mentoring.model.resourceea.Node;
 import mz.org.csaude.mentoring.model.resourceea.Resource;
 import mz.org.csaude.mentoring.view.mentorship.CreateMentorshipActivity;
+import mz.org.csaude.mentoring.view.resource.ResourceActivity;
 import mz.org.csaude.mentoring.view.session.SessionActivity;
 import mz.org.csaude.mentoring.view.session.SessionEAResourceActivity;
 import mz.org.csaude.mentoring.viewmodel.resource.ResourceVM;
@@ -45,6 +46,12 @@ public class ResourceAdapter extends AbstractRecycleViewAdapter<Node> {
             ((ResourceViewHolder) holder).resourceListemItemBinding.btnDownload.setImageResource(R.drawable.ic_done);
         } else {
             node.setItemSelected(true);
+            ((ResourceViewHolder) holder).resourceListemItemBinding.btnDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((ResourceActivity)activity).downloadResource(node);
+                }
+            });
         }
     }
 

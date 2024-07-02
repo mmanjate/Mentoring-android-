@@ -5,13 +5,20 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.R;
+import mz.org.csaude.mentoring.base.searchparams.AbstractSearchParams;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
+import mz.org.csaude.mentoring.base.viewModel.SearchVM;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.model.resourceea.Node;
@@ -20,126 +27,156 @@ import mz.org.csaude.mentoring.service.resource.ResourceService;
 import mz.org.csaude.mentoring.util.Utilities;
 
 
-public class ResourceVM extends BaseViewModel implements RestResponseListener<Resource>, ServerStatusListener {
+public class ResourceVM extends SearchVM<Resource> implements ServerStatusListener, RestResponseListener<Resource>{
 
-    private Resource resource;
+    private String searchText;
+    private List<Node> nodeList;
 
-    private Node node;
+    private boolean hivChecked;
 
-    private ResourceService resourceService;
-
-    private List<Resource> resources;
-    private List<Node> Nodes;
+    private Node selectedNode;
+    private boolean tbChecked;
 
     public ResourceVM(@NonNull Application application) {
         super(application);
-        resourceService = getApplication().getResourceService();
-        resources = new ArrayList<>();
+    }
+
+    @Override
+    protected void doOnNoRecordFound() {
+        Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.no_record_found)).show();
+        getRelatedActivity().displaySearchResults();
     }
 
     @Override
     public void preInit() {
-       this.resource = new Resource();
-    }
-
-    public List<Resource> getAllResource(){
-        try {
-            return this.resourceService.getAll();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @Bindable
-    public String getLabel() {
-        return this.node.getLabel();
-    }
-
-    public void setLabel(String label) {
-        this.node.setLabel(label);
-        notifyPropertyChanged(BR.label);
-    }
-    @Bindable
-    public int getClickable() {
-        return this.node.getClickable();
-    }
-
-    public void setClickable(int clickable) {
-        this.node.setClickable(clickable);
-        notifyPropertyChanged(BR.clickable);
+        setHivChecked(true);
+        setTbChecked(true);
     }
 
     @Bindable
-    public List<Node> getChildren() {
-        return this.node.getChildren();
+    public String getSearchText() {
+        return searchText;
     }
 
-    public void setChildren(List<Node> children) {
-        this.node.setChildren(children);
-    }
-
-    @Bindable
-    public String getIcon() {
-        return this.node.getIcon();
-    }
-
-    public void setIcon(String icon) {
-        this.node.setIcon(icon);
-    }
-
-    @Bindable
-    public String getProgram() {
-        return this.node.getProgram();
-    }
-
-    @Bindable
-    public void setProgram(String program) {
-        this.node.setProgram(program);
-    }
-
-    @Bindable
-    public String getType() {
-        return this.node.getType();
-    }
-
-    public void setType(String type) {
-        this.node.setType(type);
-    }
-
-    @Bindable
-    public String getCategory() {
-        return this.node.getCategory();
-    }
-
-    public void setCategory(String category) {
-        this.node.setCategory(category);
-    }
-
-    @Bindable
-    public String getSubCategory() {
-        return this.node.getSubCategory();
-    }
-
-    public void setSubCategory(String subCategory) {
-        this.node.setSubCategory(subCategory);
-    }
-
-    @Bindable
-    public String getResource() {
-        return this.node.getResource();
-    }
-    public void setResource(String resource) {
-        this.node.setResource(resource);
-        notifyPropertyChanged(BR.resource);
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+        notifyPropertyChanged(BR.searchText);
     }
     @Override
-    public void onServerStatusChecked(boolean isOnline) {
+    public List<Resource> doSearch(long offset, long limit) throws SQLException {
+        return getApplication().getResourceService().getAll();
+    }
 
-        if(isOnline){
-            //getApplication().getResourceRestService().
-        }else {
+    @Override
+    public void displaySearchResults() {
+        try {
+            JSONArray jsonArray = new JSONArray(getSearchResults().get(0).getResource());
+
+            List<JSONObject> filteredChildren = getApplication().getResourceService().getChildrenWithNameAndDescription(jsonArray, null, null, null);
+            if (this.nodeList == null) {
+                this.nodeList = new ArrayList<>();
+            } else {
+                this.nodeList.clear();
+            }
+
+            List<Node> nodes = getApplication().getResourceService().convertToNodeList(filteredChildren);
+
+            if (Utilities.listHasElements(nodes)) {
+                if (Utilities.stringHasValue(getSearchText())) {
+                    for (Node node : nodes) {
+                        if (node.getName().contains(getSearchText())) {
+                            this.nodeList.add(node);
+                        }
+                    }
+                } else {
+                    this.nodeList.addAll(nodes);
+                }
+
+                if (!isHivChecked() || !isTbChecked()) {
+                    Iterator<Node> iterator = this.nodeList.iterator();
+                    while (iterator.hasNext()) {
+                        Node node = iterator.next();
+                        String programLower = node.getProgram().toLowerCase();
+                        if ((!isHivChecked() && programLower.contains("hiv")) ||
+                                (!isTbChecked() && programLower.contains("tb"))) {
+                            iterator.remove();
+                        }
+                    }
+                }
+            }
+
+            if (!Utilities.listHasElements(this.nodeList)) {
+                doOnNoRecordFound();
+                return;
+            }
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        getRelatedActivity().displaySearchResults();
+    }
+
+
+    @Bindable
+    public boolean isHivChecked() {
+        return hivChecked;
+    }
+
+    public void setHivChecked(boolean hivChecked) {
+        this.hivChecked = hivChecked;
+    }
+
+    @Bindable
+    public boolean isTbChecked() {
+        return tbChecked;
+    }
+
+    public void setTbChecked(boolean tbChecked) {
+        this.tbChecked = tbChecked;
+        notifyPropertyChanged(BR.tbChecked);
+    }
+
+    public void changeHivChecked(){
+        setHivChecked(!isHivChecked());
+    }
+
+    public void changeTBChecked(){
+        setTbChecked(!isTbChecked());
+    }
+
+    @Override
+    public AbstractSearchParams<Resource> initSearchParams() {
+        return null;
+    }
+
+    public List<Node> getNodeList() {
+        return nodeList;
+    }
+
+    public void downloadResource() {
+        getApplication().isServerOnline(this);
+    }
+
+    @Override
+    public void onServerStatusChecked(boolean isOnline) {
+        if (isOnline) {
+            getApplication().getResourceRestService().downloadFile(selectedNode.getName(), this);
+        } else {
             Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.server_unavailable)).show();
         }
+    }
 
+    @Override
+    public void doOnRestSucessResponse(String flag) {
+        Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.download_success)).show();
+    }
 
+    @Override
+    public void doOnRestErrorResponse(String errormsg) {
+        Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.download_failed)).show();
+    }
+
+    public void setSelectNode(Node node) {
+        this.selectedNode = node;
     }
 }

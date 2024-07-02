@@ -44,6 +44,7 @@ import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.mentorship.CreateMentorshipActivity;
 import mz.org.csaude.mentoring.view.session.SessionClosureActivity;
+import mz.org.csaude.mentoring.view.session.SessionSummaryActivity;
 
 public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
@@ -52,6 +53,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     public static final String CURR_MENTORSHIP_STEP_MENTEE_SELECTION = "MENTEE_SELECTION";
     public static final String CURR_MENTORSHIP_STEP_PERIOD_SELECTION = "PERIOD_SELECTION";
     public static final String CURR_MENTORSHIP_STEP_QUESTION_SELECTION = "QUESTION_SELECTION";
+    public static final String CURR_MENTORSHIP_STEP_DEMOSTRATION_SELECTION = "DEMOSTRATION_SELECTION";
 
 
     private Mentorship mentorship;
@@ -102,14 +104,6 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
         return this.questionMap.lowerKey((SimpleValue) this.currQuestionCategory) != null;
     }
     public void nextCategory() {
-        /*if (!allCurrentQuestionsResponded()) {
-            Utilities.displayAlertDialog(getRelatedActivity(), "Tem uma ou mais Competências sem a resposta indicada.").show();
-            return;
-        }
-        if (!Utilities.stringHasValue(this.questionMap.higherKey(this.currQuestionCategory.getDescription()))) {
-            Utilities.displayConfirmationDialog(getRelatedActivity(), "Terminou todas as Competências desta sessão, Confirma terminar a mesma?","SIM", "NÃO", this).show();
-            return;
-        }*/
         setCurrQuestionCategory(this.questionMap.higherKey((SimpleValue) this.currQuestionCategory));
         getRelatedActivity().populateQuestionList();
     }
@@ -235,10 +229,19 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     public void nextStep() {
         if (isTableSelectionStep()) {
             getRelatedActivity().populateMenteesList();
+            if (this.mentorship.getForm() == null) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Por favor selecionar a tabela de competências.").show();
+                return;
+            }
             setCurrMentorshipStep(CURR_MENTORSHIP_STEP_MENTEE_SELECTION);
         } else if (isMenteeSelectionStep()) {
+            if (this.mentorship.getTutored() == null) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Por favor selecionar o mentorando.").show();
+                return;
+            }
             setCurrMentorshipStep(CURR_MENTORSHIP_STEP_PERIOD_SELECTION);
         } else if (isPeriodSelectionStep()) {
+            if (!isValidPeriod()) return;
             loadQuestion();
             for (Listble listble : categories) {
                 ((SimpleValue) listble).setExtraInfo("0/"+questionMap.get(listble).size());
@@ -247,11 +250,40 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             getRelatedActivity().populateQuestionList();
             setCurrMentorshipStep(CURR_MENTORSHIP_STEP_QUESTION_SELECTION);
         } else if (isQuestionSelectionStep()) {
+            if (this.isMentoringMentorship() && this.mentorship.isPatientEvaluation()) {
+                setCurrMentorshipStep(CURR_MENTORSHIP_STEP_DEMOSTRATION_SELECTION);
+            } else
+            finnalizeMentorship();
+        } else if (isDemostrationSelectionStep()) {
             finnalizeMentorship();
         }
         notifyPropertyChanged(BR.currMentorshipStep);
     }
 
+    private boolean isValidPeriod() {
+        if (this.mentorship.getStartDate() == null) {
+            Utilities.displayAlertDialog(getRelatedActivity(), "A data de início não pode ser vazia.").show();
+            return false;
+        }
+        if (this.mentorship.getStartDate().before(this.mentorship.getSession().getStartDate())) {
+            Utilities.displayAlertDialog(getRelatedActivity(), "A data de início não pode ser anterior a data de início da sessão.").show();
+            return false;
+
+        }
+        if (!Utilities.stringHasValue(mentorship.getCabinet().getUuid())) {
+            Utilities.displayAlertDialog(getRelatedActivity(), "O sector não pode ser vazio").show();
+            return false;
+        }
+        if (!Utilities.stringHasValue(mentorship.getDoor().getUuid())) {
+            Utilities.displayAlertDialog(getRelatedActivity(), "A porta não pode ser vazia").show();
+            return false;
+        }
+        if (this.mentorship.getEvaluationType() == null) {
+            Utilities.displayAlertDialog(getRelatedActivity(), "O tipo de avaliação não pode ser vazio").show();
+            return false;
+        }
+        return true;
+    }
 
 
     @Override
@@ -348,6 +380,9 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     public boolean isQuestionSelectionStep() {
         return this.CURR_MENTORSHIP_STEP.equals(CURR_MENTORSHIP_STEP_QUESTION_SELECTION);
+    }
+    public boolean isDemostrationSelectionStep() {
+        return this.CURR_MENTORSHIP_STEP.equals(CURR_MENTORSHIP_STEP_DEMOSTRATION_SELECTION);
     }
 
     public void unselectAll() {
@@ -530,6 +565,11 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
                 this.mentorship.setTutored(this.session.getTutored());
             }
 
+            if (this.mentorship.getStartDate().before(this.mentorship.getSession().getStartDate())) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "A data de início não pode ser anterior a data de início da sessão.").show();
+                return;
+            }
+
             this.mentorship.getSession().setForm(this.mentorship.getForm());
             if (isMentoringMentorship()) {
                 this.mentorship.getSession().addMentorship(this.mentorship);
@@ -549,9 +589,14 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             if (isMentoringMentorship()) {
                 if (this.mentorship.getSession().isCompleted()) {
                     initSessionClosure(this.mentorship.getSession());
-                } else getRelatedActivity().finish();
+                } else {
+                    if (this.mentorship.isPatientEvaluation()) {
+                        goToMentorshipSummary();
+                    }
+                    getRelatedActivity().finish();
+                }
             } else {
-                getRelatedActivity().finish();
+                goToMentorshipSummary();
             }
 
         } catch (SQLException e) {
@@ -559,10 +604,16 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
         }
     }
 
+    private void goToMentorshipSummary() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("session", this.mentorship.getSession());
+        getRelatedActivity().nextActivityFinishingCurrent(SessionSummaryActivity.class, params);
+    }
+
     private void initSessionClosure(Session session) {
         Map<String, Object> params = new HashMap<>();
         params.put("session", session);
-        getRelatedActivity().nextActivity(SessionClosureActivity.class, params);
+        getRelatedActivity().nextActivityFinishingCurrent(SessionClosureActivity.class, params);
     }
 
     private boolean determineIterationNumber() throws SQLException {
@@ -628,5 +679,30 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     public String getStartTime() {
         return DateUtilities.formatToHHMI(DateUtilities.getCurrentDate());
+    }
+
+    @Bindable
+    public String getDemostrationDetails() {
+        return this.mentorship.getDemonstrationDetails();
+    }
+
+    public void setDemostrationDetails(String demonstrationDetails) {
+        this.mentorship.setDemonstrationDetails(demonstrationDetails);
+        notifyPropertyChanged(BR.demostrationDetails);
+    }
+
+    public void changeDemostrationStatus() {
+        this.mentorship.setDemonstration(!this.mentorship.isDemonstration());
+        notifyPropertyChanged(BR.demostrationMade);
+    }
+
+    @Bindable
+    public boolean isDemostrationMade() {
+        return this.mentorship.isDemonstration();
+    }
+
+    public void setDemostrationMade(boolean demonstrationMade) {
+        this.mentorship.setDemonstration(demonstrationMade);
+        notifyPropertyChanged(BR.demostrationMade);
     }
 }

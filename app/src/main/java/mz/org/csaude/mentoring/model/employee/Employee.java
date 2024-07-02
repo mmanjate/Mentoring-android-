@@ -1,11 +1,15 @@
 package mz.org.csaude.mentoring.model.employee;
 
+import androidx.core.util.PatternsCompat;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -200,12 +204,20 @@ public class Employee extends BaseModel implements Listble {
 
     @Override
     public String validade() {
-        if(StringUtils.isEmpty(getName())) return "Campo nome nao pode estar vazio";
+        if(StringUtils.isEmpty(getName())) return "Campo nome nao pode estar vazio ";
+        if(getName().length() <= 2 ) return "Campo nome tem que ter mais de dois caracteres";
         if(StringUtils.isEmpty(getSurname())) return "Campo apelido nao pode estar vazio";
+        if(getSurname().length() <= 2 ) return "Campo apelido tem que ter mais de dois caracteres";
         if(StringUtils.isEmpty(getPhoneNumber())) return "Campo Telefone nao pode estar vazio";
+        if(!(getPhoneNumber().startsWith("8") && getPhoneNumber().length()==9)) return "Por favor indica um Telefone valido";
         if(StringUtils.isEmpty(getEmail())) return "Campo Email nao pode estar vazio";
+        if(!PatternsCompat.EMAIL_ADDRESS.matcher(getEmail()).matches()) return  "Por favor indica um endereco de Email valido";
         if(this.getProfessionalCategory() == null) return "Campo Categoria Professional nao pode estar vazio";
         if(!Utilities.listHasElements(this.locations)) return "Por favor indicar a unidade sanitária.";
+        if(getNuit()==0) return "Campo NUIT nao pode estar vazio";
+        if(Long.toString(getNuit()).length()!=9) return "Campo do NUIT tem que ter 9 digitos";
+        if(getTrainingYear() == 0) return "Campo Ano nao pode estar Vazio";
+        if(getTrainingYear() < 1960 || getTrainingYear() > Calendar.getInstance().get(Calendar.YEAR)) return "Por favor indica um ano valido";
         return super.validade();
     }
 

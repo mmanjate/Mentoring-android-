@@ -26,6 +26,7 @@ import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 import mz.org.csaude.mentoring.view.session.SessionActivity;
 import mz.org.csaude.mentoring.view.session.SessionClosureActivity;
 import mz.org.csaude.mentoring.view.session.SessionListActivity;
+import mz.org.csaude.mentoring.view.session.SessionSummaryActivity;
 
 public class SessionListVM extends SearchVM<Session> {
 
@@ -132,9 +133,14 @@ public class SessionListVM extends SearchVM<Session> {
         getRelatedActivity().nextActivity(SessionActivity.class, params);
     }
 
-    public void closeSession(Session session) {
+
+    public void printSummary(Session session) {
         Map<String, Object> params = new HashMap<>();
         params.put("session", session);
-        getRelatedActivity().nextActivityFinishingCurrent(SessionClosureActivity.class, params);
+        if (!session.isCompleted()) {
+            getRelatedActivity().nextActivity(SessionClosureActivity.class, params);
+        } else {
+            getRelatedActivity().nextActivity(SessionSummaryActivity.class, params);
+        }
     }
 }

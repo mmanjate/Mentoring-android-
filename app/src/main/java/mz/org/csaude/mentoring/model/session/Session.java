@@ -16,6 +16,7 @@ import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.util.Utilities;
 
 @Data
 @DatabaseTable(tableName = Session.TABLE_NAME, daoClass = SessionDAOImpl.class)
@@ -161,8 +162,9 @@ public class Session extends BaseModel {
     }
 
     public boolean canBeClosed() {
-        if (mentorships == null) {
-            // Handle the null case, possibly return false or handle as per your requirement
+        if (this.isCompleted()) return true;
+
+        if (!Utilities.listHasElements(mentorships)) {
             return false;
         }
 

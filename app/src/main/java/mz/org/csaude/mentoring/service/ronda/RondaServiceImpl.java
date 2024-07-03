@@ -144,6 +144,15 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
         return ronda;
     }
 
+    @Override
+    public Ronda getFullyLoadedRonda(Ronda ronda) throws SQLException {
+        Ronda r = this.rondaDAO.getByUuid(ronda.getUuid());
+        r.setRondaMentors(this.rondaMentorDAO.getRondaMentors(r));
+        r.setRondaMentees(this.rondaMenteeDAO.getAllOfRonda(r));
+        r.setSessions(getApplication().getSessionService().getAllOfRonda(r));
+        return r;
+    }
+
     private void saveRondaMentors(List<RondaMentorDTO> rondaMentorDTOS, Ronda ronda) throws SQLException {
         List<RondaMentor> rondaMentors = new ArrayList<>();
         for (RondaMentorDTO rondaMentorDTO: rondaMentorDTOS) {

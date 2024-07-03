@@ -97,15 +97,15 @@
                     android:onClick="@{()-> viewModel.openSession(session)}"
                     android:layout_marginRight="@dimen/dimen_2dp"/>
                 <ImageButton
-                    android:id="@+id/close"
+                    android:id="@+id/print_summary"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@android:color/transparent"
                     android:layout_gravity="end"
                     android:scaleType="fitXY"
-                    android:visibility='@{(!session.completed &amp;&amp; session.canBeClosed()) ? View.GONE : View.VISIBLE}'
-                    android:src="@drawable/ic_session_close"
-                    android:onClick="@{()-> viewModel.closeSession(session)}"
+                    android:visibility='@{session.canBeClosed() ? View.VISIBLE : View.GONE}'
+                    android:src="@drawable/ic_print"
+                    android:onClick="@{()-> viewModel.printSummary(session)}"
                     android:layout_marginRight="@dimen/dimen_2dp"/>
                 <ImageButton
                     android:id="@+id/edit"
@@ -117,7 +117,7 @@
                     android:onClick="@{()-> viewModel.editSession(session)}"
                     android:scaleType="fitXY"
                     android:src="@drawable/baseline_edit_square_24"
-                    android:visibility="@{session.syncStatus == SyncSatus.PENDING ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{(!session.completed &amp;&amp; session.syncStatus == SyncSatus.PENDING) ? View.VISIBLE : View.GONE}"
                     android:layout_marginRight="@dimen/dimen_2dp"/>
                 <ImageButton
                     android:id="@+id/delete"
@@ -128,7 +128,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/baseline_delete_forever_24"
                     android:onClick="@{()-> viewModel.deleteSession(session)}"
-                    android:visibility="@{session.syncStatus == SyncSatus.PENDING ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{(!session.completed &amp;&amp; session.syncStatus == SyncSatus.PENDING) ? View.VISIBLE : View.GONE}"
                     android:layout_marginRight="@dimen/dimen_2dp"/>
                 <ImageView
                     android:id="@+id/sync"

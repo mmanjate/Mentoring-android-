@@ -11,10 +11,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.adapter.recyclerview.session.SessionAdapter;
@@ -45,6 +49,9 @@ public class SessionSummaryActivity extends BaseActivity {
         getSupportActionBar().setTitle("Fecho da Sessão");
 
         getRelatedViewModel().generateSessionSummary();
+
+        Intent finishIntent = new Intent("FINISH_ACTIVITY");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(finishIntent);
     }
 
     @Override
@@ -73,6 +80,9 @@ public class SessionSummaryActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                /*Map<String, Object> params = new HashMap<>();
+                params.put("ronda", getRelatedViewModel().getSession().getRonda());
+                nextActivityFinishingCurrent(SessionListActivity.class, params);*/
                 // Handle the back button click
                 onBackPressed();
                 return true;

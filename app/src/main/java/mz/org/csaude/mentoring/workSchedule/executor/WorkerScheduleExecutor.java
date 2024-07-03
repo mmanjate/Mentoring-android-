@@ -11,14 +11,12 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.model.setting.Setting;
-import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.util.Http;
 import mz.org.csaude.mentoring.workSchedule.work.CabinetWorker;
 import mz.org.csaude.mentoring.workSchedule.work.DistrictWorker;
@@ -39,9 +37,7 @@ import mz.org.csaude.mentoring.workSchedule.work.ResponseTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaWorker;
 import mz.org.csaude.mentoring.workSchedule.work.SessionStatusWorker;
-import mz.org.csaude.mentoring.workSchedule.work.SessionWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TimeOfDayWorker;
-import mz.org.csaude.mentoring.workSchedule.work.TutorProgrammaticAreaWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutorWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutoredWorker;
 

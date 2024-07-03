@@ -98,6 +98,7 @@ import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.ResourceRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.RondaRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.ServerStatusChecker;
+import mz.org.csaude.mentoring.workSchedule.rest.SessionRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutorRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
 import okhttp3.OkHttpClient;
@@ -200,6 +201,7 @@ public class MentoringApplication  extends Application {
 
     private ResourceRestService resourceRestService;
     private AnswerService answerService;
+    private SessionRestService sessionRestService;
 
 
     @Override
@@ -441,6 +443,10 @@ public class MentoringApplication  extends Application {
 
         if (resourceService == null) this.resourceService = new ResourceServiceImpl(this);
         return resourceService;
+    }
+    public SessionRestService getSessionRestService() {
+        if (sessionRestService == null) this.sessionRestService = new SessionRestService(this);
+        return sessionRestService;
     }
 
     public ApplicationStep getApplicationStep() {

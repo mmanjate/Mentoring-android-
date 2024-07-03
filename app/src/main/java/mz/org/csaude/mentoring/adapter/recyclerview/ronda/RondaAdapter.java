@@ -41,6 +41,13 @@ public class RondaAdapter extends AbstractRecycleViewAdapter<Ronda> {
                 ((RondaSearchVM) activity.getRelatedViewModel()).goToMentoriships(ronda);
             }
         });
+
+        ((RondaViewHolder) holder).rondaListItemBinding.print.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((RondaSearchVM) activity.getRelatedViewModel()).printRondaSummary(ronda);
+            }
+        });
     }
 
     public class RondaViewHolder extends RecyclerView.ViewHolder {

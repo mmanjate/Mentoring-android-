@@ -100,12 +100,21 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
         for (Session session : sessions) {
             session.setMentorships(this.mentorshipDAO.getAllOfSession(session));
         }
-        return this.sessionDAO.queryForAllOfRondaAndMentee(currRonda, selectedMentee, getApplication());
+        return sessions;
     }
 
     @Override
-    public List<Session> getAllOfRonda(Ronda ronda) throws SQLException {
-        return this.sessionDAO.queryForAllOfRonda(ronda);
+    public List<Session> getAllOfRonda(Ronda currRonda) throws SQLException {
+        List<Session> sessions = this.sessionDAO.queryForAllOfRonda(currRonda);
+        for (Session session : sessions) {
+            session.setMentorships(this.mentorshipDAO.getAllOfSession(session));
+            for (Mentorship mentorship : session.getMentorships()) {
+                if (mentorship.isPatientEvaluation()) {
+                    mentorship.setAnswers(this.getApplication().getAnswerService().getAllOfMentorship(mentorship));
+                }
+            }
+        }
+        return sessions;
     }
 
     @Override

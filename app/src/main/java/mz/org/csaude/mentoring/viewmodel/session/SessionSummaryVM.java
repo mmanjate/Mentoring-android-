@@ -11,6 +11,7 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionSummary;
+import mz.org.csaude.mentoring.util.PDFGenerator;
 import mz.org.csaude.mentoring.util.Utilities;
 
 public class SessionSummaryVM extends BaseViewModel {
@@ -37,7 +38,12 @@ public class SessionSummaryVM extends BaseViewModel {
     }
 
     public void print() {
-
+        boolean print = PDFGenerator.createPDF(getRelatedActivity(), this.sessionSummaryList, this.session.getTutored());
+        if (print) {
+            Utilities.displayAlertDialog(getRelatedActivity(), "Resumo impresso com sucesso, encontre o documento no diretório de downloads.").show();
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), "Não foi possível imprimir o documento.").show();
+        }
     }
 
     public List<SessionSummary> getSessionSummaryList() {

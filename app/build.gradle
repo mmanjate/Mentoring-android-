@@ -25,6 +25,7 @@ android {
         versionName generateVersionName()
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -118,7 +119,8 @@ dependencies {
     implementation group: 'androidx.work', name: 'work-runtime', version: '2.8.1'
     implementation 'joda-time:joda-time:2.9.6'
     implementation 'org.apache.commons:commons-lang3:3.12.0'
-
+    implementation 'com.itextpdf:itext7-core:7.2.3'
+    implementation 'com.android.support:multidex:1.0.3'
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
 

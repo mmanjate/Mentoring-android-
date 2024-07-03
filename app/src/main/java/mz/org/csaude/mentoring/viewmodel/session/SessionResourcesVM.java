@@ -33,6 +33,7 @@ import mz.org.csaude.mentoring.model.resourceea.Resource;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionRecommendedResource;
 import mz.org.csaude.mentoring.util.Utilities;
+import mz.org.csaude.mentoring.view.session.SessionClosureActivity;
 import mz.org.csaude.mentoring.view.session.SessionSummaryActivity;
 
 public class SessionResourcesVM extends SearchVM<Resource> implements IDialogListener {
@@ -150,7 +151,8 @@ public class SessionResourcesVM extends SearchVM<Resource> implements IDialogLis
         }
         Map<String, Object> params = new HashMap<>();
         params.put("session", session);
-        getRelatedActivity().nextActivity(SessionSummaryActivity.class, params);
+
+        getRelatedActivity().nextActivityFinishingCurrent(SessionSummaryActivity.class, params);
     }
 
     @Override

@@ -8,8 +8,6 @@ import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.answer.AnswerDAOImpl;
 import mz.org.csaude.mentoring.dto.answer.AnswerDTO;
 import mz.org.csaude.mentoring.model.form.Form;
-import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
-import mz.org.csaude.mentoring.model.indicator.Indicator;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.question.Question;
 

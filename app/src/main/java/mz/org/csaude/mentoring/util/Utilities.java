@@ -2,7 +2,9 @@ package mz.org.csaude.mentoring.util;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Notification;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,12 +13,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -35,6 +41,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -42,6 +49,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import mz.org.csaude.mentoring.R;
+import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
 import mz.org.csaude.mentoring.listner.dialog.IListbleDialogListener;
@@ -587,5 +595,60 @@ public class Utilities {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    public static Dialog displayCustomConfirmationDialog(final BaseActivity mContext, final String dialogMesg, String positive, String negative, IDialogListener listener) {
+        Dialog dialog = new Dialog(mContext);
+        LayoutInflater inflater = mContext.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_popup, null);
+        dialog.setContentView(dialogView);
+
+        TextView msg = dialogView.findViewById((R.id.alertMessage));
+        EditText endTime = dialogView.findViewById(R.id.endTime);
+        Button cancelButton = dialogView.findViewById(R.id.cancelButton);
+        Button confirmButton = dialogView.findViewById(R.id.confirmButton);
+
+        endTime.setText(DateUtilities.formatToHHMI(DateUtilities.getCurrentDate()));
+        msg.setText(dialogMesg);
+
+        endTime.setOnClickListener(view -> {
+            showTimePickerDialog(endTime, mContext);
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.doOnDeny();
+                dialog.dismiss();
+            }
+        });
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String endTimeValue = endTime.getText().toString();
+                listener.doOnConfirmed(endTimeValue);
+                dialog.dismiss();
+            }
+        });
+
+        return dialog;
+    }
+
+    private static void showTimePickerDialog(EditText viewTe, BaseActivity activity) {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        // Show the time picker dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                // Handle the time set event
+                String time = hourOfDay + ":" + garantirXCaracterOnNumber(minute, 2);
+                viewTe.setText(time);
+            }
+        }, hour, minute, true);
+        timePickerDialog.show();
     }
 }

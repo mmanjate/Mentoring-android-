@@ -38,6 +38,7 @@ import mz.org.csaude.mentoring.service.ronda.RondaTypeService;
 import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
 import mz.org.csaude.mentoring.util.RondaTypeEnum;
+import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
@@ -48,6 +49,7 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
     private RondaTypeService rondaTypeService;
     private Ronda ronda;
     private Province selectedProvince;
+    private SimpleValue mentorType;
     private District selectedDistrict;
     private HealthFacility selectedHealthFacility;
     private Province province;
@@ -171,6 +173,17 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
     }
 
     @Bindable
+    public Listble getMentorType() {
+        if (mentorType == null) return new SimpleValue();
+        return mentorType;
+    }
+
+    public void setMentorType(Listble mentorType) {
+        this.mentorType = (SimpleValue) mentorType;
+        notifyPropertyChanged(BR.mentorType);
+    }
+
+    @Bindable
     public Listble getSelectedDistrict() {
         return selectedDistrict;
     }
@@ -209,13 +222,14 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
                 getRelatedActivity().displaySelectedMentees();
                 setSelectedMentee(null);
                 notifyPropertyChanged(BR.selectedMentee);
+                notifyPropertyChanged(BR.selectedMentees);
 
 
             }else {
                 Utilities.displayAlertDialog(getRelatedActivity(), "O Mentorando seleccionado já existe na lista!").show();
             }
         }else{
-            Utilities.displayAlertDialog(getRelatedActivity(),"Campo Mentorando está vazio. Por favor, seleccione um medicamento para adicionar à lista.").show();
+            Utilities.displayAlertDialog(getRelatedActivity(),"Campo Mentorando está vazio. Por favor, seleccione um Mentorando para adicionar à lista.").show();
         }
     }
 
@@ -280,13 +294,21 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
             Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.health_facility_required)).show();
             return false;
         }
-        if (!Utilities.listHasElements(this.ronda.getRondaMentees())) {
+        if (!Utilities.listHasElements(this.selectedMentees)) {
             Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.mentees_required)).show();
             return false;
         }
 
         return true;
     }
+
+    @Bindable
+    public List<Tutored> getMenteeList() {
+        if (menteeList == null) menteeList = new ArrayList<>();
+        return menteeList;
+    }
+
+
 
     public List<Tutored> getMentees() {
         try {
@@ -322,6 +344,7 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
         this.selectedMentees = mentees;
     }
 
+    @Bindable
     public List<Tutored> getSelectedMentees() {
         return this.selectedMentees;
     }

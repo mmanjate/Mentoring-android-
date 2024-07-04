@@ -138,7 +138,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             return;
         }
 
-        Utilities.displayConfirmationDialog(getRelatedActivity(), "Terminou o preenchimento de todas as Competências desta avaliação, Confirma terminar a mesma?", "SIM", "NÃO",this).show();
+        Utilities.displayCustomConfirmationDialog(getRelatedActivity(), "Terminou o preenchimento de todas as Competências desta avaliação, Confirma terminar a mesma?", "SIM", "NÃO",this).show();
     }
 
     private boolean allQuestionsResponded() {
@@ -704,5 +704,11 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     public void setDemostrationMade(boolean demonstrationMade) {
         this.mentorship.setDemonstration(demonstrationMade);
         notifyPropertyChanged(BR.demostrationMade);
+    }
+
+    @Override
+    public void doOnConfirmed(String value) {
+        Log.i("MentorshipVM", value);
+        doSaveMentorship();
     }
 }

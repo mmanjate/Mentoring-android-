@@ -37,6 +37,7 @@ import mz.org.csaude.mentoring.workSchedule.work.ResponseTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaWorker;
 import mz.org.csaude.mentoring.workSchedule.work.SessionStatusWorker;
+import mz.org.csaude.mentoring.workSchedule.work.SessionWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TimeOfDayWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutorWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutoredWorker;

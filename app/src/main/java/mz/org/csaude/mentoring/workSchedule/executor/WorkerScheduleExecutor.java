@@ -11,14 +11,12 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.model.setting.Setting;
-import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.util.Http;
 import mz.org.csaude.mentoring.workSchedule.work.CabinetWorker;
 import mz.org.csaude.mentoring.workSchedule.work.DistrictWorker;
@@ -40,7 +38,6 @@ import mz.org.csaude.mentoring.workSchedule.work.RondaTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaWorker;
 import mz.org.csaude.mentoring.workSchedule.work.SessionStatusWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TimeOfDayWorker;
-import mz.org.csaude.mentoring.workSchedule.work.TutorProgrammaticAreaWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutorWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutoredWorker;
 
@@ -141,25 +138,21 @@ public class WorkerScheduleExecutor {
 
     public OneTimeWorkRequest syncPostData() {
         Data inputData = new Data.Builder().putString("requestType", String.valueOf(Http.POST)).build();
-        OneTimeWorkRequest sessionOneTimeWorkRequest = new OneTimeWorkRequest.Builder(MentorshipWorker.class)
+        OneTimeWorkRequest sessionPostTimeWorkRequest = new OneTimeWorkRequest.Builder(MentorshipWorker.class)
                 .addTag("ONE_TIME_MENTORSHIPS_ID" + ONE_TIME_REQUEST_JOB_ID).setInputData(inputData).build();
-        workManager.enqueue(sessionOneTimeWorkRequest);
-        return sessionOneTimeWorkRequest;
-    }
-
-    public OneTimeWorkRequest syncGetData() {
-        Data inputData = new Data.Builder().putString("requestType", String.valueOf(Http.GET)).build();
-        OneTimeWorkRequest sessionOneTimeWorkRequest = new OneTimeWorkRequest.Builder(MentorshipWorker.class)
-                .addTag("ONE_TIME_MENTORSHIPS_ID" + ONE_TIME_REQUEST_JOB_ID).setInputData(inputData).build();
-        workManager.enqueue(sessionOneTimeWorkRequest);
-        return sessionOneTimeWorkRequest;
+        OneTimeWorkRequest sessionGetTimeWorkRequest = new OneTimeWorkRequest.Builder(SessionWorker.class)
+                .addTag("ONE_TIME_SESSIONS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        workManager
+                .beginWith(sessionPostTimeWorkRequest)
+                .then(sessionGetTimeWorkRequest)
+                .enqueue();
+        return sessionPostTimeWorkRequest;
     }
 
     public void syncNowData() {
-        downloadMentorData();
-        uploadMentees();
+        //downloadMentorData();
+        //uploadMentees();
         syncPostData();
-        syncGetData();
     }
 
     public void syncPeriodicData() {
@@ -176,11 +169,11 @@ public class WorkerScheduleExecutor {
                 .setInputData(inputData)
                 .setInitialDelay(2, TimeUnit.HOURS).build();
 
-        PeriodicWorkRequest hfPeriodicTimeWorkRequest = new PeriodicWorkRequest.Builder(HealthFacilityWorker.class, this.getMetadataSyncInterval(), TimeUnit.HOURS)
+        /*PeriodicWorkRequest hfPeriodicTimeWorkRequest = new PeriodicWorkRequest.Builder(HealthFacilityWorker.class, this.getMetadataSyncInterval(), TimeUnit.HOURS)
                 .addTag("PERIODIC_HF_ID" + ONE_TIME_REQUEST_JOB_ID)
                 .setConstraints(constraints)
                 .setInputData(inputData)
-                .setInitialDelay(2, TimeUnit.HOURS).build();
+                .setInitialDelay(2, TimeUnit.HOURS).build();*/
 
         PeriodicWorkRequest mentorFormsPeriodicTimeWorkRequest = new PeriodicWorkRequest.Builder(FormWorker.class, this.getMetadataSyncInterval(), TimeUnit.HOURS)
                 .addTag("PERIODIC_MENTOR_FORMS_ID" + ONE_TIME_REQUEST_JOB_ID)
@@ -206,7 +199,7 @@ public class WorkerScheduleExecutor {
                 .setInputData(inputData)
                 .setInitialDelay(2, TimeUnit.HOURS).build();
 
-        workManager.enqueue(hfPeriodicTimeWorkRequest);
+        //workManager.enqueue(hfPeriodicTimeWorkRequest);
         workManager.enqueue(menteesPeriodicTimeWorkRequest);
         workManager.enqueue(mentorFormsPeriodicTimeWorkRequest);
         workManager.enqueue(mentorFormsQuestionsPeriodicTimeWorkRequest);

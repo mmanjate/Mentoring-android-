@@ -138,7 +138,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             return;
         }
 
-        Utilities.displayConfirmationDialog(getRelatedActivity(), "Terminou todas as Competências desta sessão, Confirma terminar a mesma?", "SIM", "NÃO",this).show();
+        Utilities.displayConfirmationDialog(getRelatedActivity(), "Terminou o preenchimento de todas as Competências desta avaliação, Confirma terminar a mesma?", "SIM", "NÃO",this).show();
     }
 
     private boolean allQuestionsResponded() {
@@ -487,6 +487,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
                     formQuestion.getAnswer().setMentorship(this.mentorship);
                     formQuestion.getAnswer().setForm(this.mentorship.getForm());
                     formQuestion.getAnswer().setValue("");
+                    //formQuestion.getAnswer().setFormQuestion(formQuestion);
                     loadQuestionMap(formQuestion,formQuestion.getQuestion().getQuestionsCategory());
                 }
                 setCurrQuestionCategory(this.questionMap.firstKey());

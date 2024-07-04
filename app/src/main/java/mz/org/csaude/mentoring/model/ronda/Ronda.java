@@ -1,5 +1,6 @@
 package mz.org.csaude.mentoring.model.ronda;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -143,6 +144,10 @@ public class Ronda extends BaseModel implements Listble {
         return !this.isRondaCompleted() ? RondaStatus.ON_GOING.toString() : RondaStatus.FINISHED.toString();
     }
 
+    @JsonIgnore
+    public boolean isClosed() {
+        return this.getEndDate() != null;
+    }
     public List<Session> getSessions() {
         return sessions;
     }

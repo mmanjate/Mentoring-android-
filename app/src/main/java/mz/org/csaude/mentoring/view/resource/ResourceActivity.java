@@ -55,7 +55,6 @@ public class ResourceActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         activityResourceBinding = DataBindingUtil.setContentView(this , R.layout.activity_resource);
         activityResourceBinding.setViewModel(this.getRelatedViewModel());
 

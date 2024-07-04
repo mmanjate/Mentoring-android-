@@ -94,6 +94,17 @@
                 android:src="@drawable/baseline_open_in_new_24"
                 android:layout_marginRight="@dimen/dimen_2dp"/>
             <ImageButton
+                android:id="@+id/print"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="end"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_print"
+                android:visibility="@{ronda.closed ? View.VISIBLE : View.GONE}"
+                android:layout_marginRight="@dimen/dimen_2dp"/>
+            <ImageButton
                 android:id="@+id/edit"
                 android:layout_width="35dp"
                 android:layout_height="35dp"

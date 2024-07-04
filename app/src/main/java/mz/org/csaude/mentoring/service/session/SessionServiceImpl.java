@@ -2,6 +2,8 @@ package mz.org.csaude.mentoring.service.session;
 
 import android.app.Application;
 
+import com.j256.ormlite.misc.TransactionManager;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,12 +11,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import mz.org.csaude.mentoring.base.service.BaseServiceImpl;
+import mz.org.csaude.mentoring.dao.answer.AnswerDAO;
 import mz.org.csaude.mentoring.dao.mentorship.MentorshipDAO;
 import mz.org.csaude.mentoring.dao.session.SessionDAO;
 import mz.org.csaude.mentoring.dao.session.SessionRecommendedResourceDAO;
 import mz.org.csaude.mentoring.model.answer.Answer;
+import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
@@ -30,6 +35,8 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
 
     SessionRecommendedResourceDAO sessionRecommendedResourceDAO;
 
+    AnswerDAO answerDAO;
+
     public SessionServiceImpl(Application application) {
         super(application);
     }
@@ -40,11 +47,32 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
         this.sessionDAO = getDataBaseHelper().getSessionDAO();
         this.mentorshipDAO = getDataBaseHelper().getMentorshipDAO();
         this.sessionRecommendedResourceDAO = getDataBaseHelper().getSessionRecommendedResourceDAO();
+        this.answerDAO = getDataBaseHelper().getAnswerDAO();
     }
 
     @Override
     public Session save(Session record) throws SQLException {
-        this.sessionDAO.create(record);
+        TransactionManager.callInTransaction(getDataBaseHelper().getConnectionSource(), (Callable<Void>) () -> {
+            this.sessionDAO.create(record);
+            for (Mentorship mentorship: record.getMentorships()) {
+                Form form = getApplication().getFormService().getByuuid(mentorship.getForm().getUuid());
+                mentorship.setForm(form);
+                mentorship.setCabinet(getApplication().getCabinetService().getByuuid(mentorship.getCabinet().getUuid()));
+                mentorship.setDoor(getApplication().getDoorService().getByuuid(mentorship.getDoor().getUuid()));
+                mentorship.setEvaluationType(getApplication().getEvaluationTypeService().getByuuid(mentorship.getEvaluationType().getUuid()));
+                mentorship.setTutor(getApplication().getTutorService().getByuuid(mentorship.getTutor().getUuid()));
+                mentorship.setTutored(getApplication().getTutoredService().getByuuid(mentorship.getTutored().getUuid()));
+                mentorship.setSession(record);
+                this.mentorshipDAO.create(mentorship);
+                for (Answer answer: mentorship.getAnswers()) {
+                    answer.setMentorship(mentorship);
+                    answer.setForm(form);
+                    answer.setQuestion(getApplication().getQuestionService().getByuuid(answer.getQuestion().getUuid()));
+                    this.answerDAO.create(answer);
+                }
+            }
+            return null;
+        });
         return record;
     }
 
@@ -75,12 +103,21 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
         for (Session session : sessions) {
             session.setMentorships(this.mentorshipDAO.getAllOfSession(session));
         }
-        return this.sessionDAO.queryForAllOfRondaAndMentee(currRonda, selectedMentee, getApplication());
+        return sessions;
     }
 
     @Override
-    public List<Session> getAllOfRonda(Ronda ronda) throws SQLException {
-        return this.sessionDAO.queryForAllOfRonda(ronda);
+    public List<Session> getAllOfRonda(Ronda currRonda) throws SQLException {
+        List<Session> sessions = this.sessionDAO.queryForAllOfRonda(currRonda);
+        for (Session session : sessions) {
+            session.setMentorships(this.mentorshipDAO.getAllOfSession(session));
+            for (Mentorship mentorship : session.getMentorships()) {
+                if (mentorship.isPatientEvaluation()) {
+                    mentorship.setAnswers(this.getApplication().getAnswerService().getAllOfMentorship(mentorship));
+                }
+            }
+        }
+        return sessions;
     }
 
     @Override

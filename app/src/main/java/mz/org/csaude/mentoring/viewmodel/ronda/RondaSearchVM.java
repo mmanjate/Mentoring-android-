@@ -6,6 +6,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +15,13 @@ import java.util.Map;
 import mz.org.csaude.mentoring.base.searchparams.AbstractSearchParams;
 import mz.org.csaude.mentoring.base.viewModel.SearchVM;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.ronda.RondaMentee;
+import mz.org.csaude.mentoring.model.ronda.RondaSummary;
 import mz.org.csaude.mentoring.model.rondatype.RondaType;
+import mz.org.csaude.mentoring.model.session.Session;
+import mz.org.csaude.mentoring.model.session.SessionSummary;
+import mz.org.csaude.mentoring.util.PDFGenerator;
+import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.mentorship.MentorshipActivity;
 import mz.org.csaude.mentoring.view.mentorship.ZeroMentorshipListActivity;
 import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
@@ -94,5 +102,59 @@ public class RondaSearchVM extends SearchVM<Ronda> {
             Log.d("goToMentoriships", "Navigating to SessionListActivity with params: " + params);
             getRelatedActivity().nextActivity(SessionListActivity.class, params);
         }
+    }
+
+    public void printRondaSummary(Ronda ronda) {
+        try {
+            List<RondaSummary> rondaSummaryList = new ArrayList<>();
+
+            ronda = getApplication().getRondaService().getFullyLoadedRonda(ronda);
+
+            for (RondaMentee mentee : ronda.getRondaMentees()){
+                RondaSummary rondaSummary = new RondaSummary();
+                rondaSummary.setRonda(ronda);
+                rondaSummary.setMentor(ronda.getActiveMentor().getEmployee().getFullName());
+                rondaSummary.setMentee(mentee.getTutored().getEmployee().getFullName());
+                rondaSummary.setNuit(mentee.getTutored().getEmployee().getNuit());
+                List<Session> sessions = new ArrayList<>();
+                for (Session session : ronda.getSessions()){
+                    if (session.getTutored().equals(mentee.getTutored())){
+                        sessions.add(session);
+                    }
+                }
+                sessions.sort(Comparator.comparing(Session::getStartDate));
+                rondaSummary.setSummaryDetails(new HashMap<>());
+                int i = 1;
+                for (Session session : sessions){
+                    rondaSummary.getSummaryDetails().put(i, getApplication().getSessionService().generateSessionSummary(session));
+
+                    i++;
+                }
+                rondaSummary.setSession1(determineSessionScore(rondaSummary.getSummaryDetails().get(1)));
+                rondaSummary.setSession2(determineSessionScore(rondaSummary.getSummaryDetails().get(2)));
+                rondaSummary.setSession3(determineSessionScore(rondaSummary.getSummaryDetails().get(3)));
+                rondaSummary.setSession4(determineSessionScore(rondaSummary.getSummaryDetails().get(4)));
+                rondaSummaryList.add(rondaSummary);
+            }
+            boolean print = PDFGenerator.createRondaSummary(getRelatedActivity(), rondaSummaryList);
+            if (print) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Resumo impresso com sucesso, encontre o documento no diretório de downloads.").show();
+            } else {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Não foi possível imprimir o documento.").show();
+            }
+
+        } catch (SQLException e) {
+            Log.e("printRondaSummary", "Exception: " + e.getMessage());
+        }
+    }
+
+    private double determineSessionScore(List<SessionSummary> sessionSummaries) {
+        int yesCount = 0;
+        int noCount = 0;
+        for (SessionSummary sessionSummary : sessionSummaries){
+            yesCount = yesCount + sessionSummary.getSimCount();
+            noCount = noCount + sessionSummary.getNaoCount();
+        }
+        return (double) yesCount / (yesCount + noCount) *100;
     }
 }

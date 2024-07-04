@@ -1,7 +1,10 @@
 package mz.org.csaude.mentoring.view.session;
 
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.Calendar;
 
@@ -31,7 +35,7 @@ public class SessionClosureActivity extends BaseActivity {
 
 
     private ActivitySessionClosureBinding binding;
-
+    private BroadcastReceiver finishReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,18 @@ public class SessionClosureActivity extends BaseActivity {
             DatePickerDialog datePickerDialog = new DatePickerDialog(SessionClosureActivity.this, (view1, year, monthOfYear, dayOfMonth) -> getRelatedViewModel().setEndtDate(DateUtilities.createDate(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year, DateUtilities.DATE_FORMAT)), mYear, mMonth, mDay);
             datePickerDialog.show();
         });
+
+        finishReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if ("FINISH_ACTIVITY".equals(intent.getAction())) {
+                    finish();
+                }
+            }
+        };
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(finishReceiver, new IntentFilter("FINISH_ACTIVITY"));
+
     }
 
     @Override
@@ -127,5 +143,11 @@ public class SessionClosureActivity extends BaseActivity {
             }
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(finishReceiver);
+        super.onDestroy();
     }
 }

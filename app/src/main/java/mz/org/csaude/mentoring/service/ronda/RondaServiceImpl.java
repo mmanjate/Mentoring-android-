@@ -144,6 +144,8 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
         return ronda;
     }
 
+
+
     private void saveRondaMentors(List<RondaMentorDTO> rondaMentorDTOS, Ronda ronda) throws SQLException {
         List<RondaMentor> rondaMentors = new ArrayList<>();
         for (RondaMentorDTO rondaMentorDTO: rondaMentorDTOS) {
@@ -207,4 +209,9 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
     public Ronda getById(int id) throws SQLException {
         return this.rondaDAO.queryForId(id);
     }
+    @Override
+    public List<Ronda> getAllByMentor(Tutor tutor, MentoringApplication mentoringApplication) throws SQLException {
+        return this.rondaDAO.getAllByMentor(tutor, mentoringApplication);
+    }
+
 }

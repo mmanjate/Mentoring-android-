@@ -37,7 +37,7 @@ public class CareerType extends BaseModel implements Listble {
     }
 
     public CareerType(CareerTypeDTO careerTypeDTO){
-        this.setUuid(careerTypeDTO.getUuid());
+        super(careerTypeDTO);
         this.setCode(careerTypeDTO.getCode());
         this.setDescription(careerTypeDTO.getDescription());
     }

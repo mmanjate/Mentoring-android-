@@ -19,6 +19,7 @@ public class RondaMentorDTO extends BaseEntityDTO {
     public RondaMentorDTO(RondaMentor rondaMentor) {
         super(rondaMentor);
         this.setStartDate(rondaMentor.getStartDate());
+        this.setEndDate(rondaMentor.getEndDate());
         if(rondaMentor.getEndDate()!=null) {
             this.setEndDate(rondaMentor.getEndDate());
         }
@@ -68,9 +69,7 @@ public class RondaMentorDTO extends BaseEntityDTO {
         rondaMentor.setEndDate(this.getEndDate());
         rondaMentor.setCreatedAt(this.getCreatedAt());
         rondaMentor.setUpdatedAt(this.getUpdatedAt());
-        if(this.getLifeCycleStatus()!=null) {
-            rondaMentor.setLifeCycleStatus(this.getLifeCycleStatus());
-        }
+        rondaMentor.setLifeCycleStatus(this.getLifeCycleStatus());
         if(this.getMentor()!=null) {
             rondaMentor.setTutor(this.getMentor().getTutor());
         }

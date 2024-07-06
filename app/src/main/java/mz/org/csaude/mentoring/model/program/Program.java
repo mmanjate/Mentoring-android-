@@ -30,8 +30,8 @@ public class Program extends BaseModel {
 
     public Program(ProgramDTO programDTO) {
         super(programDTO);
-        this.description = programDTO.getDescription();
-        this.name = programDTO.getName();
+        this.setDescription(programDTO.getDescription());
+        this.setName(programDTO.getName());
     }
 
     public Program(String description, String name) {
@@ -39,6 +39,7 @@ public class Program extends BaseModel {
         this.name = name;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }

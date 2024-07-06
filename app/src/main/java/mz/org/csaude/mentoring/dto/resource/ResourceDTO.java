@@ -19,13 +19,11 @@ public class ResourceDTO extends BaseEntityDTO {
 
     public Resource getResourceModel(){
         Resource resource1 = new Resource();
-
         resource1.setUuid(this.getUuid());
-        resource1.setResource(this.getResource());
-        resource1.setCreatedAt(this.getCreatedAt());
         resource1.setUpdatedAt(this.getUpdatedAt());
-
-        return  resource1;
+        resource1.setCreatedAt(this.getCreatedAt());
+        resource1.setResource(this.getResource());
+        return resource1;
     }
 
     public String getResource() {

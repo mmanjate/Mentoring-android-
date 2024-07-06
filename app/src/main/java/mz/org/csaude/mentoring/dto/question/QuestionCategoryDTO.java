@@ -10,6 +10,7 @@ public class QuestionCategoryDTO extends BaseEntityDTO {
     private String category;
     public QuestionCategoryDTO(QuestionsCategory questionsCategory) {
         super(questionsCategory);
+        this.setCategory(questionsCategory.getCategory());
     }
 
     public String getCategory() {
@@ -22,9 +23,10 @@ public class QuestionCategoryDTO extends BaseEntityDTO {
     public QuestionsCategory getQuestionCategory() {
         QuestionsCategory questionsCategory = new QuestionsCategory();
         questionsCategory.setUuid(this.getUuid());
-        questionsCategory.setCategory(this.getCategory());
         questionsCategory.setCreatedAt(this.getCreatedAt());
         questionsCategory.setUpdatedAt(this.getUpdatedAt());
+        questionsCategory.setLifeCycleStatus(this.getLifeCycleStatus());
+        questionsCategory.setCategory(this.getCategory());
         return questionsCategory;
     }
 }

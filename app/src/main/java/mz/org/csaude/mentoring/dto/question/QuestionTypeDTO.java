@@ -11,6 +11,8 @@ public class QuestionTypeDTO extends BaseEntityDTO {
     private String description;
     public QuestionTypeDTO(QuestionType questionType) {
         super(questionType);
+        this.setCode(questionType.getCode());
+        this.setDescription(questionType.getDescription());
     }
 
     public String getCode() {

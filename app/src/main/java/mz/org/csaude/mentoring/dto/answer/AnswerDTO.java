@@ -5,6 +5,9 @@ import mz.org.csaude.mentoring.dto.form.FormDTO;
 import mz.org.csaude.mentoring.dto.mentorship.MentorshipDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 import mz.org.csaude.mentoring.model.answer.Answer;
+import mz.org.csaude.mentoring.model.form.Form;
+import mz.org.csaude.mentoring.model.mentorship.Mentorship;
+import mz.org.csaude.mentoring.model.question.Question;
 
 public class AnswerDTO extends BaseEntityDTO {
 
@@ -22,9 +25,6 @@ public class AnswerDTO extends BaseEntityDTO {
     public AnswerDTO(Answer answer) {
         super(answer);
         this.setValue(answer.getValue());
-        if(answer.getMentorship()!=null) {
-            this.setMentorship(new MentorshipDTO(answer.getMentorship()));
-        }
         if(answer.getForm()!=null) {
             this.setForm(new FormDTO(answer.getForm()));
         }
@@ -34,7 +34,22 @@ public class AnswerDTO extends BaseEntityDTO {
     }
 
     public Answer getAnswer() {
-        return new Answer(this);
+        Answer answer = new Answer();
+        answer.setUuid(this.getUuid());
+        answer.setCreatedAt(this.getCreatedAt());
+        answer.setUpdatedAt(this.getUpdatedAt());
+        answer.setLifeCycleStatus(this.getLifeCycleStatus());
+        answer.setValue(answer.getValue());
+        if(answer.getMentorship()!=null) {
+            answer.setMentorship(new Mentorship(this.getMentorship()));
+        }
+        if(answer.getForm()!=null) {
+            answer.setForm(new Form(this.getForm()));
+        }
+        if(answer.getQuestion()!=null) {
+            answer.setQuestion(new Question(this.getQuestion()));
+        }
+        return answer;
     }
 
     public String getValue() {

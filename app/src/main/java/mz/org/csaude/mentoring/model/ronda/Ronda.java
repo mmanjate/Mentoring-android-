@@ -47,8 +47,11 @@ public class Ronda extends BaseModel implements Listble {
     @DatabaseField(columnName = COLUMN_RONDA_TYPE, canBeNull = false, foreign = true, foreignAutoRefresh = true )
     private RondaType rondaType;
 
+    @JsonIgnore
     private List<Session> sessions;
+    @JsonIgnore
     private List<RondaMentee> rondaMentees;
+    @JsonIgnore
     private List<RondaMentor> rondaMentors;
     public Ronda () {
     }
@@ -156,6 +159,7 @@ public class Ronda extends BaseModel implements Listble {
         this.sessions = sessions;
     }
 
+    @JsonIgnore
     public boolean isRondaZero() {
         return this.rondaType.getCode().equals("SESSAO_ZERO");
     }

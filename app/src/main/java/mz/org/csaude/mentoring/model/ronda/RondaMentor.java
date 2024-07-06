@@ -30,7 +30,7 @@ public class RondaMentor extends BaseModel {
     @DatabaseField(columnName = COLUMN_START_DATE, canBeNull = false)
     private Date startDate;
 
-    @DatabaseField(columnName = COLUMN_END_DATE, canBeNull = true)
+    @DatabaseField(columnName = COLUMN_END_DATE)
     private Date endDate;
 
     public RondaMentor() {

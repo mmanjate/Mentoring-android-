@@ -280,7 +280,7 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
             Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.health_facility_required)).show();
             return false;
         }
-        if (!Utilities.listHasElements(this.ronda.getRondaMentees())) {
+        if (!Utilities.listHasElements(this.menteeList)) {
             Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.mentees_required)).show();
             return false;
         }

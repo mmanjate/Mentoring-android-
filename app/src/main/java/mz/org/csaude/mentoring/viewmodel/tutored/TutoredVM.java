@@ -41,6 +41,7 @@ import mz.org.csaude.mentoring.service.professionalCategory.ProfessionalCategory
 import mz.org.csaude.mentoring.service.session.SessionService;
 import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
+import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
 import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.SyncSatus;
@@ -403,6 +404,7 @@ public class TutoredVM extends BaseViewModel implements RestResponseListener<Tut
 
     public void initMenteeUpload() {
         OneTimeWorkRequest request = WorkerScheduleExecutor.getInstance(getApplication()).uploadMentees();
+        getApplication().saveDefaultLastSyncDate(DateUtilities.getCurrentDate());
         WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), workInfo -> {
             if (workInfo != null) {
                 if (workInfo.getState() == WorkInfo.State.SUCCEEDED){

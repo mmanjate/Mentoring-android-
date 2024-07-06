@@ -13,6 +13,8 @@ public class IterationTypeDTO extends BaseEntityDTO {
     private String description;
     public IterationTypeDTO(IterationType iterationType) {
         super(iterationType);
+        this.setCode(iterationType.getCode());
+        this.setDescription(iterationType.getDescription());
     }
 
     public String getCode() {
@@ -33,10 +35,11 @@ public class IterationTypeDTO extends BaseEntityDTO {
     public IterationType getIterationType() {
         IterationType iterationType = new IterationType();
         iterationType.setUuid(this.getUuid());
-        iterationType.setCode(this.getCode());
-        iterationType.setDescription(this.getDescription());
         iterationType.setCreatedAt(this.getCreatedAt());
         iterationType.setUpdatedAt(this.getUpdatedAt());
+        iterationType.setLifeCycleStatus(this.getLifeCycleStatus());
+        this.setCode(iterationType.getCode());
+        this.setDescription(iterationType.getDescription());
         return iterationType;
     }
 }

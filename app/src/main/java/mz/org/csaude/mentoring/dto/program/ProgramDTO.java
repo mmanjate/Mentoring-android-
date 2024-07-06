@@ -11,7 +11,9 @@ public class ProgramDTO extends BaseEntityDTO {
         super();
     }
     public ProgramDTO(Program program) {
-        super((program));
+        super(program);
+        this.setDescription(program.getDescription());
+        this.setName(program.getName());
     }
 
     public String getDescription() {
@@ -32,11 +34,12 @@ public class ProgramDTO extends BaseEntityDTO {
 
     public Program getProgram() {
         Program program = new Program();
-        program.setDescription(this.getDescription());
-        program.setName(this.getName());
         program.setUuid(this.getUuid());
         program.setCreatedAt(this.getCreatedAt());
         program.setUpdatedAt(this.getUpdatedAt());
+        program.setLifeCycleStatus(this.getLifeCycleStatus());
+        program.setName(this.getName());
+        program.setDescription(this.getDescription());
         return program;
     }
 }

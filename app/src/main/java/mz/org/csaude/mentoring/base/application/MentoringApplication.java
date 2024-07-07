@@ -513,13 +513,13 @@ public class MentoringApplication  extends Application {
     }
     public void saveDefaultSyncSettings() {
         SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
-        editor.putInt(SESSION_SYNC_TIME, 2);
-        editor.putInt(METADATA_SYNC_TIME, 2);
+        editor.putInt(SESSION_SYNC_TIME, getMentoringSharedPreferences().getInt(SESSION_SYNC_TIME, 2));
+        editor.putInt(METADATA_SYNC_TIME, getMentoringSharedPreferences().getInt(METADATA_SYNC_TIME, 2));
         editor.apply();
     }
     public void saveDefaultLastSyncDate(Date date) {
         SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
-        editor.putString(LAST_SYNC_DATE, DateUtilities.getStringDateFromDate(date, DateUtilities.DATE_FORMAT));
+        editor.putString(LAST_SYNC_DATE, getMentoringSharedPreferences().getString(LAST_SYNC_DATE,DateUtilities.getStringDateFromDate(date, DateUtilities.DATE_FORMAT)));
         editor.apply();
     }
     public void initSessionManager() {

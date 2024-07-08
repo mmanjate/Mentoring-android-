@@ -2,6 +2,8 @@ package mz.org.csaude.mentoring.dto.employee;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.location.LocationDTO;
@@ -131,6 +133,31 @@ public class EmployeeDTO extends BaseEntityDTO {
     }
 
     public Employee getEmployee() {
-        return new Employee(this);
+        Employee employee = new Employee();
+        employee.setUuid(this.getUuid());
+        employee.setCreatedAt(this.getCreatedAt());
+        employee.setUpdatedAt(this.getUpdatedAt());
+        employee.setName(this.getName());
+        employee.setSurname(this.getSurname());
+        employee.setNuit(this.getNuit());
+        employee.setTrainingYear(this.getTrainingYear());
+        employee.setPhoneNumber(this.getPhoneNumber());
+        employee.setEmail(this.getEmail());
+        employee.setLifeCycleStatus(this.getLifeCycleStatus());
+        if(this.getProfessionalCategoryDTO()!=null) {
+            employee.setProfessionalCategory(this.getProfessionalCategoryDTO().getProfessionalCategory());
+        }
+        if(this.getPartnerDTO()!=null) {
+            employee.setPartner(this.partnerDTO.getPartner());
+        }
+        if(this.getLocationDTOSet()!=null && !this.getLocationDTOSet().isEmpty()) {
+            List<Location> locations = new ArrayList<>();
+            for (LocationDTO locationDTO: this.getLocationDTOSet()) {
+                Location location = locationDTO.getLocation();
+                locations.add(location);
+            }
+            employee.setLocations(locations);
+        }
+        return employee;
     }
 }

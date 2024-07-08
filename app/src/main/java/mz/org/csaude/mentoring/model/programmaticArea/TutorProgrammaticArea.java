@@ -40,6 +40,8 @@ public class TutorProgrammaticArea extends BaseModel {
 
     public TutorProgrammaticArea(TutorProgrammaticAreaDTO tutorProgrammaticAreaDTO) {
         super(tutorProgrammaticAreaDTO);
+        this.setTutor(new Tutor(tutorProgrammaticAreaDTO.getTutorDTO()));
+        this.setProgrammaticArea(new ProgrammaticArea(tutorProgrammaticAreaDTO.getProgrammaticAreaDTO()));
     }
 
     public Tutor getTutor() {

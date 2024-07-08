@@ -13,7 +13,6 @@ import mz.org.csaude.mentoring.dto.career.CareerDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.service.career.CareerService;
-import mz.org.csaude.mentoring.service.career.CareerServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import retrofit2.Call;

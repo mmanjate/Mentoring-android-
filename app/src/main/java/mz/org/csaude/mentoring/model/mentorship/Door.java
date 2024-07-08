@@ -39,6 +39,7 @@ public class Door extends BaseModel {
         this.code = code;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }

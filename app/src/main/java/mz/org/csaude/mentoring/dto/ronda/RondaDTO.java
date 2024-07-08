@@ -115,6 +115,36 @@ public class RondaDTO extends BaseEntityDTO {
         this.rondaMentors = rondaMentors;
     }
     public Ronda getRonda() {
-        return new Ronda(this);
+        Ronda ronda = new Ronda();
+        ronda.setUuid(this.getUuid());
+        ronda.setDescription(this.getDescription());
+        ronda.setStartDate(this.getStartDate());
+        ronda.setEndDate(this.getEndDate());
+        ronda.setCreatedAt(this.getCreatedAt());
+        ronda.setUpdatedAt(this.getUpdatedAt());
+        ronda.setLifeCycleStatus(this.getLifeCycleStatus());
+        if(this.getHealthFacility()!=null) {
+            ronda.setHealthFacility(this.getHealthFacility().getHealthFacilityObj());
+        }
+        if(this.getRondaType()!=null) {
+            ronda.setRondaType(this.getRondaType().getRondaType());
+        }
+        if(Utilities.listHasElements(this.getRondaMentors())) {
+            List<RondaMentor> rondaMentors = new ArrayList<>();
+            for (RondaMentorDTO rondaMentorDTO: this.getRondaMentors()) {
+                RondaMentor rondaMentor = rondaMentorDTO.getRondaMentor();
+                rondaMentors.add(rondaMentor);
+            }
+            ronda.setRondaMentors(rondaMentors);
+        }
+        if(Utilities.listHasElements(this.getRondaMentees())) {
+            List<RondaMentee> rondaMentees = new ArrayList<>();
+            for (RondaMenteeDTO rondaMenteeDTO: this.getRondaMentees()) {
+                RondaMentee rondaMentee = rondaMenteeDTO.getRondaMentee();
+                rondaMentees.add(rondaMentee);
+            }
+            ronda.setRondaMentees(rondaMentees);
+        }
+        return ronda;
     }
 }

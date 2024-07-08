@@ -32,6 +32,8 @@ public class QuestionType extends BaseModel {
 
     public QuestionType(QuestionTypeDTO questionTypeDTO) {
         super(questionTypeDTO);
+        this.setCode(questionTypeDTO.getCode());
+        this.setDescription(questionTypeDTO.getDescription());
     }
 
     public QuestionType(String description, String code) {
@@ -39,6 +41,7 @@ public class QuestionType extends BaseModel {
         this.code = code;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }

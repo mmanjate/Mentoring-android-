@@ -11,6 +11,8 @@ public class TimeOfDayDTO extends BaseEntityDTO {
     private String description;
     public TimeOfDayDTO(TimeOfDay timeOfDay) {
         super(timeOfDay);
+        this.setCode(timeOfDay.getCode());
+        this.setDescription(timeOfDay.getDescription());
     }
 
     public String getCode() {
@@ -31,10 +33,11 @@ public class TimeOfDayDTO extends BaseEntityDTO {
     public TimeOfDay getTimeOfDay() {
         TimeOfDay timeOfDay = new TimeOfDay();
         timeOfDay.setUuid(this.getUuid());
-        timeOfDay.setCode(this.getCode());
-        timeOfDay.setDescription(this.getDescription());
         timeOfDay.setCreatedAt(this.getCreatedAt());
         timeOfDay.setUpdatedAt(this.getUpdatedAt());
+        timeOfDay.setLifeCycleStatus(this.getLifeCycleStatus());
+        timeOfDay.setCode(this.getCode());
+        timeOfDay.setDescription(this.getDescription());
         return timeOfDay;
     }
 }

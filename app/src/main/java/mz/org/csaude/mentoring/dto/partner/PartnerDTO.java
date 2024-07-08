@@ -13,9 +13,9 @@ public class PartnerDTO extends BaseEntityDTO {
     }
 
     public PartnerDTO(Partner partner) {
-        this.setUuid(partner.getUuid());
-        this.name = partner.getName();
-        this.description = partner.getDescription();
+        super(partner);
+        this.setName(partner.getName());
+        this.setDescription(partner.getDescription());
     }
 
     public String getName() {
@@ -31,6 +31,13 @@ public class PartnerDTO extends BaseEntityDTO {
         this.description = description;
     }
     public Partner getPartner() {
-        return new Partner(this);
+        Partner partner = new Partner();
+        partner.setUpdatedAt(this.getUpdatedAt());
+        partner.setName(this.getName());
+        partner.setUuid(this.getUuid());
+        partner.setDescription(this.getDescription());
+        partner.setCreatedAt(this.getCreatedAt());
+        partner.setLifeCycleStatus(this.getLifeCycleStatus());
+        return partner;
     }
 }

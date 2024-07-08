@@ -2,6 +2,7 @@ package mz.org.csaude.mentoring.model.employee;
 
 import androidx.core.util.PatternsCompat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -60,7 +61,7 @@ public class Employee extends BaseModel implements Listble {
 
     @DatabaseField(columnName = COLUMN_PARTNER, foreign = true, foreignAutoRefresh = true)
     private Partner partner;
-
+    @JsonIgnore
     private List<Location> locations;
 
     public Employee() {
@@ -95,7 +96,7 @@ public class Employee extends BaseModel implements Listble {
         this.setTrainingYear(employeeDTO.getTrainingYear());
         this.setEmail(employeeDTO.getEmail());
         this.setPhoneNumber(employeeDTO.getPhoneNumber());
-        this.setLocations(retriveLocations(employeeDTO.getLocationDTOSet()));
+        if(employeeDTO.getLocationDTOSet()!=null) this.setLocations(retriveLocations(employeeDTO.getLocationDTOSet()));
         if(employeeDTO.getProfessionalCategoryDTO() != null) this.setProfessionalCategory(new ProfessionalCategory(employeeDTO.getProfessionalCategoryDTO()));
         if(employeeDTO.getPartnerDTO() != null) this.setPartner(new Partner(employeeDTO.getPartnerDTO()));
     }
@@ -103,7 +104,8 @@ public class Employee extends BaseModel implements Listble {
     private List<Location> retriveLocations(List<LocationDTO> locationDTOSet) {
         List<Location> locations = new ArrayList<>();
         for (LocationDTO locationDTO : locationDTOSet) {
-            Location location = new Location(locationDTO, this);
+            Location location = new Location(locationDTO);
+            location.setEmployee(this);
             locations.add(location);
         }
         return locations;

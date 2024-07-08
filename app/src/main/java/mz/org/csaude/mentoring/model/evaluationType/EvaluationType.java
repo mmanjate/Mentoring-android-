@@ -40,8 +40,8 @@ public class EvaluationType extends BaseModel {
 
     public EvaluationType(EvaluationTypeDTO evaluationType) {
         super(evaluationType);
-        this.description = evaluationType.getDescription();
-        this.code = evaluationType.getCode();
+        this.setCode(evaluationType.getCode());
+        this.setDescription(evaluationType.getDescription());
     }
 
     public String getDescription() {

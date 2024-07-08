@@ -26,7 +26,7 @@ public class CareerTypeDTO extends BaseEntityDTO {
     }
 
     public CareerTypeDTO(CareerType careerType) {
-        this.setUuid(careerType.getUuid());
+        super(careerType);
         this.setCode(careerType.getCode());
         this.setDescription(careerType.getDescription());
     }
@@ -48,10 +48,11 @@ public class CareerTypeDTO extends BaseEntityDTO {
     public CareerType getCareerType() {
         CareerType careerType = new CareerType();
         careerType.setUuid(this.getUuid());
-        careerType.setCode(this.getCode());
-        careerType.setDescription(this.getDescription());
         careerType.setCreatedAt(this.getCreatedAt());
         careerType.setUpdatedAt(this.getUpdatedAt());
+        careerType.setLifeCycleStatus(this.getLifeCycleStatus());
+        careerType.setCode(this.getCode());
+        careerType.setDescription(this.getDescription());
         return careerType;
     }
 }

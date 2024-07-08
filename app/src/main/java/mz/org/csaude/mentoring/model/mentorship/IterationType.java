@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.mentorship.IterationTypeDAOImpl;
+import mz.org.csaude.mentoring.dto.mentorship.IterationTypeDTO;
 
 @Data
 @DatabaseTable(tableName = IterationType.TABLE_NAME, daoClass = IterationTypeDAOImpl.class)
@@ -33,7 +34,13 @@ public class IterationType extends BaseModel {
         this.description = description;
         this.code = code;
     }
+    public IterationType(IterationTypeDTO iterationTypeDTO) {
+        super(iterationTypeDTO);
+        this.setCode(iterationTypeDTO.getCode());
+        this.setDescription(iterationTypeDTO.getDescription());
+    }
 
+    @Override
     public String getDescription() {
         return description;
     }

@@ -13,9 +13,6 @@ import mz.org.csaude.mentoring.model.location.Cabinet;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class CabinetDTO extends BaseEntityDTO {
-
-    private String uuid;
-
     private String name;
 
     public CabinetDTO(String name) {
@@ -29,25 +26,17 @@ public class CabinetDTO extends BaseEntityDTO {
 
     public CabinetDTO(Cabinet cabinet) {
         super(cabinet);
-        this.setUuid(cabinet.getUuid());
         this.setName(cabinet.getName());
     }
 
     public Cabinet getCabinet(){
         Cabinet cabinet = new Cabinet();
         cabinet.setUuid(this.getUuid());
-        cabinet.setName(this.getName());
         cabinet.setCreatedAt(this.getCreatedAt());
         cabinet.setUpdatedAt(this.getUpdatedAt());
+        cabinet.setLifeCycleStatus(this.getLifeCycleStatus());
+        cabinet.setName(this.getName());
         return cabinet;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getName() {

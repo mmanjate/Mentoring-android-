@@ -16,6 +16,8 @@ public class SessionStatusDTO extends BaseEntityDTO implements Syncable {
     private String description;
     public SessionStatusDTO(SessionStatus sessionStatus) {
         super(sessionStatus);
+        this.setCode(sessionStatus.getCode());
+        this.setDescription(sessionStatus.getDescription());
     }
 
     public String getCode() {
@@ -34,16 +36,6 @@ public class SessionStatusDTO extends BaseEntityDTO implements Syncable {
         this.description = description;
     }
 
-    public SessionStatus getSessionStatus() {
-        SessionStatus sessionStatus = new SessionStatus();
-        sessionStatus.setUuid(this.getUuid());
-        sessionStatus.setCode(this.getCode());
-        sessionStatus.setDescription(this.getDescription());
-        sessionStatus.setCreatedAt(this.getCreatedAt());
-        sessionStatus.setUpdatedAt(this.getUpdatedAt());
-        return sessionStatus;
-    }
-
     @Override
     public void setSyncSatus(SyncSatus syncSatus) {
         this.syncSatus = syncSatus;
@@ -52,5 +44,13 @@ public class SessionStatusDTO extends BaseEntityDTO implements Syncable {
     @Override
     public SyncSatus getSyncSatus() {
         return this.syncSatus;
+    }
+
+    public SessionStatus getSessionStatus() {
+        SessionStatus sessionStatus = new SessionStatus();
+        sessionStatus.setUuid(this.getUuid());
+        sessionStatus.setCode(this.getCode());
+        sessionStatus.setDescription(this.getDescription());
+        return sessionStatus;
     }
 }

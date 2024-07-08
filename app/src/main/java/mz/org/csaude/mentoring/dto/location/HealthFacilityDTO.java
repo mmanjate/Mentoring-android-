@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
+import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 
 @Data
@@ -11,7 +12,6 @@ import mz.org.csaude.mentoring.model.location.HealthFacility;
 @EqualsAndHashCode(callSuper = true)
 public class HealthFacilityDTO extends BaseEntityDTO {
 
-    private String uuid;
     private String healthFacility;
 
     private DistrictDTO districtDTO;
@@ -21,14 +21,6 @@ public class HealthFacilityDTO extends BaseEntityDTO {
         this.setHealthFacility(healthFacility.getDescription());
         if (healthFacility.getDistrict() != null) this.setDistrictDTO(new DistrictDTO(healthFacility.getDistrict()));
 
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getHealthFacility() {
@@ -49,15 +41,11 @@ public class HealthFacilityDTO extends BaseEntityDTO {
     public HealthFacility getHealthFacilityObj() {
         HealthFacility healthFacility = new HealthFacility();
         healthFacility.setUuid(this.getUuid());
-        healthFacility.setDescription(this.getHealthFacility());
         healthFacility.setCreatedAt(this.getCreatedAt());
         healthFacility.setUpdatedAt(this.getUpdatedAt());
-        if(this.getLifeCycleStatus()!=null) {
-            healthFacility.setLifeCycleStatus(this.getLifeCycleStatus());
-        }
-        if(this.getDistrictDTO()!=null) {
-            healthFacility.setDistrict(this.getDistrictDTO().getDistrict());
-        }
+        healthFacility.setLifeCycleStatus(this.getLifeCycleStatus());
+        healthFacility.setDescription(this.getHealthFacility());
+        if(this.getDistrictDTO()!=null) healthFacility.setDistrict(new District(this.getDistrictDTO()));
         return healthFacility;
     }
 }

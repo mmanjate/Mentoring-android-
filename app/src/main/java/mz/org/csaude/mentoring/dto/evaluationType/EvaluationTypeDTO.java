@@ -13,6 +13,8 @@ public class EvaluationTypeDTO extends BaseEntityDTO {
 
     public EvaluationTypeDTO(EvaluationType evaluationType) {
         super(evaluationType);
+        this.setCode(evaluationType.getCode());
+        this.setDescription(evaluationType.getDescription());
     }
 
     public String getCode() {
@@ -33,11 +35,12 @@ public class EvaluationTypeDTO extends BaseEntityDTO {
 
     public EvaluationType getEvaluationType() {
         EvaluationType evaluationType = new EvaluationType();
-        evaluationType.setCode(this.getCode());
         evaluationType.setUuid(this.getUuid());
-        evaluationType.setDescription(this.getDescription());
         evaluationType.setCreatedAt(this.getCreatedAt());
         evaluationType.setUpdatedAt(this.getUpdatedAt());
+        evaluationType.setLifeCycleStatus(this.getLifeCycleStatus());
+        evaluationType.setCode(this.getCode());
+        evaluationType.setDescription(this.getDescription());
         return evaluationType;
     }
 }

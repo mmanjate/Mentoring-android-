@@ -7,6 +7,9 @@ import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.dto.programmaticArea.ProgrammaticAreaDTO;
 import mz.org.csaude.mentoring.model.form.Form;
+import mz.org.csaude.mentoring.model.partner.Partner;
+import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
+
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -20,6 +23,10 @@ public class FormDTO extends BaseEntityDTO {
     private ProgrammaticAreaDTO programmaticArea;
     public FormDTO(Form form) {
         super(form);
+        this.setCode(form.getCode());
+        this.setDescription(form.getDescription());
+        this.setTargetFile(form.getTargetFile());
+        this.setTargetPatient(form.getTargetPatient());
         if(form.getPartner()!=null) {
             this.setPartner(new PartnerDTO(form.getPartner()));
         }
@@ -87,20 +94,16 @@ public class FormDTO extends BaseEntityDTO {
     public Form getForm() {
         Form form = new Form();
         form.setUuid(this.getUuid());
-        form.setCode(this.getCode());
-        form.setDescription(this.getDescription());
-        form.setName(this.getName());
-        form.setTargetFile(this.getTargetFile());
-        form.setTargetPatient(this.getTargetPatient());
         form.setCreatedAt(this.getCreatedAt());
         form.setUpdatedAt(this.getUpdatedAt());
-        if(this.getPartner()!=null) {
-            form.setPartner(this.getPartner().getPartner());
-        }
-        if(this.getProgrammaticArea()!=null) {
-            form.setProgrammaticArea(this.getProgrammaticArea().getProgrammaticArea());
-        }
-
+        form.setLifeCycleStatus(this.getLifeCycleStatus());
+        form.setDescription(this.getDescription());
+        form.setName(this.getName());
+        form.setCode(this.getCode());
+        form.setTargetFile(this.getTargetFile());
+        form.setTargetPatient(this.getTargetPatient());
+        if(this.getPartner()!=null) form.setPartner(new Partner(this.getPartner()));
+        if(this.getProgrammaticArea()!=null) form.setProgrammaticArea(new ProgrammaticArea(this.getProgrammaticArea()));
         return form;
     }
 }

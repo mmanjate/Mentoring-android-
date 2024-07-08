@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.District;
+import mz.org.csaude.mentoring.model.location.Province;
+
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
@@ -37,12 +39,11 @@ public class DistrictDTO extends BaseEntityDTO {
     public District getDistrict() {
         District district = new District();
         district.setUuid(this.getUuid());
-        district.setDescription(this.getDescription());
         district.setCreatedAt(this.getCreatedAt());
         district.setUpdatedAt(this.getUpdatedAt());
-        if(district.getProvince()!=null) {
-            district.setProvince(this.getDistrict().getProvince());
-        }
+        district.setLifeCycleStatus(this.getLifeCycleStatus());
+        district.setDescription(this.getDescription());
+        if(this.getProvinceDTO()!=null) district.setProvince(new Province(this.getProvinceDTO()));
         return district;
     }
 }

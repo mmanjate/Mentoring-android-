@@ -4,7 +4,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
+import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
+import mz.org.csaude.mentoring.model.tutor.Tutor;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class TutorProgrammaticAreaDTO extends BaseEntityDTO {
@@ -45,12 +48,9 @@ public class TutorProgrammaticAreaDTO extends BaseEntityDTO {
         tutorProgrammaticArea.setUuid(this.getUuid());
         tutorProgrammaticArea.setCreatedAt(this.getCreatedAt());
         tutorProgrammaticArea.setUpdatedAt(this.getUpdatedAt());
-        if(this.getProgrammaticAreaDTO()!=null) {
-            tutorProgrammaticArea.setProgrammaticArea(this.programmaticAreaDTO.getProgrammaticArea());
-        }
-        if(this.getTutorDTO()!=null) {
-            tutorProgrammaticArea.setTutor(this.tutorDTO.getTutor());
-        }
+        tutorProgrammaticArea.setLifeCycleStatus(this.getLifeCycleStatus());
+        if(this.getTutorDTO()!=null) tutorProgrammaticArea.setTutor(new Tutor(this.getTutorDTO()));
+        if(this.getProgrammaticAreaDTO()!=null) tutorProgrammaticArea.setProgrammaticArea(new ProgrammaticArea(this.getProgrammaticAreaDTO()));
         return tutorProgrammaticArea;
     }
 }

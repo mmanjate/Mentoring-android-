@@ -2,6 +2,7 @@ package mz.org.csaude.mentoring.base.application;
 
 import static mz.org.csaude.mentoring.util.Constants.INITIAL_SETUP_STATUS;
 import static mz.org.csaude.mentoring.util.Constants.INITIAL_SETUP_STATUS_COMPLETE;
+import static mz.org.csaude.mentoring.util.Constants.LAST_SYNC_DATE;
 import static mz.org.csaude.mentoring.util.Constants.LOGGED_USER;
 import static mz.org.csaude.mentoring.util.Constants.METADATA_SYNC_TIME;
 import static mz.org.csaude.mentoring.util.Constants.SESSION_SYNC_TIME;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -90,6 +92,7 @@ import mz.org.csaude.mentoring.service.tutored.TutoredService;
 import mz.org.csaude.mentoring.service.tutored.TutoredServiceImpl;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserServiceImpl;
+import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.workSchedule.rest.FormQuestionRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.FormRestService;
@@ -112,7 +115,6 @@ public class MentoringApplication  extends Application {
     //private static final String BASE_URL = "http://10.10.2.75:8087";
     private static final String BASE_URL = "http://10.10.12.65:8087";
     //private static final String BASE_URL = "http://10.10.12.97:8087";
-
     private User authenticatedUser;
 
     private Tutor tutor;
@@ -511,8 +513,13 @@ public class MentoringApplication  extends Application {
     }
     public void saveDefaultSyncSettings() {
         SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
-        editor.putInt(SESSION_SYNC_TIME, 2);
-        editor.putInt(METADATA_SYNC_TIME, 2);
+        editor.putInt(SESSION_SYNC_TIME, getMentoringSharedPreferences().getInt(SESSION_SYNC_TIME, 2));
+        editor.putInt(METADATA_SYNC_TIME, getMentoringSharedPreferences().getInt(METADATA_SYNC_TIME, 2));
+        editor.apply();
+    }
+    public void saveDefaultLastSyncDate(Date date) {
+        SharedPreferences.Editor editor = getMentoringSharedPreferences().edit();
+        editor.putString(LAST_SYNC_DATE, getMentoringSharedPreferences().getString(LAST_SYNC_DATE,DateUtilities.getStringDateFromDate(date, DateUtilities.DATE_FORMAT)));
         editor.apply();
     }
     public void initSessionManager() {
@@ -523,5 +530,11 @@ public class MentoringApplication  extends Application {
     public AnswerService getAnswerService() {
         if (answerService == null) this.answerService = new AnswerServiceImpl(this);
         return answerService;
+    }
+    public int getMetadataSyncInterval() {
+        return getMentoringSharedPreferences().getInt(METADATA_SYNC_TIME, 2);
+    }
+    public int getSessionSyncInterval() {
+        return getMentoringSharedPreferences().getInt(SESSION_SYNC_TIME, 2);
     }
 }

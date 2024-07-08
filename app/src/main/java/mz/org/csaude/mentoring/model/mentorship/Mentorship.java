@@ -1,5 +1,6 @@
 package mz.org.csaude.mentoring.model.mentorship;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -131,8 +132,8 @@ public class Mentorship extends BaseModel {
             List<Answer> answerList = new ArrayList<>();
             for (AnswerDTO answerDTO: mentorshipDTO.getAnswers()) {
                 answerList.add(new Answer(answerDTO));
-                this.setAnswers(answerList);
             }
+            this.setAnswers(answerList);
         }
     }
 
@@ -257,14 +258,17 @@ public class Mentorship extends BaseModel {
                 '}';
     }
 
+    @JsonIgnore
     public boolean isCompleted() {
         return this.endDate != null;
     }
 
+    @JsonIgnore
     public boolean isPatientEvaluation() {
         return this.evaluationType.isPatientEvaluation();
     }
 
+    @JsonIgnore
     public boolean isFileEvaluation() {
         return this.evaluationType.isFichaEvaluation();
     }

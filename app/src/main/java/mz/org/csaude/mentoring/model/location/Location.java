@@ -44,19 +44,9 @@ public class Location extends BaseModel implements Listble {
     public Location(LocationDTO location) {
         this.setUuid(location.getUuid());
         this.setLocationLevel(location.getLocationLevel());
-       if(location.getEmployeeDTO() != null) this.setEmployee(new Employee(location.getEmployeeDTO()));
        if(location.getProvinceDTO() != null) this.setProvince(new Province(location.getProvinceDTO()));
        if(location.getDistrictDTO() != null) this.setDistrict(new District(location.getDistrictDTO()));
        if(location.getHealthFacilityDTO() != null) this.setHealthFacility(new HealthFacility(location.getHealthFacilityDTO()));
-    }
-
-    public Location(LocationDTO location, Employee employee) {
-        super(location);
-        this.setLocationLevel(location.getLocationLevel());
-        this.setEmployee(employee);
-        if(location.getProvinceDTO() != null) this.setProvince(new Province(location.getProvinceDTO()));
-        if(location.getDistrictDTO() != null) this.setDistrict(new District(location.getDistrictDTO()));
-        if(location.getHealthFacilityDTO() != null) this.setHealthFacility(new HealthFacility(location.getHealthFacilityDTO()));
     }
 
     public Employee getEmployee() {

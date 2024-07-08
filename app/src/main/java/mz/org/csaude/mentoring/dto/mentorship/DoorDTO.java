@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.mentorship.Door;
+
 @Data
 @NoArgsConstructor
 public class DoorDTO extends BaseEntityDTO {
@@ -11,6 +12,8 @@ public class DoorDTO extends BaseEntityDTO {
     private String description;
     public DoorDTO(Door door) {
         super(door);
+        this.setCode(door.getCode());
+        this.setDescription(door.getDescription());
     }
 
     public String getCode() {
@@ -30,11 +33,12 @@ public class DoorDTO extends BaseEntityDTO {
     }
     public Door getDoor() {
         Door door = new Door();
-        door.setCode(this.getCode());
         door.setUuid(this.getUuid());
-        door.setDescription(this.getDescription());
         door.setCreatedAt(this.getCreatedAt());
         door.setUpdatedAt(this.getUpdatedAt());
+        door.setLifeCycleStatus(this.getLifeCycleStatus());
+        door.setCode(this.getCode());
+        door.setDescription(this.getDescription());
         return door;
     }
 }

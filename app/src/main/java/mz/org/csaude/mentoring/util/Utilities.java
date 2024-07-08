@@ -588,4 +588,5 @@ public class Utilities {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
 }

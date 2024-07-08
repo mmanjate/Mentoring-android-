@@ -35,12 +35,14 @@ public class SessionVM extends BaseViewModel {
 
     public void init() {
         try {
-            this.session = new Session();
-            this.session.setStatus(getApplication().getSessionStatusService().getByCode(SessionStatus.INCOMPLETE));
-            this.session.setStartDate(DateUtilities.getCurrentDate());
-            this.session.setSyncStatus(SyncSatus.PENDING);
-            this.session.setUuid(Utilities.getNewUUID().toString());
-            this.session.setCreatedAt(DateUtilities.getCurrentDate());
+            if (!getApplication().getApplicationStep().isApplicationStepEdit()) {
+                this.session = new Session();
+                this.session.setStatus(getApplication().getSessionStatusService().getByCode(SessionStatus.INCOMPLETE));
+                this.session.setStartDate(DateUtilities.getCurrentDate());
+                this.session.setSyncStatus(SyncSatus.PENDING);
+                this.session.setUuid(Utilities.getNewUUID().toString());
+                this.session.setCreatedAt(DateUtilities.getCurrentDate());
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -91,11 +93,19 @@ public class SessionVM extends BaseViewModel {
                 Utilities.displayAlertDialog(getRelatedActivity(), "Por favor, selecione uma tabela de competências").show();
                 return;
             }
-            getApplication().getSessionService().save(this.session);
+            if (getApplication().getApplicationStep().isApplicationStepEdit()) {
+                getApplication().getSessionService().update(this.session);
+            } else {
+                getApplication().getSessionService().save(this.session);
+            }
             getRelatedActivity().finish();
         } catch (SQLException e) {
             Log.e("SessionVM", "save: " + e.getMessage());
         }
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 
     public void setCurrRonda(Ronda ronda) {
@@ -104,5 +114,13 @@ public class SessionVM extends BaseViewModel {
 
     public void setMentee(Tutored mentee) {
         this.session.setTutored(mentee);
+    }
+
+    public void setSelectedForm() {
+        for (Form form : this.forms) {
+            if (form.equals(this.session.getForm())) {
+                form.setItemSelected(true);
+            }
+        }
     }
 }

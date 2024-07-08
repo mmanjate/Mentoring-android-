@@ -32,8 +32,8 @@ import mz.org.csaude.mentoring.view.form.ListFormActivity;
 import mz.org.csaude.mentoring.view.mentorship.CreateMentorshipActivity;
 import mz.org.csaude.mentoring.view.mentorship.ZeroMentorshipListActivity;
 
-public class ZeroMentorshipSearchVM extends SearchVM<Mentorship> {
-    private Ronda ronda;
+public class ZeroMentorshipSearchVM extends AbstractSearchMentorshipVM {
+
 
     public ZeroMentorshipSearchVM(@NonNull Application application) {
         super(application);
@@ -44,13 +44,6 @@ public class ZeroMentorshipSearchVM extends SearchVM<Mentorship> {
 
     }
 
-    public Ronda getRonda() {
-        return ronda;
-    }
-
-    public void setRonda(Ronda ronda) {
-        this.ronda = ronda;
-    }
 
     @Override
     public void preInit() {
@@ -64,6 +57,15 @@ public class ZeroMentorshipSearchVM extends SearchVM<Mentorship> {
         getRelatedActivity().nextActivity(CreateMentorshipActivity.class, params);
     }
 
+    @Override
+    public void edit(Mentorship mentorship) {
+        super.edit(mentorship);
+        Map<String, Object> params = new HashMap<>();
+        params.put("mentorship", mentorship);
+        params.put("CURR_MENTORSHIP_STEP", MentorshipVM.CURR_MENTORSHIP_STEP_TABLE_SELECTION);
+        getApplication().getApplicationStep().changeToEdit();
+        getRelatedActivity().nextActivity(CreateMentorshipActivity.class, params);
+    }
 
     @Override
     public List<Mentorship> doSearch(long offset, long limit) throws SQLException {

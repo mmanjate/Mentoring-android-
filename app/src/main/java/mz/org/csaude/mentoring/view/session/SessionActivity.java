@@ -25,6 +25,7 @@ import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivitySessionBinding;
 import mz.org.csaude.mentoring.listner.recyclerView.ClickListener;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.view.ronda.CreateRondaActivity;
@@ -43,8 +44,18 @@ public class SessionActivity extends BaseActivity implements ClickListener.OnIte
         sessionBinding.setViewModel(getRelatedViewModel());
 
         Intent intent = this.getIntent();
-        getRelatedViewModel().setCurrRonda((Ronda) intent.getExtras().get("ronda"));
-        getRelatedViewModel().setMentee((Tutored) intent.getExtras().get("mentee"));
+
+        populateFormList();
+
+        if (getApplicationStep().isApplicationStepEdit()) {
+            getRelatedViewModel().setSession((Session) intent.getExtras().get("session"));
+            getRelatedViewModel().setCurrRonda(getRelatedViewModel().getSession().getRonda());
+            getRelatedViewModel().setMentee(getRelatedViewModel().getSession().getTutored());
+            getRelatedViewModel().setSelectedForm();
+        } else {
+            getRelatedViewModel().setCurrRonda((Ronda) intent.getExtras().get("ronda"));
+            getRelatedViewModel().setMentee((Tutored) intent.getExtras().get("mentee"));
+        }
 
 
         setSupportActionBar(sessionBinding.toolbar.toolbar);
@@ -67,7 +78,6 @@ public class SessionActivity extends BaseActivity implements ClickListener.OnIte
                 datePickerDialog.show();
             }
         });
-        populateFormList();
 
     }
 

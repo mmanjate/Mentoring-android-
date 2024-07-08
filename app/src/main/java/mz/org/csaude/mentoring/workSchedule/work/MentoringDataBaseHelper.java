@@ -2,11 +2,16 @@ package mz.org.csaude.mentoring.workSchedule.work;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 import mz.org.csaude.mentoring.R;
@@ -488,6 +493,47 @@ public class MentoringDataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-            //onCreate(database, connectionSource);
+
     }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+    private void migrateV1ToV2(SQLiteDatabase db) throws IOException {
+        db.beginTransaction();
+        try {
+            // Execute SQL statements from the migration file
+            executeSqlFile(db, "migrate_v1_to_v2.sql");
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
+    private void executeSqlFile(SQLiteDatabase db, String fileName) throws IOException {
+        InputStream inputStream = null;
+        BufferedReader reader = null;
+        try {
+            inputStream = context.getAssets().open(fileName);
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+                if (line.trim().endsWith(";")) {
+                    db.execSQL(sb.toString());
+                    sb.setLength(0); // Clear the StringBuilder for the next statement
+                }
+            }
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+    }
+
 }

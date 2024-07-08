@@ -68,6 +68,9 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
             }
             this.rondaDAO.createOrUpdate(ronda);
 
+            this.rondaMentorDAO.deleteByRonda(ronda);
+            this.rondaMenteeDAO.deleteByRonda(ronda);
+
             for (RondaMentor rondaMentor: ronda.getRondaMentors()) {
                 this.rondaMentorDAO.createOrUpdate(rondaMentor);
             }

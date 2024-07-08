@@ -2,6 +2,7 @@ package mz.org.csaude.mentoring.viewmodel.ronda;
 
 import android.app.Application;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -98,12 +99,18 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
         notifyPropertyChanged(BR.startDate);
     }
 
+    public void setRonda(Ronda ronda) {
+        this.ronda = ronda;
+    }
+
     @Bindable
     public Listble getHealthFacility() {
         return this.ronda.getHealthFacility();
     }
 
     public void setHealthFacility(Listble selectedHealthFacility) {
+        if (selectedHealthFacility == null) return;
+
         if (StringUtils.isEmpty(((HealthFacility)selectedHealthFacility).getUuid())) return;
         this.selectedHealthFacility = (HealthFacility) selectedHealthFacility;
         try {
@@ -174,12 +181,12 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
 
     @Bindable
     public Listble getMentorType() {
-        if (mentorType == null) return new SimpleValue();
-        return mentorType;
+        return new SimpleValue(ronda.getMentorType());
     }
 
     public void setMentorType(Listble mentorType) {
         this.mentorType = (SimpleValue) mentorType;
+        this.ronda.setMentorType(this.mentorType.getDescription());
         notifyPropertyChanged(BR.mentorType);
     }
 
@@ -189,6 +196,7 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
     }
 
     public void setSelectedDistrict(Listble selectedDistrict) {
+        if (selectedDistrict == null || selectedDistrict.getId() == null) return;
         try {
             this.selectedDistrict = (District) selectedDistrict;
             this.healthFacilities.clear();
@@ -242,9 +250,6 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
 
             ronda.setSyncStatus(SyncSatus.PENDING);
             ronda.setUuid(Utilities.getNewUUID().toString());
-            Intent intent = getRelatedActivity().getIntent();
-            /*RondaType rondaType = (RondaType) intent.getExtras().get("rondaType");
-            ronda.setRondaType(rondaType);*/
             ronda.setStartDate(this.getStartDate());
             ronda.setHealthFacility(this.selectedHealthFacility);
             int count = getApplication().getRondaService().countRondas();
@@ -366,7 +371,11 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
     @Override
     public void onServerStatusChecked(boolean isOnline) {
         if (isOnline) {
-            getApplication().getRondaRestService().restPostRonda(this.ronda, this);
+            if (getApplication().getApplicationStep().isApplicationStepEdit()) {
+                getApplication().getRondaRestService().restPatchRonda(this.ronda, this);
+            } else {
+                getApplication().getRondaRestService().restPostRonda(this.ronda, this);
+            }
         } else {
             Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(mz.org.csaude.mentoring.R.string.server_unavailable)).show();
         }
@@ -379,5 +388,26 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
     @Override
     public void doOnResponse(String flag, List<Ronda> objects) {
         getRelatedActivity().nextActivityFinishingCurrent(RondaActivity.class);
+    }
+
+    public void initRondaEdition() {
+        try {
+            ronda.setRondaMentees(getApplication().getRondaMenteeService().getAllOfRonda(ronda));
+            if (this.selectedMentees == null) this.selectedMentees = new ArrayList<>();
+            for (RondaMentee rondaMentee : ronda.getRondaMentees()) {
+                rondaMentee.getTutored().setListType(Listble.ListTypes.SELECTION_LIST);
+                this.selectedMentees.add(rondaMentee.getTutored());
+            }
+
+            getRelatedActivity().displaySelectedMentees();
+
+            ronda.getHealthFacility().setDistrict(getApplication().getDistrictService().getById(ronda.getHealthFacility().getDistrict().getId()));
+            this.setSelectedProvince(getRonda().getHealthFacility().getDistrict().getProvince());
+            this.setSelectedDistrict(getRonda().getHealthFacility().getDistrict());
+            this.setHealthFacility(getRonda().getHealthFacility());
+        } catch (SQLException e) {
+            Log.e("RondaVM", "initRondaEdition:" + e.getMessage());
+        }
+
     }
 }

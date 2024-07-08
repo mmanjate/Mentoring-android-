@@ -58,7 +58,7 @@ public class Mentorship extends BaseModel {
     @DatabaseField(columnName = COLUMN_START_DATE, canBeNull = false)
     private Date startDate;
 
-    @DatabaseField(columnName = COLUMN_END_DATE, canBeNull = false)
+    @DatabaseField(columnName = COLUMN_END_DATE)
     private Date endDate;
 
     @DatabaseField(columnName = COLUMN_PERFORMED_DATE, canBeNull = false)

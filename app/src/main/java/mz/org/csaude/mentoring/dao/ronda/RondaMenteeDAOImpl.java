@@ -27,4 +27,9 @@ public class RondaMenteeDAOImpl extends MentoringBaseDaoImpl<RondaMentee, Intege
     public List<RondaMentee> getAllOfRonda(Ronda ronda) throws SQLException {
         return queryBuilder().where().eq(RondaMentee.COLUMN_RONDA, ronda.getId()).query();
     }
+
+    @Override
+    public void deleteByRonda(Ronda ronda) throws SQLException {
+        this.delete(queryBuilder().where().eq(RondaMentee.COLUMN_RONDA, ronda.getId()).query());
+    }
 }

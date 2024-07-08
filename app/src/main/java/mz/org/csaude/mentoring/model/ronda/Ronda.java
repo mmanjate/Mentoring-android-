@@ -35,6 +35,8 @@ public class Ronda extends BaseModel implements Listble {
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_HEALTH_FACILITY = "health_facility_id";
     public static final String COLUMN_RONDA_TYPE = "ronda_type_id";
+    public static final String COLUMN_MENTOR_TYPE = "mentor_type";
+
     @DatabaseField(columnName = COLUMN_DESCRIPTION,  canBeNull = false)
     private String description;
     @DatabaseField(columnName = COLUMN_START_DATE, canBeNull = false)
@@ -47,6 +49,8 @@ public class Ronda extends BaseModel implements Listble {
     @DatabaseField(columnName = COLUMN_RONDA_TYPE, canBeNull = false, foreign = true, foreignAutoRefresh = true )
     private RondaType rondaType;
 
+    @DatabaseField(columnName = COLUMN_MENTOR_TYPE, canBeNull = false)
+    private String mentorType;
     private List<Session> sessions;
     private List<RondaMentee> rondaMentees;
     private List<RondaMentor> rondaMentors;
@@ -59,6 +63,7 @@ public class Ronda extends BaseModel implements Listble {
         this.setStartDate(rondaDTO.getStartDate());
         this.setEndDate(rondaDTO.getEndDate());
         this.setRondaType(new RondaType(rondaDTO.getRondaType()));
+        this.setMentorType(rondaDTO.getMentorType());
         if(rondaDTO.getHealthFacility()!=null) {
             this.setHealthFacility(new HealthFacility(rondaDTO.getHealthFacility()));
         }
@@ -241,5 +246,13 @@ public class Ronda extends BaseModel implements Listble {
             }
         }
         return null;
+    }
+
+    public String getMentorType() {
+        return mentorType;
+    }
+
+    public void setMentorType(String mentorType) {
+        this.mentorType = mentorType;
     }
 }

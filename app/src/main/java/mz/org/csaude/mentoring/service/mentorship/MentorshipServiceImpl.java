@@ -71,9 +71,17 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
                 sessionDAO.update(record.getSession());
             }
 
-            mentorshipDAO.create(record);
+            if (record.getId() == null) {
+                mentorshipDAO.create(record);
+            } else {
+                mentorshipDAO.update(record);
+            }
             for (Answer answer : record.getAnswers()) {
-                answerDAO.create(answer);
+                if (answer.getId() == null) {
+                    answerDAO.create(answer);
+                } else {
+                    answerDAO.update(answer);
+                }
             }
 
             return null;

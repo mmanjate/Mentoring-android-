@@ -56,8 +56,6 @@ public class CreateRondaActivity extends BaseActivity {
         rondaBinding = DataBindingUtil.setContentView(this, R.layout.activity_ronda);
         rondaBinding.setViewModel(getRelatedViewModel());
 
-
-
         rcvSelectedMentees = rondaBinding.rcvSelectedMentees;
         setSupportActionBar(rondaBinding.toolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,10 +63,17 @@ public class CreateRondaActivity extends BaseActivity {
         Intent intent = this.getIntent();
         if(intent!=null && intent.getExtras()!=null) {
             title = (String) intent.getExtras().get("title");
-            rondaTypeOption = (RondaType) intent.getExtras().get("rondaType");
+            if (getApplicationStep().isApplicationstepCreate()) {
+                rondaTypeOption = (RondaType) intent.getExtras().get("rondaType");
+                getRelatedViewModel().getRonda().setRondaType(rondaTypeOption);
+            } else {
+                Ronda ronda = (Ronda) intent.getExtras().get("ronda");
+                getRelatedViewModel().setRonda(ronda);
+                getRelatedViewModel().initRondaEdition();
+            }
         }
 
-        getRelatedViewModel().getRonda().setRondaType(rondaTypeOption);
+
 
         getSupportActionBar().setTitle(title);
         initAdapters();

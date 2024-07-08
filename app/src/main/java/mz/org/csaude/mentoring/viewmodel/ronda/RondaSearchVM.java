@@ -14,6 +14,7 @@ import java.util.Map;
 
 import mz.org.csaude.mentoring.base.searchparams.AbstractSearchParams;
 import mz.org.csaude.mentoring.base.viewModel.SearchVM;
+import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.ronda.RondaSummary;
@@ -29,10 +30,12 @@ import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 import mz.org.csaude.mentoring.view.session.SessionActivity;
 import mz.org.csaude.mentoring.view.session.SessionListActivity;
 
-public class RondaSearchVM extends SearchVM<Ronda> {
+public class RondaSearchVM extends SearchVM<Ronda> implements IDialogListener {
     private RondaType rondaType;
 
     private String title;
+
+    private Ronda selectedRonda;
 
     public RondaSearchVM(@NonNull Application application) {
         super(application);
@@ -51,6 +54,7 @@ public class RondaSearchVM extends SearchVM<Ronda> {
         Map<String, Object> params = new HashMap<>();
         params.put("rondaType", rondaType);
         params.put("title", title);
+        getApplication().getApplicationStep().changetocreate();
         getRelatedActivity().nextActivity(CreateRondaActivity.class, params);
     }
 
@@ -156,5 +160,53 @@ public class RondaSearchVM extends SearchVM<Ronda> {
             noCount = noCount + sessionSummary.getNaoCount();
         }
         return (double) yesCount / (yesCount + noCount) *100;
+    }
+
+    public void edit(Ronda ronda) {
+        try {
+            ronda.setSessions(getApplication().getSessionService().getAllOfRonda(ronda));
+            if (Utilities.listHasElements(ronda.getSessions())) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível editar uma ronda com sessões de mentoria registadas.").show();
+                return;
+            }
+        } catch (SQLException e) {
+            Log.e("Ronda Search VM", "Exception: " + e.getMessage());
+        }
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("ronda", ronda);
+        getApplication().getApplicationStep().changeToEdit();
+        getRelatedActivity().nextActivity(CreateRondaActivity.class, params);
+
+    }
+
+    public void delete(Ronda ronda) {
+        this.selectedRonda = ronda;
+        try {
+            ronda.setSessions(getApplication().getSessionService().getAllOfRonda(ronda));
+            if (Utilities.listHasElements(ronda.getSessions())) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível editar uma ronda com sessões de mentoria registadas.").show();
+                return;
+            }
+        } catch (SQLException e) {
+            Log.e("Ronda Search VM", "Exception: " + e.getMessage());
+        }
+
+        Utilities.displayConfirmationDialog(getRelatedActivity(), "Deseja realmente excluir a ronda?", "Sim", "Não", this).show();
+    }
+
+    @Override
+    public void doOnConfirmed() {
+        try {
+            getApplication().getRondaService().delete(selectedRonda);
+            initSearch();
+        } catch (SQLException e) {
+            Log.e("Ronda Search VM", "Exception: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void doOnDeny() {
+
     }
 }

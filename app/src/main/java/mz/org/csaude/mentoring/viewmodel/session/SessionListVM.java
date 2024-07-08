@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.viewmodel.session;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
@@ -17,6 +18,7 @@ import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.searchparams.AbstractSearchParams;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.base.viewModel.SearchVM;
+import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
@@ -28,13 +30,13 @@ import mz.org.csaude.mentoring.view.session.SessionClosureActivity;
 import mz.org.csaude.mentoring.view.session.SessionListActivity;
 import mz.org.csaude.mentoring.view.session.SessionSummaryActivity;
 
-public class SessionListVM extends SearchVM<Session> {
+public class SessionListVM extends SearchVM<Session>  implements IDialogListener {
 
     private Ronda currRonda;
 
     private Tutored selectedMentee;
 
-
+    private Session selectedSession;
 
 
 
@@ -119,17 +121,39 @@ public class SessionListVM extends SearchVM<Session> {
     }
 
     public void deleteSession(Session session) {
+        this.selectedSession = session;
         try {
-            getApplication().getSessionService().delete(session);
-            getRelatedActivity().populateSessions();
+            session.setMentorships(getApplication().getMentorshipService().getAllOfSession(session));
+            if (session.isCompleted()) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível editar uma sessão finalizada").show();
+                return;
+            } else if (Utilities.listHasElements(session.getMentorships())) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível editar uma sessão com avaliações criadas.").show();
+                return;
+            }
+
+            Utilities.displayConfirmationDialog(getRelatedActivity(), "Deseja realmente excluir a sessão?", "Sim", "Não", this).show();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Log.e("SessionListVM", "editSession: ", e);
         }
     }
 
     public void editSession(Session session) {
+        try {
+            session.setMentorships(getApplication().getMentorshipService().getAllOfSession(session));
+            if (session.isCompleted()) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível editar uma sessão finalizada").show();
+                return;
+            } else if (Utilities.listHasElements(session.getMentorships())) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível editar uma sessão com avaliações criadas.").show();
+                return;
+            }
+        } catch (SQLException e) {
+            Log.e("SessionListVM", "editSession: ", e);
+        }
         Map<String, Object> params = new HashMap<>();
         params.put("session", session);
+        getApplication().getApplicationStep().changeToEdit();
         getRelatedActivity().nextActivity(SessionActivity.class, params);
     }
 
@@ -142,5 +166,20 @@ public class SessionListVM extends SearchVM<Session> {
         } else {
             getRelatedActivity().nextActivity(SessionSummaryActivity.class, params);
         }
+    }
+
+    @Override
+    public void doOnConfirmed() {
+        try {
+            getApplication().getSessionService().delete(this.selectedSession);
+            initSearch();
+        } catch (SQLException e) {
+            Log.e("SessionListVM", "doOnConfirmed: ", e);
+        }
+    }
+
+    @Override
+    public void doOnDeny() {
+
     }
 }

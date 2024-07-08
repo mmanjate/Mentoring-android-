@@ -113,7 +113,7 @@
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/baseline_edit_square_24"
-                android:visibility="@{ronda.syncStatus == SyncSatus.PENDING ? View.VISIBLE : View.GONE}"
+                android:visibility="@{ronda.closed ? View.GONE : View.VISIBLE}"
                 android:layout_marginRight="@dimen/dimen_2dp"/>
             <ImageButton
                 android:id="@+id/delete"
@@ -123,7 +123,7 @@
                 android:layout_gravity="end"
                 android:scaleType="fitXY"
                 android:src="@drawable/baseline_delete_forever_24"
-                android:visibility="@{ronda.syncStatus == SyncSatus.PENDING ? View.VISIBLE : View.GONE}"
+                android:visibility="@{ronda.closed ? View.GONE : View.VISIBLE}"
                 android:layout_marginRight="@dimen/dimen_2dp"/>
             <ImageView
                 android:id="@+id/sync"

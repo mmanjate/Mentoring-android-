@@ -170,6 +170,10 @@ public interface SyncDataService {
     @POST("/ronda/save")
     Call<RondaDTO> postRonda(@Body RondaDTO rondaDTO);
 
+
+    @POST("/ronda/update")
+    Call<RondaDTO> patchtRonda(@Body RondaDTO rondaDTO);
+
     @GET("/resources/getAll")
     Call<List<ResourceDTO>> getAllResource();
 

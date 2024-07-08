@@ -33,6 +33,7 @@ import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivityMentorshipBinding;
 import mz.org.csaude.mentoring.listner.recyclerView.ClickListener;
+import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.util.DateUtilities;
@@ -64,14 +65,22 @@ public class CreateMentorshipActivity extends BaseActivity implements ClickListe
         formsRcv = mentorshipBinding.rcvForms;
         Intent intent = this.getIntent();
         if(intent!=null && intent.getExtras()!=null) {
-            getRelatedViewModel().setSession((Session) intent.getExtras().get("session"));
-            getRelatedViewModel().setRonda((Ronda) intent.getExtras().get("ronda"));
-            getRelatedViewModel().setCurrMentorshipStep((String) intent.getExtras().get("CURR_MENTORSHIP_STEP"));
-            getRelatedViewModel().determineMentorshipType();
-            if (getRelatedViewModel().getRonda() == null) getRelatedViewModel().setRonda(getRelatedViewModel().getSession().getRonda());
-            if (getRelatedViewModel().getRonda().isRondaZero()) {
-                populateFormList();
+            getRelatedViewModel().setMentorship((Mentorship) intent.getExtras().get("mentorship"));
+            if (getRelatedViewModel().getMentorship() == null) {
+                getRelatedViewModel().setSession((Session) intent.getExtras().get("session"));
+                getRelatedViewModel().setRonda((Ronda) intent.getExtras().get("ronda"));
+                getRelatedViewModel().determineMentorshipType();
+                if (getRelatedViewModel().getRonda() == null)
+                    getRelatedViewModel().setRonda(getRelatedViewModel().getSession().getRonda());
+                if (getRelatedViewModel().getRonda().isRondaZero()) {
+                    populateFormList();
+                }
+            } else {
+                getRelatedViewModel().setSession(getRelatedViewModel().getMentorship().getSession());
+                getRelatedViewModel().setRonda(getRelatedViewModel().getMentorship().getSession().getRonda());
             }
+
+            getRelatedViewModel().setCurrMentorshipStep((String) intent.getExtras().get("CURR_MENTORSHIP_STEP"));
         }
 
         setSupportActionBar(mentorshipBinding.toolbar.toolbar);

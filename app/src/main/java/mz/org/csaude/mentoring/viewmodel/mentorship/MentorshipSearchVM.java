@@ -36,16 +36,16 @@ import mz.org.csaude.mentoring.view.form.ListFormActivity;
 import mz.org.csaude.mentoring.view.mentorship.CreateMentorshipActivity;
 import mz.org.csaude.mentoring.view.mentorship.MentorshipActivity;
 
-public class MentorshipSearchVM extends SearchVM<Mentorship> {
+public class MentorshipSearchVM extends AbstractSearchMentorshipVM {
 
     private MentorshipService mentorshipService;
     private SessionService sessionService;
     private Mentorship mentorship;
-    private Session session;
+
     private List<Listble> mentorships;
     private List<Listble> sessions;
 
-    private Ronda ronda;
+
 
     public MentorshipSearchVM(@NonNull Application application) {
         super(application);
@@ -60,13 +60,6 @@ public class MentorshipSearchVM extends SearchVM<Mentorship> {
 
     }
 
-    public Ronda getRonda() {
-        return ronda;
-    }
-
-    public void setRonda(Ronda ronda) {
-        this.ronda = ronda;
-    }
 
     public String getMentorshipTitle() {
         return "Sessão: " + DateUtilities.formatToDDMMYYYY(this.session.getStartDate(), "/") + ", Avaliações de: " + this.session.getTutored().getEmployee().getFullName();
@@ -116,7 +109,13 @@ public class MentorshipSearchVM extends SearchVM<Mentorship> {
         return null;
     }
 
-    public void setSession(Session s) {
-        this.session = s;
+    @Override
+    public void edit(Mentorship mentorship) {
+        super.edit(mentorship);
+        Map<String, Object> params = new HashMap<>();
+        params.put("mentorship", mentorship);
+        params.put("CURR_MENTORSHIP_STEP", MentorshipVM.CURR_MENTORSHIP_STEP_PERIOD_SELECTION);
+        getApplication().getApplicationStep().changeToEdit();
+        getRelatedActivity().nextActivity(CreateMentorshipActivity.class, params);
     }
 }

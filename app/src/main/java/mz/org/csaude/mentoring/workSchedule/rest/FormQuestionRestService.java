@@ -55,13 +55,15 @@ public class FormQuestionRestService extends BaseRestService {
                     try {
                         FormQuestionService formQuestionService = getApplication().getFormQuestionService();
 
-                        List<FormQuestion> formQuestions = Utilities.parse(data, FormQuestion.class);
+                        List<FormQuestion> formQuestions = new ArrayList<>();
 
-                        for(FormQuestion formQuestion : formQuestions) {
+                        for(FormQuestionDTO formQuestionDTO : data) {
+                            FormQuestion formQuestion = formQuestionDTO.getFormQuestion();
                             formQuestion.setSyncStatus(SyncSatus.SENT);
-                            formQuestion.setForm(getApplication().getFormService().getByuuid(formQuestion.getForm().getUuid()));
+                            formQuestion.setForm(getApplication().getFormService().getByuuid(formQuestionDTO.getFormUuid()));
                             formQuestion.setEvaluationType(getApplication().getEvaluationTypeService().getByuuid(formQuestion.getEvaluationType().getUuid()));
                             formQuestion.setResponseType(getApplication().getResponseTypeService().getByuuid(formQuestion.getResponseType().getUuid()));
+                            formQuestions.add(formQuestion);
                         }
 
                         formQuestionService.saveOrUpdate(formQuestions);

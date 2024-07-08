@@ -54,21 +54,23 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
     public Session save(Session record) throws SQLException {
         TransactionManager.callInTransaction(getDataBaseHelper().getConnectionSource(), (Callable<Void>) () -> {
             this.sessionDAO.create(record);
-            for (Mentorship mentorship: record.getMentorships()) {
-                Form form = getApplication().getFormService().getByuuid(mentorship.getForm().getUuid());
-                mentorship.setForm(form);
-                mentorship.setCabinet(getApplication().getCabinetService().getByuuid(mentorship.getCabinet().getUuid()));
-                mentorship.setDoor(getApplication().getDoorService().getByuuid(mentorship.getDoor().getUuid()));
-                mentorship.setEvaluationType(getApplication().getEvaluationTypeService().getByuuid(mentorship.getEvaluationType().getUuid()));
-                mentorship.setTutor(getApplication().getTutorService().getByuuid(mentorship.getTutor().getUuid()));
-                mentorship.setTutored(getApplication().getTutoredService().getByuuid(mentorship.getTutored().getUuid()));
-                mentorship.setSession(record);
-                this.mentorshipDAO.create(mentorship);
-                for (Answer answer: mentorship.getAnswers()) {
-                    answer.setMentorship(mentorship);
-                    answer.setForm(form);
-                    answer.setQuestion(getApplication().getQuestionService().getByuuid(answer.getQuestion().getUuid()));
-                    this.answerDAO.create(answer);
+            if(record.getMentorships()!=null) {
+                for (Mentorship mentorship : record.getMentorships()) {
+                    Form form = getApplication().getFormService().getByuuid(mentorship.getForm().getUuid());
+                    mentorship.setForm(form);
+                    mentorship.setCabinet(getApplication().getCabinetService().getByuuid(mentorship.getCabinet().getUuid()));
+                    mentorship.setDoor(getApplication().getDoorService().getByuuid(mentorship.getDoor().getUuid()));
+                    mentorship.setEvaluationType(getApplication().getEvaluationTypeService().getByuuid(mentorship.getEvaluationType().getUuid()));
+                    mentorship.setTutor(getApplication().getTutorService().getByuuid(mentorship.getTutor().getUuid()));
+                    mentorship.setTutored(getApplication().getTutoredService().getByuuid(mentorship.getTutored().getUuid()));
+                    mentorship.setSession(record);
+                    this.mentorshipDAO.create(mentorship);
+                    for (Answer answer : mentorship.getAnswers()) {
+                        answer.setMentorship(mentorship);
+                        answer.setForm(form);
+                        answer.setQuestion(getApplication().getQuestionService().getByuuid(answer.getQuestion().getUuid()));
+                        this.answerDAO.create(answer);
+                    }
                 }
             }
             return null;

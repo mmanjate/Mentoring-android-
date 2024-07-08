@@ -119,7 +119,7 @@ public class PDFGenerator {
                 table.addCell(new Cell().add(new Paragraph(String.valueOf(sessionSummary.getSimCount()))).setTextAlignment(TextAlignment.CENTER));
                 table.addCell(new Cell().add(new Paragraph(String.valueOf(sessionSummary.getNaoCount()))).setTextAlignment(TextAlignment.CENTER));
                 DeviceRgb color = sessionSummary.getProgressPercentage() < 64 ? redColor : sessionSummary.getProgressPercentage() < 86 ? yellowColor : greenColor;
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(sessionSummary.getProgressPercentage() + "%"))).setBackgroundColor(color).setTextAlignment(TextAlignment.CENTER));
+                table.addCell(new Cell().add(new Paragraph(sessionSummary.getProgressPercentage() + "%")).setBackgroundColor(color).setTextAlignment(TextAlignment.CENTER));
             }
 
             document.add(table);
@@ -205,6 +205,10 @@ public class PDFGenerator {
             DeviceRgb cellColor = new DeviceRgb(0xD9, 0xE1, 0xF2); // Example color for cells
             DeviceRgb whiteColor = new DeviceRgb(0xFF, 0xFF, 0xFF);
 
+            DeviceRgb redColor = new DeviceRgb(0xFF, 0x00, 0x00);
+
+            DeviceRgb yellowColor = new DeviceRgb(0xFF, 0xFF, 0x00);
+            DeviceRgb greenColor = new DeviceRgb(0x00, 0xFF, 0x00);
 
             for (RondaSummary rondaSummary : rondaSummaryList) { // Adjust the column widths
                 Table table = new Table(UnitValue.createPercentArray(columnWidths));
@@ -224,11 +228,12 @@ public class PDFGenerator {
                 table.addCell(new Cell().add(new Paragraph(String.valueOf(rondaSummary.getNuit()))).setBackgroundColor(cellColor));
                 table.addCell(new Cell().add(new Paragraph(rondaSummary.getMentee())).setBackgroundColor(cellColor));
                 table.addCell(new Cell().add(new Paragraph(String.valueOf(rondaSummary.getZeroEvaluation()))).setBackgroundColor(cellColor));
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rondaSummary.getSession1()))).setBackgroundColor(cellColor));
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rondaSummary.getSession2()))).setBackgroundColor(cellColor));
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rondaSummary.getSession3()))).setBackgroundColor(cellColor));
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rondaSummary.getSession4()))).setBackgroundColor(cellColor));
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rondaSummary.getFinalScore()))).setBackgroundColor(cellColor));
+                table.addCell(new Cell().add(new Paragraph(rondaSummary.getSession1() + "%")).setBackgroundColor(cellColor));
+                table.addCell(new Cell().add(new Paragraph(rondaSummary.getSession2() + "%")).setBackgroundColor(cellColor));
+                table.addCell(new Cell().add(new Paragraph(rondaSummary.getSession3() + "%")).setBackgroundColor(cellColor));
+                table.addCell(new Cell().add(new Paragraph(rondaSummary.getSession4() + "%")).setBackgroundColor(cellColor));
+                DeviceRgb color =  rondaSummary.getSession4() < 64 ? redColor :  rondaSummary.getSession4() < 86 ? yellowColor : greenColor;
+                table.addCell(new Cell().add(new Paragraph((int) rondaSummary.getSession4() + "%")).setBackgroundColor(color));
                 table.addCell(new Cell().add(new Paragraph(rondaSummary.getMentor())).setBackgroundColor(cellColor));
                 table.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(cellColor));
 

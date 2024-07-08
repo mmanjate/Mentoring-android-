@@ -27,6 +27,8 @@ import mz.org.csaude.mentoring.service.ronda.RondaService;
 import mz.org.csaude.mentoring.service.ronda.RondaServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
+import mz.org.csaude.mentoring.viewmodel.ronda.RondaVM;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,7 +72,7 @@ public class RondaRestService extends BaseRestService {
 
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, rondas);
                     } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                        Log.e("RondaRestService", e.getMessage(), e);
                     }
                     Toast.makeText(APP.getApplicationContext(), "RONDAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
@@ -160,6 +162,86 @@ public class RondaRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<RondaDTO> call, Throwable t) {
+                Log.i("METADATA LOAD --", t.getMessage(), t);
+                listener.doOnRestErrorResponse(t.getMessage());
+            }
+        });
+    }
+
+    public void restPatchRonda(Ronda ronda, RestResponseListener<Ronda> listener) {
+
+        RondaDTO dto = new RondaDTO(ronda);
+        Call<RondaDTO> rondaCall = syncDataService.patchtRonda(dto);
+        rondaCall.enqueue(new Callback<RondaDTO>() {
+            @Override
+            public void onResponse(Call<RondaDTO> call, Response<RondaDTO> response) {
+                RondaDTO data = response.body();
+                if (response.code() == 201) {
+                    try {
+                        getApplication().getRondaService().savedOrUpdateRonda(ronda);
+
+                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Utilities.parseToList(ronda));
+                    } catch (SQLException  e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    if (response.code() == HttpStatus.BAD_REQUEST) {
+                        // Parse custom error response
+                        try {
+                            Gson gson = new Gson();
+                            MentoringAPIError error = gson.fromJson(response.errorBody().string(), MentoringAPIError.class);
+                            listener.doOnRestErrorResponse(error.getMessage());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        // Handle other error responses
+                        listener.doOnRestErrorResponse(response.message());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RondaDTO> call, Throwable t) {
+                Log.i("METADATA LOAD --", t.getMessage(), t);
+                listener.doOnRestErrorResponse(t.getMessage());
+            }
+        });
+    }
+
+    public void delete(Ronda ronda, RestResponseListener<Ronda> listener) {
+        Call<ResponseBody> rondaCall = syncDataService.delete(ronda.getUuid());
+        rondaCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                ResponseBody data = response.body();
+                if (response.code() == 200) {
+                    try {
+                        getApplication().getRondaService().delete(ronda);
+
+                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Utilities.parseToList(ronda));
+                    } catch (SQLException  e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    if (response.code() == HttpStatus.BAD_REQUEST) {
+                        // Parse custom error response
+                        try {
+                            Gson gson = new Gson();
+                            MentoringAPIError error = gson.fromJson(response.errorBody().string(), MentoringAPIError.class);
+                            listener.doOnRestErrorResponse(error.getMessage());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        // Handle other error responses
+                        listener.doOnRestErrorResponse(response.message());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.i("METADATA LOAD --", t.getMessage(), t);
                 listener.doOnRestErrorResponse(t.getMessage());
             }

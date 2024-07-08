@@ -130,13 +130,13 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             return;
         }
 
-        Utilities.displayConfirmationDialog(getRelatedActivity(), "Terminou o preenchimento de todas as Competências desta avaliação, Confirma terminar a mesma?", "SIM", "NÃO",this).show();
+        Utilities.displayCustomConfirmationDialog(getRelatedActivity(), "Terminou o preenchimento de todas as Competências desta avaliação, Confirma terminar a mesma?", "SIM", "NÃO",this).show();
     }
 
     private boolean allQuestionsResponded() {
         for (Map.Entry<SimpleValue, List<FormQuestion>> entry : questionMap.entrySet()) {
             for (FormQuestion question : entry.getValue()) {
-                if (!Utilities.stringHasValue(question.getAnswer().getValue())) return false;
+                if (!Utilities.stringHasValue(question.getAnswer().getValue()) || question.getAnswer().getValue().length() <= 1) return false;
             }
         }
         return true;
@@ -236,20 +236,71 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             if (!isValidPeriod()) return;
             loadQuestion();
             for (Listble listble : categories) {
-                ((SimpleValue) listble).setExtraInfo("0/"+questionMap.get(listble).size());
+                int responded = 0;
+                for (FormQuestion formQuestion : questionMap.get(listble)) {
+                    if (Utilities.stringHasValue(formQuestion.getAnswer().getValue())) responded++;
+                }
+                ((SimpleValue) listble).setExtraInfo(responded+"/"+questionMap.get(listble).size());
             }
             getRelatedActivity().loadCategoryAdapter();
             getRelatedActivity().populateQuestionList();
+            if (mentorship.getId() == null) {
+                doMentorshipInitialSave();
+            }
             setCurrMentorshipStep(CURR_MENTORSHIP_STEP_QUESTION_SELECTION);
         } else if (isQuestionSelectionStep()) {
+            if (!allQuestionsResponded()) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "Tem uma ou mais Competências sem a resposta indicada.").show();
+                return;
+            }
+
             if (this.isMentoringMentorship() && this.mentorship.isPatientEvaluation()) {
                 setCurrMentorshipStep(CURR_MENTORSHIP_STEP_DEMOSTRATION_SELECTION);
-            } else
-            finnalizeMentorship();
+            } else {
+                finnalizeMentorship();
+            }
         } else if (isDemostrationSelectionStep()) {
             finnalizeMentorship();
         }
         notifyPropertyChanged(BR.currMentorshipStep);
+    }
+
+    public void setMentorship(Mentorship mentorship) {
+        this.mentorship = mentorship;
+    }
+
+    public Mentorship getMentorship() {
+        return mentorship;
+    }
+
+    private void doMentorshipInitialSave() {
+        try {
+            for (Map.Entry<SimpleValue, List<FormQuestion>> entry : questionMap.entrySet()) {
+                for (FormQuestion question : entry.getValue()) {
+                    this.mentorship.addAnswer(question.getAnswer());
+                }
+            }
+            if (ronda.isRondaZero()) {
+                this.mentorship.getTutored().setZeroEvaluationDone(true);
+                this.mentorship.getSession().setTutored(this.mentorship.getTutored());
+                this.mentorship.getSession().setStartDate(this.mentorship.getStartDate());
+            } else {
+                this.mentorship.setTutored(this.session.getTutored());
+            }
+
+            if (this.mentorship.getStartDate().before(this.mentorship.getSession().getStartDate())) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "A data de início não pode ser anterior a data de início da sessão.").show();
+                return;
+            }
+
+            this.mentorship.getSession().setForm(this.mentorship.getForm());
+
+            getApplication().getMentorshipService().save(this.mentorship);
+            Log.i("Mentorship initial save", this.mentorship.toString());
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private boolean isValidPeriod() {
@@ -308,6 +359,8 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
         try {
             this.mentorship.setEvaluationType(getApplication().getEvaluationTypeService().getByCode(evaluationType));
             if (!determineIterationNumber()) this.mentorship.setEvaluationType(null);
+            notifyPropertyChanged(BR.consultaEvaluation);
+            notifyPropertyChanged(BR.fichaEvaluation);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -398,7 +451,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     public List<Tutored> getMentees() {
         try {
-            this.tutoreds= getApplication().getTutoredService().getAllOfRondaForZeroEvaluation(this.mentorship.getSession().getRonda());
+            this.tutoreds = getApplication().getTutoredService().getAllOfRondaForZeroEvaluation(this.mentorship.getSession().getRonda());
             for (Tutored tutored :this.tutoreds) {
                 tutored.setListType(Listble.ListTypes.UNDEFINED);
             }
@@ -466,27 +519,54 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
         }
     }
 
+    @Bindable
+    public boolean isConsultaEvaluation() {
+        if (this.mentorship.getEvaluationType() == null) return false;
+        return this.mentorship.getEvaluationType().getCode().equals(EvaluationType.CONSULTA);
+    }
+
+    @Bindable
+    public boolean isFichaEvaluation() {
+        if (this.mentorship.getEvaluationType() == null) return false;
+        return this.mentorship.getEvaluationType().getCode().equals(EvaluationType.FICHA);
+    }
+
     private void loadQuestion() {
         try {
             this.formQuestions = getApplication().getFormQuestionService().getAllOfForm(this.mentorship.getForm(), this.mentorship.getEvaluationType().getCode());
             if (Utilities.listHasElements(this.formQuestions)) {
-                for (FormQuestion formQuestion : formQuestions) {
-                    formQuestion.setAnswer(new Answer());
-                    formQuestion.getAnswer().setQuestion(formQuestion.getQuestion());
-                    formQuestion.getAnswer().setSyncStatus(SyncSatus.PENDING);
-                    formQuestion.getAnswer().setUuid(Utilities.getNewUUID().toString());
-                    formQuestion.getAnswer().setCreatedAt(DateUtilities.getCurrentDate());
-                    formQuestion.getAnswer().setMentorship(this.mentorship);
-                    formQuestion.getAnswer().setForm(this.mentorship.getForm());
-                    formQuestion.getAnswer().setValue("");
-                    //formQuestion.getAnswer().setFormQuestion(formQuestion);
-                    loadQuestionMap(formQuestion,formQuestion.getQuestion().getQuestionsCategory());
+                if (this.mentorship.getId() == null) {
+                    for (FormQuestion formQuestion : formQuestions) {
+                        formQuestion.setAnswer(new Answer());
+                        formQuestion.getAnswer().setQuestion(formQuestion.getQuestion());
+                        formQuestion.getAnswer().setSyncStatus(SyncSatus.PENDING);
+                        formQuestion.getAnswer().setUuid(Utilities.getNewUUID().toString());
+                        formQuestion.getAnswer().setCreatedAt(DateUtilities.getCurrentDate());
+                        formQuestion.getAnswer().setMentorship(this.mentorship);
+                        formQuestion.getAnswer().setForm(this.mentorship.getForm());
+                        formQuestion.getAnswer().setValue("");
+                        loadQuestionMap(formQuestion, formQuestion.getQuestion().getQuestionsCategory());
+                    }
+                } else {
+                    for (FormQuestion formQuestion : formQuestions) {
+                        formQuestion.setAnswer(getRelatedAnswer(formQuestion));
+                        loadQuestionMap(formQuestion, formQuestion.getQuestion().getQuestionsCategory());
+                    }
                 }
                 setCurrQuestionCategory(this.questionMap.firstKey());
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Answer getRelatedAnswer(FormQuestion formQuestion) {
+        for (Answer answer : this.mentorship.getAnswers()) {
+            if (answer.getQuestion().equals(formQuestion.getQuestion())) {
+                return answer;
+            }
+        }
+        return null;
     }
 
 
@@ -533,8 +613,12 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     @Override
     public void doOnConfirmed() {
-        doSaveMentorship();
-        showMentorshipSummary();
+        if (allQuestionsResponded()) {
+            doSaveMentorship();
+            showMentorshipSummary();
+        } else {
+            doMentorshipStateSave();
+        }
     }
 
     private void showMentorshipSummary() {
@@ -542,11 +626,13 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     private void doSaveMentorship() {
         try {
+            this.mentorship.getAnswers().clear();
             for (Map.Entry<SimpleValue, List<FormQuestion>> entry : questionMap.entrySet()) {
                 for (FormQuestion question : entry.getValue()) {
                     this.mentorship.addAnswer(question.getAnswer());
                 }
             }
+
             this.mentorship.setEndDate(DateUtilities.getCurrentDate());
             if (ronda.isRondaZero()) {
                 this.mentorship.getTutored().setZeroEvaluationDone(true);
@@ -649,7 +735,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
     @Override
     public void doOnDeny() {
-
+        getRelatedActivity().onBackPressed();
     }
 
     public void setQuestionAnswer(FormQuestion formQuestion, String answerValue) {
@@ -696,5 +782,32 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     public void setDemostrationMade(boolean demonstrationMade) {
         this.mentorship.setDemonstration(demonstrationMade);
         notifyPropertyChanged(BR.demostrationMade);
+    }
+
+    private void doMentorshipStateSave() {
+        try {
+            this.mentorship.getAnswers().clear();
+            for (Map.Entry<SimpleValue, List<FormQuestion>> entry : questionMap.entrySet()) {
+                for (FormQuestion question : entry.getValue()) {
+                    this.mentorship.addAnswer(question.getAnswer());
+                }
+            }
+            getApplication().getMentorshipService().save(this.mentorship);
+            Log.i("Mentorship state save", this.mentorship.toString());
+            getRelatedActivity().onBackPressed();
+        } catch (SQLException e) {
+            Log.e("MentorshipVM", e.getMessage());
+        }
+    }
+
+    public void tryToUpdateMentorship() {
+        Utilities.displayConfirmationDialog(getRelatedActivity(), "Deseja gravar as alterações do preenchimento desta a avaliação?", "SIM", "NÃO", this).show();
+    }
+
+    @Override
+    public void doOnConfirmed(String value) {
+        Log.i("MentorshipVM", value);
+
+        doSaveMentorship();
     }
 }

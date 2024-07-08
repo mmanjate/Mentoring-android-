@@ -20,10 +20,12 @@
     <color name="red_light">#F61909</color>
     <color name="red">#C11508</color>
     <color name="input_labels">#6E6E6E</color>
+    <color name="light_grey">#E0E0E0</color>
 
     <color name="input_border">#1D6B8F</color>
 
     <color name="spinner_back_color">#DFEAF7</color>
 
     <color name="logo">#01226D</color>
+    <color name="orange">#FF9800</color>
 </resources>

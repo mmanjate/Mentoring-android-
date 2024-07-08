@@ -6,6 +6,10 @@
         <variable
             name="mentorship"
             type="mz.org.csaude.mentoring.model.mentorship.Mentorship" />
+        <variable
+            name="viewModel"
+            type="mz.org.csaude.mentoring.viewmodel.mentorship.AbstractSearchMentorshipVM" />
+        <import type="mz.org.csaude.mentoring.util.SyncSatus"/>
 
         <import type="mz.org.csaude.mentoring.util.Utilities"/>
         <import type="mz.org.csaude.mentoring.util.DateUtilities"/>
@@ -78,6 +82,48 @@
                     android:text="@{DateUtilities.formatToDDMMYYYY(mentorship.performedDate)}"
                    />
             </LinearLayout>
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dimen_5dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/edit"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="end"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:onClick="@{()-> viewModel.edit(mentorship)}"
+                android:scaleType="fitXY"
+                android:src="@drawable/baseline_edit_square_24"
+                android:visibility="@{(!mentorship.completed &amp;&amp; mentorship.syncStatus == SyncSatus.PENDING) ? View.VISIBLE : View.GONE}"
+                android:layout_marginRight="@dimen/dimen_2dp"/>
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="end"
+                android:scaleType="fitXY"
+                android:src="@drawable/baseline_delete_forever_24"
+                android:onClick="@{()-> viewModel.delete(mentorship)}"
+                android:visibility="@{(!mentorship.completed &amp;&amp; mentorship.syncStatus == SyncSatus.PENDING) ? View.VISIBLE : View.GONE}"
+                android:layout_marginRight="@dimen/dimen_2dp"/>
+            <ImageView
+                android:id="@+id/sync"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="end"
+                android:scaleType="fitXY"
+                android:src="@drawable/baseline_cloud_done_24"
+                android:visibility="@{mentorship.pending ? View.GONE : View.VISIBLE}"
+                android:layout_marginRight="@dimen/dimen_2dp"/>
+
+        </LinearLayout>
 
         </LinearLayout>
 

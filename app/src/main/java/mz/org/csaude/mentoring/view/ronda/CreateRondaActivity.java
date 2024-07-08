@@ -34,6 +34,7 @@ import mz.org.csaude.mentoring.model.rondatype.RondaType;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.RondaTypeEnum;
+import mz.org.csaude.mentoring.util.SimpleValue;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.viewmodel.ronda.RondaVM;
 
@@ -42,6 +43,7 @@ public class CreateRondaActivity extends BaseActivity {
     private ListableSpinnerAdapter districtAdapter;
     private ListableSpinnerAdapter provinceAdapter;
     private ListableSpinnerAdapter healthFacilityAdapter;
+    private ListableSpinnerAdapter mentorTypeAdapter;
     private RecyclerView rcvSelectedMentees;
     private TutoredAdapter tutoredAdapter;
     private String title;
@@ -54,8 +56,6 @@ public class CreateRondaActivity extends BaseActivity {
         rondaBinding = DataBindingUtil.setContentView(this, R.layout.activity_ronda);
         rondaBinding.setViewModel(getRelatedViewModel());
 
-
-
         rcvSelectedMentees = rondaBinding.rcvSelectedMentees;
         setSupportActionBar(rondaBinding.toolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,10 +63,17 @@ public class CreateRondaActivity extends BaseActivity {
         Intent intent = this.getIntent();
         if(intent!=null && intent.getExtras()!=null) {
             title = (String) intent.getExtras().get("title");
-            rondaTypeOption = (RondaType) intent.getExtras().get("rondaType");
+            if (getApplicationStep().isApplicationstepCreate()) {
+                rondaTypeOption = (RondaType) intent.getExtras().get("rondaType");
+                getRelatedViewModel().getRonda().setRondaType(rondaTypeOption);
+            } else {
+                Ronda ronda = (Ronda) intent.getExtras().get("ronda");
+                getRelatedViewModel().setRonda(ronda);
+                getRelatedViewModel().initRondaEdition();
+            }
         }
 
-        getRelatedViewModel().getRonda().setRondaType(rondaTypeOption);
+
 
         getSupportActionBar().setTitle(title);
         initAdapters();
@@ -137,6 +144,12 @@ public class CreateRondaActivity extends BaseActivity {
 
     private void initAdapters(){
         try {
+            List<SimpleValue> mentorTypes = new ArrayList<>();
+            mentorTypes.add(new SimpleValue(1, "Interno"));
+            mentorTypes.add(new SimpleValue(2, "Externo"));
+            mentorTypeAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, mentorTypes);
+            rondaBinding.spnMentorType.setAdapter(mentorTypeAdapter);
+
             List<Province> provinces = getRelatedViewModel().getAllProvince();
             provinceAdapter = new ListableSpinnerAdapter(this, R.layout.simple_auto_complete_item, provinces);
             rondaBinding.spnProvince.setAdapter(provinceAdapter);

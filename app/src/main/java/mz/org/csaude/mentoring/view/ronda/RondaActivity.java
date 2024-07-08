@@ -44,12 +44,13 @@ public class RondaActivity extends BaseActivity {
             setUpToolbar(getRelatedViewModel().getTitle());
             //getRelatedViewModel().initSearch();
         }
+        getRelatedViewModel().initSearch();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getRelatedViewModel().initSearch();
+        //getRelatedViewModel().initSearch();
     }
 
     @Override

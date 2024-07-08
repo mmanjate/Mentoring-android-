@@ -252,7 +252,9 @@
                                         android:id="@+id/rd_consulta"
                                         android:layout_weight="2"
                                         android:layout_width="@dimen/dimen_0dp"
+                                        android:enabled="@{viewModel.currentStep.applicationstepCreate}"
                                         android:layout_height="wrap_content"
+                                        android:checked="@{viewModel.consultaEvaluation}"
                                         android:onClick='@{()->viewModel.setEvaluationType(EvaluationType.CONSULTA)}'
                                         android:text="Consulta" />
 
@@ -260,7 +262,9 @@
                                         android:id="@+id/rdOnline"
                                         android:layout_weight="2"
                                         android:layout_width="@dimen/dimen_0dp"
+                                        android:enabled="@{viewModel.currentStep.applicationstepCreate}"
                                         android:layout_height="wrap_content"
+                                        android:checked="@{viewModel.fichaEvaluation}"
                                         android:onClick='@{()->viewModel.setEvaluationType(EvaluationType.FICHA)}'
                                         android:text="Ficha" />
                                 </RadioGroup>

@@ -27,6 +27,7 @@ import mz.org.csaude.mentoring.model.session.SessionRecommendedResource;
 import mz.org.csaude.mentoring.model.session.SessionSummary;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
+import mz.org.csaude.mentoring.util.Utilities;
 
 public class SessionServiceImpl extends BaseServiceImpl<Session> implements SessionService{
 
@@ -54,7 +55,7 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
     public Session save(Session record) throws SQLException {
         TransactionManager.callInTransaction(getDataBaseHelper().getConnectionSource(), (Callable<Void>) () -> {
             this.sessionDAO.create(record);
-            if(record.getMentorships()!=null) {
+            if (Utilities.listHasElements(record.getMentorships())) {
                 for (Mentorship mentorship : record.getMentorships()) {
                     Form form = getApplication().getFormService().getByuuid(mentorship.getForm().getUuid());
                     mentorship.setForm(form);

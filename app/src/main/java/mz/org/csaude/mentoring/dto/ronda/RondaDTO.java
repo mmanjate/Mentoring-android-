@@ -26,6 +26,8 @@ public class RondaDTO extends BaseEntityDTO {
     private String description;
     private Date startDate;
     private Date endDate;
+
+    private String mentorType;
     @JsonProperty(value = "rondaTypeDTO")
     private RondaTypeDTO rondaType;
     private HealthFacilityDTO healthFacility;
@@ -35,6 +37,7 @@ public class RondaDTO extends BaseEntityDTO {
         super(ronda);
         this.setDescription(ronda.getDescription());
         this.setStartDate(ronda.getStartDate());
+        this.setMentorType(ronda.getMentorType());
         if(ronda.getEndDate()!=null) {
             this.setEndDate(ronda.getEndDate());
         }
@@ -57,6 +60,14 @@ public class RondaDTO extends BaseEntityDTO {
             this.setRondaMentors(rondaMentorDTOS);
         }
 
+    }
+
+    public String getMentorType() {
+        return mentorType;
+    }
+
+    public void setMentorType(String mentorType) {
+        this.mentorType = mentorType;
     }
 
     public String getDescription() {
@@ -123,6 +134,7 @@ public class RondaDTO extends BaseEntityDTO {
         ronda.setCreatedAt(this.getCreatedAt());
         ronda.setUpdatedAt(this.getUpdatedAt());
         ronda.setLifeCycleStatus(this.getLifeCycleStatus());
+        ronda.setMentorType(this.getMentorType());
         if(this.getHealthFacility()!=null) {
             ronda.setHealthFacility(this.getHealthFacility().getHealthFacilityObj());
         }

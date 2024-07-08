@@ -25,7 +25,7 @@
     <style name="input_labels">
         <item name="android:textColor">@color/input_labels</item>
         <item name="android:typeface">sans</item>
-        <item name="android:textSize">@dimen/dimen_10dp</item>
+        <item name="android:textSize">@dimen/dimen_12dp</item>
         <item name="android:padding">@dimen/dimen_4dp</item>
         <item name="android:layout_marginBottom">@dimen/dimen_6dp</item>
     </style>

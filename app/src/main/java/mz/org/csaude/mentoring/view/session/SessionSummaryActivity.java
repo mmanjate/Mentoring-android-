@@ -46,7 +46,7 @@ public class SessionSummaryActivity extends BaseActivity {
         setSupportActionBar(binding.toolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Fecho da Sessão");
+        getSupportActionBar().setTitle("Resumo");
 
         getRelatedViewModel().generateSessionSummary();
 

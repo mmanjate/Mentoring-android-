@@ -10,4 +10,6 @@ import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 public interface RondaMenteeDAO extends MentoringBaseDao<RondaMentee, Integer> {
 
     List<RondaMentee> getAllOfRonda(Ronda ronda) throws SQLException;
+
+    void deleteByRonda(Ronda ronda) throws SQLException;
 }

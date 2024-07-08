@@ -78,9 +78,13 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
             ronda.setRondaType(rondaType);
             this.rondaDAO.createOrUpdate(ronda);
 
+            this.rondaMentorDAO.deleteByRonda(ronda);
+            this.rondaMenteeDAO.deleteByRonda(ronda);
+
             for (RondaMentor rondaMentor: ronda.getRondaMentors()) {
                 rondaMentor.setRonda(ronda);
                 rondaMentor.setSyncStatus(ronda.getSyncStatus());
+                rondaMentor.setStartDate(ronda.getStartDate());
 
                 Tutor mentor = this.tutorDAO.getByUuid(rondaMentor.getTutor().getUuid());
                 if(mentor!=null) {
@@ -92,6 +96,7 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
             for (RondaMentee rondaMentee: ronda.getRondaMentees()) {
                 rondaMentee.setRonda(ronda);
                 rondaMentee.setSyncStatus(ronda.getSyncStatus());
+                rondaMentee.setStartDate(ronda.getStartDate());
 
                 Tutored mentee = this.tutoredDao.getByUuid(rondaMentee.getTutored().getUuid());
                 if(mentee!=null) {
@@ -230,7 +235,13 @@ public class RondaServiceImpl extends BaseServiceImpl<Ronda> implements RondaSer
 
     @Override
     public int delete(Ronda record) throws SQLException {
-        return this.rondaDAO.delete(record);
+        TransactionManager.callInTransaction(getDataBaseHelper().getConnectionSource(), (Callable<Void>) () -> {
+            this.rondaMentorDAO.deleteByRonda(record);
+            this.rondaMenteeDAO.deleteByRonda(record);
+            this.rondaDAO.delete(record);
+            return null;
+        });
+        return record.getId();
     }
 
     @Override

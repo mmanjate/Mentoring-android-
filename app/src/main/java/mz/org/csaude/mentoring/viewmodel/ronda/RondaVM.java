@@ -248,8 +248,13 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
         try {
             if (!isValid()) return;
 
-            ronda.setSyncStatus(SyncSatus.PENDING);
-            ronda.setUuid(Utilities.getNewUUID().toString());
+
+            ronda.setSyncStatus(SyncSatus.SENT);
+            if (!getApplication().getApplicationStep().isApplicationStepEdit()) {
+                ronda.setUuid(Utilities.getNewUUID().toString());
+                this.ronda.setCreatedAt(DateUtilities.getCurrentDate());
+                this.ronda.setLifeCycleStatus(LifeCycleStatus.ACTIVE);
+            }
             ronda.setStartDate(this.getStartDate());
             ronda.setHealthFacility(this.selectedHealthFacility);
             int count = getApplication().getRondaService().countRondas();
@@ -259,7 +264,7 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
             for (Tutored tutored : this.getSelectedMentees()) {
                 RondaMentee rondaMentee = new RondaMentee();
                 rondaMentee.setUuid(Utilities.getNewUUID().toString());
-                rondaMentee.setSyncStatus(SyncSatus.PENDING);
+                rondaMentee.setSyncStatus(SyncSatus.SENT);
                 rondaMentee.setCreatedAt(DateUtilities.getCurrentDate());
                 rondaMentee.setTutored(tutored);
                 rondaMentee.setStartDate(this.getStartDate());
@@ -269,16 +274,16 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
             List<RondaMentor> rondaMentors = new ArrayList<>();
             Tutor tutor = this.getApplication().getCurrMentor();
             RondaMentor rondaMentor = new RondaMentor();
-            rondaMentor.setUuid(Utilities.getNewUUID().toString());
-            rondaMentor.setSyncStatus(SyncSatus.PENDING);
-            rondaMentor.setCreatedAt(DateUtilities.getCurrentDate());
+            if (!getApplication().getApplicationStep().isApplicationStepEdit()) {
+                rondaMentor.setUuid(Utilities.getNewUUID().toString());
+                rondaMentor.setCreatedAt(DateUtilities.getCurrentDate());
+                rondaMentor.setStartDate(this.getStartDate());
+            }
+            rondaMentor.setSyncStatus(SyncSatus.SENT);
             rondaMentor.setTutor(tutor);
-            rondaMentor.setStartDate(this.getStartDate());
             rondaMentors.add(rondaMentor);
             this.ronda.setRondaMentees(rondaMentees);
             this.ronda.setRondaMentors(rondaMentors);
-            this.ronda.setCreatedAt(DateUtilities.getCurrentDate());
-            this.ronda.setLifeCycleStatus(LifeCycleStatus.ACTIVE);
             String error = this.ronda.validade();
             if (Utilities.stringHasValue(error)) {
                 Utilities.displayAlertDialog(getRelatedActivity(), error).show();
@@ -387,7 +392,11 @@ public class RondaVM extends BaseViewModel implements RestResponseListener<Ronda
 
     @Override
     public void doOnResponse(String flag, List<Ronda> objects) {
-        getRelatedActivity().nextActivityFinishingCurrent(RondaActivity.class);
+        Map<String, Object> params = new HashMap<>();
+        params.put("rondaType", objects.get(0).getRondaType());
+        params.put("title", objects.get(0).isRondaZero() ? "Ronda Zero" : "Ronda de Mentoria");
+        getApplication().getApplicationStep().changeToList();
+        getRelatedActivity().nextActivityFinishingCurrent(RondaActivity.class, params);
     }
 
     public void initRondaEdition() {

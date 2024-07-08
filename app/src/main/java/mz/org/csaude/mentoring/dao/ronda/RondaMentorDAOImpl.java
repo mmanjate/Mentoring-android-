@@ -1,5 +1,6 @@
 package mz.org.csaude.mentoring.dao.ronda;
 
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -30,6 +31,13 @@ public class RondaMentorDAOImpl extends MentoringBaseDaoImpl<RondaMentor, Intege
 
     @Override
     public void deleteByRonda(Ronda ronda) throws SQLException {
-        this.deleteBuilder().where().eq(RondaMentor.COLUMN_RONDA, ronda.getId()).query();
+        // Prepare the delete statement
+        DeleteBuilder<RondaMentor, Integer> deleteBuilder = this.deleteBuilder();
+
+        // Add the condition for the deletion
+        deleteBuilder.where().eq(RondaMentor.COLUMN_RONDA, ronda.getId());
+
+        // Execute the delete operation
+        deleteBuilder.delete();
     }
 }

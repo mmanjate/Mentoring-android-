@@ -66,7 +66,11 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
                 rondaDAO.update(record.getSession().getRonda());
             }
             if (record.getSession().getRonda().isRondaZero()) {
-                sessionDAO.create(record.getSession());
+                if (record.getSession().getId() == null) {
+                    sessionDAO.create(record.getSession());
+                } else {
+                    sessionDAO.update(record.getSession());
+                }
             } else if (record.getSession().isCompleted()) {
                 sessionDAO.update(record.getSession());
             }

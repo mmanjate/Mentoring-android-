@@ -28,6 +28,7 @@ import mz.org.csaude.mentoring.service.ronda.RondaServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.viewmodel.ronda.RondaVM;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -202,6 +203,45 @@ public class RondaRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<RondaDTO> call, Throwable t) {
+                Log.i("METADATA LOAD --", t.getMessage(), t);
+                listener.doOnRestErrorResponse(t.getMessage());
+            }
+        });
+    }
+
+    public void delete(Ronda ronda, RestResponseListener<Ronda> listener) {
+        Call<ResponseBody> rondaCall = syncDataService.delete(ronda.getUuid());
+        rondaCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                ResponseBody data = response.body();
+                if (response.code() == 200) {
+                    try {
+                        getApplication().getRondaService().delete(ronda);
+
+                        listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Utilities.parseToList(ronda));
+                    } catch (SQLException  e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    if (response.code() == HttpStatus.BAD_REQUEST) {
+                        // Parse custom error response
+                        try {
+                            Gson gson = new Gson();
+                            MentoringAPIError error = gson.fromJson(response.errorBody().string(), MentoringAPIError.class);
+                            listener.doOnRestErrorResponse(error.getMessage());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        // Handle other error responses
+                        listener.doOnRestErrorResponse(response.message());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.i("METADATA LOAD --", t.getMessage(), t);
                 listener.doOnRestErrorResponse(t.getMessage());
             }

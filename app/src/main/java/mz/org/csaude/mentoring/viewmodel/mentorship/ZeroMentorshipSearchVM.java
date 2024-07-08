@@ -54,6 +54,7 @@ public class ZeroMentorshipSearchVM extends AbstractSearchMentorshipVM {
         Map<String, Object> params = new HashMap<>();
         params.put("ronda", ronda);
         params.put("CURR_MENTORSHIP_STEP", MentorshipVM.CURR_MENTORSHIP_STEP_TABLE_SELECTION);
+        getCurrentStep().changetocreate();
         getRelatedActivity().nextActivity(CreateMentorshipActivity.class, params);
     }
 

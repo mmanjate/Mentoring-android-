@@ -15,6 +15,7 @@ import java.util.Map;
 import mz.org.csaude.mentoring.base.searchparams.AbstractSearchParams;
 import mz.org.csaude.mentoring.base.viewModel.SearchVM;
 import mz.org.csaude.mentoring.listner.dialog.IDialogListener;
+import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.ronda.RondaMentee;
 import mz.org.csaude.mentoring.model.ronda.RondaSummary;
@@ -30,7 +31,7 @@ import mz.org.csaude.mentoring.view.ronda.RondaActivity;
 import mz.org.csaude.mentoring.view.session.SessionActivity;
 import mz.org.csaude.mentoring.view.session.SessionListActivity;
 
-public class RondaSearchVM extends SearchVM<Ronda> implements IDialogListener {
+public class RondaSearchVM extends SearchVM<Ronda> implements IDialogListener, ServerStatusListener {
     private RondaType rondaType;
 
     private String title;
@@ -43,7 +44,7 @@ public class RondaSearchVM extends SearchVM<Ronda> implements IDialogListener {
 
     @Override
     protected void doOnNoRecordFound() {
-
+        getRelatedActivity().populateRecyclerView();
     }
 
     @Override
@@ -197,16 +198,31 @@ public class RondaSearchVM extends SearchVM<Ronda> implements IDialogListener {
 
     @Override
     public void doOnConfirmed() {
-        try {
-            getApplication().getRondaService().delete(selectedRonda);
-            initSearch();
-        } catch (SQLException e) {
-            Log.e("Ronda Search VM", "Exception: " + e.getMessage());
-        }
+        getApplication().getApplicationStep().changeToRemove();
+        getApplication().isServerOnline(this);
     }
 
     @Override
     public void doOnDeny() {
 
+    }
+
+    @Override
+    public void onServerStatusChecked(boolean isOnline) {
+
+        if (isOnline) {
+            if (getApplication().getApplicationStep().isApplicationStepRemove()) {
+                getApplication().getRondaRestService().delete(selectedRonda, this);
+            }
+        }
+    }
+
+    @Override
+    public void doOnResponse(String flag, List<Ronda> objects) {
+        if (getApplication().getApplicationStep().isApplicationStepRemove()) {
+            getApplication().getApplicationStep().changeToList();
+            Utilities.displayAlertDialog(getRelatedActivity(), "Ronda removida com sucesso.").show();
+            initSearch();
+        }
     }
 }

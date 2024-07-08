@@ -113,15 +113,6 @@ public class CreateMentorshipActivity extends BaseActivity implements ClickListe
         mentorshipBinding.sessionStartTime.setOnClickListener(view -> {
             showTimePickerDialog(mentorshipBinding.sessionStartTime);
         });
-
-        /*mentorshipBinding.sessionEndTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    showTimePickerDialog(mentorshipBinding.sessionEndTime);
-                }
-            }
-        });*/
     }
 
     private void showTimePickerDialog(EditText viewTe) {
@@ -231,12 +222,12 @@ public class CreateMentorshipActivity extends BaseActivity implements ClickListe
         mentorshipBinding.rcvQuestions.setAdapter(questionAdapter);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // Handle the back button click
-                onBackPressed();
+                getRelatedViewModel().tryToUpdateMentorship();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

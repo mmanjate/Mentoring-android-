@@ -37,6 +37,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -171,7 +172,7 @@ public interface SyncDataService {
     Call<RondaDTO> postRonda(@Body RondaDTO rondaDTO);
 
 
-    @POST("/ronda/update")
+    @PATCH("/ronda/update")
     Call<RondaDTO> patchtRonda(@Body RondaDTO rondaDTO);
 
     @GET("/resources/getAll")
@@ -179,4 +180,7 @@ public interface SyncDataService {
 
     @GET("/resources/load")
     Call<ResponseBody> downloadFile(@Query("fileName") String fileName);
+
+    @DELETE("/ronda/delete")
+    Call<ResponseBody> delete(@Query("uuid") String uuid);
 }

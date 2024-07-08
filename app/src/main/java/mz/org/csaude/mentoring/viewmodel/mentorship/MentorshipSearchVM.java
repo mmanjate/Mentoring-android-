@@ -78,6 +78,7 @@ public class MentorshipSearchVM extends AbstractSearchMentorshipVM {
             Map<String, Object> params = new HashMap<>();
             params.put("session", session);
             params.put("CURR_MENTORSHIP_STEP", MentorshipVM.CURR_MENTORSHIP_STEP_PERIOD_SELECTION);
+            getCurrentStep().changetocreate();
             getRelatedActivity().nextActivity(CreateMentorshipActivity.class, params);
         } else {
             Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível criar mais de 4 avaliações para o mentorando(a) "+this.session.getTutored().getEmployee().getFullName()).show();

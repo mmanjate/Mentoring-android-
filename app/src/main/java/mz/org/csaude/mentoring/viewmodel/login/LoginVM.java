@@ -19,6 +19,7 @@ import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.user.UserService;
 import mz.org.csaude.mentoring.service.user.UserSyncService;
+import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.view.home.MainActivity;
 import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
@@ -81,6 +82,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
                 getApplication().isServerOnline(this);
             }
             getApplication().saveDefaultSyncSettings();
+            getApplication().saveDefaultLastSyncDate(DateUtilities.getCurrentDate());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -129,6 +131,7 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
                             WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(downloadMentorData.getId()).observe(getRelatedActivity(), info -> {
                                 if (info.getState() == WorkInfo.State.SUCCEEDED) {
                                     getApplication().setInitialSetUpComplete();
+                                    getApplication().saveDefaultLastSyncDate(DateUtilities.getCurrentDate());
                                     goHome();
                                 }
                             });

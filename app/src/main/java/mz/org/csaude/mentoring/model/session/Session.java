@@ -1,5 +1,6 @@
 package mz.org.csaude.mentoring.model.session;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -88,7 +89,7 @@ public class Session extends BaseModel {
         this.setPerformedDate(sessionDTO.getPerformedDate());
         this.setPointsToImprove(sessionDTO.getPointsToImprove());
         this.setStrongPoints(sessionDTO.getStrongPoints());
-        this.setObsevations(sessionDTO.getObsevations());
+        this.setObservations(sessionDTO.getObservations());
         if(sessionDTO.getSessionStatus()!=null) {
             this.setStatus(new SessionStatus(sessionDTO.getSessionStatus()));
         }
@@ -180,6 +181,7 @@ public class Session extends BaseModel {
         this.form = form;
     }
 
+    @JsonIgnore
     public boolean isCompleted() {
         return this.status.isCompleted();
     }
@@ -242,11 +244,11 @@ public class Session extends BaseModel {
         this.workPlan = workPlan;
     }
 
-    public String getObsevations() {
+    public String getObservations() {
         return obsevations;
     }
 
-    public void setObsevations(String obsevations) {
+    public void setObservations(String obsevations) {
         this.obsevations = obsevations;
     }
 

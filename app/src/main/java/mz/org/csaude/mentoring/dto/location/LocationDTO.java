@@ -9,7 +9,6 @@ import mz.org.csaude.mentoring.model.location.Province;
 
 public class LocationDTO extends BaseEntityDTO {
 
-    private String uuid;
     private EmployeeDTO employeeDTO;
     private ProvinceDTO provinceDTO;
     private DistrictDTO districtDTO;
@@ -24,7 +23,7 @@ public class LocationDTO extends BaseEntityDTO {
         this.setLocationLevel(location.getLocationLevel());
        if(location.getProvince() != null) this.setProvinceDTO(new ProvinceDTO((Province) location.getProvince()));
        if(location.getDistrict() != null) this.setDistrictDTO(new DistrictDTO((District) location.getDistrict()));
-        this.setHealthFacilityDTO(new HealthFacilityDTO((HealthFacility) location.getHealthFacility()));
+       if(location.getHealthFacility()!=null)  this.setHealthFacilityDTO(new HealthFacilityDTO(location.getHealthFacility()));
 
     }
 
@@ -71,8 +70,6 @@ public class LocationDTO extends BaseEntityDTO {
     public Location getLocation() {
         Location location = new Location();
         location.setUuid(this.getUuid());
-        location.setCreatedAt(this.getCreatedAt());
-        location.setUpdatedAt(this.getUpdatedAt());
         if(this.getEmployeeDTO()!=null) {
             location.setEmployee(this.employeeDTO.getEmployee());
         }

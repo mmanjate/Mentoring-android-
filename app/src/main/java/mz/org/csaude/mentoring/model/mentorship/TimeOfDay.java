@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.mentorship.TimeOfDayDAOImpl;
+import mz.org.csaude.mentoring.dto.mentorship.TimeOfDayDTO;
 
 @Data
 @DatabaseTable(tableName = TimeOfDay.TABLE_NAME, daoClass = TimeOfDayDAOImpl.class)
@@ -32,7 +33,13 @@ public class TimeOfDay extends BaseModel {
         this.description = description;
         this.code = code;
     }
+    public TimeOfDay(TimeOfDayDTO timeOfDayDTO) {
+        super(timeOfDayDTO);
+        this.setCode(timeOfDayDTO.getCode());
+        this.setDescription(timeOfDayDTO.getDescription());
+    }
 
+    @Override
     public String getDescription() {
         return description;
     }

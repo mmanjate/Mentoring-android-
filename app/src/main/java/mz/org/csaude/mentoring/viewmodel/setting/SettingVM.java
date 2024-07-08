@@ -115,4 +115,40 @@ public class SettingVM extends BaseViewModel {
         this.metadataSyncTime = Integer.parseInt(metadataSyncTime);
         this.notifyPropertyChanged(BR.metadataSyncTime);
     }
+
+    public void increaseMetadataSyncTime() {
+        if(metadataSyncTime<24) {
+            metadataSyncTime++;
+            notifyPropertyChanged(BR.metadataSyncTime);
+            saveMetadataSyncTime();
+            getMetadataSyncTime();
+        }
+    }
+
+    public void decreaseMetadataSyncTime() {
+        if(metadataSyncTime>1) {
+            metadataSyncTime--;
+            notifyPropertyChanged(BR.metadataSyncTime);
+            saveMetadataSyncTime();
+            getMetadataSyncTime();
+        }
+    }
+
+    public void increaseSessionSyncTime() {
+        if(sessionSyncTime<24) {
+            sessionSyncTime++;
+            notifyPropertyChanged(BR.sessionSyncTime);
+            saveSessionSyncTime();
+            getSessionSyncTime();
+        }
+    }
+
+    public void decreaseSessionSyncTime() {
+        if(sessionSyncTime>1) {
+            sessionSyncTime--;
+            notifyPropertyChanged(BR.sessionSyncTime);
+            saveSessionSyncTime();
+            getSessionSyncTime();
+        }
+    }
 }

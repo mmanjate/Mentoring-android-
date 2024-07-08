@@ -19,6 +19,8 @@ import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
+import mz.org.csaude.mentoring.model.ronda.RondaMentee;
+import mz.org.csaude.mentoring.model.ronda.RondaMentor;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
@@ -132,7 +134,9 @@ public class RondaRestService extends BaseRestService {
                 RondaDTO data = response.body();
                 if (response.code() == 201) {
                     try {
-                        getApplication().getRondaService().savedOrUpdateRonda(ronda);
+                        Ronda ronda1 = data.getRonda();
+                        ronda1.setSyncStatus(ronda.getSyncStatus());
+                        getApplication().getRondaService().savedOrUpdateRonda(ronda1);
 
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Utilities.parseToList(ronda));
                     } catch (SQLException  e) {

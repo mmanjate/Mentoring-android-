@@ -38,9 +38,9 @@ public class ProgrammaticArea extends BaseModel {
 
     public ProgrammaticArea(ProgrammaticAreaDTO programmaticAreaDTO) {
         super(programmaticAreaDTO);
-        this.description = programmaticAreaDTO.getDescription();
-        this.code = programmaticAreaDTO.getCode();
-        this.name = programmaticAreaDTO.getName();
+        this.setCode(programmaticAreaDTO.getCode());
+        this.setDescription(programmaticAreaDTO.getDescription());
+        this.setName(programmaticAreaDTO.getName());
         if (programmaticAreaDTO.getProgram() != null) this.program = new Program(programmaticAreaDTO.getProgram());
     }
 
@@ -51,6 +51,7 @@ public class ProgrammaticArea extends BaseModel {
         this.program = program;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }

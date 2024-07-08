@@ -13,6 +13,8 @@ public class ResponseTypeDTO extends BaseEntityDTO {
     private String description;
     public ResponseTypeDTO(ResponseType responseType) {
         super(responseType);
+        this.setCode(responseType.getCode());
+        this.setDescription(responseType.getDescription());
     }
 
     public String getCode() {
@@ -33,10 +35,11 @@ public class ResponseTypeDTO extends BaseEntityDTO {
     public ResponseType getResponseType() {
         ResponseType responseType = new ResponseType();
         responseType.setUuid(this.getUuid());
-        responseType.setCode(this.getCode());
-        responseType.setDescription(this.getDescription());
         responseType.setCreatedAt(this.getCreatedAt());
         responseType.setUpdatedAt(this.getUpdatedAt());
+        responseType.setLifeCycleStatus(this.getLifeCycleStatus());
+        responseType.setCode(this.getCode());
+        responseType.setDescription(this.getDescription());
         return responseType;
     }
 }

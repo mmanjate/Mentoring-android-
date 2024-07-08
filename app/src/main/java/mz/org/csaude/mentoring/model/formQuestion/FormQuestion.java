@@ -60,13 +60,11 @@ public class FormQuestion extends BaseModel {
 
     public FormQuestion(FormQuestionDTO formQuestionDTO) {
         super(formQuestionDTO);
-        this.setMandatory(formQuestionDTO.isMandatory());
-        this.setApplicable(formQuestionDTO.getApplicable());
         this.setSequence(formQuestionDTO.getSequence());
-        this.setQuestion(new Question(formQuestionDTO.getQuestion()));
-        this.setEvaluationType(new EvaluationType(formQuestionDTO.getEvaluationType()));
-        this.setResponseType(new ResponseType(formQuestionDTO.getResponseType()));
-        this.setForm(new Form(formQuestionDTO.getForm()));
+        if(formQuestionDTO.getQuestion()!=null)  this.setQuestion(new Question(formQuestionDTO.getQuestion()));
+        if(formQuestionDTO.getEvaluationType()!=null) this.setEvaluationType(new EvaluationType(formQuestionDTO.getEvaluationType()));
+        if(formQuestionDTO.getResponseType()!=null) this.setResponseType(new ResponseType(formQuestionDTO.getResponseType()));
+        if(formQuestionDTO.getForm()!=null) this.setForm(new Form(formQuestionDTO.getForm()));
     }
 
     public Form getForm() {

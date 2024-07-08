@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.program.ProgramDTO;
+import mz.org.csaude.mentoring.model.program.Program;
 import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 @Data
 @NoArgsConstructor
@@ -58,14 +59,15 @@ public class ProgrammaticAreaDTO extends BaseEntityDTO {
 
     public ProgrammaticArea getProgrammaticArea() {
         ProgrammaticArea programmaticArea = new ProgrammaticArea();
-        programmaticArea.setCode(this.getCode());
-        programmaticArea.setDescription(this.getDescription());
-        programmaticArea.setName(this.getName());
         programmaticArea.setUuid(this.getUuid());
         programmaticArea.setCreatedAt(this.getCreatedAt());
         programmaticArea.setUpdatedAt(this.getUpdatedAt());
+        programmaticArea.setLifeCycleStatus(this.getLifeCycleStatus());
+        programmaticArea.setCode(this.getCode());
+        programmaticArea.setDescription(this.getDescription());
+        programmaticArea.setName(this.getName());
         if(this.getProgram()!=null) {
-            programmaticArea.setProgram(this.program.getProgram());
+            programmaticArea.setProgram(new Program(this.getProgram()));
         }
         return programmaticArea;
     }

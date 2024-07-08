@@ -53,9 +53,25 @@
                 android:text="Tempo de Sincronização de Sessões (horas)"
                 style="@style/input_labels"
                 />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_4dp"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="3dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_drop_down_24"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_shape"
+            android:onClick="@{()->viewModel.decreaseSessionSyncTime()}"
+            android:layout_weight="1"/>
+
             <EditText
                 android:id="@+id/session_sync_period"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
                 android:inputType="number"
@@ -63,16 +79,45 @@
                 android:text="@={viewModel.sessionSyncTime}"
                 android:onClick="@{()->viewModel.saveSessionSyncTime()}"
                 android:enabled="true"
+                android:gravity="center"
                 style="@style/bottom_border_edit_text_style"/>
+
+        <ImageButton
+            android:layout_width="3dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:src="@drawable/baseline_arrow_drop_up_24"
+            android:onClick="@{()->viewModel.increaseSessionSyncTime()}"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tempo de Sincronização de Metadados (horas)"
                 style="@style/input_labels"
                 />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_4dp"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="3dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_drop_down_24"
+            android:onClick="@{()->viewModel.decreaseMetadataSyncTime()}"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_shape"
+            android:layout_weight="1"/>
+
             <EditText
                 android:id="@+id/metadata_sync_period"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
                 android:inputType="number"
@@ -80,7 +125,19 @@
                 android:text="@={viewModel.metadataSyncTime}"
                 android:onClick="@{()->viewModel.saveMetadataSyncTime()}"
                 android:enabled="true"
+                android:gravity="center"
                 style="@style/bottom_border_edit_text_style"/>
+
+        <ImageButton
+            android:layout_width="3dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:src="@drawable/baseline_arrow_drop_up_24"
+            android:onClick="@{()->viewModel.increaseMetadataSyncTime()}"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
             <Button
                 android:id="@+id/update_credential"

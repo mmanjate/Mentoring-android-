@@ -57,13 +57,13 @@ public class SessionClosureVM extends BaseViewModel {
     }
 
     public void setObsevations(String strongPoints) {
-        session.setObsevations(strongPoints);
+        session.setObservations(strongPoints);
         notifyPropertyChanged(BR.obsevations);
     }
 
     @Bindable
     public String getObsevations() {
-        return session.getObsevations();
+        return session.getObservations();
     }
     @Override
     public SessionClosureActivity getRelatedActivity() {

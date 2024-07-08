@@ -40,8 +40,8 @@ public class Question extends BaseModel {
     public Question(QuestionDTO questionDTO) {
         super(questionDTO);
         this.setCode(questionDTO.getCode());
-        this.setQuestion(questionDTO.getQuestion());
-        this.setQuestionsCategory(new QuestionsCategory(questionDTO.getQuestionCategory()));
+        if(questionDTO.getQuestion()!=null) this.setQuestion(questionDTO.getQuestion());
+        if(questionDTO.getQuestionCategory()!=null) this.setQuestionsCategory(new QuestionsCategory(questionDTO.getQuestionCategory()));
     }
 
     public String getCode() {

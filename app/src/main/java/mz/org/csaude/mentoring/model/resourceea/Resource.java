@@ -6,6 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.resource.ResourceDaoImpl;
+import mz.org.csaude.mentoring.dto.resource.ResourceDTO;
 
 @DatabaseTable(tableName = Resource.TABLE_NAME, daoClass = ResourceDaoImpl.class)
 public class Resource extends BaseModel implements Listble {
@@ -21,6 +22,11 @@ public class Resource extends BaseModel implements Listble {
     }
 
     public Resource() {
+    }
+
+    public Resource(ResourceDTO resourceDTO) {
+        super(resourceDTO);
+        this.setResource(resourceDTO.getResource());
     }
 
     public String getResource() {

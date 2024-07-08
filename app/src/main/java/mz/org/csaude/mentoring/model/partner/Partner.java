@@ -34,8 +34,8 @@ public class Partner extends BaseModel implements Listble {
     }
     public Partner(PartnerDTO partnerDTO) {
         super(partnerDTO);
-        this.name = partnerDTO.getName();
-        this.description = partnerDTO.getDescription();
+        this.setName(partnerDTO.getName());
+        this.setDescription(partnerDTO.getDescription());
     }
     public String getName() {
         return name;

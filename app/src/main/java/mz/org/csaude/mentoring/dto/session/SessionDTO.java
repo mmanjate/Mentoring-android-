@@ -11,7 +11,12 @@ import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.form.FormDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
+import mz.org.csaude.mentoring.model.form.Form;
+import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
+import mz.org.csaude.mentoring.model.session.SessionStatus;
+import mz.org.csaude.mentoring.model.tutored.Tutored;
+
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -29,7 +34,7 @@ public class SessionDTO extends BaseEntityDTO {
     private String strongPoints;
     private String pointsToImprove;
     private String workPlan;
-    private String obsevations;
+    private String observations;
 
     public SessionDTO(Session session) {
         super(session);
@@ -38,7 +43,7 @@ public class SessionDTO extends BaseEntityDTO {
         this.setPerformedDate(session.getPerformedDate());
         this.setPointsToImprove(session.getPointsToImprove());
         this.setStrongPoints(session.getStrongPoints());
-        this.setObsevations(session.getObsevations());
+        this.setObservations(session.getObservations());
         if(session.getStatus()!=null) {
             this.setSessionStatus(new SessionStatusDTO(session.getStatus()));
         }
@@ -109,22 +114,6 @@ public class SessionDTO extends BaseEntityDTO {
         this.mentee = mentee;
     }
 
-    public boolean isDemonstration() {
-        return demonstration;
-    }
-
-    public void setDemonstration(boolean demonstration) {
-        this.demonstration = demonstration;
-    }
-
-    public String getDemonstrationDetails() {
-        return demonstrationDetails;
-    }
-
-    public void setDemonstrationDetails(String demonstrationDetails) {
-        this.demonstrationDetails = demonstrationDetails;
-    }
-
     public String getStrongPoints() {
         return strongPoints;
     }
@@ -149,12 +138,12 @@ public class SessionDTO extends BaseEntityDTO {
         this.workPlan = workPlan;
     }
 
-    public String getObsevations() {
-        return obsevations;
+    public String getObservations() {
+        return observations;
     }
 
-    public void setObsevations(String obsevations) {
-        this.obsevations = obsevations;
+    public void setObservations(String observations) {
+        this.observations = observations;
     }
 
     public String getReason() {
@@ -166,6 +155,29 @@ public class SessionDTO extends BaseEntityDTO {
     }
 
     public Session getSession() {
-        return new Session(this);
+        Session session = new Session();
+        session.setUpdatedAt(this.getUpdatedAt());
+        session.setUuid(this.getUuid());
+        session.setCreatedAt(this.getCreatedAt());
+        session.setLifeCycleStatus(this.getLifeCycleStatus());
+        session.setStartDate(this.getStartDate());
+        session.setEndDate(this.getEndDate());
+        session.setPerformedDate(this.getPerformedDate());
+        session.setPointsToImprove(this.getPointsToImprove());
+        session.setStrongPoints(this.getStrongPoints());
+        session.setObservations(this.getObservations());
+        if(session.getStatus()!=null) {
+            session.setStatus(new SessionStatus(this.getSessionStatus()));
+        }
+        if(session.getForm()!=null) {
+            session.setForm(new Form(this.getForm()));
+        }
+        if(session.getRonda()!=null) {
+            session.setRonda(new Ronda(this.getRonda()));
+        }
+        if(session.getTutored()!=null) {
+            session.setTutored(new Tutored(this.getMentee()));
+        }
+        return session;
     }
 }

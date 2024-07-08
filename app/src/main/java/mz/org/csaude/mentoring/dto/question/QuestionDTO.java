@@ -3,6 +3,8 @@ package mz.org.csaude.mentoring.dto.question;
 import lombok.Data;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.question.Question;
+import mz.org.csaude.mentoring.model.question.QuestionsCategory;
+
 @Data
 public class QuestionDTO extends BaseEntityDTO {
     private String code;
@@ -45,14 +47,13 @@ public class QuestionDTO extends BaseEntityDTO {
     }
     public Question getQuestionObj() {
         Question question = new Question();
-        question.setUuid(this.getUuid());
-        question.setCode(this.getCode());
         question.setQuestion(this.getQuestion());
+        question.setCode(this.getCode());
+        question.setLifeCycleStatus(this.getLifeCycleStatus());
+        question.setUuid(this.getUuid());
         question.setCreatedAt(this.getCreatedAt());
         question.setUpdatedAt(this.getUpdatedAt());
-        if(this.getQuestionCategory()!=null) {
-            question.setQuestionsCategory(this.getQuestionCategory().getQuestionCategory());
-        }
+        if (this.getQuestionCategory()!=null) question.setQuestionsCategory(new QuestionsCategory(this.getQuestionCategory()));
         return question;
     }
 }

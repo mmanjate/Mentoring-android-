@@ -20,6 +20,7 @@ public class FormQuestionDTO extends BaseEntityDTO {
     private EvaluationTypeDTO evaluationType;
     private ResponseTypeDTO responseType;
     private FormDTO form;
+    private String formUuid;
     public FormQuestionDTO() {
 
     }
@@ -36,6 +37,7 @@ public class FormQuestionDTO extends BaseEntityDTO {
             this.setResponseType(new ResponseTypeDTO(formQuestion.getResponseType()));
         }
         if(formQuestion.getForm()!=null) {
+            this.setFormUuid(formQuestion.getForm().getUuid());
             this.setForm(new FormDTO(formQuestion.getForm()));
         }
     }
@@ -74,6 +76,14 @@ public class FormQuestionDTO extends BaseEntityDTO {
 
     public void setForm(FormDTO formDTO) {
         this.form = formDTO;
+    }
+
+    public String getFormUuid() {
+        return formUuid;
+    }
+
+    public void setFormUuid(String formUuid) {
+        this.formUuid = formUuid;
     }
 
     public void setResponseType(ResponseTypeDTO responseType) {

@@ -45,7 +45,7 @@ public class MentorshipRestService extends BaseRestService {
                 @Override
                 public void onResponse(Call<List<MentorshipDTO>> call, Response<List<MentorshipDTO>> response) {
                     List<MentorshipDTO> data = response.body();
-                    if (response.code() == 201) {
+                    if (Utilities.listHasElements(data)) {
                         try {
                             List<Mentorship> mentorshipList = getApplication().getMentorshipService().getAllNotSynced(getApplication());
                             for (Mentorship mentorship : mentorshipList) {

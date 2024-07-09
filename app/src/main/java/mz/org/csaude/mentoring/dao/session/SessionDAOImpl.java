@@ -67,7 +67,7 @@ public class SessionDAOImpl extends MentoringBaseDaoImpl<Session, Integer> imple
 
     @Override
     public List<Session> getAllOfRondaPending(Ronda ronda, Date startDate) throws SQLException {
-        return this.queryBuilder().orderBy(Session.COLUMN_START_DATE, true).where().eq(Session.COLUMN_RONDA, ronda.getId()).and().gt(Session.COLUMN_START_DATE, startDate)
+        return this.queryBuilder().orderBy(Session.COLUMN_START_DATE, true).where().eq(Session.COLUMN_RONDA, ronda.getId()).and().eq(Session.COLUMN_START_DATE, startDate)
                 .and().isNull(Session.COLUMN_END_DATE).query();
     }
 

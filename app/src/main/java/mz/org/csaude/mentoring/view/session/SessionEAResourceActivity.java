@@ -1,12 +1,16 @@
 package mz.org.csaude.mentoring.view.session;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -23,6 +27,7 @@ import mz.org.csaude.mentoring.adapter.resource.ResourceAdapter;
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.databinding.ActivitySessionEaresourceBinding;
+import mz.org.csaude.mentoring.model.resourceea.Node;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.viewmodel.session.SessionResourcesVM;
@@ -88,4 +93,7 @@ public class SessionEAResourceActivity extends BaseActivity {
         getRelatedViewModel().selectResource(position);
         resourceAdapter.notifyDataSetChanged();
     }
+
+
+
 }

@@ -43,7 +43,7 @@ public class PDFGenerator {
 
     public static boolean createPDF(Context context, List<SessionSummary> sessionSummaryList, Tutored tutored) {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-        File file = new File(pdfPath, "resumo_da_sessao_" + DateUtilities.formatToYYYYMMDD(DateUtilities.getCurrentDate()) + ".pdf");
+        File file = new File(pdfPath, "resumo_da_sessao_" + DateUtilities.getCurrTimeStamp() + ".pdf");
 
         try {
             PdfWriter writer = new PdfWriter(file);
@@ -141,7 +141,7 @@ public class PDFGenerator {
 
     public static boolean createRondaSummary(Context context, List<RondaSummary> rondaSummaryList) {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-        File file = new File(pdfPath, "relatorio_da_ronda_" + DateUtilities.formatToYYYYMMDD(DateUtilities.getCurrentDate()) + ".pdf");
+        File file = new File(pdfPath, "relatorio_da_ronda_" + DateUtilities.getCurrTimeStamp() + ".pdf");
 
         try {
             PdfWriter writer = new PdfWriter(file);
@@ -232,8 +232,7 @@ public class PDFGenerator {
                 table.addCell(new Cell().add(new Paragraph(rondaSummary.getSession2() + "%")).setBackgroundColor(cellColor));
                 table.addCell(new Cell().add(new Paragraph(rondaSummary.getSession3() + "%")).setBackgroundColor(cellColor));
                 table.addCell(new Cell().add(new Paragraph(rondaSummary.getSession4() + "%")).setBackgroundColor(cellColor));
-                DeviceRgb color =  rondaSummary.getSession4() < 64 ? redColor :  rondaSummary.getSession4() < 86 ? yellowColor : greenColor;
-                table.addCell(new Cell().add(new Paragraph((int) rondaSummary.getSession4() + "%")).setBackgroundColor(color));
+                table.addCell(new Cell().add(new Paragraph(rondaSummary.getSession4() < 86 ? "Repetir Ronda" : "Graduado")));
                 table.addCell(new Cell().add(new Paragraph(rondaSummary.getMentor())).setBackgroundColor(cellColor));
                 table.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(cellColor));
 

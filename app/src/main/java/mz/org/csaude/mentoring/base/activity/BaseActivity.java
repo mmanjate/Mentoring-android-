@@ -37,6 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GenericA
      */
     private PackageInfo pinfo;
 
+    protected static final int REQUEST_WRITE_STORAGE = 112;
     private Tutored tutored;
 
     private Integer positionRemoved;

@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -45,6 +46,10 @@ public class SessionResourcesVM extends SearchVM<Resource> implements IDialogLis
 
     private List<SessionRecommendedResource> recommendedResources;
     private Session session;
+
+    private boolean hivChecked;
+
+    private boolean tbChecked;
     public SessionResourcesVM(@NonNull Application application) {
         super(application);
     }
@@ -108,6 +113,18 @@ public class SessionResourcesVM extends SearchVM<Resource> implements IDialogLis
                         }
                     }
                 } else this.nodeList.addAll(nodes);
+
+                if (!isHivChecked() || !isTbChecked()) {
+                    Iterator<Node> iterator = this.nodeList.iterator();
+                    while (iterator.hasNext()) {
+                        Node node = iterator.next();
+                        String programLower = node.getProgram().toLowerCase();
+                        if ((!isHivChecked() && programLower.contains("hiv")) ||
+                                (!isTbChecked() && programLower.contains("tb"))) {
+                            iterator.remove();
+                        }
+                    }
+                }
             }
             if (!Utilities.listHasElements(nodeList)) {
                 doOnNoRecordFound();
@@ -144,6 +161,10 @@ public class SessionResourcesVM extends SearchVM<Resource> implements IDialogLis
         try {
             getApplication().getSessionService().update(session);
             if (isRecommendResources()) {
+                if (!Utilities.listHasElements(recommendedResources)) {
+                    Utilities.displayAlertDialog(getRelatedActivity(), "Não foram selecionados recursos recomendados.").show();
+                    return;
+                }
                 getApplication().getSessionService().saveRecommendedResources(session, recommendedResources);
             }
         } catch (SQLException e) {
@@ -176,5 +197,33 @@ public class SessionResourcesVM extends SearchVM<Resource> implements IDialogLis
         } else {
             recommendedResources.remove(new SessionRecommendedResource(session, node));
         }
+    }
+
+    public void changeHivChecked(){
+        setHivChecked(!isHivChecked());
+    }
+
+    public void changeTBChecked(){
+        setTbChecked(!isTbChecked());
+    }
+
+
+    @Bindable
+    public boolean isHivChecked() {
+        return hivChecked;
+    }
+
+    public void setHivChecked(boolean hivChecked) {
+        this.hivChecked = hivChecked;
+    }
+
+    @Bindable
+    public boolean isTbChecked() {
+        return tbChecked;
+    }
+
+    public void setTbChecked(boolean tbChecked) {
+        this.tbChecked = tbChecked;
+        notifyPropertyChanged(BR.tbChecked);
     }
 }

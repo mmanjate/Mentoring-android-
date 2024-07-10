@@ -109,10 +109,17 @@ public class RondaSearchVM extends SearchVM<Ronda> implements IDialogListener, S
         }
     }
 
+
     public void printRondaSummary(Ronda ronda) {
+        this.selectedRonda = ronda;
+        getRelatedActivity().checkStoragePermission();
+    }
+
+    public void printRondaReport() {
         try {
             List<RondaSummary> rondaSummaryList = new ArrayList<>();
 
+            Ronda ronda = this.selectedRonda;
             ronda = getApplication().getRondaService().getFullyLoadedRonda(ronda);
 
             for (RondaMentee mentee : ronda.getRondaMentees()){
@@ -151,6 +158,8 @@ public class RondaSearchVM extends SearchVM<Ronda> implements IDialogListener, S
         } catch (SQLException e) {
             Log.e("printRondaSummary", "Exception: " + e.getMessage());
         }
+
+
     }
 
     private double determineSessionScore(List<SessionSummary> sessionSummaries) {

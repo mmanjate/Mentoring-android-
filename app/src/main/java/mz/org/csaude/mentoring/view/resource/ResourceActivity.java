@@ -50,7 +50,7 @@ public class ResourceActivity extends BaseActivity {
     List<Resource> resourceList = new ArrayList<>();
     List<Node> nodeList = new ArrayList<>();
 
-    private static final int REQUEST_WRITE_STORAGE = 112;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

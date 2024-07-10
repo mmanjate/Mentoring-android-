@@ -7,12 +7,15 @@ import androidx.annotation.NonNull;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionSummary;
 import mz.org.csaude.mentoring.util.PDFGenerator;
 import mz.org.csaude.mentoring.util.Utilities;
+import mz.org.csaude.mentoring.view.session.SessionEAResourceActivity;
+import mz.org.csaude.mentoring.view.session.SessionSummaryActivity;
 
 public class SessionSummaryVM extends BaseViewModel {
 
@@ -38,6 +41,15 @@ public class SessionSummaryVM extends BaseViewModel {
     }
 
     public void print() {
+        getRelatedActivity().checkStoragePermission();
+    }
+
+    @Override
+    public SessionSummaryActivity getRelatedActivity() {
+        return (SessionSummaryActivity) super.getRelatedActivity();
+    }
+
+    public void downloadFile() {
         boolean print = PDFGenerator.createPDF(getRelatedActivity(), this.sessionSummaryList, this.session.getTutored());
         if (print) {
             Utilities.displayAlertDialog(getRelatedActivity(), "Resumo impresso com sucesso, encontre o documento no diretório de downloads.").show();

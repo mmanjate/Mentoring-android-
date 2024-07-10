@@ -538,4 +538,8 @@ public class DateUtilities {
 
     }
 
+    public static String getCurrTimeStamp() {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        return dateFormatter.format(new Date());
+    }
 }

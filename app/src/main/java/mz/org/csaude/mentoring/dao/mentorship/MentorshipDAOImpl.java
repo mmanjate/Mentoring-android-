@@ -56,7 +56,7 @@ public class MentorshipDAOImpl extends MentoringBaseDaoImpl<Mentorship, Integer>
     @Override
     public List<Mentorship> getAllNotSynced(Application application) throws SQLException {
         QueryBuilder<Mentorship, Integer> mentorshipQueryBuilder = MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getMentorshipDAO().queryBuilder();
-        mentorshipQueryBuilder.where().eq(Form.COLUMN_SYNC_STATUS, SyncSatus.PENDING).and().isNotNull(Mentorship.COLUMN_END_DATE).and().eq(Mentorship.COLUMN_SYNC_STATUS, SyncSatus.PENDING);
+        mentorshipQueryBuilder.where().eq(Mentorship.COLUMN_SYNC_STATUS, SyncSatus.PENDING).and().isNotNull(Mentorship.COLUMN_END_DATE);
         return mentorshipQueryBuilder.query();
     }
 

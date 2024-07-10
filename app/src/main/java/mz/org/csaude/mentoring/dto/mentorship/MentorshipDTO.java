@@ -45,6 +45,7 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
     private boolean demonstration;
     private String demonstrationDetails;
     private List<AnswerDTO> answers;
+    private Date performedDate;
     public MentorshipDTO(Mentorship mentorship) {
         super(mentorship);
         this.setStartDate(mentorship.getStartDate());
@@ -52,6 +53,7 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         this.setIterationNumber(mentorship.getIterationNumber());
         this.setDemonstration(mentorship.isDemonstration());
         this.setDemonstrationDetails(mentorship.getDemonstrationDetails());
+        this.setPerformedDate(mentorship.getPerformedDate());
         if(mentorship.getTutor()!=null) {
             this.setMentor(new TutorDTO(mentorship.getTutor()));
         }
@@ -195,6 +197,14 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         this.demonstrationDetails = demonstrationDetails;
     }
 
+    public Date getPerformedDate() {
+        return performedDate;
+    }
+
+    public void setPerformedDate(Date performedDate) {
+        this.performedDate = performedDate;
+    }
+
     public Mentorship getMentorship() {
         Mentorship mentorship = new Mentorship();
         mentorship.setUuid(this.getUuid());
@@ -206,6 +216,7 @@ public class MentorshipDTO extends BaseEntityDTO implements Syncable {
         mentorship.setIterationNumber(this.getIterationNumber());
         mentorship.setDemonstration(this.isDemonstration());
         mentorship.setDemonstrationDetails(this.getDemonstrationDetails());
+        mentorship.setPerformedDate(this.getPerformedDate());
 
         if(this.getMentor()!=null) {
             mentorship.setTutor(new Tutor(this.getMentor()));

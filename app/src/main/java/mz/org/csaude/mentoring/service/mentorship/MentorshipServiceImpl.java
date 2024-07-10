@@ -180,4 +180,13 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
         return mentorships;
     }
 
+    @Override
+    public void saveOrUpdate(Mentorship mentorship) throws SQLException {
+        Mentorship mm = this.mentorshipDAO.getByUuid(mentorship.getUuid());
+        if(mm!=null) {
+            mentorship.setId(mm.getId());
+        }
+        this.mentorshipDAO.createOrUpdate(mentorship);
+    }
+
 }

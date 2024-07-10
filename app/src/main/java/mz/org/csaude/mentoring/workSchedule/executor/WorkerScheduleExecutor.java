@@ -114,6 +114,7 @@ public class WorkerScheduleExecutor {
         OneTimeWorkRequest mentorFormsQuestionsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(FormQuestionWorker.class).addTag("ONE_TIME_MENTOR_FORMS_QUESTIONS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest mentorRondasOneTimeWorkRequest = new OneTimeWorkRequest.Builder(RondaWorker.class).addTag("ONE_TIME_MENTOR_RONDAS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest resourceTimeWorkRequest = new OneTimeWorkRequest.Builder(Resourceworker.class).addTag("ONE_RESOURCE_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest mentorSessionsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(SessionWorker.class).addTag("ONE_TIME_MENTOR_SESSIONS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         //OneTimeWorkRequest mentorMentorshipsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(MentorshipWorker.class).addTag("ONE_TIME_MENTOR_MENTORSHIPS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         //OneTimeWorkRequest tutorProgrammaticAreaOneTimeWorkRequest = new OneTimeWorkRequest.Builder(TutorProgrammaticAreaWorker.class).addTag("ONE_TIME_TUTOR_PROGRAMMATIC_AREA_ID" + ONE_TIME_REQUEST_JOB_ID).build();
 
@@ -123,6 +124,7 @@ public class WorkerScheduleExecutor {
                 .then(mentorFormsQuestionsOneTimeWorkRequest)
                 .then(mentorRondasOneTimeWorkRequest)
                 .then(resourceTimeWorkRequest)
+                .then(mentorSessionsOneTimeWorkRequest)
                 //.then(mentorMentorshipsOneTimeWorkRequest)
                 .enqueue();
         return mentorRondasOneTimeWorkRequest;

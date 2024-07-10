@@ -651,4 +651,11 @@ public class Utilities {
         }, hour, minute, true);
         timePickerDialog.show();
     }
+
+    public static Object extractElementByUuid(List list, String uuid) {
+        for (Object object: list) {
+            if(((BaseModel) object).getUuid().equalsIgnoreCase(uuid)) return object;
+        }
+        return null;
+    }
 }

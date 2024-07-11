@@ -38,7 +38,6 @@ public class SessionStatusRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         SessionStatusService sessionStatusService = getApplication().getSessionStatusService();
-                        Toast.makeText(APP.getApplicationContext(), "Carregando os Estados de Sessões.", Toast.LENGTH_SHORT).show();
                         List<SessionStatus> sessionStatuses = new ArrayList<>();
                         for (SessionStatusDTO sessionStatusDTO : data){
                             sessionStatusDTO.setSyncSatus(SyncSatus.SENT);
@@ -50,7 +49,6 @@ public class SessionStatusRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "ESTADOS DE SESSÕES CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -58,7 +56,6 @@ public class SessionStatusRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<SessionStatusDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Estados de Sessões. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

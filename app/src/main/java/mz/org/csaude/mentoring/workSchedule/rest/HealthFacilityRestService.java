@@ -59,7 +59,6 @@ public class HealthFacilityRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<HealthFacilityDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as HealthFacility. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

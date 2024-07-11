@@ -424,9 +424,6 @@ public class Utilities {
         intent.setDataAndType(uri, "application/pdf");
 
         mContext.startActivity(intent);
-        //} else {
-        //    Toast.makeText( mContext, "Download a PDF Viewer to see the generated PDF", Toast.LENGTH_SHORT).show();
-        //   }
     }
 
 

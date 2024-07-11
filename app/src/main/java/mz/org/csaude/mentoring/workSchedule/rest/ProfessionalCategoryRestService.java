@@ -38,7 +38,6 @@ public class ProfessionalCategoryRestService extends BaseRestService {
                          }
                    try {
                    ProfessionalCategoryService professionalCategoryService = getApplication().getProfessionalCategoryService();
-                   Toast.makeText(APP.getApplicationContext(), "Carregando as ProfessionalCategory ", Toast.LENGTH_SHORT).show();
 
                    List<ProfessionalCategory> professionalCategories = new ArrayList<>();
 
@@ -51,14 +50,12 @@ public class ProfessionalCategoryRestService extends BaseRestService {
                    } catch (SQLException e) {
                        throw new RuntimeException(e);
                    }
-                   Toast.makeText(APP.getApplicationContext(), "ProfessionalCategory carregadas com sucesso!", Toast.LENGTH_SHORT).show();
 
 
             }
 
             @Override
             public void onFailure(Call<List<ProfessionalCategoryDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as PROVINCIAS. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });
@@ -79,7 +76,6 @@ public class ProfessionalCategoryRestService extends BaseRestService {
                 }
                 try {
                     ProfessionalCategoryService professionalCategoryService = getApplication().getProfessionalCategoryService();
-                    Toast.makeText(APP.getApplicationContext(), "Carregando as ProfessionalCategory ", Toast.LENGTH_SHORT).show();
                     professionalCategoryService.saveOrUpdateProfessionalCategorys(data);
 
                     List<ProfessionalCategory> professionalCategories = new ArrayList<>();
@@ -91,14 +87,12 @@ public class ProfessionalCategoryRestService extends BaseRestService {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                Toast.makeText(APP.getApplicationContext(), "ProfessionalCategory carregadas com sucesso!", Toast.LENGTH_SHORT).show();
 
 
             }
 
             @Override
             public void onFailure(Call<List<ProfessionalCategoryDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as PROVINCIAS. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

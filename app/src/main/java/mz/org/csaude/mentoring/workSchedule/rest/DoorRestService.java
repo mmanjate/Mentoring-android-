@@ -38,7 +38,6 @@ public class DoorRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         DoorService doorService = getApplication().getDoorService();
-                        Toast.makeText(APP.getApplicationContext(), "Carregando as Portas.", Toast.LENGTH_SHORT).show();
                         List<Door> doors = new ArrayList<>();
                         for (DoorDTO doorDTO : data){
                             doorDTO.getDoor().setSyncStatus(SyncSatus.SENT);
@@ -49,7 +48,6 @@ public class DoorRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "PORTAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -57,7 +55,6 @@ public class DoorRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<DoorDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as Portas. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

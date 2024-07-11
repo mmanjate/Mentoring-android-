@@ -41,7 +41,6 @@ public class ResponseTypeRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         ResponseTypeService responseTypeService = getApplication().getResponseTypeService();
-                        Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Respostas.", Toast.LENGTH_SHORT).show();
                         List<ResponseType> responseTypes = new ArrayList<>();
                         for (ResponseTypeDTO responseTypeDTO : data){
                             responseTypeDTO.getResponseType().setSyncStatus(SyncSatus.SENT);
@@ -52,7 +51,6 @@ public class ResponseTypeRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE RESPOSTAS CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -60,7 +58,6 @@ public class ResponseTypeRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<ResponseTypeDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Tipos de Respostas. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

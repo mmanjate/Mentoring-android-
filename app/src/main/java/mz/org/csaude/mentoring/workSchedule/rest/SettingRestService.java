@@ -40,7 +40,6 @@ public class SettingRestService extends BaseRestService {
 
                try {
                    SettingService settingService = getApplication().getSettingService();
-                   Toast.makeText(APP.getApplicationContext(), "CARREGANDO OS SETTINGS", Toast.LENGTH_SHORT).show();
                    List<Setting> settings = new ArrayList<>();
 
                    for(SettingDTO settingDTO : data){
@@ -53,13 +52,10 @@ public class SettingRestService extends BaseRestService {
                    throw new RuntimeException(e);
                }
 
-               Toast.makeText(APP.getApplicationContext(), "SETTINGS carregadas com sucesso", Toast.LENGTH_SHORT).show();
            }
 
            @Override
            public void onFailure(Call<List<SettingDTO>> call, Throwable t) {
-
-               Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Settings", Toast.LENGTH_SHORT).show();
                Log.i("METADATA LOAD --", t.getMessage(), t);
            }
        });

@@ -37,7 +37,6 @@ public class ProgramRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         ProgramService programService = getApplication().getProgramService();
-                        Toast.makeText(APP.getApplicationContext(), "Carregando os Programas.", Toast.LENGTH_SHORT).show();
                         List<Program> programs = new ArrayList<>();
                         for (ProgramDTO programDTO : data){
                             programs.add(programDTO.getProgram());
@@ -47,7 +46,6 @@ public class ProgramRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "PROGRAMAS CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -55,7 +53,6 @@ public class ProgramRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<ProgramDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Programas. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

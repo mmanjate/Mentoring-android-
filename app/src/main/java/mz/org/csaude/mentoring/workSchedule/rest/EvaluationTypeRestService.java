@@ -42,7 +42,6 @@ public class EvaluationTypeRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         EvaluationTypeService evaluationTypeService = getApplication().getEvaluationTypeService();
-                        Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Avaliações.", Toast.LENGTH_SHORT).show();
                         List<EvaluationType> evaluationTypes = new ArrayList<>();
                         for (EvaluationTypeDTO evaluationTypeDTO : data){
                             evaluationTypeDTO.getEvaluationType().setSyncStatus(SyncSatus.SENT);
@@ -53,7 +52,6 @@ public class EvaluationTypeRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE AVALIAÇÕES CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -61,7 +59,6 @@ public class EvaluationTypeRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<EvaluationTypeDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Tipos de Avaliações. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

@@ -156,6 +156,16 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
         }
     }
 
+    @Override
+    public void updateRecommendedResources(SessionRecommendedResource recommendedResources) throws SQLException {
+        this.sessionRecommendedResourceDAO.update(recommendedResources);
+    }
+
+    @Override
+    public List<SessionRecommendedResource> getPendingRecommendedResources() throws SQLException {
+        return this.sessionRecommendedResourceDAO.queryForAllPending();
+    }
+
     private void doCountInCategory(String cat, List<SessionSummary> summaries, Answer answer) {
         for (SessionSummary sessionSummary : summaries) {
             if (sessionSummary.getTitle().equals(cat)) {

@@ -38,7 +38,6 @@ public class IterationTypeRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         IterationTypeService evaluationTypeService = getApplication().getIterationTypeService();
-                        Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de ITERAÇÕES.", Toast.LENGTH_SHORT).show();
                         List<IterationType> iterationTypes = new ArrayList<>();
                         for (IterationTypeDTO iterationTypeDTO : data){
                             iterationTypeDTO.getIterationType().setSyncStatus(SyncSatus.SENT);
@@ -49,7 +48,6 @@ public class IterationTypeRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE ITERAÇÕES CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -57,7 +55,6 @@ public class IterationTypeRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<IterationTypeDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Tipos de ITERAÇÕES. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

@@ -124,7 +124,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/fields_background"
-                            android:hint="@string/name"
                             android:text="@={viewModel.name}"
                             style="@style/bottom_border_edit_text_style"/>
 
@@ -139,7 +138,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/fields_background"
-                            android:hint="@string/surname"
                             android:text="@={viewModel.surname}"
                             style="@style/bottom_border_edit_text_style"/>
 
@@ -155,7 +153,6 @@
                             android:layout_height="wrap_content"
                             android:inputType="phone"
                             android:background="@drawable/fields_background"
-                            android:hint="@string/telephone"
                             android:maxLength="9"
                             android:text="@={viewModel.phoneNumber}"
                             style="@style/bottom_border_edit_text_style"/>
@@ -172,7 +169,6 @@
                             android:layout_height="wrap_content"
                             android:inputType="textEmailAddress"
                             android:background="@drawable/fields_background"
-                            android:hint="@string/email"
                             android:text="@={viewModel.email}"
                             style="@style/bottom_border_edit_text_style"/>
 
@@ -190,7 +186,6 @@
                             android:background="@drawable/fields_background"
                             android:text="@={viewModel.nuit}"
                             android:maxLength="9"
-                            android:hint="@string/nuit"
                             style="@style/bottom_border_edit_text_style"/>
 
                     </LinearLayout>

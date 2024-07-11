@@ -50,7 +50,6 @@ public class TutorRestService extends BaseRestService {
                 try {
 
                 TutorService tutorService = getApplication().getTutorService();
-                Toast.makeText(APP.getApplicationContext(), "Carregando os Tutores", Toast.LENGTH_SHORT).show();
 
                 List<Tutor> tutors = new ArrayList<>();
                 for (TutorDTO tutorDTO : data){
@@ -63,12 +62,10 @@ public class TutorRestService extends BaseRestService {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                Toast.makeText(APP.getApplicationContext(), "Tutores carregadas com sucesso!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<List<TutorDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Tutores. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
 
             }
@@ -100,12 +97,10 @@ public class TutorRestService extends BaseRestService {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                Toast.makeText(APP.getApplicationContext(), "Mentor carregado com sucesso!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<TutorDTO> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Tutores. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

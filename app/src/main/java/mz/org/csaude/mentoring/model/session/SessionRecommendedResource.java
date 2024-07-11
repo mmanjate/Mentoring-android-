@@ -7,6 +7,7 @@ import java.util.Date;
 
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.session.SessionRecommendedResourceDAOImpl;
+import mz.org.csaude.mentoring.dto.session.SessionRecommendedResourceDTO;
 import mz.org.csaude.mentoring.model.resourceea.Node;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
@@ -54,6 +55,17 @@ public class SessionRecommendedResource extends BaseModel {
         this.setSyncStatus(SyncSatus.PENDING);
         this.setCreatedAt(DateUtilities.getCurrentDate());
         this.setUuid(Utilities.getNewUUID().toString());
+    }
+
+
+    public SessionRecommendedResource(SessionRecommendedResourceDTO dto, Session session, Tutored tutored, Tutor tutor) {
+        super(dto);
+        this.session = session;
+        this.tutored = tutored;
+        this.tutor = tutor;
+        this.resourceLink = dto.getResourceLink();
+        this.resourceName = dto.getResourceName();
+        this.dateRecommended = dto.getDateRecommended();
     }
 
     // Getters and Setters

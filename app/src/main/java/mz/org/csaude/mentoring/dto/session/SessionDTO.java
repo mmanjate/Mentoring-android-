@@ -3,24 +3,29 @@ package mz.org.csaude.mentoring.dto.session;
 import com.j256.ormlite.field.DatabaseField;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
+import mz.org.csaude.mentoring.common.Syncable;
 import mz.org.csaude.mentoring.dto.form.FormDTO;
+import mz.org.csaude.mentoring.dto.mentorship.MentorshipDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.model.form.Form;
+import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.util.SyncSatus;
 
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SessionDTO extends BaseEntityDTO {
+public class SessionDTO extends BaseEntityDTO implements Syncable {
     private Date startDate;
     private Date endDate;
     private Date performedDate;
@@ -35,6 +40,8 @@ public class SessionDTO extends BaseEntityDTO {
     private String pointsToImprove;
     private String workPlan;
     private String observations;
+
+    private List<MentorshipDTO> mentorships;
 
     public SessionDTO(Session session) {
         super(session);
@@ -154,6 +161,30 @@ public class SessionDTO extends BaseEntityDTO {
         this.reason = reason;
     }
 
+    public boolean isDemonstration() {
+        return demonstration;
+    }
+
+    public void setDemonstration(boolean demonstration) {
+        this.demonstration = demonstration;
+    }
+
+    public String getDemonstrationDetails() {
+        return demonstrationDetails;
+    }
+
+    public void setDemonstrationDetails(String demonstrationDetails) {
+        this.demonstrationDetails = demonstrationDetails;
+    }
+
+    public List<MentorshipDTO> getMentorships() {
+        return mentorships;
+    }
+
+    public void setMentorships(List<MentorshipDTO> mentorships) {
+        this.mentorships = mentorships;
+    }
+
     public Session getSession() {
         Session session = new Session();
         session.setUpdatedAt(this.getUpdatedAt());
@@ -179,5 +210,15 @@ public class SessionDTO extends BaseEntityDTO {
             session.setTutored(new Tutored(this.getMentee()));
         }
         return session;
+    }
+
+    @Override
+    public void setSyncSatus(SyncSatus syncSatus) {
+
+    }
+
+    @Override
+    public SyncSatus getSyncSatus() {
+        return null;
     }
 }

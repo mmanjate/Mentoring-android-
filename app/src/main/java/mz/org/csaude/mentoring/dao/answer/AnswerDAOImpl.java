@@ -7,10 +7,11 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 import java.sql.SQLException;
 import java.util.List;
 
+import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.answer.Answer;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 
-public class AnswerDAOImpl extends BaseDaoImpl<Answer, Integer> implements AnswerDAO {
+public class AnswerDAOImpl extends MentoringBaseDaoImpl<Answer, Integer> implements AnswerDAO {
 
     public AnswerDAOImpl(Class<Answer> dataClass) throws SQLException {
         super(dataClass);

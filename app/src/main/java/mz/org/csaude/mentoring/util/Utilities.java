@@ -40,10 +40,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -654,5 +652,10 @@ public class Utilities {
         timePickerDialog.show();
     }
 
-
+    public static Object extractElementByUuid(List list, String uuid) {
+        for (Object object: list) {
+            if(((BaseModel) object).getUuid().equalsIgnoreCase(uuid)) return object;
+        }
+        return null;
+    }
 }

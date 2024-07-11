@@ -9,4 +9,6 @@ import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 
 public interface AnswerService extends BaseService<Answer> {
     List<Answer> getAllOfMentorship(Mentorship mentorship) throws SQLException;
+
+    void saveOrUpdate(Answer answer) throws SQLException;
 }

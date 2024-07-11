@@ -101,9 +101,9 @@ public class Mentorship extends BaseModel {
 
     public Mentorship(MentorshipDTO mentorshipDTO) {
         super(mentorshipDTO);
-        this.setStartDate(this.getStartDate());
-        this.setEndDate(this.getEndDate());
-        this.setIterationNumber(this.getIterationNumber());
+        this.setStartDate(mentorshipDTO.getStartDate());
+        this.setEndDate(mentorshipDTO.getEndDate());
+        this.setIterationNumber(mentorshipDTO.getIterationNumber());
         this.setDemonstration(mentorshipDTO.isDemonstration());
         this.setDemonstrationDetails(mentorshipDTO.getDemonstrationDetails());
         this.setPerformedDate(mentorshipDTO.getPerformedDate());
@@ -243,6 +243,7 @@ public class Mentorship extends BaseModel {
     public String getEvaluationTypeDestription(){
         return "Avaliação de " + evaluationType.getDescription();
     }
+
     @Override
     public String toString() {
         return "Mentorship{" +
@@ -256,6 +257,8 @@ public class Mentorship extends BaseModel {
                 ", evaluationType=" + evaluationType +
                 ", iterationNumber=" + iterationNumber +
                 ", door=" + door +
+                ", demonstration=" + demonstration +
+                ", demonstrationDetails='" + demonstrationDetails +
                 '}';
     }
 

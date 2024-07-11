@@ -213,4 +213,13 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
 
         return this.sessionDAO.getAllOfRondaPending(ronda, startDate);
     }
+
+    @Override
+    public void saveOrUpdate(Session session) throws SQLException {
+        Session ss = this.sessionDAO.getByUuid(session.getUuid());
+        if(ss!=null) {
+            session.setId(ss.getId());
+        }
+        this.sessionDAO.createOrUpdate(session);
+    }
 }

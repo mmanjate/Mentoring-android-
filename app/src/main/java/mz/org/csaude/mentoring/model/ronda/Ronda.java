@@ -65,8 +65,8 @@ public class Ronda extends BaseModel implements Listble {
         this.setDescription(rondaDTO.getDescription());
         this.setStartDate(rondaDTO.getStartDate());
         this.setEndDate(rondaDTO.getEndDate());
-        this.setRondaType(new RondaType(rondaDTO.getRondaType()));
-        this.setMentorType(rondaDTO.getMentorType());
+        if(rondaDTO.getRondaType()!=null) this.setRondaType(new RondaType(rondaDTO.getRondaType()));
+        if(rondaDTO.getMentorType()!=null) this.setMentorType(rondaDTO.getMentorType());
         if(rondaDTO.getHealthFacility()!=null) {
             this.setHealthFacility(new HealthFacility(rondaDTO.getHealthFacility()));
         }

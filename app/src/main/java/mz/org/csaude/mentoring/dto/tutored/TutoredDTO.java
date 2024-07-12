@@ -2,7 +2,9 @@ package mz.org.csaude.mentoring.dto.tutored;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
@@ -19,8 +21,12 @@ public class TutoredDTO extends BaseEntityDTO {
 
     private boolean zeroEvaluationDone;
 
+    private Double zeroEvaluationScore;
+
     public TutoredDTO(Tutored tutored) {
         super(tutored);
+        setZeroEvaluationScore(tutored.getZeroEvaluationScore());
+        setZeroEvaluationDone(tutored.isZeroEvaluationDone());
         this.setEmployeeDTO(new EmployeeDTO(tutored.getEmployee()));
     }
 
@@ -40,9 +46,19 @@ public class TutoredDTO extends BaseEntityDTO {
         this.zeroEvaluationDone = zeroEvaluationDone;
     }
 
+    public Double getZeroEvaluationScore() {
+        return zeroEvaluationScore;
+    }
+
+    public void setZeroEvaluationScore(Double zeroEvaluationScore) {
+        this.zeroEvaluationScore = zeroEvaluationScore;
+    }
+
     public Tutored getMentee() {
         Tutored tutored = new Tutored();
         tutored.setUuid(this.getUuid());
+        tutored.setZeroEvaluationDone(this.isZeroEvaluationDone());
+        tutored.setZeroEvaluationScore(this.getZeroEvaluationScore());
         tutored.setCreatedAt(this.getCreatedAt());
         tutored.setUpdatedAt(this.getUpdatedAt());
         tutored.setLifeCycleStatus(this.getLifeCycleStatus());

@@ -117,7 +117,7 @@ public class MentoringApplication  extends Application {
     private static MentoringApplication mInstance;
 
     //private static final String BASE_URL = "http://10.10.2.30:8087";
-    private static final String BASE_URL = "http://10.10.12.65:8087";
+    public static final String BASE_URL = "http://10.10.12.65:8087";
     //private static final String BASE_URL = "http://10.10.12.97:8087";
     private User authenticatedUser;
 
@@ -231,8 +231,7 @@ public class MentoringApplication  extends Application {
         return mInstance;
     }
 
-    public void setUpRetrofit() {
-
+    private void setUpRetrofit() {
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 

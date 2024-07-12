@@ -150,10 +150,10 @@ public class WorkerScheduleExecutor {
                 .addTag("ONE_TIME_SESSIONS_RECOMMENDED_RESOURCES_ID" + ONE_TIME_REQUEST_JOB_ID).setInputData(inputData).build();
 
         workManager
-                .beginWith(sessionPostTimeWorkRequest)
+                .beginUniqueWork("FORCED_DATA_SYNC_JOB", ExistingWorkPolicy.KEEP, sessionPostTimeWorkRequest)
                 .then(sessionRecommendedPostTimeWorkRequest)
                 .enqueue();
-        return sessionPostTimeWorkRequest;
+        return sessionRecommendedPostTimeWorkRequest;
     }
 
     public OneTimeWorkRequest syncNowData() {

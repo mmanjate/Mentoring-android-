@@ -5,9 +5,12 @@ import static mz.org.csaude.mentoring.util.Constants.SESSION_SYNC_TIME;
 
 import android.Manifest;
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -48,6 +51,19 @@ public class SettingVM extends BaseViewModel {
         workerScheduleExecutor = WorkerScheduleExecutor.getInstance(getApplication());
         this.sessionSyncTime = this.getApplication().getMentoringSharedPreferences().getInt(SESSION_SYNC_TIME, 2);
         this.metadataSyncTime = this.getApplication().getMentoringSharedPreferences().getInt(METADATA_SYNC_TIME, 2);
+        createNotificationChannel();
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Sync Notifications";
+            String description = "Notifications for data sync status";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(SYNC_CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getApplication().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     @Override

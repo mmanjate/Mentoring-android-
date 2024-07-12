@@ -54,7 +54,6 @@ public class PartnerRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<PartnerDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as ONG's. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
                 listener.doOnRestErrorResponse(t.getMessage());
 

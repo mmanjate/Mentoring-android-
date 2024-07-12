@@ -17,12 +17,16 @@ public class Tutored extends BaseModel {
     public static final String COLUMN_TABLE_NAME = "tutored";
     public static final String COLUMN_EMPLOYEE = "emplyee_id";
     public static final String COLUMN_ZERO_EVALUATION_STATUS = "zero_evatuation_status";
+    public static final String COLUMN_ZERO_EVALUATION_SCORE = "zero_evatuation_score";
 
     @DatabaseField(columnName = COLUMN_EMPLOYEE, foreign = true, foreignAutoRefresh = true )
     private Employee employee;
 
     @DatabaseField(columnName = COLUMN_ZERO_EVALUATION_STATUS)
     private boolean zeroEvaluationDone;
+
+    @DatabaseField(columnName = COLUMN_ZERO_EVALUATION_SCORE)
+    private Double zeroEvaluationScore;
     public Tutored() {
     }
 
@@ -32,8 +36,9 @@ public class Tutored extends BaseModel {
 
     public Tutored(TutoredDTO tutoredDTO) {
         super(tutoredDTO);
-        this.setEmployee(new Employee(tutoredDTO.getEmployeeDTO()));
+        this.setZeroEvaluationScore(tutoredDTO.getZeroEvaluationScore());
         this.setZeroEvaluationDone(tutoredDTO.isZeroEvaluationDone());
+        this.setEmployee(new Employee(tutoredDTO.getEmployeeDTO()));
     }
 
     public Employee getEmployee() {
@@ -76,6 +81,14 @@ public class Tutored extends BaseModel {
     @Override
     public String getListType() {
         return listTyp;
+    }
+
+    public Double getZeroEvaluationScore() {
+        return zeroEvaluationScore;
+    }
+
+    public void setZeroEvaluationScore(Double zeroEvaluationScore) {
+        this.zeroEvaluationScore = zeroEvaluationScore;
     }
 
     @Override

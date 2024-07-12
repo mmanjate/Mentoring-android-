@@ -38,7 +38,6 @@ public class TimeOfDayRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         TimeOfDayService timeOfDayService = getApplication().getTimeOfDayService();
-                        Toast.makeText(APP.getApplicationContext(), "Carregando os Período do Dia.", Toast.LENGTH_SHORT).show();
                         List<TimeOfDay> timeOfDays = new ArrayList<>();
                         for (TimeOfDayDTO timeOfDayDTO : data){
                             timeOfDayDTO.getTimeOfDay().setSyncStatus(SyncSatus.SENT);
@@ -49,7 +48,6 @@ public class TimeOfDayRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "PERÍODOS DO DIA CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -57,7 +55,6 @@ public class TimeOfDayRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<TimeOfDayDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Períodos do Dia. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

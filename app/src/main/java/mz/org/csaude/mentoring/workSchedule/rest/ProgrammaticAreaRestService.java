@@ -43,7 +43,6 @@ public class ProgrammaticAreaRestService extends BaseRestService {
                     } catch (SQLException e) {
                         Log.e("ProgrammaticAreaRestService", e.getMessage());
                     }
-                    Toast.makeText(APP.getApplicationContext(), "ÁREAS PROGRAMÁTICAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -51,7 +50,6 @@ public class ProgrammaticAreaRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<ProgrammaticAreaDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as Áreas Programáticas. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

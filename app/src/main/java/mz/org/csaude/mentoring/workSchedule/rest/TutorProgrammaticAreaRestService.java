@@ -39,7 +39,6 @@ public class TutorProgrammaticAreaRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         TutorProgrammaticAreaService tutorProgrammaticAreaService = getApplication().getTutorProgrammaticAreaService();
-                        Toast.makeText(APP.getApplicationContext(), "Carregando as Áreas Programáticas do Tutor.", Toast.LENGTH_SHORT).show();
                         List<TutorProgrammaticArea> tutorProgrammaticAreas = new ArrayList<>();
                         for (TutorProgrammaticAreaDTO tutorProgrammaticAreaDTO : data){
                             tutorProgrammaticAreas.add(tutorProgrammaticAreaDTO.getTutorProgrammaticArea());
@@ -49,7 +48,6 @@ public class TutorProgrammaticAreaRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "ÁREAS PROGRAMÁTICAS DO TUTOR CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -57,7 +55,6 @@ public class TutorProgrammaticAreaRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<TutorProgrammaticAreaDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as Áreas Programáticas do Tutor. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

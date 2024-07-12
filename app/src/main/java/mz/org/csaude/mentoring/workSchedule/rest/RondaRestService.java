@@ -67,14 +67,12 @@ public class RondaRestService extends BaseRestService {
                             rondaDTO.getHealthFacility().getHealthFacilityObj().setSyncStatus(SyncSatus.SENT);
                             rondas.add(ronda);
                         }
-                        Toast.makeText(APP.getApplicationContext(), "Carregando as Rondas.", Toast.LENGTH_SHORT).show();
                         rondaService.saveOrUpdateRondas(data);
 
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, rondas);
                     } catch (SQLException e) {
                         Log.e("RondaRestService", e.getMessage(), e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "RONDAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(BaseRestService.REQUEST_NO_DATA, null);
                 }
@@ -82,7 +80,6 @@ public class RondaRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<RondaDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as Rondas. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

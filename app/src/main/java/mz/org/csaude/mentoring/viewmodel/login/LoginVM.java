@@ -186,4 +186,10 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
             Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.server_unavailable)).show();
         }
     }
+
+    @Override
+    public void doOnRestErrorResponse(String errormsg) {
+        Utilities.displayAlertDialog(getRelatedActivity(), "Utilizador ou senha inválida").show();
+        setAuthenticating(false);
+    }
 }

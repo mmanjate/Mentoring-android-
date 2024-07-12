@@ -38,7 +38,6 @@ public class QuestionRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         QuestionService questionService = getApplication().getQuestionService();
-                        Toast.makeText(APP.getApplicationContext(), "Carregando as Questões.", Toast.LENGTH_SHORT).show();
                         List<Question> questions = new ArrayList<>();
                         for (QuestionDTO questionDTO : data){
                             questionDTO.getQuestionObj().setSyncStatus(SyncSatus.SENT);
@@ -49,7 +48,6 @@ public class QuestionRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "QUESTÕES CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -57,7 +55,6 @@ public class QuestionRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<QuestionDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as Questões. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

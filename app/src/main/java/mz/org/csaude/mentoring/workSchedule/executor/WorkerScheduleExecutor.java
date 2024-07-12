@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import androidx.work.Constraints;
 import androidx.work.Data;
+import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.ExistingWorkPolicy;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
@@ -36,6 +37,7 @@ import mz.org.csaude.mentoring.workSchedule.work.Resourceworker;
 import mz.org.csaude.mentoring.workSchedule.work.ResponseTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaWorker;
+import mz.org.csaude.mentoring.workSchedule.work.SessionRecommendedResourceWorker;
 import mz.org.csaude.mentoring.workSchedule.work.SessionStatusWorker;
 import mz.org.csaude.mentoring.workSchedule.work.SessionWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TimeOfDayWorker;
@@ -143,16 +145,21 @@ public class WorkerScheduleExecutor {
         Data inputData = new Data.Builder().putString("requestType", String.valueOf(Http.POST)).build();
         OneTimeWorkRequest sessionPostTimeWorkRequest = new OneTimeWorkRequest.Builder(MentorshipWorker.class)
                 .addTag("ONE_TIME_MENTORSHIPS_ID" + ONE_TIME_REQUEST_JOB_ID).setInputData(inputData).build();
+
+        OneTimeWorkRequest sessionRecommendedPostTimeWorkRequest = new OneTimeWorkRequest.Builder(SessionRecommendedResourceWorker.class)
+                .addTag("ONE_TIME_SESSIONS_RECOMMENDED_RESOURCES_ID" + ONE_TIME_REQUEST_JOB_ID).setInputData(inputData).build();
+
         workManager
-                .beginWith(sessionPostTimeWorkRequest)
+                .beginUniqueWork("FORCED_DATA_SYNC_JOB", ExistingWorkPolicy.KEEP, sessionPostTimeWorkRequest)
+                .then(sessionRecommendedPostTimeWorkRequest)
                 .enqueue();
-        return sessionPostTimeWorkRequest;
+        return sessionRecommendedPostTimeWorkRequest;
     }
 
-    public void syncNowData() {
+    public OneTimeWorkRequest syncNowData() {
         //downloadMentorData();
         //uploadMentees();
-        syncPostData();
+         return syncPostData();
     }
 
     public void syncPeriodicData() {
@@ -204,13 +211,21 @@ public class WorkerScheduleExecutor {
                 .setInputData(inputData)
                 .setInitialDelay(2, TimeUnit.HOURS).build();
 
-        //workManager.enqueue(hfPeriodicTimeWorkRequest);
-        workManager.enqueue(menteesPeriodicTimeWorkRequest);
-        workManager.enqueue(mentorFormsPeriodicTimeWorkRequest);
-        workManager.enqueue(mentorFormsQuestionsPeriodicTimeWorkRequest);
-        workManager.enqueue(mentorRondasPeriodicTimeWorkRequest);
-        workManager.enqueue(mentorshipPeriodicWorkRequest);
-        workManager.enqueue(sessionPeriodicWorkRequest);
+
+        PeriodicWorkRequest sessionRecommendedResourcePeriodicWorkRequest = new PeriodicWorkRequest.Builder(SessionRecommendedResourceWorker.class, 1, TimeUnit.HOURS)
+                .addTag("ONE_TIME_SESSIONS_RECOMMENDED_RESOURCES_ID" + ONE_TIME_REQUEST_JOB_ID)
+                .setInputData(inputData)
+                .setInitialDelay(2, TimeUnit.HOURS)
+                .build();
+
+        workManager.enqueueUniquePeriodicWork("PERIODIC_MENTEES_ID", ExistingPeriodicWorkPolicy.KEEP, menteesPeriodicTimeWorkRequest);
+        workManager.enqueueUniquePeriodicWork("PERIODIC_MENTOR_FORMS_ID", ExistingPeriodicWorkPolicy.KEEP, mentorFormsPeriodicTimeWorkRequest);
+        workManager.enqueueUniquePeriodicWork("PERIODIC_MENTOR_FORMS_QUESTIONS_ID", ExistingPeriodicWorkPolicy.KEEP, mentorFormsQuestionsPeriodicTimeWorkRequest);
+        workManager.enqueueUniquePeriodicWork("PERIODIC_MENTOR_RONDAS_ID", ExistingPeriodicWorkPolicy.KEEP, mentorRondasPeriodicTimeWorkRequest);
+        workManager.enqueueUniquePeriodicWork("PERIODIC_MENTORSHIPS_ID", ExistingPeriodicWorkPolicy.KEEP, mentorshipPeriodicWorkRequest);
+        workManager.enqueueUniquePeriodicWork("ONE_TIME_SESSIONS_ID", ExistingPeriodicWorkPolicy.KEEP, sessionPeriodicWorkRequest);
+        workManager.enqueueUniquePeriodicWork("ONE_TIME_SESSIONS_RECOMMENDED_RESOURCES_ID", ExistingPeriodicWorkPolicy.KEEP, sessionRecommendedResourcePeriodicWorkRequest);
+
     }
 
     public MentoringApplication getApplication() {

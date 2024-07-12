@@ -38,7 +38,6 @@ public class RondaTypeRestService extends BaseRestService {
                 if(Utilities.listHasElements(data)){
                     try {
                         RondaTypeService rondaTypeService = getApplication().getRondaTypeService();
-                        Toast.makeText(APP.getApplicationContext(), "Carregando os Tipos de Rondas.", Toast.LENGTH_SHORT).show();
                         List<RondaType> rondaTypes = new ArrayList<>();
                         for (RondaTypeDTO rondaTypeDTO : data){
                             rondaTypeDTO.getRondaType().setSyncStatus(SyncSatus.SENT);
@@ -49,7 +48,6 @@ public class RondaTypeRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "TIPOS DE RONDAS CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(REQUEST_NO_DATA, null);
                 }
@@ -57,7 +55,6 @@ public class RondaTypeRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<RondaTypeDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Tipos de Rondas. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

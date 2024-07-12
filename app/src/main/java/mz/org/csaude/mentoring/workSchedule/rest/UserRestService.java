@@ -61,13 +61,14 @@ public class UserRestService extends BaseRestService implements UserSyncService 
                         sessionManager.saveAuthToken(data.getAccess_token(), data.getRefresh_token(), data.getExpires_in());
                         listener.doOnRestSucessResponse(getApplication().getAuthenticatedUser());
                     }
+                } else {
+                    listener.doOnRestErrorResponse(response.message());
                 }
 
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar metadados. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });
@@ -102,7 +103,6 @@ public class UserRestService extends BaseRestService implements UserSyncService 
 
             @Override
             public void onFailure(Call<UserDTO> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar metadados. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

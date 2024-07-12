@@ -20,6 +20,9 @@ public interface SessionService extends BaseService<Session> {
     List<SessionSummary> generateSessionSummary(Session session);
 
     void saveRecommendedResources(Session session, List<SessionRecommendedResource> recommendedResources) throws SQLException;
+    void updateRecommendedResources(SessionRecommendedResource recommendedResources) throws SQLException;
+
+    List<SessionRecommendedResource> getPendingRecommendedResources() throws SQLException;
 
     List<Session> getAllOfRondaPending(Ronda ronda) throws SQLException;
 

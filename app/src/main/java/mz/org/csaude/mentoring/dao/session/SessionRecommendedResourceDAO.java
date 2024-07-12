@@ -13,4 +13,6 @@ public interface SessionRecommendedResourceDAO extends MentoringBaseDao<SessionR
     List<SessionRecommendedResource> findByTutorId(int tutorId) throws SQLException;
 
     List<SessionRecommendedResource> findByTutoredId(int tutoredId) throws SQLException;
+
+    List<SessionRecommendedResource> queryForAllPending() throws SQLException;
 }

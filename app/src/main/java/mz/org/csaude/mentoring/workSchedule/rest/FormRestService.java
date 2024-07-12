@@ -72,7 +72,6 @@ public class FormRestService extends BaseRestService {
                     } catch (SQLException e) {
                         Log.e("METADATA LOAD --", e.getMessage(), e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "TABELAS DE COMPETÊNCIAS CARREGADAS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 } else {
                     listener.doOnResponse(BaseRestService.REQUEST_NO_DATA, null);
                 }
@@ -80,7 +79,6 @@ public class FormRestService extends BaseRestService {
 
             @Override
             public void onFailure(Call<List<FormDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as Tabelas de Competências. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

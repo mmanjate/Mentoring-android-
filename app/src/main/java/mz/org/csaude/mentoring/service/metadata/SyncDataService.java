@@ -27,6 +27,7 @@ import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.dto.ronda.RondaTypeDTO;
 import mz.org.csaude.mentoring.dto.session.SessionDTO;
+import mz.org.csaude.mentoring.dto.session.SessionRecommendedResourceDTO;
 import mz.org.csaude.mentoring.dto.session.SessionStatusDTO;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
@@ -76,8 +77,8 @@ public interface SyncDataService {
     @POST("/login")
     Call<LoginResponse> login(@Body RequestBody body);
 
-   /* @POST("users/refresh-token/")
-    suspend fun refreshAccessToken(): TokenResponse*/
+    @POST("/auth/refresh")
+    Call<ResponseBody> refreshToken(@Body RequestBody body);
 
     @GET("/user/getByCredencials/{username}/{password}")
     Call<UserDTO> getByCredencials(@Path("username") final String username, @Path("password") final String password);
@@ -183,4 +184,7 @@ public interface SyncDataService {
 
     @DELETE("/ronda/delete")
     Call<ResponseBody> delete(@Query("uuid") String uuid);
+
+    @POST("/sessionRecommendedResources")
+    Call<List<SessionRecommendedResourceDTO>> postSessionRecommendedResource(@Body List<SessionRecommendedResourceDTO> sessionRecommendedResourceDTOs);
 }

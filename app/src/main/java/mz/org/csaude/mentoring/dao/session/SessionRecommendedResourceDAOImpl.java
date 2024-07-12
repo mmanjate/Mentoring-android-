@@ -8,6 +8,7 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.dao.MentoringBaseDaoImpl;
 import mz.org.csaude.mentoring.model.session.SessionRecommendedResource;
+import mz.org.csaude.mentoring.util.SyncSatus;
 
 public class SessionRecommendedResourceDAOImpl extends MentoringBaseDaoImpl<SessionRecommendedResource, Integer> implements SessionRecommendedResourceDAO {
     public SessionRecommendedResourceDAOImpl(Class dataClass) throws SQLException {
@@ -35,5 +36,10 @@ public class SessionRecommendedResourceDAOImpl extends MentoringBaseDaoImpl<Sess
     @Override
     public List<SessionRecommendedResource> findByTutoredId(int tutoredId) throws SQLException {
         return queryBuilder().where().eq(SessionRecommendedResource.COLUMN_TUTORED_ID, tutoredId).query();
+    }
+
+    @Override
+    public List<SessionRecommendedResource> queryForAllPending() throws SQLException {
+        return queryBuilder().where().eq(SessionRecommendedResource.COLUMN_SYNC_STATUS, SyncSatus.PENDING).query();
     }
 }

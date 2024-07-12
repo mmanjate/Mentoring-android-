@@ -8,8 +8,11 @@ import static mz.org.csaude.mentoring.util.Constants.METADATA_SYNC_TIME;
 import static mz.org.csaude.mentoring.util.Constants.SESSION_SYNC_TIME;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -101,6 +104,7 @@ import mz.org.csaude.mentoring.workSchedule.rest.PartnerRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.ResourceRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.RondaRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.ServerStatusChecker;
+import mz.org.csaude.mentoring.workSchedule.rest.SessionRecommendedResourceRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.SessionRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutorRestService;
 import mz.org.csaude.mentoring.workSchedule.rest.TutoredRestService;
@@ -112,8 +116,8 @@ public class MentoringApplication  extends Application {
 
     private static MentoringApplication mInstance;
 
-    //private static final String BASE_URL = "http://10.10.2.75:8087";
-    private static final String BASE_URL = "http://10.10.12.65:8087";
+    //private static final String BASE_URL = "http://10.10.2.30:8087";
+    public static final String BASE_URL = "http://10.10.12.65:8087";
     //private static final String BASE_URL = "http://10.10.12.97:8087";
     private User authenticatedUser;
 
@@ -204,6 +208,7 @@ public class MentoringApplication  extends Application {
     private ResourceRestService resourceRestService;
     private AnswerService answerService;
     private SessionRestService sessionRestService;
+    private SessionRecommendedResourceRestService sessionRecommendedResourceRestService;
 
 
     @Override
@@ -218,14 +223,15 @@ public class MentoringApplication  extends Application {
         setUpRetrofit();
 
         Locale.setDefault(new Locale("en_ZA"));
+
     }
+
 
     public static synchronized MentoringApplication getInstance() {
         return mInstance;
     }
 
-    public void setUpRetrofit() {
-
+    private void setUpRetrofit() {
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
@@ -450,6 +456,10 @@ public class MentoringApplication  extends Application {
         if (sessionRestService == null) this.sessionRestService = new SessionRestService(this);
         return sessionRestService;
     }
+    public SessionRecommendedResourceRestService getSessionRecommendedResourceRestService() {
+        if (sessionRecommendedResourceRestService == null) this.sessionRecommendedResourceRestService = new SessionRecommendedResourceRestService(this);
+        return sessionRecommendedResourceRestService;
+    }
 
     public ApplicationStep getApplicationStep() {
         return this.applicationStep;
@@ -537,4 +547,6 @@ public class MentoringApplication  extends Application {
     public int getSessionSyncInterval() {
         return getMentoringSharedPreferences().getInt(SESSION_SYNC_TIME, 2);
     }
+
+
 }

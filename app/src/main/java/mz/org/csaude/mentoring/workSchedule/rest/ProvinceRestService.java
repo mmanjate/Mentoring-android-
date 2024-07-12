@@ -42,7 +42,6 @@ public class ProvinceRestService extends BaseRestService {
                 try {
 
                 ProvinceService provinceService = getApplication().getProvinceService();
-                Toast.makeText(APP.getApplicationContext(), "Carregando as Provincias ", Toast.LENGTH_SHORT).show();
 
                     List<Province> provinces = new ArrayList<>();
                     for (ProvinceDTO provinceDTO : data) {
@@ -54,12 +53,10 @@ public class ProvinceRestService extends BaseRestService {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                Toast.makeText(APP.getApplicationContext(), "PROVINCIAS carregadas com sucesso!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<List<ProvinceDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar as PROVINCIAS. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
 
             }

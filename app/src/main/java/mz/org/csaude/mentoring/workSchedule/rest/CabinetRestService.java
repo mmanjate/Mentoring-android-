@@ -53,14 +53,12 @@ public class CabinetRestService extends BaseRestService {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(APP.getApplicationContext(), "CABINETS CARREGADOS COM SUCESSO", Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<List<CabinetDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os Cabinets. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

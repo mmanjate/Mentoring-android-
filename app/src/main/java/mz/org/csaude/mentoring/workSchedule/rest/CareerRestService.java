@@ -38,7 +38,6 @@ public class CareerRestService extends BaseRestService {
 
                     try {
                         CareerService careerService = null;
-                        Toast.makeText(APP.getApplicationContext(), "Carregando as CARREIRAS...", Toast.LENGTH_SHORT).show();
                         List<Career> careers = new ArrayList<>();
                         for (CareerDTO careerDTO : data) {
                             careerDTO.getCareer().setSyncStatus(SyncSatus.SENT);
@@ -50,14 +49,12 @@ public class CareerRestService extends BaseRestService {
                         throw new RuntimeException(e);
                     }
 
-                    Toast.makeText(APP.getApplicationContext(), "CARREIRAS CARREGADAS COM SUCESSO!", Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<List<CareerDTO>> call, Throwable t) {
-                Toast.makeText(APP.getApplicationContext(), "Não foi possivel carregar os TIPOS DE CARREIRAS. Tente mais tarde....", Toast.LENGTH_SHORT).show();
                 Log.i("METADATA LOAD --", t.getMessage(), t);
             }
         });

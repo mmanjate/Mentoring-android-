@@ -26,11 +26,11 @@ public class SessionRecommendedResource extends BaseModel {
     public static final String COLUMN_RESOURCE_NAME = "resource_name";
     public static final String COLUMN_DATE_RECOMMENDED = "date_recommended";
 
-    @DatabaseField(columnName = COLUMN_SESSION_ID, canBeNull = false, foreign = true)
+    @DatabaseField(columnName = COLUMN_SESSION_ID, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Session session;
-    @DatabaseField(columnName = COLUMN_TUTORED_ID, canBeNull = false, foreign = true)
+    @DatabaseField(columnName = COLUMN_TUTORED_ID, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Tutored tutored;
-    @DatabaseField(columnName = COLUMN_TUTOR_ID, canBeNull = false, foreign = true)
+    @DatabaseField(columnName = COLUMN_TUTOR_ID, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Tutor tutor;
 
     @DatabaseField(columnName = COLUMN_RESOURCE_LINK, canBeNull = false)

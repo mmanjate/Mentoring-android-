@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.dao.tutored;
 
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -107,8 +108,17 @@ public class TutoredDaoImpl extends MentoringBaseDaoImpl<Tutored, Integer> imple
         QueryBuilder<Employee, Integer> employeeQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getEmployeeDAO().queryBuilder();
         employeeQb.join(locationQb);
 
-        QueryBuilder<Tutored, Integer> tutoredQb =  MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getTutoredDao().queryBuilder();
-        tutoredQb.join(employeeQb).where().eq(Tutored.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE).and().eq(Tutored.COLUMN_ZERO_EVALUATION_STATUS, zeroEvaluation);
+        QueryBuilder<Tutored, Integer> tutoredQb = MentoringDataBaseHelper.getInstance(application.getApplicationContext()).getTutoredDao().queryBuilder();
+
+        Where<Tutored, Integer> where = tutoredQb.join(employeeQb)
+                .where()
+                .eq(Tutored.COLUMN_LIFE_CYCLE_STATUS, LifeCycleStatus.ACTIVE)
+                .and()
+                .eq(Tutored.COLUMN_ZERO_EVALUATION_STATUS, zeroEvaluation);
+
+        if (zeroEvaluation) {
+            where.and().isNotNull(Tutored.COLUMN_ZERO_EVALUATION_SCORE);
+        }
 
         return tutoredQb.orderBy(Employee.COLUMN_ID, true).query();
     }

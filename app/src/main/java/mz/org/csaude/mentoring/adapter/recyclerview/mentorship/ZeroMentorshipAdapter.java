@@ -15,6 +15,7 @@ import mz.org.csaude.mentoring.adapter.recyclerview.generic.AbstractRecycleViewA
 import mz.org.csaude.mentoring.base.activity.BaseActivity;
 import mz.org.csaude.mentoring.databinding.MentorshipListItemBinding;
 import mz.org.csaude.mentoring.model.mentorship.Mentorship;
+import mz.org.csaude.mentoring.viewmodel.mentorship.AbstractSearchMentorshipVM;
 
 public class ZeroMentorshipAdapter extends AbstractRecycleViewAdapter<Mentorship> {
     public ZeroMentorshipAdapter(RecyclerView recyclerView, List<Mentorship> records, BaseActivity activity) {
@@ -31,6 +32,7 @@ public class ZeroMentorshipAdapter extends AbstractRecycleViewAdapter<Mentorship
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((MentorshipViewHolder) holder).mentorshipListItemBinding.setMentorship(records.get(position));
+        ((MentorshipViewHolder) holder).mentorshipListItemBinding.setViewModel((AbstractSearchMentorshipVM) activity.getRelatedViewModel());
     }
 
     public class MentorshipViewHolder extends RecyclerView.ViewHolder {

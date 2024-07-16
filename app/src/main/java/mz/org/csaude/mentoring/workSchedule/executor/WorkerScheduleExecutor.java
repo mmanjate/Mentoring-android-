@@ -142,19 +142,34 @@ public class WorkerScheduleExecutor {
     }
 
     public OneTimeWorkRequest syncPostData() {
+        // Define a unique job ID
+        String jobId = "ONE_TIME_REQUEST_JOB_ID_" + System.currentTimeMillis();
+
+        // Define input data for the requests
         Data inputData = new Data.Builder().putString("requestType", String.valueOf(Http.POST)).build();
+
+        // Create the first OneTimeWorkRequest
         OneTimeWorkRequest sessionPostTimeWorkRequest = new OneTimeWorkRequest.Builder(MentorshipWorker.class)
-                .addTag("ONE_TIME_MENTORSHIPS_ID" + ONE_TIME_REQUEST_JOB_ID).setInputData(inputData).build();
+                .addTag("ONE_TIME_MENTORSHIPS_" + jobId)
+                .setInputData(inputData)
+                .build();
 
+        // Create the second OneTimeWorkRequest
         OneTimeWorkRequest sessionRecommendedPostTimeWorkRequest = new OneTimeWorkRequest.Builder(SessionRecommendedResourceWorker.class)
-                .addTag("ONE_TIME_SESSIONS_RECOMMENDED_RESOURCES_ID" + ONE_TIME_REQUEST_JOB_ID).setInputData(inputData).build();
+                .addTag("ONE_TIME_SESSIONS_RECOMMENDED_RESOURCES_" + jobId)
+                .setInputData(inputData)
+                .build();
 
+        // Chain the WorkRequests and enqueue
         workManager
-                .beginUniqueWork("FORCED_DATA_SYNC_JOB", ExistingWorkPolicy.KEEP, sessionPostTimeWorkRequest)
+                .beginWith(sessionPostTimeWorkRequest)
                 .then(sessionRecommendedPostTimeWorkRequest)
                 .enqueue();
+
+        // Return the final WorkRequest
         return sessionRecommendedPostTimeWorkRequest;
     }
+
 
     public OneTimeWorkRequest syncNowData() {
         //downloadMentorData();

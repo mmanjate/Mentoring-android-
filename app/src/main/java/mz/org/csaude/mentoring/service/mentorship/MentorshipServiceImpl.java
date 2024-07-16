@@ -102,6 +102,10 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
 
     @Override
     public int delete(Mentorship record) throws SQLException {
+        if (record.getSession().getRonda().isRondaZero()) {
+            record.getTutored().setZeroEvaluationDone(false);
+            tutoredDao.update(record.getTutored());
+        }
         return this.mentorshipDAO.delete(record);
     }
 

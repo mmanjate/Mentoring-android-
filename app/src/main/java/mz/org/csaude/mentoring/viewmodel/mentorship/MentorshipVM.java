@@ -29,6 +29,7 @@ import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
+import mz.org.csaude.mentoring.model.session.SessionSummary;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.SimpleValue;
@@ -682,6 +683,13 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
         }
     }
 
+    private void determineMenteeScore(Mentorship mentorship) {
+        List<SessionSummary> sessionSummaryList = getApplication().getSessionService().generateSessionSummary(session);
+        if (Utilities.listHasElements(sessionSummaryList)) {
+            getRelatedActivity().displaySearchResults();
+        }
+    }
+
     private void goToMentorshipSummary() {
         Map<String, Object> params = new HashMap<>();
         params.put("session", this.mentorship.getSession());
@@ -801,6 +809,10 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
     }
 
     public void tryToUpdateMentorship() {
+        if (isTableSelectionStep() || isMenteeSelectionStep() || isPeriodSelectionStep() ) {
+            doOnDeny();
+            return;
+        }
         Utilities.displayConfirmationDialog(getRelatedActivity(), "Deseja gravar as alterações do preenchimento desta a avaliação?", "SIM", "NÃO", this).show();
     }
 

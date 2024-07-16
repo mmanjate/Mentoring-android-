@@ -31,7 +31,7 @@ public class SessionRecommendedResourceRestService extends BaseRestService {
             if (resources.isEmpty()) {
                 return;
             }
-            resourceDTOList = Utilities.parseList(resources, SessionRecommendedResourceDTO.class);
+            resourceDTOList = Utilities.parse(resources, SessionRecommendedResourceDTO.class);
         } catch (SQLException e) {
             Log.e("SessionRecommendedResourceRestService", "Failed to get pending recommended resources", e);
         }

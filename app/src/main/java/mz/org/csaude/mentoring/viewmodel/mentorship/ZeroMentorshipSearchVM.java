@@ -41,7 +41,7 @@ public class ZeroMentorshipSearchVM extends AbstractSearchMentorshipVM {
 
     @Override
     protected void doOnNoRecordFound() {
-
+        getRelatedActivity().populateRecyclerView();
     }
 
 
@@ -63,7 +63,7 @@ public class ZeroMentorshipSearchVM extends AbstractSearchMentorshipVM {
         super.edit(mentorship);
         Map<String, Object> params = new HashMap<>();
         params.put("mentorship", mentorship);
-        params.put("CURR_MENTORSHIP_STEP", MentorshipVM.CURR_MENTORSHIP_STEP_TABLE_SELECTION);
+        params.put("CURR_MENTORSHIP_STEP", MentorshipVM.CURR_MENTORSHIP_STEP_PERIOD_SELECTION);
         getApplication().getApplicationStep().changeToEdit();
         getRelatedActivity().nextActivity(CreateMentorshipActivity.class, params);
     }

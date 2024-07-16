@@ -392,7 +392,7 @@ public class TutoredVM extends BaseViewModel implements RestResponseListener<Tut
     }
 
     public void createNewTutored() {
-        getRelatedActivity().nextActivity(CreateTutoredActivity.class);
+        getRelatedActivity().nextActivityFinishingCurrent(CreateTutoredActivity.class);
     }
     public List getAllPartners() {
         try {

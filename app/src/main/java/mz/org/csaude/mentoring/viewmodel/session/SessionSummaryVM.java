@@ -1,6 +1,7 @@
 package mz.org.csaude.mentoring.viewmodel.session;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -66,6 +67,25 @@ public class SessionSummaryVM extends BaseViewModel {
         sessionSummaryList = getApplication().getSessionService().generateSessionSummary(session);
         if (Utilities.listHasElements(sessionSummaryList)) {
             getRelatedActivity().displaySearchResults();
+            if (session.getRonda().isRondaZero()) {
+                determineAndUpdateMenteeScore();
+            }
+        }
+    }
+
+    private void determineAndUpdateMenteeScore() {
+        try {
+            int yesCount = 0;
+            int noCount = 0;
+            for (SessionSummary sessionSummary : sessionSummaryList){
+                yesCount = yesCount + sessionSummary.getSimCount();
+                noCount = noCount + sessionSummary.getNaoCount();
+            }
+            double score = (double) yesCount / (yesCount + noCount) *100;
+            session.getTutored().setZeroEvaluationScore(score);
+            getApplication().getTutoredService().update(session.getTutored());
+        } catch (SQLException e) {
+            Log.e("SessionSummaryVM", "Exception: " + e.getMessage());
         }
     }
 }

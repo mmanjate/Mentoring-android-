@@ -185,6 +185,6 @@ public interface SyncDataService {
     @DELETE("/ronda/delete")
     Call<ResponseBody> delete(@Query("uuid") String uuid);
 
-    @POST("/sessionRecommendedResources")
+    @POST("/sessionsReommendedResources/save")
     Call<List<SessionRecommendedResourceDTO>> postSessionRecommendedResource(@Body List<SessionRecommendedResourceDTO> sessionRecommendedResourceDTOs);
 }

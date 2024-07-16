@@ -125,6 +125,7 @@ public class RondaSearchVM extends SearchVM<Ronda> implements IDialogListener, S
             for (RondaMentee mentee : ronda.getRondaMentees()){
                 RondaSummary rondaSummary = new RondaSummary();
                 rondaSummary.setRonda(ronda);
+                rondaSummary.setZeroEvaluation(mentee.getTutored().getZeroEvaluationScore());
                 rondaSummary.setMentor(ronda.getActiveMentor().getEmployee().getFullName());
                 rondaSummary.setMentee(mentee.getTutored().getEmployee().getFullName());
                 rondaSummary.setNuit(mentee.getTutored().getEmployee().getNuit());
@@ -176,7 +177,7 @@ public class RondaSearchVM extends SearchVM<Ronda> implements IDialogListener, S
         try {
             ronda.setSessions(getApplication().getSessionService().getAllOfRonda(ronda));
             if (Utilities.listHasElements(ronda.getSessions())) {
-                Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível editar uma ronda com sessões de mentoria registadas.").show();
+                Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível editar uma ronda com sessões registadas.").show();
                 return;
             }
         } catch (SQLException e) {
@@ -195,7 +196,7 @@ public class RondaSearchVM extends SearchVM<Ronda> implements IDialogListener, S
         try {
             ronda.setSessions(getApplication().getSessionService().getAllOfRonda(ronda));
             if (Utilities.listHasElements(ronda.getSessions())) {
-                Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível editar uma ronda com sessões de mentoria registadas.").show();
+                Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível apagar uma ronda com sessões registadas.").show();
                 return;
             }
         } catch (SQLException e) {

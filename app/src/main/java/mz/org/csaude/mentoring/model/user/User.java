@@ -7,6 +7,7 @@ import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.user.UserDaoImpl;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
 import mz.org.csaude.mentoring.model.employee.Employee;
+import mz.org.csaude.mentoring.util.LifeCycleStatus;
 import mz.org.csaude.mentoring.util.Utilities;
 
 @DatabaseTable(tableName = "user", daoClass = UserDaoImpl.class)
@@ -123,4 +124,7 @@ public class User extends BaseModel {
         return validadeToLogin();
     }
 
+    public boolean isActivated() {
+        return this.getLifeCycleStatus().equals(LifeCycleStatus.ACTIVE);
+    }
 }

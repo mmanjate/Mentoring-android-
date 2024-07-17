@@ -187,4 +187,7 @@ public interface SyncDataService {
 
     @POST("/sessionsReommendedResources/save")
     Call<List<SessionRecommendedResourceDTO>> postSessionRecommendedResource(@Body List<SessionRecommendedResourceDTO> sessionRecommendedResourceDTOs);
+
+    @GET("/user/getByuuid/{uuid}")
+    Call<UserDTO> getByuuid(@Path("uuid") String uuid);
 }

@@ -92,6 +92,10 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
         User logedUser = userService.login(this.user);
 
         if (logedUser != null) {
+            if (!logedUser.isActivated()) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "O utilizador está inativo, contacte o administrador.").show();
+                return;
+            }
             getApplication().setAuthenticatedUser(logedUser, remeberMe);
             goHome();
         } else {
@@ -189,7 +193,11 @@ public class LoginVM extends BaseViewModel implements RestResponseListener<User>
 
     @Override
     public void doOnRestErrorResponse(String errormsg) {
-        Utilities.displayAlertDialog(getRelatedActivity(), "Utilizador ou senha inválida").show();
+        if (Utilities.stringHasValue(errormsg)) {
+            Utilities.displayAlertDialog(getRelatedActivity(), errormsg).show();
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), "Utilizador ou senha inválida").show();
+        }
         setAuthenticating(false);
     }
 }

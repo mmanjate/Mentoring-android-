@@ -62,7 +62,7 @@ public class MentorshipRestService extends BaseRestService {
 
                 @Override
                 public void onFailure(Call<List<MentorshipDTO>> call, Throwable t) {
-                    Log.i("METADATA LOAD --", t.getMessage(), t);
+                    Log.i("MENTORSHIP REST --", t.getMessage(), t);
                 }
             });
         }

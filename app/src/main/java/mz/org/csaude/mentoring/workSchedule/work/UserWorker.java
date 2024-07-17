@@ -11,11 +11,6 @@ import java.util.List;
 
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
 import mz.org.csaude.mentoring.model.user.User;
-import mz.org.csaude.mentoring.service.tutor.TutorService;
-import mz.org.csaude.mentoring.service.tutor.TutorServiceImpl;
-import mz.org.csaude.mentoring.service.user.UserService;
-import mz.org.csaude.mentoring.service.user.UserServiceImpl;
-import mz.org.csaude.mentoring.service.user.UserSyncService;
 import mz.org.csaude.mentoring.workSchedule.rest.UserRestService;
 
 public class UserWorker extends BaseWorker<User> {
@@ -34,7 +29,7 @@ public class UserWorker extends BaseWorker<User> {
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-        userRestService.getUserByCedencials(this);
+        userRestService.getByUuid(this);
     }
 
     @Override

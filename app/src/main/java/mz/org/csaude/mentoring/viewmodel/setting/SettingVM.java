@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -51,20 +52,8 @@ public class SettingVM extends BaseViewModel {
         workerScheduleExecutor = WorkerScheduleExecutor.getInstance(getApplication());
         this.sessionSyncTime = this.getApplication().getMentoringSharedPreferences().getInt(SESSION_SYNC_TIME, 2);
         this.metadataSyncTime = this.getApplication().getMentoringSharedPreferences().getInt(METADATA_SYNC_TIME, 2);
-        createNotificationChannel();
     }
 
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Sync Notifications";
-            String description = "Notifications for data sync status";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(SYNC_CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getApplication().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
 
     @Override
     public void preInit() {
@@ -111,112 +100,28 @@ public class SettingVM extends BaseViewModel {
         }
     }
 
-    private NotificationCompat.Builder buildProgressNotification(Context context, String title, String content, int progress) {
-        return new NotificationCompat.Builder(context, "sync_channel")
-                .setContentTitle(title)
-                .setContentText(content)
-                .setSmallIcon(R.drawable.baseline_cloud_sync_24)  // Replace with your sync icon drawable
-                .setOngoing(true)
-                .setOnlyAlertOnce(true)
-                .setProgress(100, progress, false);
-    }
     public void syncAllNow() {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplication());
-        int notificationId = 1;
+        // Create a ProgressDialog
+        ProgressDialog progressDialog = new ProgressDialog(getRelatedActivity());
+        progressDialog.setMessage("Syncing data...");
+        progressDialog.setCancelable(false); // Prevents dismissal by tapping outside the dialog
+        progressDialog.show();
 
-        // Start the notification with progress
-        NotificationCompat.Builder builder = buildProgressNotification(getApplication(), "Sync In Progress", "Syncing data...", 0);
-        if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        notificationManager.notify(notificationId, builder.build());
-
+        // Schedule the sync work
         OneTimeWorkRequest request = workerScheduleExecutor.syncNowData();
         WorkerScheduleExecutor.getInstance(getApplication()).getWorkManager().getWorkInfoByIdLiveData(request.getId()).observe(getRelatedActivity(), info -> {
             if (info.getState() == WorkInfo.State.RUNNING) {
-                // Update progress on the notification
-                int progress = info.getProgress().getInt("PROGRESS", 0);
-                builder.setProgress(100, progress, false);
-                if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
+                // Show progress dialog when work is running
+                if (!progressDialog.isShowing()) {
+                    progressDialog.show();
                 }
-                notificationManager.notify(notificationId, builder.build());
             } else if (info.getState().isFinished()) {
-                // Remove progress, mark as complete
-                builder.setContentTitle("Sync Complete")
-                        .setContentText("Data sync complete.")
-                        .setProgress(0, 0, false)
-                        .setOngoing(false);
-                if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                notificationManager.notify(notificationId, builder.build());
+                // Dismiss the progress dialog when work is finished
+                progressDialog.dismiss();
             }
         });
     }
 
-    private void showProgressNotification(String title, String content) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplication(), SYNC_CHANNEL_ID)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setSmallIcon(android.R.drawable.stat_sys_download)
-                .setOngoing(true)
-                .setProgress(100, 0, true);
-
-        if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        NotificationManagerCompat.from(getApplication()).notify(SYNC_NOTIFICATION_ID, builder.build());
-    }
-
-    private void showNotification(String title, String content) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplication(), SYNC_CHANNEL_ID)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setSmallIcon(android.R.drawable.stat_sys_download_done)
-                .setProgress(0, 0, false)
-                .setOngoing(false);
-
-        if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        NotificationManagerCompat.from(getApplication()).notify(SYNC_NOTIFICATION_ID, builder.build());
-    }
     public void saveSessionSyncTime() {
         SharedPreferences.Editor editor = this.getApplication().getMentoringSharedPreferences().edit();
         editor.putInt(SESSION_SYNC_TIME, this.sessionSyncTime);

@@ -29,6 +29,7 @@ public class SessionRecommendedResourceRestService extends BaseRestService {
         try {
             List<SessionRecommendedResource> resources = getApplication().getSessionService().getPendingRecommendedResources();
             if (resources.isEmpty()) {
+                listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Collections.emptyList());
                 return;
             }
             resourceDTOList = Utilities.parse(resources, SessionRecommendedResourceDTO.class);

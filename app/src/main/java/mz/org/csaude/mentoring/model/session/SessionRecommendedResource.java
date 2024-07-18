@@ -26,6 +26,8 @@ public class SessionRecommendedResource extends BaseModel {
     public static final String COLUMN_RESOURCE_NAME = "resource_name";
     public static final String COLUMN_DATE_RECOMMENDED = "date_recommended";
 
+    public static final String COLUMN_TOKEN = "token";
+
     @DatabaseField(columnName = COLUMN_SESSION_ID, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Session session;
     @DatabaseField(columnName = COLUMN_TUTORED_ID, canBeNull = false, foreign = true, foreignAutoRefresh = true)
@@ -41,6 +43,9 @@ public class SessionRecommendedResource extends BaseModel {
     @DatabaseField(columnName = COLUMN_DATE_RECOMMENDED, canBeNull = false)
     private Date dateRecommended;
 
+    @DatabaseField(columnName = COLUMN_TOKEN, canBeNull = true)
+    private String token;
+
     // Default constructor is needed by ORMLite
     public SessionRecommendedResource() {
     }
@@ -49,8 +54,8 @@ public class SessionRecommendedResource extends BaseModel {
         this.tutor = session.getRonda().getActiveMentor();
         this.tutored = session.getTutored();
         this.session = session;
-        this.resourceLink = node.getName();
-        this.resourceName = node.getName();
+        this.resourceLink = node.getName().replace(" ", "_");
+        this.resourceName = node.getName().replace(" ", "_");
         this.dateRecommended = DateUtilities.getCurrentDate();
         this.setSyncStatus(SyncSatus.PENDING);
         this.setCreatedAt(DateUtilities.getCurrentDate());
@@ -115,5 +120,13 @@ public class SessionRecommendedResource extends BaseModel {
 
     public void setDateRecommended(Date dateRecommended) {
         this.dateRecommended = dateRecommended;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -13,6 +13,8 @@ public class SessionRecommendedResourceDTO extends BaseEntityDTO {
     private String resourceName;
     private Date dateRecommended;
 
+    private String token;
+
     public SessionRecommendedResourceDTO() {
     }
 
@@ -72,5 +74,13 @@ public class SessionRecommendedResourceDTO extends BaseEntityDTO {
 
     public void setDateRecommended(Date dateRecommended) {
         this.dateRecommended = dateRecommended;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

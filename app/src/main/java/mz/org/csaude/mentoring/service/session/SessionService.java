@@ -28,4 +28,5 @@ public interface SessionService extends BaseService<Session> {
 
     void saveOrUpdate(Session session) throws SQLException;
 
+    List<Session> getAllNotSynced() throws SQLException;
 }

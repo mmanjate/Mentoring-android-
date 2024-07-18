@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.dao.session.SessionDAO;
 import mz.org.csaude.mentoring.dto.answer.AnswerDTO;
 import mz.org.csaude.mentoring.dto.mentorship.MentorshipDTO;
+import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
 import mz.org.csaude.mentoring.dto.session.SessionDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.answer.Answer;
@@ -28,6 +30,7 @@ import mz.org.csaude.mentoring.service.mentorship.MentorshipService;
 import mz.org.csaude.mentoring.service.session.SessionService;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
+import mz.org.csaude.mentoring.workSchedule.work.SessionPOSTWorker;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,8 +68,8 @@ public class SessionRestService extends BaseRestService {
                             session.setTutored(mentee);
                             session.setStatus(getApplication().getSessionStatusService().getByuuid(sessionDTO.getSessionStatus().getUuid()));
                             getApplication().getSessionService().saveOrUpdate(session);
-                            List<MentorshipDTO> mentorships = sessionDTO.getMentorships();
-                            updateMentorships(mentorships, form, mentee, session);
+                            //List<MentorshipDTO> mentorships = sessionDTO.getMentorships();
+                            //updateMentorships(mentorships, form, mentee, session);
                         }
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, sessions);
                     } catch (SQLException e) {
@@ -130,6 +133,43 @@ public class SessionRestService extends BaseRestService {
             if(answerDTO.getLifeCycleStatus()!=null) answer.setLifeCycleStatus(answerDTO.getLifeCycleStatus());
             answer.setValue(answerDTO.getValue());
             getApplication().getAnswerService().saveOrUpdate(answer);
+        }
+    }
+
+    public void restPostSessions(RestResponseListener<Session> listener) {
+        List<Session> sessions = null;
+        try {
+            sessions = getApplication().getSessionService().getAllNotSynced();
+            if (Utilities.listHasElements(sessions)) {
+                Call<List<SessionDTO>> rondaCall = syncDataService.postSessions(Utilities.parse(sessions, SessionDTO.class));
+                rondaCall.enqueue(new Callback<List<SessionDTO>>() {
+                    @Override
+                    public void onResponse(Call<List<SessionDTO>> call, Response<List<SessionDTO>> response) {
+                        List<SessionDTO> data = response.body();
+                        if (Utilities.listHasElements(data)) {
+                            try {
+                                List<Session> sessionList = Utilities.parse(data, Session.class);
+                                for (Session session : sessionList) {
+                                    session = getApplication().getSessionService().getByuuid(session.getUuid());
+                                    session.setSyncStatus(SyncSatus.SENT);
+                                    getApplication().getSessionService().update(session);
+                                }
+
+                                listener.doOnResponse(BaseRestService.REQUEST_SUCESS, sessionList);
+                            } catch (SQLException  e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else listener.doOnRestErrorResponse(response.message());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<SessionDTO>> call, Throwable t) {
+                        Log.i("METADATA LOAD --", t.getMessage(), t);
+                    }
+                });
+            } else listener.doOnResponse(BaseRestService.REQUEST_SUCESS, Collections.emptyList());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

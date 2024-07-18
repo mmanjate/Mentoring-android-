@@ -2,12 +2,10 @@ package mz.org.csaude.mentoring.workSchedule.rest;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,18 +14,13 @@ import mz.org.csaude.mentoring.base.service.BaseRestService;
 import mz.org.csaude.mentoring.common.HttpStatus;
 import mz.org.csaude.mentoring.common.MentoringAPIError;
 import mz.org.csaude.mentoring.dto.ronda.RondaDTO;
-import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.listner.rest.RestResponseListener;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
-import mz.org.csaude.mentoring.model.ronda.RondaMentee;
-import mz.org.csaude.mentoring.model.ronda.RondaMentor;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.user.User;
 import mz.org.csaude.mentoring.service.ronda.RondaService;
-import mz.org.csaude.mentoring.service.ronda.RondaServiceImpl;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
-import mz.org.csaude.mentoring.viewmodel.ronda.RondaVM;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -91,7 +84,7 @@ public class RondaRestService extends BaseRestService {
         try {
             rondas = getApplication().getRondaService().getAllNotSynced();
             if (Utilities.listHasElements(rondas)) {
-                Call<List<RondaDTO>> rondaCall = syncDataService.postRondas(Utilities.parse(rondas, RondaDTO.class));
+                Call<List<RondaDTO>> rondaCall = syncDataService.updateRondaInfo(Utilities.parse(rondas, RondaDTO.class));
                 rondaCall.enqueue(new Callback<List<RondaDTO>>() {
                     @Override
                     public void onResponse(Call<List<RondaDTO>> call, Response<List<RondaDTO>> response) {
@@ -106,19 +99,20 @@ public class RondaRestService extends BaseRestService {
 
                                 listener.doOnResponse(BaseRestService.REQUEST_SUCESS, rondaList);
                             } catch (SQLException  e) {
-                                throw new RuntimeException(e);
+                                listener.doOnRestErrorResponse(response.message());
                             }
                         } else listener.doOnRestErrorResponse(response.message());
                     }
 
                     @Override
                     public void onFailure(Call<List<RondaDTO>> call, Throwable t) {
-                        Log.i("METADATA LOAD --", t.getMessage(), t);
+                        Log.i("RONDA REST SERVICE --", t.getMessage(), t);
+                        listener.doOnRestErrorResponse(t.getMessage());
                     }
                 });
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            listener.doOnRestErrorResponse(e.getMessage());
         }
     }
 

@@ -131,7 +131,8 @@ public abstract class BaseWorker<T extends BaseModel> extends Worker implements 
 
     @Override
     public void doOnRestErrorResponse(String errormsg) {
-
+        changeStatusToFinished();
+        doOnFinish();
     }
 
     @Override

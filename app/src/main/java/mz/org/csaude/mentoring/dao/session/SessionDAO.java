@@ -17,4 +17,6 @@ public interface SessionDAO extends MentoringBaseDao<Session, Integer> {
     List<Session> queryForAllOfMentee(Tutored selectedMentee);
     List<Session> queryForAllOfMentor(Tutored selectedMentor);
     List<Session> getAllOfRondaPending(Ronda ronda, Date startDate) throws SQLException;
+
+    List<Session> getAllNotSynced() throws SQLException;
 }

@@ -37,9 +37,10 @@ import mz.org.csaude.mentoring.workSchedule.work.Resourceworker;
 import mz.org.csaude.mentoring.workSchedule.work.ResponseTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaTypeWorker;
 import mz.org.csaude.mentoring.workSchedule.work.RondaWorker;
+import mz.org.csaude.mentoring.workSchedule.work.SessionPOSTWorker;
 import mz.org.csaude.mentoring.workSchedule.work.SessionRecommendedResourceWorker;
 import mz.org.csaude.mentoring.workSchedule.work.SessionStatusWorker;
-import mz.org.csaude.mentoring.workSchedule.work.SessionWorker;
+import mz.org.csaude.mentoring.workSchedule.work.SessionGETWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TimeOfDayWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutorWorker;
 import mz.org.csaude.mentoring.workSchedule.work.TutoredWorker;
@@ -117,7 +118,7 @@ public class WorkerScheduleExecutor {
         OneTimeWorkRequest mentorFormsQuestionsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(FormQuestionWorker.class).addTag("ONE_TIME_MENTOR_FORMS_QUESTIONS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest mentorRondasOneTimeWorkRequest = new OneTimeWorkRequest.Builder(RondaWorker.class).addTag("ONE_TIME_MENTOR_RONDAS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
         OneTimeWorkRequest resourceTimeWorkRequest = new OneTimeWorkRequest.Builder(Resourceworker.class).addTag("ONE_RESOURCE_ID" + ONE_TIME_REQUEST_JOB_ID).build();
-        OneTimeWorkRequest mentorSessionsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(SessionWorker.class).addTag("ONE_TIME_MENTOR_SESSIONS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
+        OneTimeWorkRequest mentorSessionsOneTimeWorkRequest = new OneTimeWorkRequest.Builder(SessionGETWorker.class).addTag("ONE_TIME_MENTOR_SESSIONS_ID" + ONE_TIME_REQUEST_JOB_ID).build();
 
         workManager.beginUniqueWork("INITIAL_MENTOR_DATA_APP_SETUP", ExistingWorkPolicy.KEEP, hfOneTimeWorkRequest)
                 .then(Arrays.asList(menteesOneTimeWorkRequest, mentorFormsOneTimeWorkRequest))
@@ -145,8 +146,17 @@ public class WorkerScheduleExecutor {
         // Define input data for the requests
         Data inputData = new Data.Builder().putString("requestType", String.valueOf(Http.POST)).build();
 
+        OneTimeWorkRequest sessionPostTimeWorkRequest = new OneTimeWorkRequest.Builder(SessionPOSTWorker.class)
+                .addTag("ONE_TIME_SESSIONS_" + jobId)
+                .build();
+
+        OneTimeWorkRequest rondaPostTimeWorkRequest = new OneTimeWorkRequest.Builder(RondaWorker.class)
+                .addTag("ONE_TIME_RONDAS_" + jobId)
+                .setInputData(inputData)
+                .build();
+
         // Create the first OneTimeWorkRequest
-        OneTimeWorkRequest sessionPostTimeWorkRequest = new OneTimeWorkRequest.Builder(MentorshipWorker.class)
+        OneTimeWorkRequest mentorshipPostTimeWorkRequest = new OneTimeWorkRequest.Builder(MentorshipWorker.class)
                 .addTag("ONE_TIME_MENTORSHIPS_" + jobId)
                 .setInputData(inputData)
                 .build();
@@ -165,7 +175,9 @@ public class WorkerScheduleExecutor {
         // Chain the WorkRequests and enqueue
         workManager
                 .beginWith(sessionPostTimeWorkRequest)
+                .then(mentorshipPostTimeWorkRequest)
                 .then(sessionRecommendedPostTimeWorkRequest)
+                .then(rondaPostTimeWorkRequest)
                 .then(userInfoUpdateRequest)
                 .enqueue();
 
@@ -210,8 +222,14 @@ public class WorkerScheduleExecutor {
                 .setInputData(inputData)
                 .setInitialDelay(2, TimeUnit.HOURS).build();
 
-        PeriodicWorkRequest mentorRondasPeriodicTimeWorkRequest = new PeriodicWorkRequest.Builder(MentorshipWorker.class, getApplication().getMetadataSyncInterval(), TimeUnit.HOURS)
+        PeriodicWorkRequest mentorRondasPeriodicTimeWorkRequest = new PeriodicWorkRequest.Builder(RondaWorker.class, getApplication().getMetadataSyncInterval(), TimeUnit.HOURS)
                 .addTag("PERIODIC_MENTOR_RONDAS_ID" + ONE_TIME_REQUEST_JOB_ID)
+                .setConstraints(constraints)
+                .setInputData(inputData)
+                .setInitialDelay(2, TimeUnit.HOURS).build();
+
+        PeriodicWorkRequest sessionPeriodicTimeWorkRequest = new PeriodicWorkRequest.Builder(SessionPOSTWorker.class, getApplication().getMetadataSyncInterval(), TimeUnit.HOURS)
+                .addTag("PERIODIC_SESSION_ID" + ONE_TIME_REQUEST_JOB_ID)
                 .setConstraints(constraints)
                 .setInputData(inputData)
                 .setInitialDelay(2, TimeUnit.HOURS).build();
@@ -222,7 +240,7 @@ public class WorkerScheduleExecutor {
                 .setInputData(inputData)
                 .setInitialDelay(2, TimeUnit.HOURS).build();
 
-        PeriodicWorkRequest sessionPeriodicWorkRequest = new PeriodicWorkRequest.Builder(SessionWorker.class, getApplication().getSessionSyncInterval(), TimeUnit.HOURS)
+        PeriodicWorkRequest sessionPeriodicWorkRequest = new PeriodicWorkRequest.Builder(SessionGETWorker.class, getApplication().getSessionSyncInterval(), TimeUnit.HOURS)
                 .addTag("ONE_TIME_SESSIONS_ID" + ONE_TIME_REQUEST_JOB_ID)
                 .setInputData(inputData)
                 .setInitialDelay(2, TimeUnit.HOURS).build();
@@ -238,9 +256,10 @@ public class WorkerScheduleExecutor {
         workManager.enqueueUniquePeriodicWork("PERIODIC_MENTOR_FORMS_ID", ExistingPeriodicWorkPolicy.KEEP, mentorFormsPeriodicTimeWorkRequest);
         workManager.enqueueUniquePeriodicWork("PERIODIC_MENTOR_FORMS_QUESTIONS_ID", ExistingPeriodicWorkPolicy.KEEP, mentorFormsQuestionsPeriodicTimeWorkRequest);
         workManager.enqueueUniquePeriodicWork("PERIODIC_MENTOR_RONDAS_ID", ExistingPeriodicWorkPolicy.KEEP, mentorRondasPeriodicTimeWorkRequest);
+        workManager.enqueueUniquePeriodicWork("PERIODIC_SESSION_ID", ExistingPeriodicWorkPolicy.KEEP, sessionPeriodicTimeWorkRequest);
         workManager.enqueueUniquePeriodicWork("PERIODIC_MENTORSHIPS_ID", ExistingPeriodicWorkPolicy.KEEP, mentorshipPeriodicWorkRequest);
-        workManager.enqueueUniquePeriodicWork("ONE_TIME_SESSIONS_ID", ExistingPeriodicWorkPolicy.KEEP, sessionPeriodicWorkRequest);
-        workManager.enqueueUniquePeriodicWork("ONE_TIME_SESSIONS_RECOMMENDED_RESOURCES_ID", ExistingPeriodicWorkPolicy.KEEP, sessionRecommendedResourcePeriodicWorkRequest);
+        workManager.enqueueUniquePeriodicWork("PERIODIC_SESSIONS_ID", ExistingPeriodicWorkPolicy.KEEP, sessionPeriodicWorkRequest);
+        workManager.enqueueUniquePeriodicWork("PERIODIC_SESSIONS_RECOMMENDED_RESOURCES_ID", ExistingPeriodicWorkPolicy.KEEP, sessionRecommendedResourcePeriodicWorkRequest);
         workManager.enqueueUniquePeriodicWork("PERIODIC_USER_ID", ExistingPeriodicWorkPolicy.KEEP, userPeriodicTimeWorkRequest);
 
     }

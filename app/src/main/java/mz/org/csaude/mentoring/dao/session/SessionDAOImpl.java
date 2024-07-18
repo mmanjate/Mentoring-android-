@@ -6,6 +6,7 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import mz.org.csaude.mentoring.base.databasehelper.MentoringDataBaseHelper;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
+import mz.org.csaude.mentoring.util.SyncSatus;
 
 public class SessionDAOImpl extends MentoringBaseDaoImpl<Session, Integer> implements SessionDAO{
 
@@ -69,6 +71,11 @@ public class SessionDAOImpl extends MentoringBaseDaoImpl<Session, Integer> imple
     public List<Session> getAllOfRondaPending(Ronda ronda, Date startDate) throws SQLException {
         return this.queryBuilder().orderBy(Session.COLUMN_START_DATE, true).where().eq(Session.COLUMN_RONDA, ronda.getId()).and().eq(Session.COLUMN_START_DATE, startDate)
                 .and().isNull(Session.COLUMN_END_DATE).query();
+    }
+
+    @Override
+    public List<Session> getAllNotSynced() throws SQLException {
+        return this.queryBuilder().where().eq(Session.COLUMN_SYNC_STATUS, SyncSatus.PENDING).query();
     }
 
 

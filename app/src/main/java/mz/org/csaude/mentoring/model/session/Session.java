@@ -158,7 +158,17 @@ public class Session extends BaseModel {
         if (mentorships == null) {
             mentorships = new ArrayList<>();
         }
-        mentorships.add(mentorship);
+        if (!Utilities.listHasElements(mentorships)) {
+            mentorships.add(mentorship);
+        } else {
+            for (Mentorship m : mentorships) {
+                if (m.getUuid().equals(mentorship.getUuid())) {
+                    mentorships.remove(m);
+                    mentorships.add(mentorship);
+                    return;
+                }
+            }
+        }
     }
 
     public void setMentorships(List<Mentorship> mentorships) {

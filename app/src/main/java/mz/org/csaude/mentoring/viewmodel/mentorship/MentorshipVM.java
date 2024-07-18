@@ -651,15 +651,19 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
 
             this.mentorship.getSession().setForm(this.mentorship.getForm());
             if (isMentoringMentorship()) {
-                this.mentorship.getSession().addMentorship(this.mentorship);
                 List<Mentorship> completedMentorships = getApplication().getMentorshipService().getAllOfSession(this.mentorship.getSession());
+                this.mentorship.getSession().setMentorships(new ArrayList<>());
                 this.mentorship.getSession().addMentorships(completedMentorships);
             }
+
+            this.mentorship.getSession().addMentorship(this.mentorship);
             if (this.mentorship.getSession().canBeClosed()) {
                 this.mentorship.getSession().setStatus(getApplication().getSessionStatusService().getByCode(SessionStatus.COMPLETE));
                 this.mentorship.getSession().setEndDate(DateUtilities.getCurrentDate());
+                this.mentorship.getSession().setSyncStatus(SyncSatus.PENDING);
             }
 
+            this.ronda.setSessions(getApplication().getSessionService().getAllOfRonda(this.ronda));
             this.ronda.addSession(this.mentorship.getSession());
             ronda.setRondaMentees(getApplication().getRondaMenteeService().getAllOfRonda(this.ronda));
             this.ronda.tryToCloseRonda();
@@ -677,7 +681,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             } else {
                 goToMentorshipSummary();
             }
-
+        getCurrentStep().changeToList();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

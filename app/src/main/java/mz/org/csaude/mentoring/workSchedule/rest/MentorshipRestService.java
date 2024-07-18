@@ -7,6 +7,7 @@ import android.widget.Toast;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import mz.org.csaude.mentoring.base.service.BaseRestService;
@@ -65,9 +66,12 @@ public class MentorshipRestService extends BaseRestService {
                     Log.i("MENTORSHIP REST --", t.getMessage(), t);
                 }
             });
+        } else
+        {
+            listener.doOnResponse(BaseRestService.REQUEST_NO_DATA, Collections.emptyList());
         }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+             listener.doOnRestErrorResponse(e.getMessage());
         }
 
     }

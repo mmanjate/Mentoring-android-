@@ -11,17 +11,17 @@ import java.util.List;
 import mz.org.csaude.mentoring.base.worker.BaseWorker;
 import mz.org.csaude.mentoring.model.session.Session;
 
-public class SessionWorker extends BaseWorker<Session> {
+public class SessionPOSTWorker extends BaseWorker<Session> {
     private String requestType;
 
-    public SessionWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public SessionPOSTWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         requestType = getInputData().getString("requestType");
     }
 
     @Override
     public void doOnlineSearch(long offset, long limit) throws SQLException {
-        getApplication().getSessionRestService().restGetSessions(this);
+        getApplication().getSessionRestService().restPostSessions(this);
     }
 
     @Override

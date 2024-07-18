@@ -7,6 +7,7 @@ import com.j256.ormlite.misc.TransactionManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -221,5 +222,15 @@ public class SessionServiceImpl extends BaseServiceImpl<Session> implements Sess
             session.setId(ss.getId());
         }
         this.sessionDAO.createOrUpdate(session);
+    }
+
+    @Override
+    public List<Session> getAllNotSynced() throws SQLException {
+        return sessionDAO.getAllNotSynced();
+    }
+
+    @Override
+    public Session getByuuid(String uuid) throws SQLException {
+        return sessionDAO.getByUuid(uuid);
     }
 }

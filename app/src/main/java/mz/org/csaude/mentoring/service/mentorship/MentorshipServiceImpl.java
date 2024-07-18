@@ -23,6 +23,7 @@ import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
+import mz.org.csaude.mentoring.util.SyncSatus;
 
 public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implements MentorshipService {
 
@@ -60,6 +61,7 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
     public Mentorship save(Mentorship record) throws SQLException {
         TransactionManager.callInTransaction(getDataBaseHelper().getConnectionSource(), (Callable<Void>) () -> {
             if (record.getSession().getRonda().isRondaZero()) {
+                record.getTutored().setSyncStatus(SyncSatus.PENDING);
                 tutoredDao.update(record.getTutored());
             }
             if(record.getSession().getRonda().isRondaCompleted()) {

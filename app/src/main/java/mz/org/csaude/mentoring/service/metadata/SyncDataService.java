@@ -33,7 +33,6 @@ import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 import mz.org.csaude.mentoring.dto.tutor.TutorDTO;
 import mz.org.csaude.mentoring.dto.tutored.TutoredDTO;
 import mz.org.csaude.mentoring.dto.user.UserDTO;
-import mz.org.csaude.mentoring.model.programmaticArea.TutorProgrammaticArea;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -139,8 +138,8 @@ public interface SyncDataService {
     @GET("/rondas/getAllRondasOfMentor")
     Call<List<RondaDTO>> getAllRondasOfMentor(@Query("mentorId") Long mentorId);
 
-    @POST("/rondas/save")
-    Call<List<RondaDTO>> postRondas(@Body List<RondaDTO> rondaDTOS);
+    @PATCH("/ronda/closeRonda")
+    Call<List<RondaDTO>> updateRondaInfo(@Body List<RondaDTO> rondaDTOS);
     @GET("/sessions/getAllOfRondas")
     Call<List<SessionDTO>> getAllOfRondas(@Query("rondasUuids") List<String> rondasUuids);
     @POST("/mentorships/save")
@@ -190,4 +189,7 @@ public interface SyncDataService {
 
     @GET("/user/getByuuid/{uuid}")
     Call<UserDTO> getByuuid(@Path("uuid") String uuid);
+
+    @POST("/sessions/save")
+    Call<List<SessionDTO>> postSessions(@Body List<SessionDTO> sessionDTOS);
 }

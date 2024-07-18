@@ -171,8 +171,16 @@ public class Ronda extends BaseModel implements Listble {
 
     public void addSession(Session session) {
         if(this.sessions == null) this.sessions = new ArrayList<>();
-        if (!this.sessions.contains(session)){
+        if (!Utilities.listHasElements(this.sessions)) {
             this.sessions.add(session);
+        } else {
+            for (Session s : this.sessions) {
+                if (s.getUuid().equals(session.getUuid())) {
+                    this.sessions.remove(s);
+                    this.sessions.add(session);
+                    return;
+                }
+            }
         }
     }
 
@@ -197,6 +205,7 @@ public class Ronda extends BaseModel implements Listble {
 
         if (allSessionsClosed) {
             this.setEndDate(DateUtilities.getCurrentDate());
+            this.setSyncStatus(SyncSatus.PENDING);
         }
     }
 

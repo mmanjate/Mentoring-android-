@@ -27,6 +27,7 @@ import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.R;
 import mz.org.csaude.mentoring.base.application.MentoringApplication;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
+import mz.org.csaude.mentoring.listner.rest.ServerStatusListener;
 import mz.org.csaude.mentoring.model.setting.Setting;
 import mz.org.csaude.mentoring.service.setting.SettingService;
 import mz.org.csaude.mentoring.service.setting.SettingServiceImpl;
@@ -34,7 +35,7 @@ import mz.org.csaude.mentoring.util.DateUtilities;
 import mz.org.csaude.mentoring.util.Utilities;
 import mz.org.csaude.mentoring.workSchedule.executor.WorkerScheduleExecutor;
 
-public class SettingVM extends BaseViewModel {
+public class SettingVM extends BaseViewModel implements ServerStatusListener {
 
     private Setting setting;
 
@@ -101,9 +102,13 @@ public class SettingVM extends BaseViewModel {
     }
 
     public void syncAllNow() {
+        getApplication().isServerOnline(this);
+    }
+
+    private void doSync() {
         // Create a ProgressDialog
         ProgressDialog progressDialog = new ProgressDialog(getRelatedActivity());
-        progressDialog.setMessage("Syncing data...");
+        progressDialog.setMessage("Sincronizando dados, aguarde por favor...");
         progressDialog.setCancelable(false); // Prevents dismissal by tapping outside the dialog
         progressDialog.show();
 
@@ -188,4 +193,15 @@ public class SettingVM extends BaseViewModel {
             getSessionSyncTime();
         }
     }
+
+    @Override
+    public void onServerStatusChecked(boolean isOnline) {
+        if (isOnline) {
+            doSync();
+        } else {
+            Utilities.displayAlertDialog(getRelatedActivity(), getRelatedActivity().getString(R.string.server_unavailable), null).show();
+        }
+    }
+
+
 }

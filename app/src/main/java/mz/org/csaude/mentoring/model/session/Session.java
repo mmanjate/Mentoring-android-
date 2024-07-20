@@ -102,6 +102,9 @@ public class Session extends BaseModel {
         if(sessionDTO.getForm()!=null) {
             this.setForm(new Form(sessionDTO.getForm()));
         }
+        if (Utilities.listHasElements(sessionDTO.getMentorships())) {
+            setMentorships(Utilities.parse(sessionDTO.getMentorships(), Mentorship.class));
+        }
     }
 
     public Session(Date startDate, Date endDate, Date performedDate, SessionStatus status) {

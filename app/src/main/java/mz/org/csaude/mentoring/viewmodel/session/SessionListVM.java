@@ -47,7 +47,7 @@ public class SessionListVM extends SearchVM<Session>  implements IDialogListener
     @Override
     protected void doOnNoRecordFound() {
         getRelatedActivity().populateSessions();
-        Utilities.displayAlertDialog(getRelatedActivity(), "Não foram encontradas sessões para o mentorando(a) "+this.selectedMentee.getEmployee().getFullName()).show();
+        //Utilities.displayAlertDialog(getRelatedActivity(), "Não foram encontradas sessões para o mentorando(a) "+this.selectedMentee.getEmployee().getFullName()).show();
     }
 
     public Ronda getCurrRonda() {
@@ -82,7 +82,7 @@ public class SessionListVM extends SearchVM<Session>  implements IDialogListener
             params.put("mentee", this.selectedMentee);
             getRelatedActivity().nextActivity(SessionActivity.class, params);
         } else {
-            Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível criar mais de 4 sessões para o mentorando(a) "+this.selectedMentee.getEmployee().getFullName()).show();
+            Utilities.displayAlertDialog(getRelatedActivity(), "Não é possível criar mais de 4 sessões para o(a) mentorando(a) "+this.selectedMentee.getEmployee().getFullName()).show();
         }
     }
 

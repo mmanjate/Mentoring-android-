@@ -107,6 +107,7 @@ public class MentorshipServiceImpl extends BaseServiceImpl<Mentorship> implement
         if (record.getSession().getRonda().isRondaZero()) {
             record.getTutored().setZeroEvaluationDone(false);
             tutoredDao.update(record.getTutored());
+            sessionDAO.delete(record.getSession());
         }
         return this.mentorshipDAO.delete(record);
     }

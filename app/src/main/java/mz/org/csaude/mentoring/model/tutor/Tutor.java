@@ -26,7 +26,7 @@ public class Tutor extends BaseModel {
 
   public Tutor(TutorDTO tutorDTO) {
     super(tutorDTO);
-    this.setEmployee(new Employee(tutorDTO.getEmployeeDTO()));
+    if (tutorDTO.getEmployeeDTO() != null) this.setEmployee(new Employee(tutorDTO.getEmployeeDTO()));
   }
   public Employee getEmployee() {
     return employee;

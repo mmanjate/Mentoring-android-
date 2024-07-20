@@ -56,7 +56,7 @@ public class RondaActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //getRelatedViewModel().initSearch();
+        getRelatedViewModel().initSearch();
     }
 
     @Override

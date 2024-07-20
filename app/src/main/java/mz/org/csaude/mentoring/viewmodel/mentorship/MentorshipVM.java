@@ -285,6 +285,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
                 this.mentorship.getTutored().setZeroEvaluationDone(true);
                 this.mentorship.getSession().setTutored(this.mentorship.getTutored());
                 this.mentorship.getSession().setStartDate(this.mentorship.getStartDate());
+                this.mentorship.getSession().setSyncStatus(null);
             } else {
                 this.mentorship.setTutored(this.session.getTutored());
             }
@@ -313,6 +314,10 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
             Utilities.displayAlertDialog(getRelatedActivity(), "A data de início não pode ser anterior a data de início da sessão.").show();
             return false;
 
+        }
+        if (this.mentorship.getStartDate().after(DateUtilities.getCurrentDate())) {
+            Utilities.displayAlertDialog(getRelatedActivity(), "A data de início não pode ser futura.").show();
+            return false;
         }
         if (!Utilities.stringHasValue(mentorship.getCabinet().getUuid())) {
             Utilities.displayAlertDialog(getRelatedActivity(), "O sector não pode ser vazio").show();
@@ -640,6 +645,7 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
                 this.mentorship.getSession().setTutored(this.mentorship.getTutored());
                 this.mentorship.getSession().setEndDate(this.mentorship.getEndDate());
                 this.mentorship.getSession().setStartDate(this.mentorship.getStartDate());
+                this.mentorship.getSession().setSyncStatus(SyncSatus.PENDING);
             } else {
                 this.mentorship.setTutored(this.session.getTutored());
             }
@@ -684,13 +690,6 @@ public class MentorshipVM extends BaseViewModel implements IDialogListener {
         getCurrentStep().changeToList();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private void determineMenteeScore(Mentorship mentorship) {
-        List<SessionSummary> sessionSummaryList = getApplication().getSessionService().generateSessionSummary(session);
-        if (Utilities.listHasElements(sessionSummaryList)) {
-            getRelatedActivity().displaySearchResults();
         }
     }
 

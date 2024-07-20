@@ -68,8 +68,10 @@ public class SessionRestService extends BaseRestService {
                             session.setTutored(mentee);
                             session.setStatus(getApplication().getSessionStatusService().getByuuid(sessionDTO.getSessionStatus().getUuid()));
                             getApplication().getSessionService().saveOrUpdate(session);
-                            //List<MentorshipDTO> mentorships = sessionDTO.getMentorships();
-                            //updateMentorships(mentorships, form, mentee, session);
+                            List<MentorshipDTO> mentorships = sessionDTO.getMentorships();
+                            if (Utilities.listHasElements(mentorships)) {
+                                updateMentorships(mentorships, form, mentee, session);
+                            }
                         }
                         listener.doOnResponse(BaseRestService.REQUEST_SUCESS, sessions);
                     } catch (SQLException e) {

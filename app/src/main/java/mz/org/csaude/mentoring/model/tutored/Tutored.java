@@ -38,7 +38,7 @@ public class Tutored extends BaseModel {
         super(tutoredDTO);
         this.setZeroEvaluationScore(tutoredDTO.getZeroEvaluationScore());
         this.setZeroEvaluationDone(tutoredDTO.isZeroEvaluationDone());
-        this.setEmployee(new Employee(tutoredDTO.getEmployeeDTO()));
+        if (tutoredDTO.getEmployeeDTO() != null) this.setEmployee(new Employee(tutoredDTO.getEmployeeDTO()));
     }
 
     public Employee getEmployee() {

@@ -16,6 +16,7 @@ import java.util.Map;
 
 import mz.org.csaude.mentoring.BR;
 import mz.org.csaude.mentoring.base.viewModel.BaseViewModel;
+import mz.org.csaude.mentoring.model.mentorship.Mentorship;
 import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.service.session.SessionClosureService;
 import mz.org.csaude.mentoring.util.Utilities;
@@ -107,6 +108,11 @@ public class SessionClosureVM extends BaseViewModel {
                 Utilities.displayAlertDialog(getRelatedActivity(), "A data de fim da sessão não pode ser menor que a data de início").show();
                 return;
             }
+
+            if (sessionCloseDateBeforeLastMentorship()) {
+                Utilities.displayAlertDialog(getRelatedActivity(), "A data de fim da sessão não pode ser menor que a data final da última avaliação").show();
+                return;
+            }
             getApplication().getSessionService().update(session);
             session.getRonda().setRondaMentors(getApplication().getRondaMentorService().getRondaMentors(session.getRonda()));
             Map<String, Object> params = new HashMap<>();
@@ -115,6 +121,15 @@ public class SessionClosureVM extends BaseViewModel {
         } catch (SQLException e) {
             Log.e(TAG, e.getMessage());
         }
+    }
+
+    private boolean sessionCloseDateBeforeLastMentorship() {
+        for (Mentorship mentorship : session.getMentorships()) {
+            if (session.getEndDate().before(mentorship.getEndDate())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void changeInitialDataViewStatus(View view){

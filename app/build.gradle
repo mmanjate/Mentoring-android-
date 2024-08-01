@@ -2,10 +2,10 @@ plugins {
     id 'com.android.application'
 }
 ext.versionMajor = 1
-ext.versionMinor = 4
+ext.versionMinor = 0
 ext.versionPatch = 0
 ext.versionClassifier = null
-ext.isSnapshot = true
+ext.isSnapshot = false
 ext.minimumSdkVersion = 28
 
 android {

@@ -51,145 +51,145 @@ import java.util.List;
  */
 public interface SyncDataService {
 
-    @GET("/settings/check")
+    @GET("settings/check")
     Call<Void> checkServerStatus();
 
-    @GET("/settings/tutor/{uuid}/{offset}/{limit}")
+    @GET("settings/tutor/{uuid}/{offset}/{limit}")
     Call<List<SettingDTO>> getSettings(@Path("uuid") final String uuid, @Path("offset") long offset, @Path("limit") long limit);
-    @GET("/settings/tutor/{uuid}")
+    @GET("settings/tutor/{uuid}")
     Call<List<SettingDTO>> getSettings(@Path("uuid") final String uuid);
 
-    @GET("/healthFacilities/tutor/{uuid}")
+    @GET("healthFacilities/tutor/{uuid}")
     Call<List<HealthFacilityDTO>> getHealthFacilities(@Path("uuid") final String uuid);
 
-    @GET("/cabinets/getall")
+    @GET("cabinets/getall")
     Call<List<CabinetDTO>> getCabinets(@Query("offset") long offset, @Query("limit") long limit);
 
-    @GET("/careers/careerTypes")
+    @GET("careers/careerTypes")
     Call<List<CareerTypeDTO>> getCareerTypes(@Query("offset") long offset, @Query("limit") long limit);
 
-    @GET("/careers/getall")
+    @GET("careers/getall")
     Call<List<CareerDTO>> getCareers(@Query("offset") long offset, @Query("limit") long limit);
 
-    @GET("/tutored/getTutoreds")
+    @GET("tutored/getTutoreds")
     Call<List<TutoredDTO>> getTutoreds(@Query("uuids") List<String> uuids, @Query("offset") long offset, @Query("limit") long limit);
-    @POST("/login")
+    @POST("login")
     Call<LoginResponse> login(@Body RequestBody body);
 
-    @POST("/auth/refresh")
+    @POST("auth/refresh")
     Call<ResponseBody> refreshToken(@Body RequestBody body);
 
-    @GET("/user/getByCredencials/{username}/{password}")
+    @GET("user/getByCredencials/{username}/{password}")
     Call<UserDTO> getByCredencials(@Path("username") final String username, @Path("password") final String password);
 
-    @GET("/tutor/tutors/{limit}/{offset}")
+    @GET("tutor/tutors/{limit}/{offset}")
     Call<List<TutorDTO>> getTutors(@Path("limit") long limit , @Path("offset") long offset);
 
-    @GET("/mentor/employee/{uuid}")
+    @GET("mentor/employee/{uuid}")
     Call<TutorDTO> getTutorByEmployeeUuid(@Path("uuid") String userUuid);
 
-    @GET("/province/getall")
+    @GET("province/getall")
     Call<List<ProvinceDTO>> getProvinces();
 
-    @GET("/healthFacilities/getall")
+    @GET("healthFacilities/getall")
     Call<List<HealthFacilityDTO>> getHealthFacilities(@Query("offset") long offset, @Query("limit") long limit);
 
     @GET("healthFacilities/getByDistricts")
     Call<List<HealthFacilityDTO>> getByDistricts(@Query("uuids") List<String> uuids);
 
-    @GET("/district/getall")
+    @GET("district/getall")
     Call<List<DistrictDTO>> getDistricts(@Query("offset") long offset, @Query("limit") long limit);
 
-    @GET("/professionalCategories/getall")
+    @GET("professionalCategories/getall")
     Call<List<ProfessionalCategoryDTO>> getProfessionalCategory(@Query("offset") long offset, @Query("limit") long limit);
 
-    @GET("/partner/getall")
+    @GET("partner/getall")
     Call<List<PartnerDTO>> getPartners();
 
-    @POST("/tutored/save")
+    @POST("tutored/save")
     Call<TutoredDTO> postTutored(@Body TutoredDTO tutoredDTO);
 
-    @POST("/tutored/saveMany")
+    @POST("tutored/saveMany")
     Call<List<TutoredDTO>> postTutoreds(@Body List<TutoredDTO> tutoredDTOS);
-    @GET("/rondaTypes/getall")
+    @GET("rondaTypes/getall")
     Call<List<RondaTypeDTO>> getRondaTypes();
-    @GET("/forms/getall")
+    @GET("forms/getall")
     Call<List<FormDTO>> getFormsByPartner(@Query("partnerId") Long partnerId);
-    @POST("/forms/save")
+    @POST("forms/save")
     Call<List<FormDTO>> postForms(@Body List<FormDTO> formDTOS);
-    @GET("/evaluationTypes/getAll")
+    @GET("evaluationTypes/getAll")
     Call<List<EvaluationTypeDTO>> getEvaluationTypes();
-    @GET("/responseTypes/getAll")
+    @GET("responseTypes/getAll")
     Call<List<ResponseTypeDTO>> getResponseTypes();
-    @GET("/questionCategories/getAll")
+    @GET("questionCategories/getAll")
     Call<List<QuestionCategoryDTO>> getQuestionCategories();
-    @GET("/utils/iterationTypes")
+    @GET("utils/iterationTypes")
     Call<List<IterationTypeDTO>> getIterationTypes();
-    @GET("/utils/doors")
+    @GET("utils/doors")
     Call<List<DoorDTO>> getDoors();
-    @GET("/utils/timesOfDay")
+    @GET("utils/timesOfDay")
     Call<List<TimeOfDayDTO>> getTimesOfDay();
-    @GET("/questions/getAll")
+    @GET("questions/getAll")
     Call<List<QuestionDTO>> getAllQuestions();
-    @GET("/formQuestions/getByFormsUuids")
+    @GET("formQuestions/getByFormsUuids")
     Call<List<FormQuestionDTO>> getFormsQuestionsByFormsUuids(@Query("formsUuids") List<String> formsUuids,
                                                               @Query("limit") Long limit,
                                                               @Query("offset") Long offset);
-    @GET("/rondas/getAllRondasOfMentor")
+    @GET("rondas/getAllRondasOfMentor")
     Call<List<RondaDTO>> getAllRondasOfMentor(@Query("mentorId") Long mentorId);
 
-    @PATCH("/ronda/closeRonda")
+    @PATCH("ronda/closeRonda")
     Call<List<RondaDTO>> updateRondaInfo(@Body List<RondaDTO> rondaDTOS);
-    @GET("/sessions/getAllOfRondas")
+    @GET("sessions/getAllOfRondas")
     Call<List<SessionDTO>> getAllOfRondas(@Query("rondasUuids") List<String> rondasUuids);
-    @POST("/mentorships/save")
+    @POST("mentorships/save")
     Call<List<MentorshipDTO>> postMenthorships(@Body List<MentorshipDTO> mentorshipDTOS);
 
-    @GET("/sessionStatuses/getall")
+    @GET("sessionStatuses/getall")
     Call<List<SessionStatusDTO>> getSessionStatuses();
 
     @GET("error")
     Call<MentoringAPIError> getError();
 
-    @PATCH("/mentor/update")
+    @PATCH("mentor/update")
     Call<TutorDTO> patchTutor(@Body TutorDTO tutorDTO);
-    @GET("/programs/getAll")
+    @GET("programs/getAll")
     Call<List<ProgramDTO>> getAllPrograms();
-    @GET("/programmaticareas/getAll")
+    @GET("programmaticareas/getAll")
     Call<List<ProgrammaticAreaDTO>> getAllProgrammaticAreas();
-    @GET("/tutorprogrammaticareas/getByTutorUuidd/{tutorUuid}")
+    @GET("tutorprogrammaticareas/getByTutorUuidd/{tutorUuid}")
     Call<List<TutorProgrammaticAreaDTO>> getByTutorUuidd(@Path("tutorUuid") String tutorUuid);
 
-    @GET("/forms/getByTutorUuidd/{tutorUuid}")
+    @GET("forms/getByTutorUuidd/{tutorUuid}")
     Call<List<FormDTO>> getFormsByMentor(@Path("tutorUuid") String tutorUuid);
-    @GET("/ronda/getAllOfMentor")
+    @GET("ronda/getAllOfMentor")
     Call<List<RondaDTO>> getAllOfMentor(@Query("mentorUuid") String mentorUuid);
 
-    @GET("/mentorships/getAllMentorshipSessionsOfMentorRondas")
+    @GET("mentorships/getAllMentorshipSessionsOfMentorRondas")
     Call<List<MentorshipDTO>> getAllMentorshipSessionsOfMentorRondas(@Query("rondaUuidList") List<String> rondaUuidList);
 
-    @POST("/ronda/save")
+    @POST("ronda/save")
     Call<RondaDTO> postRonda(@Body RondaDTO rondaDTO);
 
 
-    @PATCH("/ronda/update")
+    @PATCH("ronda/update")
     Call<RondaDTO> patchtRonda(@Body RondaDTO rondaDTO);
 
-    @GET("/resources/getAll")
+    @GET("resources/getAll")
     Call<List<ResourceDTO>> getAllResource();
 
-    @GET("/resources/load")
+    @GET("resources/load")
     Call<ResponseBody> downloadFile(@Query("fileName") String fileName);
 
-    @DELETE("/ronda/delete")
+    @DELETE("ronda/delete")
     Call<ResponseBody> delete(@Query("uuid") String uuid);
 
-    @POST("/sessionsReommendedResources/save")
+    @POST("sessionsReommendedResources/save")
     Call<List<SessionRecommendedResourceDTO>> postSessionRecommendedResource(@Body List<SessionRecommendedResourceDTO> sessionRecommendedResourceDTOs);
 
-    @GET("/user/getByuuid/{uuid}")
+    @GET("user/getByuuid/{uuid}")
     Call<UserDTO> getByuuid(@Path("uuid") String uuid);
 
-    @POST("/sessions/save")
+    @POST("sessions/save")
     Call<List<SessionDTO>> postSessions(@Body List<SessionDTO> sessionDTOS);
 }

@@ -115,8 +115,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class MentoringApplication  extends Application {
 
     private static MentoringApplication mInstance;
-    //public static final String BASE_URL = "https://mentoria.csaude.org.mz/api";
-    public static final String BASE_URL = "http://10.10.12.72:8087/api";
+    public static final String BASE_URL = "https://mentdev.csaude.org.mz/api/";
+    //public static final String BASE_URL = "http://10.10.12.72:8087/api";
     //public static final String BASE_URL = "http://10.10.2.30:8087";
     private User authenticatedUser;
 

@@ -2,10 +2,10 @@ package mz.org.csaude.mentoring.dto.career;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.career.Career;
 import mz.org.csaude.mentoring.model.career.CareerType;
@@ -13,9 +13,9 @@ import mz.org.csaude.mentoring.model.career.CareerType;
 /**
  * @author Jose Julai Ritsure
  */
-@Data
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+
+
+
 public class CareerDTO extends BaseEntityDTO {
     @JsonProperty(value = "position")
     private String position;

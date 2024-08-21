@@ -3,16 +3,11 @@ package mz.org.csaude.mentoring.model.question;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.question.QuestionDAOImpl;
 import mz.org.csaude.mentoring.dto.question.QuestionDTO;
 
-@Data
 @DatabaseTable(tableName = Question.TABLE_NAME, daoClass = QuestionDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
 public class Question extends BaseModel {
 
     public static final String TABLE_NAME = "question";
@@ -25,7 +20,7 @@ public class Question extends BaseModel {
 
     public static final String COLUMN_QUESTION_CATEGORY = "question_category_id";
 
-    @DatabaseField(columnName = COLUMN_CODE, unique = true, canBeNull = false)
+    @DatabaseField(columnName = COLUMN_CODE, unique = false, canBeNull = false)
     private String code;
 
     @DatabaseField(columnName = COLUMN_QUESTION, canBeNull = false)

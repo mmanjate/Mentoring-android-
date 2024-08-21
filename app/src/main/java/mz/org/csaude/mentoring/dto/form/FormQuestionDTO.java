@@ -1,7 +1,7 @@
 package mz.org.csaude.mentoring.dto.form;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.evaluationType.EvaluationTypeDTO;
 import mz.org.csaude.mentoring.dto.question.QuestionDTO;
@@ -12,8 +12,8 @@ import mz.org.csaude.mentoring.model.formQuestion.FormQuestion;
 import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.responseType.ResponseType;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+
+
 public class FormQuestionDTO extends BaseEntityDTO {
     private Integer sequence;
     private QuestionDTO question;

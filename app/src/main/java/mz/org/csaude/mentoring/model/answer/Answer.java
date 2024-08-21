@@ -3,7 +3,7 @@ package mz.org.csaude.mentoring.model.answer;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.EqualsAndHashCode;
+
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.answer.AnswerDAOImpl;
 import mz.org.csaude.mentoring.dto.answer.AnswerDTO;
@@ -13,7 +13,7 @@ import mz.org.csaude.mentoring.model.question.Question;
 
 
 @DatabaseTable(tableName = Answer.TABLE_NAME, daoClass = AnswerDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
+
 public class Answer extends BaseModel {
 
     public static final String TABLE_NAME = "answer";

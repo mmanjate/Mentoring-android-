@@ -7,9 +7,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.common.Syncable;
 import mz.org.csaude.mentoring.dto.location.HealthFacilityDTO;
@@ -19,9 +19,9 @@ import mz.org.csaude.mentoring.model.ronda.RondaMentor;
 import mz.org.csaude.mentoring.util.SyncSatus;
 import mz.org.csaude.mentoring.util.Utilities;
 
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+
+
+
 public class RondaDTO extends BaseEntityDTO {
     private String description;
     private Date startDate;

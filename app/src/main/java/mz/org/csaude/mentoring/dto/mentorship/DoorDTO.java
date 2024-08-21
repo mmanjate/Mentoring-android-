@@ -1,12 +1,12 @@
 package mz.org.csaude.mentoring.dto.mentorship;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.mentorship.Door;
 
-@Data
-@NoArgsConstructor
+
+
 public class DoorDTO extends BaseEntityDTO {
     private String code;
     private String description;

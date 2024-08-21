@@ -1,12 +1,12 @@
 package mz.org.csaude.mentoring.dto.evaluationType;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.evaluationType.EvaluationType;
 
-@Data
-@NoArgsConstructor
+
+
 public class EvaluationTypeDTO extends BaseEntityDTO {
     private String code;
     private String description;

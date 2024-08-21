@@ -5,17 +5,17 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.indicator.IndicatorDAOImpl;
 import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.location.HealthFacility;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 
-@Data
+
 @DatabaseTable(tableName = Indicator.TABLE_NAME, daoClass = IndicatorDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
+
 public class Indicator extends BaseModel {
 
     public static final String TABLE_NAME = "indicator";

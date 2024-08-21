@@ -5,9 +5,9 @@ import com.j256.ormlite.field.DatabaseField;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.common.Syncable;
 import mz.org.csaude.mentoring.dto.form.FormDTO;
@@ -22,9 +22,9 @@ import mz.org.csaude.mentoring.model.session.SessionStatus;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.SyncSatus;
 
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+
+
+
 public class SessionDTO extends BaseEntityDTO implements Syncable {
     private Date startDate;
     private Date endDate;

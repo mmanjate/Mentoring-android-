@@ -1,8 +1,8 @@
 package mz.org.csaude.mentoring.dto.form;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.partner.PartnerDTO;
 import mz.org.csaude.mentoring.dto.programmaticArea.ProgrammaticAreaDTO;
@@ -10,9 +10,9 @@ import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.partner.Partner;
 import mz.org.csaude.mentoring.model.programmaticArea.ProgrammaticArea;
 
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+
+
+
 public class FormDTO extends BaseEntityDTO {
     private String name;
     private String code;

@@ -1,11 +1,11 @@
 package mz.org.csaude.mentoring.dto.setting;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.setting.Setting;
 
-@Data
+
 public class SettingDTO extends BaseEntityDTO {
 
     private String designation;

@@ -1,9 +1,9 @@
 package mz.org.csaude.mentoring.dto.partner;
 
-import lombok.Data;
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.partner.Partner;
-@Data
+
 public class PartnerDTO extends BaseEntityDTO {
     private String name;
     private String description;

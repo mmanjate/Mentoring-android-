@@ -2,17 +2,17 @@ package mz.org.csaude.mentoring.dto.user;
 
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.dto.role.UserRoleDTO;
 import mz.org.csaude.mentoring.model.user.User;
 
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+
+
+
 public class UserDTO extends BaseEntityDTO {
 
     private String username;

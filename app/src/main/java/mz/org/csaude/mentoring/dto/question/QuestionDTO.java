@@ -1,11 +1,11 @@
 package mz.org.csaude.mentoring.dto.question;
 
-import lombok.Data;
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 
-@Data
+
 public class QuestionDTO extends BaseEntityDTO {
     private String code;
     private String question;

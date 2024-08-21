@@ -7,15 +7,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import lombok.Getter;
-import lombok.Setter;
+
+
 import mz.org.csaude.mentoring.adapter.recyclerview.listable.Listble;
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.util.LifeCycleStatus;
 import mz.org.csaude.mentoring.util.SyncSatus;
 
-@Getter
-@Setter
+
+
 public abstract class BaseModel implements Serializable, Listble {
 
     public static final String COLUMN_ID = "id";

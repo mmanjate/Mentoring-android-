@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.session.SessionDAOImpl;
 import mz.org.csaude.mentoring.dto.session.SessionDTO;
@@ -20,9 +20,9 @@ import mz.org.csaude.mentoring.model.ronda.Ronda;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 import mz.org.csaude.mentoring.util.Utilities;
 
-@Data
+
 @DatabaseTable(tableName = Session.TABLE_NAME, daoClass = SessionDAOImpl.class)
-@EqualsAndHashCode(callSuper=true)
+
 public class Session extends BaseModel {
 
     public static final String TABLE_NAME = "session";

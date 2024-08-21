@@ -3,15 +3,15 @@ package mz.org.csaude.mentoring.model.setting;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.setting.SettingDAOImpl;
 import mz.org.csaude.mentoring.dto.setting.SettingDTO;
 
-@Data
+
 @DatabaseTable(tableName = Setting.TABLE_NAME, daoClass = SettingDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
+
 public class Setting extends BaseModel {
 
     public static final String TABLE_NAME = "setting";

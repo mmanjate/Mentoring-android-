@@ -1,16 +1,16 @@
 package mz.org.csaude.mentoring.dto.session;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.common.Syncable;
 import mz.org.csaude.mentoring.model.session.SessionStatus;
 import mz.org.csaude.mentoring.util.SyncSatus;
 
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+
+
+
 public class SessionStatusDTO extends BaseEntityDTO implements Syncable {
     private String code;
     private String description;

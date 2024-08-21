@@ -3,9 +3,9 @@ plugins {
 }
 ext.versionMajor = 1
 ext.versionMinor = 0
-ext.versionPatch = 0
+ext.versionPatch = 1
 ext.versionClassifier = null
-ext.isSnapshot = true
+ext.isSnapshot = false
 ext.minimumSdkVersion = 28
 
 android {
@@ -110,6 +110,5 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'com.itextpdf:itext7-core:7.2.3'
     implementation 'com.android.support:multidex:1.0.3'
-    compileOnly 'org.projectlombok:lombok:1.18.28'
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    implementation 'net.zetetic:android-database-sqlcipher:4.5.0@aar'
 }

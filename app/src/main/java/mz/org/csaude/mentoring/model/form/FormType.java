@@ -3,16 +3,16 @@ package mz.org.csaude.mentoring.model.form;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+
+
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.form.FormTypeDAOImpl;
 
-@Data
-@NoArgsConstructor
+
+
 @DatabaseTable(tableName = FormType.COLUMN_TABLE_NAME, daoClass = FormTypeDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
+
 public class FormType extends BaseModel {
 
     public static final String COLUMN_TABLE_NAME = "career_type";

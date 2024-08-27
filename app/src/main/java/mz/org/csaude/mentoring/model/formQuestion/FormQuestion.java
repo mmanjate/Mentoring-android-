@@ -3,8 +3,8 @@ package mz.org.csaude.mentoring.model.formQuestion;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.formQuestion.FormQuestionDAImpl;
@@ -16,9 +16,9 @@ import mz.org.csaude.mentoring.model.form.Form;
 import mz.org.csaude.mentoring.model.question.Question;
 import mz.org.csaude.mentoring.model.responseType.ResponseType;
 
-@Data
+
 @DatabaseTable(tableName = FormQuestion.TABLE_NAME, daoClass = FormQuestionDAImpl.class)
-@EqualsAndHashCode(callSuper=false)
+
 public class FormQuestion extends BaseModel {
 
     public static final String TABLE_NAME = "form_question";

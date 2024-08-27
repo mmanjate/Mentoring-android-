@@ -3,16 +3,16 @@ package mz.org.csaude.mentoring.model.program;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.program.ProgramDAOImpl;
 import mz.org.csaude.mentoring.dto.program.ProgramDTO;
 
-@Data
+
 @DatabaseTable(tableName = Program.TABLE_NAME, daoClass = ProgramDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
+
 public class Program extends BaseModel {
 
     public static final String TABLE_NAME = "program";

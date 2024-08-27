@@ -1,11 +1,11 @@
 package mz.org.csaude.mentoring.dto.question;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.question.QuestionType;
-@Data
-@NoArgsConstructor
+
+
 public class QuestionTypeDTO extends BaseEntityDTO {
     private String code;
     private String description;

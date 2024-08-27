@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.mentorship.MentorshipDAOImpl;
 import mz.org.csaude.mentoring.dto.answer.AnswerDTO;
@@ -24,9 +24,9 @@ import mz.org.csaude.mentoring.model.session.Session;
 import mz.org.csaude.mentoring.model.tutor.Tutor;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
 
-@Data
+
 @DatabaseTable(tableName = Mentorship.TABLE_NAME, daoClass = MentorshipDAOImpl.class)
-@EqualsAndHashCode(callSuper=true)
+
 public class Mentorship extends BaseModel {
 
     public static final String TABLE_NAME = "mentorship";

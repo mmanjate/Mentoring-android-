@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.evaluation.EvaluationTypeDAOImpl;
 import mz.org.csaude.mentoring.dto.evaluationType.EvaluationTypeDTO;
 
-@Data
+
 @DatabaseTable(tableName = EvaluationType.TABLE_NAME, daoClass = EvaluationTypeDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
+
 public class EvaluationType extends BaseModel {
 
     public static final String TABLE_NAME = "evaluation_type";

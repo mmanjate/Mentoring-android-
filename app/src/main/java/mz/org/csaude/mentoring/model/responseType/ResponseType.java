@@ -3,15 +3,15 @@ package mz.org.csaude.mentoring.model.responseType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+
 import mz.org.csaude.mentoring.base.model.BaseModel;
 import mz.org.csaude.mentoring.dao.responseType.ResponseTypeDAOImpl;
 import mz.org.csaude.mentoring.dto.responseType.ResponseTypeDTO;
 
-@Data
+
 @DatabaseTable(tableName = ResponseType.TABLE_NAME, daoClass = ResponseTypeDAOImpl.class)
-@EqualsAndHashCode(callSuper=false)
+
 public class ResponseType extends BaseModel {
 
     public static final String TABLE_NAME = "response_type";

@@ -1,15 +1,15 @@
 package mz.org.csaude.mentoring.dto.career;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.career.CareerType;
 
 /**
  * @author Jose Julai Ritsure
  */
-@Data
-@NoArgsConstructor
+
+
 public class CareerTypeDTO extends BaseEntityDTO {
     private String code;
     private String description;

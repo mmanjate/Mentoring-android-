@@ -1,10 +1,10 @@
 package mz.org.csaude.mentoring.dto.resource;
 
-import lombok.Data;
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.resourceea.Resource;
 
-@Data
+
 public class ResourceDTO extends BaseEntityDTO {
 
     private String resource;

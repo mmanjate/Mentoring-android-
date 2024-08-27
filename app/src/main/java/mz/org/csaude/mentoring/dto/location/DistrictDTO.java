@@ -1,15 +1,15 @@
 package mz.org.csaude.mentoring.dto.location;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.model.location.District;
 import mz.org.csaude.mentoring.model.location.Province;
 
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+
+
+
 public class DistrictDTO extends BaseEntityDTO {
 
     private String description;

@@ -1,10 +1,10 @@
 package mz.org.csaude.mentoring.dto.tutored;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+
+
+
+
 import mz.org.csaude.mentoring.base.dto.BaseEntityDTO;
 import mz.org.csaude.mentoring.dto.employee.EmployeeDTO;
 import mz.org.csaude.mentoring.model.tutored.Tutored;
@@ -12,9 +12,9 @@ import mz.org.csaude.mentoring.model.tutored.Tutored;
 /**
  * @author Jose Julai Ritsure
  */
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+
+
+
 public class TutoredDTO extends BaseEntityDTO {
 
     private EmployeeDTO employeeDTO;

@@ -15,6 +15,9 @@ import mz.org.csaude.mentoring.model.location.Cabinet;
 public class CabinetDTO extends BaseEntityDTO {
     private String name;
 
+    public CabinetDTO() {
+    }
+
     public CabinetDTO(String name) {
         this.setName(name);
     }

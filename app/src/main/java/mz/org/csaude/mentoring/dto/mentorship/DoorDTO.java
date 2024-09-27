@@ -10,6 +10,10 @@ import mz.org.csaude.mentoring.model.mentorship.Door;
 public class DoorDTO extends BaseEntityDTO {
     private String code;
     private String description;
+
+    public DoorDTO() {
+    }
+
     public DoorDTO(Door door) {
         super(door);
         this.setCode(door.getCode());

@@ -9,6 +9,10 @@ import mz.org.csaude.mentoring.model.question.QuestionType;
 public class QuestionTypeDTO extends BaseEntityDTO {
     private String code;
     private String description;
+
+    public QuestionTypeDTO() {
+    }
+
     public QuestionTypeDTO(QuestionType questionType) {
         super(questionType);
         this.setCode(questionType.getCode());

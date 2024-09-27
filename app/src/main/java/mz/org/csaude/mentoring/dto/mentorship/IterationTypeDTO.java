@@ -11,6 +11,10 @@ import mz.org.csaude.mentoring.model.mentorship.IterationType;
 public class IterationTypeDTO extends BaseEntityDTO {
     private String code;
     private String description;
+
+    public IterationTypeDTO() {
+    }
+
     public IterationTypeDTO(IterationType iterationType) {
         super(iterationType);
         this.setCode(iterationType.getCode());

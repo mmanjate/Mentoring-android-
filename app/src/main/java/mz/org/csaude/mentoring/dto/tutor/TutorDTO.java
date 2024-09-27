@@ -14,6 +14,9 @@ public class TutorDTO extends BaseEntityDTO {
 
     private EmployeeDTO employeeDTO;
 
+    public TutorDTO() {
+    }
+
     public TutorDTO(Tutor tutor) {
         super(tutor);
         this.setEmployeeDTO(new EmployeeDTO(tutor.getEmployee()));

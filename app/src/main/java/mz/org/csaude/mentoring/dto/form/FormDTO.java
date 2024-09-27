@@ -21,6 +21,10 @@ public class FormDTO extends BaseEntityDTO {
     private int targetFile;
     private PartnerDTO partner;
     private ProgrammaticAreaDTO programmaticArea;
+
+    public FormDTO() {
+    }
+
     public FormDTO(Form form) {
         super(form);
         this.setCode(form.getCode());

@@ -16,6 +16,9 @@ public class HealthFacilityDTO extends BaseEntityDTO {
 
     private DistrictDTO districtDTO;
 
+    public HealthFacilityDTO() {
+    }
+
     public HealthFacilityDTO(HealthFacility healthFacility){
         super(healthFacility);
         this.setHealthFacility(healthFacility.getDescription());

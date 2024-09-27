@@ -8,6 +8,10 @@ import mz.org.csaude.mentoring.model.question.QuestionsCategory;
 
 public class QuestionCategoryDTO extends BaseEntityDTO {
     private String category;
+
+    public QuestionCategoryDTO() {
+    }
+
     public QuestionCategoryDTO(QuestionsCategory questionsCategory) {
         super(questionsCategory);
         this.setCategory(questionsCategory.getCategory());

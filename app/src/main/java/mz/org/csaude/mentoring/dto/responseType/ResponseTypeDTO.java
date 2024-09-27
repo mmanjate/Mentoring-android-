@@ -11,6 +11,10 @@ import mz.org.csaude.mentoring.model.responseType.ResponseType;
 public class ResponseTypeDTO extends BaseEntityDTO {
     private String code;
     private String description;
+
+    public ResponseTypeDTO() {
+    }
+
     public ResponseTypeDTO(ResponseType responseType) {
         super(responseType);
         this.setCode(responseType.getCode());

@@ -27,6 +27,9 @@ public class RondaDTO extends BaseEntityDTO {
     private Date startDate;
     private Date endDate;
 
+    public RondaDTO() {
+    }
+
     private String mentorType;
     @JsonProperty(value = "rondaTypeDTO")
     private RondaTypeDTO rondaType;

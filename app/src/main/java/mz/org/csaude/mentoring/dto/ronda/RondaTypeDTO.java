@@ -9,6 +9,10 @@ import mz.org.csaude.mentoring.model.rondatype.RondaType;
 public class RondaTypeDTO extends BaseEntityDTO {
     private String code;
     private String description;
+
+    public RondaTypeDTO() {
+    }
+
     public RondaTypeDTO(RondaType rondaType) {
         super(rondaType);
         this.setCode(rondaType.getCode());

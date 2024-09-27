@@ -15,6 +15,10 @@ public class ProgrammaticAreaDTO extends BaseEntityDTO {
     private String description;
     private String name;
     private ProgramDTO program;
+
+    public ProgrammaticAreaDTO() {
+    }
+
     public ProgrammaticAreaDTO(ProgrammaticArea programmaticArea) {
         super(programmaticArea);
         this.setCode(programmaticArea.getCode());

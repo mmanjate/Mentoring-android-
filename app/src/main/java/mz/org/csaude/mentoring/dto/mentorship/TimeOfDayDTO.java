@@ -15,6 +15,9 @@ public class TimeOfDayDTO extends BaseEntityDTO {
         this.setDescription(timeOfDay.getDescription());
     }
 
+    public TimeOfDayDTO() {
+    }
+
     public String getCode() {
         return code;
     }

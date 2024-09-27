@@ -15,6 +15,9 @@ public class DistrictDTO extends BaseEntityDTO {
     private String description;
     private ProvinceDTO provinceDTO;
 
+    public DistrictDTO() {
+    }
+
     public DistrictDTO(District district) {
         super(district);
         this.setDescription(district.getDescription());

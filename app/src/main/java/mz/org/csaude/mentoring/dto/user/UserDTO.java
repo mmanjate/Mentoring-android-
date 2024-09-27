@@ -25,6 +25,9 @@ public class UserDTO extends BaseEntityDTO {
 
     private List<UserRoleDTO> userRoleDTOS;
 
+    public UserDTO() {
+    }
+
     public UserDTO(User user) {
         super(user);
         this.setEmployeeDTO(new EmployeeDTO(user.getEmployee()));

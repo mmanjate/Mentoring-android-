@@ -14,6 +14,9 @@ public class ProfessionalCategoryDTO extends BaseEntityDTO {
     private String code;
     private String description;
 
+    public ProfessionalCategoryDTO() {
+    }
+
     public ProfessionalCategoryDTO(ProfessionalCategory professionalCategory){
         super(professionalCategory);
         this.setCode(professionalCategory.getCode());

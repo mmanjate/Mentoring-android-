@@ -14,6 +14,10 @@ import mz.org.csaude.mentoring.util.SyncSatus;
 public class SessionStatusDTO extends BaseEntityDTO implements Syncable {
     private String code;
     private String description;
+
+    public SessionStatusDTO() {
+    }
+
     public SessionStatusDTO(SessionStatus sessionStatus) {
         super(sessionStatus);
         this.setCode(sessionStatus.getCode());

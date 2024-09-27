@@ -16,6 +16,10 @@ public class RondaMenteeDTO extends BaseEntityDTO {
     private Date endDate;
     private TutoredDTO mentee;
     private RondaDTO ronda;
+
+    public RondaMenteeDTO() {
+    }
+
     public RondaMenteeDTO(RondaMentee rondaMentee) {
         super(rondaMentee);
         this.setStartDate(rondaMentee.getStartDate());

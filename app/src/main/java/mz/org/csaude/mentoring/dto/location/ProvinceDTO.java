@@ -12,6 +12,10 @@ import mz.org.csaude.mentoring.model.location.Province;
 public class ProvinceDTO extends BaseEntityDTO {
 
     private String designation;
+
+    public ProvinceDTO() {
+    }
+
     public ProvinceDTO(Province province) {
         super(province);
         this.setDesignation(province.getDescription());
